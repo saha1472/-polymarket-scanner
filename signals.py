@@ -7,28 +7,31 @@ import requests
 
 DATA_API = "https://data-api.polymarket.com"
 GAMMA_API = "https://gamma-api.polymarket.com"
+BOOK_URL = "https://clob.polymarket.com/book"
 LEDGER_FILE = "ledger.json"
 
 # ---------- Your settings ----------
 START_BANKROLL = 5.00
-BET_SIZE = 1.00           # $1 is Polymarket's market-order minimum
-MAX_OPEN_BETS = 4
+MAX_BET = 1.00             # never stake more than this on one bet
+MARKET_ORDER_MIN_USD = 1.00
+DEFAULT_MIN_SHARES = 5     # used if a market doesn't report its minimum
+MAX_OPEN_BETS = 6
 HOURS_MIN = 0
-HOURS_MAX = 48            # set to None to ignore time to resolution
+HOURS_MAX = 48             # set to None to ignore time to resolution
 MIN_PRICE = 0.55
 MAX_PRICE = 0.95
-FEE_RATE = 0.07           # worst-case taker rate; most categories are lower
-MIN_PROFIT_IF_WIN = 0.03
+FEE_RATE = 0.07            # worst-case taker rate; most categories are lower
+MIN_RETURN_IF_WIN = 0.03   # need at least 3% profit on the stake if it wins
 
 # ---------- Trader filter ----------
 LEADERBOARD_SIZE = 50
 MIN_CLOSED = 20
 MIN_WIN_RATE = 0.55
 MIN_ROI = 0.02
-MIN_PNL_TO_VOLUME = 0.01  # weeds out market makers
-MIN_POSITION_USD = 50     # ignore tiny positions
+MIN_PNL_TO_VOLUME = 0.01   # weeds out market makers
+MIN_POSITION_USD = 50      # ignore tiny positions
 MIN_TRADERS_AGREE = 2
-MAX_CHASE = 0.10          # skip if price ran 10c+ past their entry
+MAX_CHASE = 0.10           # skip if price ran 10c+ past their entry
 
 
 def get(url, params=None):
@@ -104,7 +107,7 @@ def trader_quality(wallet):
 
 # ---------- Step 2: find what they agree on ----------
 
-def find_signals(good):
+def find_candidates(good):
     by_asset, assets_by_condition = {}, {}
     for wallet, (name, _wr, _roi) in good.items():
         rows = get(f"{DATA_API}/positions",
@@ -133,29 +136,62 @@ def find_signals(good):
             s["entries"].append(num(p.get("avgPrice")))
             assets_by_condition.setdefault(cond, set()).add(asset)
 
-    signals = []
+    candidates = []
     for s in by_asset.values():
         if len(assets_by_condition.get(s["condition"], ())) > 1:
             continue  # good traders are on opposite sides
         if len(s["traders"]) < MIN_TRADERS_AGREE:
             continue
-        p = s["price"]
-        if not MIN_PRICE <= p <= MAX_PRICE:
+        if not MIN_PRICE <= s["price"] <= MAX_PRICE:
             continue
-        avg_entry = sum(s["entries"]) / len(s["entries"])
-        if p - avg_entry > MAX_CHASE:
-            continue
-        fee = BET_SIZE * FEE_RATE * (1 - p)
-        profit = BET_SIZE * (1 / p - 1) - fee
-        if profit < MIN_PROFIT_IF_WIN:
-            continue
-        s.update(avg_entry=avg_entry, fee=fee, profit_if_win=profit,
-                 breakeven=p * (1 + FEE_RATE * (1 - p)))
-        signals.append(s)
-    return sorted(signals, key=lambda s: len(s["traders"]), reverse=True)
+        s["avg_entry"] = sum(s["entries"]) / len(s["entries"])
+        candidates.append(s)
+    return sorted(candidates, key=lambda s: len(s["traders"]), reverse=True)
 
 
-# ---------- Step 3: paper trading ledger ----------
+# ---------- Step 3: size each bet from the live order book ----------
+
+def size_bet(s):
+    """Use the real best ask and the market's minimum order size to find
+    the cheapest legal bet. Returns the updated signal, or None."""
+    book = get(BOOK_URL, {"token_id": s["asset"]})
+    if not book:
+        return None
+    asks = sorted((num(a.get("price")), num(a.get("size")))
+                  for a in book.get("asks", []))
+    if not asks:
+        return None
+    ask, ask_size = asks[0]
+
+    if not MIN_PRICE <= ask <= MAX_PRICE:
+        return None
+    if ask - s["avg_entry"] > MAX_CHASE:
+        return None
+
+    min_shares = num(book.get("min_order_size"),
+                     DEFAULT_MIN_SHARES) or DEFAULT_MIN_SHARES
+    limit_cost = min_shares * ask
+    if limit_cost < MARKET_ORDER_MIN_USD:
+        order, shares, stake = "limit", min_shares, limit_cost
+    else:
+        order = "market"
+        shares = MARKET_ORDER_MIN_USD / ask
+        stake = MARKET_ORDER_MIN_USD
+
+    if stake > MAX_BET or ask_size < shares:
+        return None
+
+    fee = shares * FEE_RATE * ask * (1 - ask)
+    profit = shares - stake - fee
+    if profit / stake < MIN_RETURN_IF_WIN:
+        return None
+
+    s.update(price=ask, order=order, shares=shares, stake=stake, fee=fee,
+             profit_if_win=profit, breakeven=(stake + fee) / shares)
+    return s
+
+
+# ---------- Step 4: paper trading ledger ----------
 
 def load_ledger():
     if os.path.exists(LEDGER_FILE):
@@ -204,25 +240,25 @@ def open_paper_bets(ledger, signals):
             break
         if s["asset"] in held:
             continue
-        if ledger["cash"] < BET_SIZE + s["fee"]:
-            break
-        ledger["cash"] -= BET_SIZE + s["fee"]
+        if ledger["cash"] < s["stake"] + s["fee"]:
+            continue  # try cheaper signals further down the list
+        ledger["cash"] -= s["stake"] + s["fee"]
         ledger["bets"].append({
             "asset": s["asset"], "condition": s["condition"],
             "title": s["title"], "outcome": s["outcome"],
-            "price": s["price"], "shares": BET_SIZE / s["price"],
-            "stake": BET_SIZE, "fee": s["fee"], "status": "open",
-            "traders": s["traders"],
+            "price": s["price"], "shares": s["shares"],
+            "stake": s["stake"], "fee": s["fee"], "order": s["order"],
+            "status": "open", "traders": s["traders"],
             "opened": datetime.now(timezone.utc).isoformat(),
         })
         held.add(s["asset"])
         ends = f"ends in {s['hours']:.0f}h | " if s["hours"] else ""
         msgs.append(
-            f"📝 Paper bet ${BET_SIZE:.2f} on {s['outcome']} @ "
-            f"{s['price']:.2f} | {s['title']} | {len(s['traders'])} traders "
-            f"(avg entry {s['avg_entry']:.2f}) | {ends}win +"
-            f"${s['profit_if_win']:.2f}, needs >{s['breakeven']:.1%} to "
-            f"break even"
+            f"📝 Paper bet ${s['stake']:.2f} ({s['shares']:.2f} shares, "
+            f"{s['order']} order) on {s['outcome']} @ {s['price']:.2f} | "
+            f"{s['title']} | {len(s['traders'])} traders (avg entry "
+            f"{s['avg_entry']:.2f}) | {ends}win +${s['profit_if_win']:.2f}, "
+            f"needs >{s['breakeven']:.1%} to break even"
         )
     return msgs
 
@@ -248,8 +284,11 @@ if __name__ == "__main__":
     print(f"{len(good)} passed the quality filter: "
           f"{', '.join(v[0] for v in good.values())}")
 
-    signals = find_signals(good)
-    print(f"{len(signals)} signal(s) found.")
+    candidates = find_candidates(good)
+    print(f"{len(candidates)} candidate(s) before order book checks.")
+    signals = [s for s in (size_bet(c) for c in candidates) if s]
+    print(f"{len(signals)} signal(s) after sizing and fee checks.")
+
     msgs += open_paper_bets(ledger, signals)
     save_ledger(ledger)
 
