@@ -1,4 +1,102 @@
 {
-  "cash": 50,
-  "bets": []}
-   
+  "cash": 43.94259999999999,
+  "bets": [
+    {
+      "asset": "76726319337566318835132399515758192316852774481956593564388934640363007258831",
+      "condition": "0xe5b8e3984b02d404637550684b88ff786c54cd9081938ad9f3bc42f54c88b5d0",
+      "title": "Will Flavio Bolsonaro win the most votes in the second round of the Brazil presidential election from Par\u00e1?",
+      "outcome": "No",
+      "price": 0.95,
+      "shares": 1.0526315789473684,
+      "stake": 1.0,
+      "fee": 0.0035000000000000035,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "donthackme",
+        "anoin123"
+      ],
+      "opened": "2026-10-25T20:35:01.525497+00:00"
+    },
+    {
+      "asset": "27670129619626213108912772417909250054836917373961985276008181424732686448004",
+      "condition": "0xbdfde2fd2472d48a0b126c360eab593687d87208a0f54a89079680af25007e92",
+      "title": "Will Brad Bradford win the 2026 Toronto mayoral election?",
+      "outcome": "No",
+      "price": 0.63,
+      "shares": 1.5873015873015872,
+      "stake": 1.0,
+      "fee": 0.025900000000000003,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "donthackme"
+      ],
+      "opened": "2026-10-25T20:35:01.525547+00:00"
+    },
+    {
+      "asset": "72760825994891083916229752624573558476975748350253061093993265011569953984187",
+      "condition": "0x4c78040758e92fe3a003d91ce31ebc422d4c79538bc1eaf145e393e9b5806b84",
+      "title": "Will Fl\u00e1vio Bolsonaro win the second round of the 2026 Brazilian presidential election by 6\u20138%?",
+      "outcome": "No",
+      "price": 0.95,
+      "shares": 1.0526315789473684,
+      "stake": 1.0,
+      "fee": 0.0035000000000000035,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354"
+      ],
+      "opened": "2026-10-25T20:35:01.525555+00:00"
+    },
+    {
+      "asset": "57832070797568528853061044230648661459439638421186537143341457256093418818367",
+      "condition": "0xec8c6a4afcc26cb3ed68784b609a5ddb30b737a449b1c8361ec7bdc8d70038d9",
+      "title": "Will Fl\u00e1vio Bolsonaro win the second round of the 2026 Brazilian presidential election by 4\u20136%?",
+      "outcome": "No",
+      "price": 0.88,
+      "shares": 1.1363636363636365,
+      "stake": 1.0,
+      "fee": 0.008400000000000001,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354"
+      ],
+      "opened": "2026-10-25T20:35:01.525561+00:00"
+    },
+    {
+      "asset": "31623936159095332688024354843260607282774748032416502723809456339512273128295",
+      "condition": "0x625a989ce4602b4f93b656d118f5a5a806d8052fef07709a97befc35b8bc8125",
+      "title": "LoL: T1 vs CTBC Flying Oyster (BO1) - Worlds Group Stage",
+      "outcome": "T1",
+      "price": 0.89,
+      "shares": 1.1235955056179776,
+      "stake": 1.0,
+      "fee": 0.007699999999999999,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "jakepaulthegoat2008"
+      ],
+      "opened": "2026-10-25T20:35:01.525566+00:00"
+    },
+    {
+      "asset": "52412672867742134827062797182352455902517290986912934285237358422097757014975",
+      "condition": "0x30158a5121818f12ffacce32f5de7053ea0ef5c9c57206c05d12eff47f9f4b4c",
+      "title": "Will voter turnout in the second round of the 2026 Brazil presidential election be 80-82%?",
+      "outcome": "No",
+      "price": 0.88,
+      "shares": 1.1363636363636365,
+      "stake": 1.0,
+      "fee": 0.008400000000000001,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "anoin123"
+      ],
+      "opened": "2026-10-25T20:35:01.525573+00:00"
+    }
+  ]
+}
