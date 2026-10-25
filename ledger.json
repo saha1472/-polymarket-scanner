@@ -1,1 +1,203 @@
-   {"cash": 50.0, "bets": []}
+{
+  "cash": 40.857969999999995,
+  "bets": [
+    {
+      "asset": "27670129619626213108912772417909250054836917373961985276008181424732686448004",
+      "condition": "0xbdfde2fd2472d48a0b126c360eab593687d87208a0f54a89079680af25007e92",
+      "title": "Will Brad Bradford win the 2026 Toronto mayoral election?",
+      "outcome": "No",
+      "price": 0.64,
+      "shares": 1.5625,
+      "stake": 1.0,
+      "fee": 0.0252,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "donthackme"
+      ],
+      "holders": {
+        "0x03805a13a0b3e058f55f6c6af95389d4f431073d": {
+          "name": "donthackme",
+          "size": 2117.9645
+        }
+      },
+      "opened": "2026-10-25T22:03:57.632679+00:00"
+    },
+    {
+      "asset": "40625055120512781928865279684465081503696419037853962760027077436510763888398",
+      "condition": "0x45c61766c485ac1318af0e579557c5cdbca24067d4d50ad064bdcf7a50d587bf",
+      "title": "Will Luiz In\u00e1cio Lula da Silva win the second round of the 2026 Brazilian presidential election by less than 2%?",
+      "outcome": "No",
+      "price": 0.77,
+      "shares": 1.2987012987012987,
+      "stake": 1.0,
+      "fee": 0.0161,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354"
+      ],
+      "holders": {
+        "0x69f0c154a3412f2b3fa7eb22c6d08e6b5b32fb27": {
+          "name": "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354",
+          "size": 119.76
+        }
+      },
+      "opened": "2026-10-25T22:03:57.632720+00:00"
+    },
+    {
+      "asset": "12968036822889354937019155248155794355099075603860074350874532466303944221017",
+      "condition": "0xaa1c1f03175c143615d4f0da301082b2d6004b0365ec5e19474b43412d246142",
+      "title": "Will Luiz In\u00e1cio Lula da Silva win the second round of the 2026 Brazilian presidential election by 2\u20134%?",
+      "outcome": "No",
+      "price": 0.841,
+      "shares": 1.1890606420927468,
+      "stake": 1.0,
+      "fee": 0.011130000000000003,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354"
+      ],
+      "holders": {
+        "0x69f0c154a3412f2b3fa7eb22c6d08e6b5b32fb27": {
+          "name": "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354",
+          "size": 115.76
+        }
+      },
+      "opened": "2026-10-25T22:03:57.632731+00:00"
+    },
+    {
+      "asset": "3137598969106550590180647757672374515126456302927713030576554013284821828687",
+      "condition": "0xfe329826153a4fa1c902d583f1ed99b0425204bc1421d9b3108f5b83056c1f0a",
+      "title": "Will Fl\u00e1vio Bolsonaro win the second round of the 2026 Brazilian presidential election by 2\u20134%?",
+      "outcome": "No",
+      "price": 0.77,
+      "shares": 1.2987012987012987,
+      "stake": 1.0,
+      "fee": 0.0161,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354"
+      ],
+      "holders": {
+        "0x69f0c154a3412f2b3fa7eb22c6d08e6b5b32fb27": {
+          "name": "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354",
+          "size": 100.6662
+        }
+      },
+      "opened": "2026-10-25T22:03:57.632738+00:00"
+    },
+    {
+      "asset": "64509574119415469111750008269886337749329420333348126494751470836802940503474",
+      "condition": "0x20d60ad6559e9df5f8d2903f8f14bdf6447709eb01c17a9d1159d10a9f9a1b2f",
+      "title": "Will Fl\u00e1vio Bolsonaro win the second round of the 2026 Brazilian presidential election by less than 2%?",
+      "outcome": "No",
+      "price": 0.79,
+      "shares": 1.2658227848101264,
+      "stake": 1.0,
+      "fee": 0.0147,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354"
+      ],
+      "holders": {
+        "0x69f0c154a3412f2b3fa7eb22c6d08e6b5b32fb27": {
+          "name": "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354",
+          "size": 99.4678
+        }
+      },
+      "opened": "2026-10-25T22:03:57.632745+00:00"
+    },
+    {
+      "asset": "31623936159095332688024354843260607282774748032416502723809456339512273128295",
+      "condition": "0x625a989ce4602b4f93b656d118f5a5a806d8052fef07709a97befc35b8bc8125",
+      "title": "LoL: T1 vs CTBC Flying Oyster (BO1) - Worlds Group Stage",
+      "outcome": "T1",
+      "price": 0.89,
+      "shares": 1.1235955056179776,
+      "stake": 1.0,
+      "fee": 0.007699999999999999,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "jakepaulthegoat2008"
+      ],
+      "holders": {
+        "0x6ac5bb06a9eb05641fd5e82640268b92f3ab4b6e": {
+          "name": "jakepaulthegoat2008",
+          "size": 74999.4067
+        }
+      },
+      "opened": "2026-10-25T22:03:57.632753+00:00"
+    },
+    {
+      "asset": "15608643409971761503638981418366748681664167967140328613245148153377110556924",
+      "condition": "0xd0590fb2d44c3b5deb053fde7072206ee9041441e3ee0e5fb022a41caf79b407",
+      "title": "Will \u0410ndrey Gyurov win the next Bulgarian presidential election?",
+      "outcome": "No",
+      "price": 0.7,
+      "shares": 1.4285714285714286,
+      "stake": 1.0,
+      "fee": 0.021,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "anoin123"
+      ],
+      "holders": {
+        "0x96489abcb9f583d6835c8ef95ffc923d05a86825": {
+          "name": "anoin123",
+          "size": 6423.6408
+        }
+      },
+      "opened": "2026-10-25T22:03:57.632760+00:00"
+    },
+    {
+      "asset": "52412672867742134827062797182352455902517290986912934285237358422097757014975",
+      "condition": "0x30158a5121818f12ffacce32f5de7053ea0ef5c9c57206c05d12eff47f9f4b4c",
+      "title": "Will voter turnout in the second round of the 2026 Brazil presidential election be 80-82%?",
+      "outcome": "No",
+      "price": 0.88,
+      "shares": 1.1363636363636365,
+      "stake": 1.0,
+      "fee": 0.008400000000000001,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "anoin123"
+      ],
+      "holders": {
+        "0x96489abcb9f583d6835c8ef95ffc923d05a86825": {
+          "name": "anoin123",
+          "size": 4574.0
+        }
+      },
+      "opened": "2026-10-25T22:03:57.632765+00:00"
+    },
+    {
+      "asset": "51137589046515265921830059856432478288040475876568161617998630350593321061750",
+      "condition": "0x4b82c0dd6196c7325a465b74b30c50c5df0acebf44a0ea756155e5053fa14bcf",
+      "title": "LoL: Gen.G vs LYON - Game 2 Winner",
+      "outcome": "Gen.G",
+      "price": 0.69,
+      "shares": 1.4492753623188408,
+      "stake": 1.0,
+      "fee": 0.021700000000000007,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Mooseborzoiii"
+      ],
+      "holders": {
+        "0x57a85952044f2c8e4d31b475aab6987d2f98ebc2": {
+          "name": "Mooseborzoiii",
+          "size": 151362.6186
+        }
+      },
+      "opened": "2026-10-25T22:03:57.632770+00:00"
+    }
+  ]
+}
