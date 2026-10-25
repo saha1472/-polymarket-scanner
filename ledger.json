@@ -1,0 +1,21 @@
+{
+  "cash": 3.9937,
+  "bets": [
+    {
+      "asset": "76726319337566318835132399515758192316852774481956593564388934640363007258831",
+      "condition": "0xe5b8e3984b02d404637550684b88ff786c54cd9081938ad9f3bc42f54c88b5d0",
+      "title": "Will Flavio Bolsonaro win the most votes in the second round of the Brazil presidential election from Par\u00e1?",
+      "outcome": "No",
+      "price": 0.91,
+      "shares": 1.0989010989010988,
+      "stake": 1.0,
+      "fee": 0.006299999999999998,
+      "status": "open",
+      "traders": [
+        "donthackme",
+        "anoin123"
+      ],
+      "opened": "2026-10-25T20:03:42.267208+00:00"
+    }
+  ]
+}
