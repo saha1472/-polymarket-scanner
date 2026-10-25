@@ -11,20 +11,20 @@ BOOK_URL = "https://clob.polymarket.com/book"
 LEDGER_FILE = "ledger.json"
 
 # ---------- Your settings ----------
-START_BANKROLL = 5.00
-MAX_BET = 1.00             # never stake more than this on one bet
+START_BANKROLL = 50.00
+MAX_BET = 6.00             # never stake more than this on one bet
 MARKET_ORDER_MIN_USD = 1.00
 DEFAULT_MIN_SHARES = 5     # used if a market doesn't report its minimum
 MAX_OPEN_BETS = 6
 HOURS_MIN = 0.5
-HOURS_MAX = 48             # set to None to ignore time to resolution
+HOURS_MAX = 36             # set to None to ignore time to resolution
 MIN_PRICE = 0.55
 MAX_PRICE = 0.95
 FEE_RATE = 0.07            # worst-case taker rate; most categories are lower
 MIN_RETURN_IF_WIN = 0.03   # need at least 3% profit on the stake if it wins
 
 # ---------- Trader filter ----------
-LEADERBOARD_SIZE = 50
+LEADERBOARD_SIZE = 100
 MIN_CLOSED = 20
 MIN_WIN_RATE = 0.55
 MIN_ROI = 0.02
