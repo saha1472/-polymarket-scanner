@@ -33,6 +33,10 @@ MIN_POSITION_USD = 50      # ignore tiny positions
 MIN_TRADERS_AGREE = 1
 MAX_CHASE = 0.10           # skip if price ran 10c+ past their entry
 
+# ---------- Exit tracking (shadow only: bets still ride to resolution) ----------
+EXIT_CUT = 0.50            # a trader "exited" if they cut their size by 50%+
+EXIT_MAJORITY = 0.50       # shadow-sell once this share of a bet's traders exited
+
 
 def get(url, params=None):
     try:
@@ -130,10 +134,11 @@ def find_candidates(good):
                 "title": p.get("title", "?"),
                 "outcome": p.get("outcome", "?"),
                 "price": price, "hours": hrs,
-                "traders": [], "entries": [],
+                "traders": [], "entries": [], "holders": {},
             })
             s["traders"].append(name)
             s["entries"].append(num(p.get("avgPrice")))
+            s["holders"][wallet] = {"name": name, "size": num(p.get("size"))}
             assets_by_condition.setdefault(cond, set()).add(asset)
 
     candidates = []
@@ -249,6 +254,7 @@ def open_paper_bets(ledger, signals):
             "price": s["price"], "shares": s["shares"],
             "stake": s["stake"], "fee": s["fee"], "order": s["order"],
             "status": "open", "traders": s["traders"],
+            "holders": s["holders"],
             "opened": datetime.now(timezone.utc).isoformat(),
         })
         held.add(s["asset"])
@@ -263,6 +269,56 @@ def open_paper_bets(ledger, signals):
     return msgs
 
 
+def check_exits(ledger):
+    """Watch the traders behind each open bet. If enough of them sell (or
+    flip sides), record a shadow exit at the current best bid. The real
+    paper bet still rides to resolution, so both strategies can be compared."""
+    msgs = []
+    for bet in ledger["bets"]:
+        if bet["status"] != "open" or not bet.get("holders"):
+            continue
+        if bet.get("shadow_exit"):
+            continue  # already shadow-sold
+        for wallet, h in bet["holders"].items():
+            if h.get("exited"):
+                continue
+            rows = get(f"{DATA_API}/positions",
+                       {"user": wallet, "market": bet["condition"]})
+            if rows is None:
+                continue  # API hiccup: don't count it as an exit
+            now_size, flipped = 0.0, False
+            for p in rows:
+                if p.get("asset") == bet["asset"]:
+                    now_size = num(p.get("size"))
+                elif num(p.get("size")) * num(p.get("curPrice")) >= MIN_POSITION_USD:
+                    flipped = True
+            if flipped or now_size <= h["size"] * (1 - EXIT_CUT):
+                h["exited"] = datetime.now(timezone.utc).isoformat()
+                h["exit_reason"] = "flipped" if flipped else (
+                    "sold all" if now_size <= 0 else
+                    f"cut {1 - now_size / h['size']:.0%}")
+                msgs.append(f"👀 {h['name']} {h['exit_reason']} on "
+                            f"{bet['outcome']} | {bet['title']}")
+
+        exited = sum(1 for h in bet["holders"].values() if h.get("exited"))
+        if exited / len(bet["holders"]) < EXIT_MAJORITY:
+            continue
+        book = get(BOOK_URL, {"token_id": bet["asset"]})
+        bids = sorted((num(b.get("price")) for b in (book or {}).get("bids", [])),
+                      reverse=True)
+        bid = bids[0] if bids else 0.0
+        sell_fee = bet["shares"] * FEE_RATE * bid * (1 - bid)
+        bet["shadow_exit"] = {
+            "time": datetime.now(timezone.utc).isoformat(),
+            "bid": bid,
+            "pnl": bet["shares"] * bid - sell_fee - bet["stake"] - bet["fee"],
+        }
+        msgs.append(f"🚪 Shadow exit {bet['outcome']} @ {bid:.2f} "
+                    f"(entry {bet['price']:.2f}) → would lock "
+                    f"${bet['shadow_exit']['pnl']:+.2f} | {bet['title']}")
+    return msgs
+
+
 def notify(lines):
     url = os.environ.get("DISCORD_WEBHOOK_URL")
     if not url or not lines:
@@ -273,6 +329,7 @@ def notify(lines):
 if __name__ == "__main__":
     ledger = load_ledger()
     msgs = settle(ledger)
+    msgs += check_exits(ledger)
 
     traders = top_traders()
     print(f"{len(traders)} traders after the leaderboard filter.")
@@ -301,5 +358,11 @@ if __name__ == "__main__":
             f"record {wins}-{len(done) - wins} | realized P&L "
             f"${sum(b['pnl'] for b in done):+.2f}"
         )
+        follow = sum(b["shadow_exit"]["pnl"] if b.get("shadow_exit")
+                     else b["pnl"] for b in done)
+        shadowed = sum(1 for b in done if b.get("shadow_exit"))
+        if shadowed:
+            msgs.append(f"🔁 Following exits instead: ${follow:+.2f} "
+                        f"({shadowed} settled bet(s) had a shadow exit)")
     print("\n".join(msgs))
     notify(msgs)
