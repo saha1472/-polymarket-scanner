@@ -1,5 +1,5 @@
 {
-  "cash": 43.94259999999999,
+  "cash": 38.85089999999999,
   "bets": [
     {
       "asset": "76726319337566318835132399515758192316852774481956593564388934640363007258831",
@@ -97,6 +97,86 @@
         "anoin123"
       ],
       "opened": "2026-10-25T20:35:01.525573+00:00"
+    },
+    {
+      "asset": "40625055120512781928865279684465081503696419037853962760027077436510763888398",
+      "condition": "0x45c61766c485ac1318af0e579557c5cdbca24067d4d50ad064bdcf7a50d587bf",
+      "title": "Will Luiz In\u00e1cio Lula da Silva win the second round of the 2026 Brazilian presidential election by less than 2%?",
+      "outcome": "No",
+      "price": 0.78,
+      "shares": 1.282051282051282,
+      "stake": 1.0,
+      "fee": 0.015399999999999999,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354"
+      ],
+      "opened": "2026-10-25T21:49:45.559247+00:00"
+    },
+    {
+      "asset": "3137598969106550590180647757672374515126456302927713030576554013284821828687",
+      "condition": "0xfe329826153a4fa1c902d583f1ed99b0425204bc1421d9b3108f5b83056c1f0a",
+      "title": "Will Fl\u00e1vio Bolsonaro win the second round of the 2026 Brazilian presidential election by 2\u20134%?",
+      "outcome": "No",
+      "price": 0.69,
+      "shares": 1.4492753623188408,
+      "stake": 1.0,
+      "fee": 0.021700000000000007,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354"
+      ],
+      "opened": "2026-10-25T21:49:45.559284+00:00"
+    },
+    {
+      "asset": "64509574119415469111750008269886337749329420333348126494751470836802940503474",
+      "condition": "0x20d60ad6559e9df5f8d2903f8f14bdf6447709eb01c17a9d1159d10a9f9a1b2f",
+      "title": "Will Fl\u00e1vio Bolsonaro win the second round of the 2026 Brazilian presidential election by less than 2%?",
+      "outcome": "No",
+      "price": 0.85,
+      "shares": 1.1764705882352942,
+      "stake": 1.0,
+      "fee": 0.010500000000000002,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354"
+      ],
+      "opened": "2026-10-25T21:49:45.559298+00:00"
+    },
+    {
+      "asset": "15608643409971761503638981418366748681664167967140328613245148153377110556924",
+      "condition": "0xd0590fb2d44c3b5deb053fde7072206ee9041441e3ee0e5fb022a41caf79b407",
+      "title": "Will \u0410ndrey Gyurov win the next Bulgarian presidential election?",
+      "outcome": "No",
+      "price": 0.69,
+      "shares": 1.4492753623188408,
+      "stake": 1.0,
+      "fee": 0.021700000000000007,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "anoin123"
+      ],
+      "opened": "2026-10-25T21:49:45.559310+00:00"
+    },
+    {
+      "asset": "9831509399048727767609566874075848071794464816917572911219855758114324777440",
+      "condition": "0x4b4c5155f813d5855ade550cf0e044f0b69acaddfb3971327aa35ae053b772d2",
+      "title": "Will the price of Ethereum be above $2,300 on October 27?",
+      "outcome": "Yes",
+      "price": 0.68,
+      "shares": 1.4705882352941175,
+      "stake": 1.0,
+      "fee": 0.0224,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Tokor"
+      ],
+      "opened": "2026-10-25T21:49:45.559320+00:00"
     }
   ]
 }
