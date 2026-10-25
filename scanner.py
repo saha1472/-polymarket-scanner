@@ -7,16 +7,25 @@ MIN_EDGE = 0.01  # ignore anything under 1 cent of profit per set
 
 
 def fetch_events():
-    """Page through all active, open events."""
+    """Page through all active, open events, stopping cleanly on errors."""
     offset, limit = 0, 100
     while True:
-        resp = requests.get(
-            GAMMA_URL,
-            params={"active": "true", "closed": "false",
-                    "limit": limit, "offset": offset},
-            timeout=20,
-        )
-        resp.raise_for_status()
+        try:
+            resp = requests.get(
+                GAMMA_URL,
+                params={"active": "true", "closed": "false",
+                        "limit": limit, "offset": offset},
+                timeout=20,
+            )
+        except requests.RequestException as err:
+            print(f"Network error at offset {offset}: {err}")
+            break
+
+        if resp.status_code != 200:
+            print(f"API returned {resp.status_code} at offset {offset}: "
+                  f"{resp.text[:200]}")
+            break
+
         batch = resp.json()
         if not batch:
             break
