@@ -12,10 +12,10 @@ LEDGER_FILE = "ledger.json"
 
 # ---------- Your settings ----------
 START_BANKROLL = 50.00
-MAX_BET = 6.00             # never stake more than this on one bet
+MAX_BET = 1.00             # never stake more than this on one bet
 MARKET_ORDER_MIN_USD = 1.00
 DEFAULT_MIN_SHARES = 5     # used if a market doesn't report its minimum
-MAX_OPEN_BETS = 6
+MAX_OPEN_BETS = 40
 HOURS_MIN = 0.5
 HOURS_MAX = 36             # set to None to ignore time to resolution
 MIN_PRICE = 0.55
@@ -30,7 +30,7 @@ MIN_WIN_RATE = 0.55
 MIN_ROI = 0.02
 MIN_PNL_TO_VOLUME = 0.01   # weeds out market makers
 MIN_POSITION_USD = 50      # ignore tiny positions
-MIN_TRADERS_AGREE = 2
+MIN_TRADERS_AGREE = 1
 MAX_CHASE = 0.10           # skip if price ran 10c+ past their entry
 
 
