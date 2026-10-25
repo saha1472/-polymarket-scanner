@@ -1,5 +1,5 @@
 {
-  "cash": 40.857969999999995,
+  "cash": 38.84572,
   "bets": [
     {
       "asset": "27670129619626213108912772417909250054836917373961985276008181424732686448004",
@@ -198,6 +198,55 @@
         }
       },
       "opened": "2026-10-25T22:03:57.632770+00:00"
+    },
+    {
+      "asset": "76726319337566318835132399515758192316852774481956593564388934640363007258831",
+      "condition": "0xe5b8e3984b02d404637550684b88ff786c54cd9081938ad9f3bc42f54c88b5d0",
+      "title": "Will Flavio Bolsonaro win the most votes in the second round of the Brazil presidential election from Par\u00e1?",
+      "outcome": "No",
+      "price": 0.94,
+      "shares": 1.0638297872340425,
+      "stake": 1.0,
+      "fee": 0.004200000000000004,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "donthackme",
+        "anoin123"
+      ],
+      "holders": {
+        "0x03805a13a0b3e058f55f6c6af95389d4f431073d": {
+          "name": "donthackme",
+          "size": 1836.1744
+        },
+        "0x96489abcb9f583d6835c8ef95ffc923d05a86825": {
+          "name": "anoin123",
+          "size": 15435.1821
+        }
+      },
+      "opened": "2026-10-25T22:29:24.077826+00:00"
+    },
+    {
+      "asset": "39489883991512531190101057229553624296671248090402344184914235782031258493574",
+      "condition": "0x3303653d1923c98cdd74f53b04c29c79bf4ca45c1243f3cd6245e4cc9b609bd4",
+      "title": "Will Luiz In\u00e1cio Lula da Silva win the second round of the 2026 Brazilian presidential election by 4\u20136%?",
+      "outcome": "No",
+      "price": 0.885,
+      "shares": 1.1299435028248588,
+      "stake": 1.0,
+      "fee": 0.00805,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354"
+      ],
+      "holders": {
+        "0x69f0c154a3412f2b3fa7eb22c6d08e6b5b32fb27": {
+          "name": "0x69f0C154a3412F2b3Fa7eB22c6d08E6B5B32FB27-1778811502354",
+          "size": 85.84
+        }
+      },
+      "opened": "2026-10-25T22:29:24.077865+00:00"
     }
   ]
 }
