@@ -5,16 +5,37 @@ on:
     - cron: "*/15 * * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
+concurrency:
+  group: polymarket-scanner
+  cancel-in-progress: false
+
 jobs:
   scan:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - run: pip install requests
-      - run: python scanner.py
+
+      - name: Arbitrage scanner
+        run: python scanner.py
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+      - name: Smart-money signals
+        run: python signals.py
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+      - name: Save paper ledger
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ledger.json
+          git diff --cached --quiet || (git commit -m "Update paper ledger" && git push)
