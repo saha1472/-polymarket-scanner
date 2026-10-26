@@ -1,6 +1,8 @@
 import json
 import os
+import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 
 import requests
@@ -8,7 +10,25 @@ import requests
 DATA_API = "https://data-api.polymarket.com"
 GAMMA_API = "https://gamma-api.polymarket.com"
 BOOK_URL = "https://clob.polymarket.com/book"
-LEDGER_FILE = "ledger.json"
+
+# ---------- Which scan is this? ----------
+# python signals.py           -> general scan (all categories), ledger.json
+# python signals.py SPORTS    -> sports-only scan, ledger_sports.json
+# Each category: leaderboard filter, Gamma tag slug used to recognise its
+# markets, taker fee rate, and the price band to buy in.
+CATEGORIES = {
+    "SPORTS":  {"tag": "sports",  "fee": 0.05, "min_price": 0.40, "max_price": 0.90},
+    "ESPORTS": {"tag": "esports", "fee": 0.05, "min_price": 0.40, "max_price": 0.90},
+    "TECH":    {"tag": "tech",    "fee": 0.04, "min_price": 0.40, "max_price": 0.90},
+    "WEATHER": {"tag": "weather", "fee": 0.05, "min_price": 0.40, "max_price": 0.90},
+}
+SCAN = (sys.argv[1] if len(sys.argv) > 1 else "GENERAL").upper()
+if SCAN != "GENERAL" and SCAN not in CATEGORIES:
+    sys.exit(f"Unknown scan {SCAN}. Use one of: {', '.join(CATEGORIES)}")
+CAT = CATEGORIES.get(SCAN)
+LEDGER_FILE = "ledger.json" if SCAN == "GENERAL" else f"ledger_{SCAN.lower()}.json"
+TRADERS_FILE = f"traders_{SCAN.lower()}.json"   # cached trader scores
+TAGS_FILE = "tags.json"                         # event -> tags cache (not committed)
 
 # ---------- Your settings ----------
 START_BANKROLL = 50.00
@@ -18,16 +38,18 @@ DEFAULT_MIN_SHARES = 5     # used if a market doesn't report its minimum
 MAX_OPEN_BETS = 40
 HOURS_MIN = 0.5
 HOURS_MAX = 36             # set to None to ignore time to resolution
-MIN_PRICE = 0.55
-MAX_PRICE = 0.95
-FEE_RATE = 0.07            # worst-case taker rate; most categories are lower
+MIN_PRICE = CAT["min_price"] if CAT else 0.55
+MAX_PRICE = CAT["max_price"] if CAT else 0.95
+FEE_RATE = CAT["fee"] if CAT else 0.07   # general scan uses the worst case
 MIN_RETURN_IF_WIN = 0.03   # need at least 3% profit on the stake if it wins
 
 # ---------- Trader filter ----------
-LEADERBOARD_SIZE = 100
-MIN_CLOSED = 20
+LEADERBOARD_SIZE = 100 if SCAN == "GENERAL" else 50
+HISTORY_DAYS = 30          # judge traders on bets resolved in the last 30 days
+MIN_RESOLVED = 15          # need at least this many resolved bets to judge
 MIN_WIN_RATE = 0.55
 MIN_ROI = 0.02
+SCORE_REFRESH_HOURS = 6    # re-score traders this often (slow step)
 MIN_PNL_TO_VOLUME = 0.01   # weeds out market makers
 MIN_POSITION_USD = 50      # ignore tiny positions
 MIN_TRADERS_AGREE = 1
@@ -37,21 +59,29 @@ MAX_CHASE = 0.10           # skip if price ran 10c+ past their entry
 EXIT_CUT = 0.50            # a trader "exited" if they cut their size by 50%+
 EXIT_MAJORITY = 0.50       # shadow-sell once this share of a bet's traders exited
 
+SESSION = requests.Session()
+
 
 def get(url, params=None):
-    try:
-        resp = requests.get(url, params=params, timeout=20)
-    except requests.RequestException as err:
-        print(f"Request failed for {url}: {err}")
-        return None
-    if resp.status_code != 200:
-        print(f"{url} returned {resp.status_code}: {resp.text[:200]}")
-        return None
-    time.sleep(0.15)
-    data = resp.json()
-    if isinstance(data, dict) and "data" in data:
-        data = data["data"]
-    return data
+    for attempt in range(3):
+        try:
+            resp = SESSION.get(url, params=params, timeout=20)
+        except requests.RequestException as err:
+            print(f"Request failed for {url}: {err}")
+            time.sleep(1 + attempt)
+            continue
+        if resp.status_code == 429 or resp.status_code >= 500:
+            time.sleep(2 + attempt * 2)
+            continue
+        if resp.status_code != 200:
+            print(f"{url} returned {resp.status_code}: {resp.text[:200]}")
+            return None
+        time.sleep(0.15)
+        data = resp.json()
+        if isinstance(data, dict) and "data" in data:
+            data = data["data"]
+        return data
+    return None
 
 
 def num(value, default=0.0):
@@ -73,15 +103,56 @@ def hours_until(end):
     return (dt - datetime.now(timezone.utc)).total_seconds() / 3600
 
 
+def read_json(path, default):
+    try:
+        with open(path) as fh:
+            return json.load(fh)
+    except (OSError, ValueError):
+        return default
+
+
+def write_json(path, data, indent=None):
+    with open(path, "w") as fh:
+        json.dump(data, fh, indent=indent)
+
+
+# ---------- Category tags (which markets belong to which category) ----------
+
+TAGS = read_json(TAGS_FILE, {})
+
+
+def event_tags(slug):
+    if not slug:
+        return []
+    if slug not in TAGS:
+        rows = get(f"{GAMMA_API}/events", {"slug": slug})
+        if rows is None:
+            return []  # don't cache API failures
+        TAGS[slug] = [t.get("slug") for t in ((rows[0].get("tags") or [])
+                                              if rows else [])]
+    return TAGS[slug]
+
+
+def in_scan(slug):
+    return CAT is None or CAT["tag"] in event_tags(slug)
+
+
+def warm_tags(slugs):
+    todo = [s for s in set(slugs) if s and s not in TAGS]
+    with ThreadPoolExecutor(6) as pool:
+        list(pool.map(event_tags, todo))
+
+
 # ---------- Step 1: find good traders ----------
 
 def top_traders():
     wallets = {}
     for period in ("MONTH", "ALL"):
-        rows = get(f"{DATA_API}/v1/leaderboard",
-                   {"timePeriod": period, "orderBy": "PNL",
-                    "limit": LEADERBOARD_SIZE}) or []
-        for row in rows:
+        params = {"timePeriod": period, "orderBy": "PNL",
+                  "limit": LEADERBOARD_SIZE}
+        if CAT:
+            params["category"] = SCAN
+        for row in get(f"{DATA_API}/v1/leaderboard", params) or []:
             wallet = row.get("proxyWallet")
             if not wallet:
                 continue
@@ -92,28 +163,93 @@ def top_traders():
     return wallets
 
 
-def trader_quality(wallet):
-    rows = get(f"{DATA_API}/closed-positions",
-               {"user": wallet, "limit": 50}) or []
-    if len(rows) < MIN_CLOSED:
-        return None
-    wins = sum(1 for r in rows if num(r.get("realizedPnl")) > 0)
-    pnl = sum(num(r.get("realizedPnl")) for r in rows)
-    cost = sum(num(r.get("totalBought")) * num(r.get("avgPrice"))
-               for r in rows)
-    if cost <= 0:
-        return None
-    win_rate, roi = wins / len(rows), pnl / cost
-    if win_rate < MIN_WIN_RATE or roi < MIN_ROI:
-        return None
-    return win_rate, roi
+def trader_history(wallet):
+    """Every bet this trader had resolved in the last HISTORY_DAYS, wins AND
+    losses, as (event slug, pnl, cost). Closed positions alone miss most
+    losses: a losing bet resolves to $0 and is usually never redeemed, so it
+    stays in /positions as 'redeemable'."""
+    cutoff = datetime.now(timezone.utc) - timedelta(days=HISTORY_DAYS)
+    out = []
+    for offset in range(0, 500, 50):
+        rows = get(f"{DATA_API}/closed-positions",
+                   {"user": wallet, "limit": 50, "offset": offset,
+                    "sortBy": "TIMESTAMP", "sortDirection": "DESC"})
+        if rows is None:
+            return None
+        for r in rows:
+            if num(r.get("timestamp")) < cutoff.timestamp():
+                break
+            cost = num(r.get("totalBought")) * num(r.get("avgPrice"))
+            out.append((r.get("eventSlug"), num(r.get("realizedPnl")), cost))
+        else:
+            if len(rows) == 50:
+                continue
+        break
+    for offset in range(0, 3000, 500):
+        rows = get(f"{DATA_API}/positions",
+                   {"user": wallet, "limit": 500, "offset": offset,
+                    "sizeThreshold": 0, "redeemable": "true"})
+        if rows is None:
+            return None
+        for p in rows:
+            if str(p.get("endDate", ""))[:10] < cutoff.date().isoformat():
+                continue
+            cost = num(p.get("initialValue"))
+            out.append((p.get("eventSlug"),
+                        num(p.get("currentValue")) - cost, cost))
+        if len(rows) < 500:
+            break
+    return [x for x in out if x[2] > 0]
+
+
+def score_traders(traders):
+    """Win rate and ROI on recent resolved bets (in this scan's category)."""
+    with ThreadPoolExecutor(6) as pool:
+        histories = dict(zip(traders, pool.map(trader_history, traders)))
+    if CAT:
+        warm_tags(s for h in histories.values() if h for s, _, _ in h)
+    scores = {}
+    for wallet, hist in histories.items():
+        if not hist:
+            continue
+        bets = [x for x in hist if in_scan(x[0])]
+        if len(bets) < MIN_RESOLVED:
+            continue
+        wins = sum(1 for _, pnl, _ in bets if pnl > 0)
+        cost = sum(c for _, _, c in bets)
+        scores[wallet] = {"name": traders[wallet], "n": len(bets),
+                          "win_rate": wins / len(bets),
+                          "roi": sum(p for _, p, _ in bets) / cost}
+    return scores
+
+
+def good_traders():
+    cache = read_json(TRADERS_FILE, {})
+    age = hours_until(cache.get("scored_at"))
+    if age is not None and -age < SCORE_REFRESH_HOURS:
+        scores = cache["scores"]
+        print(f"Using trader scores from {-age:.1f}h ago.")
+    else:
+        traders = top_traders()
+        print(f"{len(traders)} traders after the leaderboard filter. Scoring...")
+        scores = score_traders(traders)
+        write_json(TRADERS_FILE, {
+            "scored_at": datetime.now(timezone.utc).isoformat(),
+            "scores": scores}, indent=1)
+    good = {w: s for w, s in scores.items()
+            if s["win_rate"] >= MIN_WIN_RATE and s["roi"] >= MIN_ROI}
+    print(f"{len(good)} of {len(scores)} scored traders pass: " + ", ".join(
+        f"{s['name']} ({s['win_rate']:.0%}, ROI {s['roi']:+.0%}, n={s['n']})"
+        for s in good.values()))
+    return good
 
 
 # ---------- Step 2: find what they agree on ----------
 
 def find_candidates(good):
     by_asset, assets_by_condition = {}, {}
-    for wallet, (name, _wr, _roi) in good.items():
+    for wallet, info in good.items():
+        name = info["name"]
         rows = get(f"{DATA_API}/positions",
                    {"user": wallet, "sizeThreshold": 1, "limit": 500}) or []
         for p in rows:
@@ -125,6 +261,8 @@ def find_candidates(good):
             hrs = hours_until(p.get("endDate"))
             if HOURS_MAX is not None and (
                     hrs is None or hrs < HOURS_MIN or hrs > HOURS_MAX):
+                continue
+            if not in_scan(p.get("eventSlug")):
                 continue
             asset, cond = p.get("asset"), p.get("conditionId")
             if not asset:
@@ -199,15 +337,11 @@ def size_bet(s):
 # ---------- Step 4: paper trading ledger ----------
 
 def load_ledger():
-    if os.path.exists(LEDGER_FILE):
-        with open(LEDGER_FILE) as fh:
-            return json.load(fh)
-    return {"cash": START_BANKROLL, "bets": []}
+    return read_json(LEDGER_FILE, {"cash": START_BANKROLL, "bets": []})
 
 
 def save_ledger(ledger):
-    with open(LEDGER_FILE, "w") as fh:
-        json.dump(ledger, fh, indent=2)
+    write_json(LEDGER_FILE, ledger, indent=2)
 
 
 def settle(ledger):
@@ -332,24 +466,19 @@ def notify(lines):
     url = os.environ.get("DISCORD_WEBHOOK_URL")
     if not url or not lines:
         return
-    requests.post(url, json={"content": "\n".join(lines)[:1900]}, timeout=10)
+    text = "\n".join(lines)
+    for i in range(0, len(text), 1900):   # Discord caps messages at 2000 chars
+        requests.post(url, json={"content": text[i:i + 1900]}, timeout=10)
 
 
 if __name__ == "__main__":
+    print(f"=== {SCAN} scan | ledger {LEDGER_FILE} | price {MIN_PRICE}-{MAX_PRICE} "
+          f"| fee rate {FEE_RATE} ===")
     ledger = load_ledger()
     exit_msgs = check_exits(ledger)  # before settling, so bogus shadows get cleaned
     msgs = settle(ledger) + exit_msgs
 
-    traders = top_traders()
-    print(f"{len(traders)} traders after the leaderboard filter.")
-    good = {}
-    for wallet, name in traders.items():
-        quality = trader_quality(wallet)
-        if quality:
-            good[wallet] = (name, *quality)
-    print(f"{len(good)} passed the quality filter: "
-          f"{', '.join(v[0] for v in good.values())}")
-
+    good = good_traders()
     candidates = find_candidates(good)
     print(f"{len(candidates)} candidate(s) before order book checks.")
     signals = [s for s in (size_bet(c) for c in candidates) if s]
@@ -357,6 +486,9 @@ if __name__ == "__main__":
 
     msgs += open_paper_bets(ledger, signals)
     save_ledger(ledger)
+    if len(TAGS) > 30000:
+        TAGS.clear()   # keep the cache from growing forever
+    write_json(TAGS_FILE, TAGS)
 
     if msgs:
         done = [b for b in ledger["bets"] if b["status"] != "open"]
@@ -373,5 +505,6 @@ if __name__ == "__main__":
         if shadowed:
             msgs.append(f"🔁 Following exits instead: ${follow:+.2f} "
                         f"({shadowed} settled bet(s) had a shadow exit)")
+        msgs = [f"**[{SCAN}]**"] + msgs
     print("\n".join(msgs))
     notify(msgs)
