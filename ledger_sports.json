@@ -1,5 +1,5 @@
 {
-  "cash": 46.938250000000004,
+  "cash": 43.86725,
   "bets": [
     {
       "asset": "3673211229986378875016473696747705357968994038214193282193808739733385050479",
@@ -79,6 +79,75 @@
       "opened": "2026-10-26T15:00:52.597888+00:00",
       "ends": "2026-10-27T00:00:00.316427+00:00",
       "stops": {}
+    },
+    {
+      "asset": "33443275973840581328861110198827937034562549640806800771609126916475541983704",
+      "condition": "0x4ac56ed82cda229122ac7514da21ea82661055c73c1e3668adacd5ec7030fdef",
+      "title": "Spread: Nuggets (-7.5)",
+      "outcome": "Warriors",
+      "price": 0.52,
+      "shares": 1.923076923076923,
+      "stake": 1.0,
+      "fee": 0.023999999999999997,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "ArielFilipino"
+      ],
+      "holders": {
+        "0xe18ecc345e00ee7c4f2d1f676f3dd2acb112f826": {
+          "name": "ArielFilipino",
+          "size": 83400.0
+        }
+      },
+      "opened": "2026-10-26T15:45:36.012071+00:00",
+      "ends": "2026-10-27T00:00:00.358868+00:00"
+    },
+    {
+      "asset": "23988024383994965149863858271676239596656646459569397939879023427121355858150",
+      "condition": "0x401c1614a93ddc098c97338b5452d887f4ca1617a4445c2a1a966b6aa58e28d7",
+      "title": "Grizzlies vs. Jazz",
+      "outcome": "Jazz",
+      "price": 0.52,
+      "shares": 1.923076923076923,
+      "stake": 1.0,
+      "fee": 0.023999999999999997,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "ArielFilipino"
+      ],
+      "holders": {
+        "0xe18ecc345e00ee7c4f2d1f676f3dd2acb112f826": {
+          "name": "ArielFilipino",
+          "size": 62500.0
+        }
+      },
+      "opened": "2026-10-26T15:45:36.012108+00:00",
+      "ends": "2026-10-27T00:00:00.358858+00:00"
+    },
+    {
+      "asset": "13144206296751969138817405966106271472571237963909287282058508724746501341917",
+      "condition": "0x83fa7a1a2a281cbfd3c730e0e30e89cd5876c4118e883a2e58a25af15f0976ba",
+      "title": "Spread: Rockets (-5.5)",
+      "outcome": "Hawks",
+      "price": 0.54,
+      "shares": 1.8518518518518516,
+      "stake": 1.0,
+      "fee": 0.023,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "ArielFilipino"
+      ],
+      "holders": {
+        "0xe18ecc345e00ee7c4f2d1f676f3dd2acb112f826": {
+          "name": "ArielFilipino",
+          "size": 21800.0
+        }
+      },
+      "opened": "2026-10-26T15:45:36.012126+00:00",
+      "ends": "2026-10-27T00:00:00.358855+00:00"
     }
   ]
 }
