@@ -1,7 +1,7 @@
 import json
 import os
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import requests
 
@@ -216,7 +216,7 @@ def settle(ledger):
         if bet["status"] != "open":
             continue
         rows = get(f"{GAMMA_API}/markets",
-                   {"condition_ids": bet["condition"]}) or []
+                   {"condition_ids": bet["condition"], "closed": "true"}) or []
         if not rows or not rows[0].get("closed"):
             continue
         try:
@@ -256,6 +256,8 @@ def open_paper_bets(ledger, signals):
             "status": "open", "traders": s["traders"],
             "holders": s["holders"],
             "opened": datetime.now(timezone.utc).isoformat(),
+            "ends": ((datetime.now(timezone.utc) + timedelta(hours=s["hours"])).isoformat()
+                     if s["hours"] else None),
         })
         held.add(s["asset"])
         ends = f"ends in {s['hours']:.0f}h | " if s["hours"] else ""
@@ -275,8 +277,13 @@ def check_exits(ledger):
     paper bet still rides to resolution, so both strategies can be compared."""
     msgs = []
     for bet in ledger["bets"]:
+        if bet.get("shadow_exit") and bet["shadow_exit"]["bid"] <= 0:
+            del bet["shadow_exit"]  # recorded against an empty book: not real
         if bet["status"] != "open" or not bet.get("holders"):
             continue
+        if bet.get("ends") and hours_until(bet["ends"]) is not None \
+                and hours_until(bet["ends"]) <= 0:
+            continue  # trading is over; traders cashing out isn't a signal
         if bet.get("shadow_exit"):
             continue  # already shadow-sold
         for wallet, h in bet["holders"].items():
@@ -307,6 +314,8 @@ def check_exits(ledger):
         bids = sorted((num(b.get("price")) for b in (book or {}).get("bids", [])),
                       reverse=True)
         bid = bids[0] if bids else 0.0
+        if bid <= 0:
+            continue  # nothing to sell into; try again next run
         sell_fee = bet["shares"] * FEE_RATE * bid * (1 - bid)
         bet["shadow_exit"] = {
             "time": datetime.now(timezone.utc).isoformat(),
@@ -328,8 +337,8 @@ def notify(lines):
 
 if __name__ == "__main__":
     ledger = load_ledger()
-    msgs = settle(ledger)
-    msgs += check_exits(ledger)
+    exit_msgs = check_exits(ledger)  # before settling, so bogus shadows get cleaned
+    msgs = settle(ledger) + exit_msgs
 
     traders = top_traders()
     print(f"{len(traders)} traders after the leaderboard filter.")
