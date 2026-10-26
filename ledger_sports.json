@@ -1,0 +1,28 @@
+{
+  "cash": 48.979,
+  "bets": [
+    {
+      "asset": "3673211229986378875016473696747705357968994038214193282193808739733385050479",
+      "condition": "0xed21f7eca26207a485eaaaa950ad208c01ced4cb066129cb3eaa7829c04b113b",
+      "title": "Maple Leafs vs. Flames",
+      "outcome": "Maple Leafs",
+      "price": 0.58,
+      "shares": 1.7241379310344829,
+      "stake": 1.0,
+      "fee": 0.021000000000000005,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "scootergene"
+      ],
+      "holders": {
+        "0xf3a6ac44c5c90ff2b4afa4459f71acc2e57971bd": {
+          "name": "scootergene",
+          "size": 342.96
+        }
+      },
+      "opened": "2026-10-26T06:40:45.319895+00:00",
+      "ends": "2026-10-27T00:00:02.085789+00:00"
+    }
+  ]
+}

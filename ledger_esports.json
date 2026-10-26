@@ -1,0 +1,28 @@
+{
+  "cash": 48.9855,
+  "bets": [
+    {
+      "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
+      "condition": "0x395a54059b5ae93c8bc3a75974bd774c965fa9453dfacc548de4bba42a6946d2",
+      "title": "LoL: Karmine Corp vs Bilibili Gaming (BO1) - Worlds Group Stage",
+      "outcome": "Bilibili Gaming",
+      "price": 0.71,
+      "shares": 1.4084507042253522,
+      "stake": 1.0,
+      "fee": 0.014500000000000002,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x446884aa55e3dCF7123D9A3D6243c4E34B70B165-1791060354625"
+      ],
+      "holders": {
+        "0x446884aa55e3dcf7123d9a3d6243c4e34b70b165": {
+          "name": "0x446884aa55e3dCF7123D9A3D6243c4E34B70B165-1791060354625",
+          "size": 25000.0
+        }
+      },
+      "opened": "2026-10-26T06:43:14.797160+00:00",
+      "ends": "2026-10-27T00:00:07.060453+00:00"
+    }
+  ]
+}
