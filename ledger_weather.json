@@ -1,4 +1,28 @@
 {
-  "cash": 50.0,
-  "bets": []
+  "cash": 48.9845,
+  "bets": [
+    {
+      "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
+      "condition": "0x552ffccc29eff75035c03eff15f00bffa2e3fe043ac65b0a9ea8bed53f3c7c00",
+      "title": "Will the highest temperature in Seoul (Incheon) be 16\u00b0C on October 27?",
+      "outcome": "No",
+      "price": 0.69,
+      "shares": 1.4492753623188408,
+      "stake": 1.0,
+      "fee": 0.015500000000000005,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Bakuskyvs"
+      ],
+      "holders": {
+        "0xf3618ba9f63638ab77e85553c67dbb9aaeba783a": {
+          "name": "Bakuskyvs",
+          "size": 142.05
+        }
+      },
+      "opened": "2026-10-26T13:11:24.095533+00:00",
+      "ends": "2026-10-27T00:00:03.429922+00:00"
+    }
+  ]
 }

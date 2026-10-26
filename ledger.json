@@ -1,5 +1,5 @@
 {
-  "cash": 44.29879403459046,
+  "cash": 37.180984034590445,
   "bets": [
     {
       "asset": "27670129619626213108912772417909250054836917373961985276008181424732686448004",
@@ -342,6 +342,167 @@
       },
       "opened": "2026-10-26T06:35:31.304219+00:00",
       "ends": "2026-10-27T00:00:01.905306+00:00"
+    },
+    {
+      "asset": "107142228881760764691067231870684659722121121601354894147685293393869302162432",
+      "condition": "0x33739ee4e59805e73186ff7444a3d74f6075a09e8a0261533a3070d8b00dd36d",
+      "title": "Will the price of Bitcoin be above $78,000 on October 28?",
+      "outcome": "Yes",
+      "price": 0.847,
+      "shares": 1.1806375442739079,
+      "stake": 1.0,
+      "fee": 0.010710000000000003,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Tokor"
+      ],
+      "holders": {
+        "0xa19cbababc312f9df185e49d7004c249ed1ade6b": {
+          "name": "Tokor",
+          "size": 2067.9777
+        }
+      },
+      "opened": "2026-10-26T13:08:33.737800+00:00",
+      "ends": "2026-10-28T00:00:05.845199+00:00"
+    },
+    {
+      "asset": "54533569528927082430133047556849600511985191158927477533124630301934489498530",
+      "condition": "0x7586a96520578acaaaa4ea84a2582f197f84255da1f3392a7aa300386c187b37",
+      "title": "Will Benjamin Netanyahu be the next Prime Minister of Israel?",
+      "outcome": "No",
+      "price": 0.74,
+      "shares": 1.3513513513513513,
+      "stake": 1.0,
+      "fee": 0.0182,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "paddaa"
+      ],
+      "holders": {
+        "0x60a92c8620846d81f5ea17b0564e0d4b7c545a71": {
+          "name": "paddaa",
+          "size": 15526.7318
+        }
+      },
+      "opened": "2026-10-26T13:08:33.737848+00:00",
+      "ends": "2026-10-28T00:00:05.194322+00:00"
+    },
+    {
+      "asset": "92976520942241629262291194809467992108991395742911750962304946290847575183833",
+      "condition": "0x2ef5e53027a9955b626b846a4c008cb560d83cdcbdd2130493012a2c43d06abf",
+      "title": "Will Paul Gibson win the next Huon Valley mayoral election?",
+      "outcome": "No",
+      "price": 0.8,
+      "shares": 1.25,
+      "stake": 1.0,
+      "fee": 0.013999999999999999,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "paddaa"
+      ],
+      "holders": {
+        "0x60a92c8620846d81f5ea17b0564e0d4b7c545a71": {
+          "name": "paddaa",
+          "size": 949.0525
+        }
+      },
+      "opened": "2026-10-26T13:08:33.737860+00:00",
+      "ends": "2026-10-28T00:00:05.194202+00:00"
+    },
+    {
+      "asset": "11328336403284979726098682978376525848511103586505260008987766290887062571575",
+      "condition": "0x4d0b8dd9cb14b8d4a4d88c6692762a29f1a7973bba9be038f06e9e71abd88765",
+      "title": "Will Alison Jarman win the next Devonport mayoral election?",
+      "outcome": "Yes",
+      "price": 0.73,
+      "shares": 1.36986301369863,
+      "stake": 1.0,
+      "fee": 0.018900000000000004,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "paddaa"
+      ],
+      "holders": {
+        "0x60a92c8620846d81f5ea17b0564e0d4b7c545a71": {
+          "name": "paddaa",
+          "size": 858.1133
+        }
+      },
+      "opened": "2026-10-26T13:08:33.737868+00:00",
+      "ends": "2026-10-28T00:00:05.194204+00:00"
+    },
+    {
+      "asset": "54028890581877643681033846035930074198667711567498362591507557629754064980277",
+      "condition": "0x46d6de8f966aab1e19d27b26cc59cab7397c1de15cfa965983486708597ca889",
+      "title": "Will Ben Dudman win the next Meander Valley mayoral election?",
+      "outcome": "No",
+      "price": 0.65,
+      "shares": 1.5384615384615383,
+      "stake": 1.0,
+      "fee": 0.0245,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "paddaa"
+      ],
+      "holders": {
+        "0x60a92c8620846d81f5ea17b0564e0d4b7c545a71": {
+          "name": "paddaa",
+          "size": 783.5732
+        }
+      },
+      "opened": "2026-10-26T13:08:33.737875+00:00",
+      "ends": "2026-10-28T00:00:05.194205+00:00"
+    },
+    {
+      "asset": "29343095831659087745084285433679619621104838295894948572859550134287841672484",
+      "condition": "0xc027f0ad7f729c66f5d89427e73f1cf76fcf9e075a5d0badcda0ce22cff46a73",
+      "title": "Will Kristian Horvath win the next Sorell mayoral election?",
+      "outcome": "No",
+      "price": 0.8,
+      "shares": 1.25,
+      "stake": 1.0,
+      "fee": 0.013999999999999999,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "paddaa"
+      ],
+      "holders": {
+        "0x60a92c8620846d81f5ea17b0564e0d4b7c545a71": {
+          "name": "paddaa",
+          "size": 232.9111
+        }
+      },
+      "opened": "2026-10-26T13:08:33.737882+00:00",
+      "ends": "2026-10-28T00:00:05.194145+00:00"
+    },
+    {
+      "asset": "108188779790444016941848487602523982621927017413109885207453087351349250458729",
+      "condition": "0x1d315e87770060d113b10642aeb4b6a4b67ecbcd218cf4926e7101bce0cdf73b",
+      "title": "Will Steve Martin win the next Devonport mayoral election?",
+      "outcome": "No",
+      "price": 0.75,
+      "shares": 1.3333333333333333,
+      "stake": 1.0,
+      "fee": 0.0175,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "paddaa"
+      ],
+      "holders": {
+        "0x60a92c8620846d81f5ea17b0564e0d4b7c545a71": {
+          "name": "paddaa",
+          "size": 102.9418
+        }
+      },
+      "opened": "2026-10-26T13:08:33.737889+00:00",
+      "ends": "2026-10-28T00:00:05.194128+00:00"
     }
   ]
 }
