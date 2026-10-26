@@ -1,5 +1,5 @@
 {
-  "cash": 47.965,
+  "cash": 39.80299999999998,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -46,6 +46,190 @@
       },
       "opened": "2026-10-26T07:53:45.869414+00:00",
       "ends": "2026-10-27T00:00:06.880085+00:00"
+    },
+    {
+      "asset": "35630490852936558929587114700406149019546856387028915611471031247976106255172",
+      "condition": "0xfc0fb3cea958a81d95566b09e5769cd9992efd31f497860705342f2810ffe71a",
+      "title": "LoL: LOS vs Team Secret Whales (BO3) - Worlds Group Stage",
+      "outcome": "Team Secret Whales",
+      "price": 0.66,
+      "shares": 1.5151515151515151,
+      "stake": 1.0,
+      "fee": 0.016999999999999998,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027"
+      ],
+      "holders": {
+        "0x6918ea182d963b1fb7888860b8a8b8bcfba5782b": {
+          "name": "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027",
+          "size": 9265.0
+        }
+      },
+      "opened": "2026-10-26T11:05:06.456887+00:00",
+      "ends": "2026-10-27T00:00:05.174810+00:00"
+    },
+    {
+      "asset": "83540775199708918433067827726329113913665242829292606006320096881189631180671",
+      "condition": "0xec399270c6687b6e488df68488be64ec42065f941bb4d85f08db656999e48d90",
+      "title": "Games Total: O/U 2.5",
+      "outcome": "Under",
+      "price": 0.55,
+      "shares": 1.8181818181818181,
+      "stake": 1.0,
+      "fee": 0.0225,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027"
+      ],
+      "holders": {
+        "0x6918ea182d963b1fb7888860b8a8b8bcfba5782b": {
+          "name": "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027",
+          "size": 7816.0
+        }
+      },
+      "opened": "2026-10-26T11:05:06.456936+00:00",
+      "ends": "2026-10-27T00:00:05.013989+00:00"
+    },
+    {
+      "asset": "27912309467499068042098068993277447754185652471361146254273227085136625421840",
+      "condition": "0x420fd9373f52ca7542b3285d706aeed94a5bc7f86b98fd0066de7fcd29198ad1",
+      "title": "LoL: Team Liquid vs Anyone's Legend - Game 2 Winner",
+      "outcome": "Anyone's Legend",
+      "price": 0.66,
+      "shares": 1.5151515151515151,
+      "stake": 1.0,
+      "fee": 0.016999999999999998,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027"
+      ],
+      "holders": {
+        "0x6918ea182d963b1fb7888860b8a8b8bcfba5782b": {
+          "name": "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027",
+          "size": 7640.0
+        }
+      },
+      "opened": "2026-10-26T11:05:06.456957+00:00",
+      "ends": "2026-10-27T00:00:05.013994+00:00"
+    },
+    {
+      "asset": "68602230195549743820871878515060376689357536274768463610768337701903413079110",
+      "condition": "0x0ad892e777bbc7f3ed8f1a705a0a1c68e059e4efb0336c68be666f0e6b2a29b7",
+      "title": "LoL: Team Liquid vs Anyone's Legend - Game 1 Winner",
+      "outcome": "Anyone's Legend",
+      "price": 0.66,
+      "shares": 1.5151515151515151,
+      "stake": 1.0,
+      "fee": 0.016999999999999998,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027"
+      ],
+      "holders": {
+        "0x6918ea182d963b1fb7888860b8a8b8bcfba5782b": {
+          "name": "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027",
+          "size": 7640.0
+        }
+      },
+      "opened": "2026-10-26T11:05:06.456974+00:00",
+      "ends": "2026-10-27T00:00:04.853785+00:00"
+    },
+    {
+      "asset": "86806214993602311121480597358139627560974298961179599994895270974543734838564",
+      "condition": "0xf7b7925067315a0b612fb845080d43e7dfc82fb25c9e4f296309d8b89e815c29",
+      "title": "Games Total: O/U 2.5",
+      "outcome": "Under",
+      "price": 0.57,
+      "shares": 1.7543859649122808,
+      "stake": 1.0,
+      "fee": 0.021500000000000005,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027"
+      ],
+      "holders": {
+        "0x6918ea182d963b1fb7888860b8a8b8bcfba5782b": {
+          "name": "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027",
+          "size": 6066.0
+        }
+      },
+      "opened": "2026-10-26T11:05:06.456990+00:00",
+      "ends": "2026-10-27T00:00:04.853779+00:00"
+    },
+    {
+      "asset": "32803228090525813150249914103389492855369537469910064194380984777662540931132",
+      "condition": "0x75fc6fd6b494ebe3efb0f405a5bf5bbf36762826edc66df43c3efdf8f0b69d03",
+      "title": "Total Kills Over/Under 27.5 in Game 1?",
+      "outcome": "Under",
+      "price": 0.63,
+      "shares": 1.5873015873015872,
+      "stake": 1.0,
+      "fee": 0.0185,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027"
+      ],
+      "holders": {
+        "0x6918ea182d963b1fb7888860b8a8b8bcfba5782b": {
+          "name": "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027",
+          "size": 3432.0
+        }
+      },
+      "opened": "2026-10-26T11:05:06.457004+00:00",
+      "ends": "2026-10-27T00:00:04.853785+00:00"
+    },
+    {
+      "asset": "16097900609343992412476970721402246791622730558967221982816275319319849006472",
+      "condition": "0xf75401c441292ba1eac75fd2ffd62647cf82824f1562f5388496a34c4b96600d",
+      "title": "Game Handicap: AL (-1.5) vs Team Liquid (+1.5)",
+      "outcome": "Anyone's Legend",
+      "price": 0.45,
+      "shares": 2.2222222222222223,
+      "stake": 1.0,
+      "fee": 0.027500000000000004,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027"
+      ],
+      "holders": {
+        "0x6918ea182d963b1fb7888860b8a8b8bcfba5782b": {
+          "name": "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027",
+          "size": 2473.0
+        }
+      },
+      "opened": "2026-10-26T11:05:06.457019+00:00",
+      "ends": "2026-10-27T00:00:04.853788+00:00"
+    },
+    {
+      "asset": "92023344733151922798858770368729066278552997880241742923254983316351930800040",
+      "condition": "0xcc7e0f90382bb0d16680eeb1c5f3f5648c3f15b0b17eed78dda467c077a55519",
+      "title": "Total Kills Over/Under 27.5 in Game 2?",
+      "outcome": "Under",
+      "price": 0.58,
+      "shares": 1.7241379310344829,
+      "stake": 1.0,
+      "fee": 0.021000000000000005,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027"
+      ],
+      "holders": {
+        "0x6918ea182d963b1fb7888860b8a8b8bcfba5782b": {
+          "name": "0x6918EA182D963b1Fb7888860b8a8b8bCfbA5782b-1771878010027",
+          "size": 1624.38
+        }
+      },
+      "opened": "2026-10-26T11:05:06.457033+00:00",
+      "ends": "2026-10-27T00:00:04.853796+00:00"
     }
   ]
 }
