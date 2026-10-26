@@ -15,33 +15,53 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30   # trader re-scoring (every 6h) takes ~15 min for all scans
+    env:
+      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
     steps:
       - uses: actions/checkout@v5
         with:
-          ref: main   # always start from the latest ledger, even if this run waited in the queue
+          ref: main   # always start from the latest ledgers, even if this run waited in the queue
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - run: pip install requests
 
+      # Event -> category lookups. Kept in the Actions cache, not the repo.
+      - uses: actions/cache@v4
+        with:
+          path: tags.json
+          key: tags-${{ github.run_id }}
+          restore-keys: tags-
+
       - name: Arbitrage scanner
         run: python scanner.py
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
-      - name: Smart-money signals
+      # Each scan runs even if an earlier one failed (a failure still shows red).
+      - name: Smart-money signals (general)
+        if: ${{ !cancelled() }}
         run: python signals.py
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      - name: Sports signals
+        if: ${{ !cancelled() }}
+        run: python signals.py SPORTS
+      - name: Esports signals
+        if: ${{ !cancelled() }}
+        run: python signals.py ESPORTS
+      - name: Tech signals
+        if: ${{ !cancelled() }}
+        run: python signals.py TECH
+      - name: Weather signals
+        if: ${{ !cancelled() }}
+        run: python signals.py WEATHER
 
-      - name: Save paper ledger
+      - name: Save ledgers
+        if: ${{ !cancelled() }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ledger.json
+          git add ledger*.json traders_*.json
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Update paper ledger"
+          git commit -m "Update paper ledgers"
           if ! git push; then
-            echo "::warning::ledger.json changed on GitHub during this run (probably a manual edit). This run's ledger was not saved; the next run starts from the latest one."
+            echo "::warning::Files changed on GitHub during this run (probably a manual edit). This run's ledgers were not saved; the next run starts from the latest ones."
           fi
