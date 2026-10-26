@@ -59,6 +59,10 @@ MAX_CHASE = 0.10           # skip if price ran 10c+ past their entry
 EXIT_CUT = 0.50            # a trader "exited" if they cut their size by 50%+
 EXIT_MAJORITY = 0.50       # shadow-sell once this share of a bet's traders exited
 
+# ---------- Stop-loss test (shadow only) ----------
+# Record the first time the best bid falls this far below the entry price.
+STOP_LEVELS = (0.25, 0.40, 0.60)
+
 SESSION = requests.Session()
 
 
@@ -82,6 +86,15 @@ def get(url, params=None):
             data = data["data"]
         return data
     return None
+
+
+def pmap(fn, items, workers=8):
+    """Run fn over items in parallel threads (the APIs are slow, not busy)."""
+    items = list(items)
+    if not items:
+        return []
+    with ThreadPoolExecutor(workers) as pool:
+        return list(pool.map(fn, items))
 
 
 def num(value, default=0.0):
@@ -248,10 +261,16 @@ def good_traders():
 
 def find_candidates(good):
     by_asset, assets_by_condition = {}, {}
-    for wallet, info in good.items():
-        name = info["name"]
-        rows = get(f"{DATA_API}/positions",
-                   {"user": wallet, "sizeThreshold": 1, "limit": 500}) or []
+    wallets = list(good)
+    all_rows = pmap(lambda w: get(f"{DATA_API}/positions",
+                                  {"user": w, "sizeThreshold": 1,
+                                   "limit": 500}) or [], wallets)
+    if CAT:
+        warm_tags(p.get("eventSlug") for rows in all_rows for p in rows
+                  if not p.get("redeemable")
+                  and HOURS_MIN <= (hours_until(p.get("endDate")) or -1) <= (HOURS_MAX or 1e9))
+    for wallet, rows in zip(wallets, all_rows):
+        name = good[wallet]["name"]
         for p in rows:
             if p.get("redeemable"):
                 continue
@@ -346,11 +365,11 @@ def save_ledger(ledger):
 
 def settle(ledger):
     msgs = []
-    for bet in ledger["bets"]:
-        if bet["status"] != "open":
-            continue
-        rows = get(f"{GAMMA_API}/markets",
-                   {"condition_ids": bet["condition"], "closed": "true"}) or []
+    open_bets = [b for b in ledger["bets"] if b["status"] == "open"]
+    markets = pmap(lambda b: get(f"{GAMMA_API}/markets",
+                                 {"condition_ids": b["condition"],
+                                  "closed": "true"}) or [], open_bets)
+    for bet, rows in zip(open_bets, markets):
         if not rows or not rows[0].get("closed"):
             continue
         try:
@@ -420,11 +439,11 @@ def check_exits(ledger):
             continue  # trading is over; traders cashing out isn't a signal
         if bet.get("shadow_exit"):
             continue  # already shadow-sold
-        for wallet, h in bet["holders"].items():
-            if h.get("exited"):
-                continue
-            rows = get(f"{DATA_API}/positions",
-                       {"user": wallet, "market": bet["condition"]})
+        watch = [(w, h) for w, h in bet["holders"].items() if not h.get("exited")]
+        found = pmap(lambda wh: get(f"{DATA_API}/positions",
+                                    {"user": wh[0], "market": bet["condition"]}),
+                     watch)
+        for (wallet, h), rows in zip(watch, found):
             if rows is None:
                 continue  # API hiccup: don't count it as an exit
             now_size, flipped = 0.0, False
@@ -462,6 +481,36 @@ def check_exits(ledger):
     return msgs
 
 
+def check_stops(ledger):
+    """Shadow stop-losses: for each open bet, note the first run where the
+    best bid sits 25% / 40% / 60% below entry, and what selling there would
+    have locked in. The bet itself still rides to resolution."""
+    msgs = []
+    watch = [b for b in ledger["bets"] if b["status"] == "open"
+             and not (b.get("ends") and hours_until(b["ends"]) is not None
+                      and hours_until(b["ends"]) <= 0)
+             and any(str(lvl) not in b.get("stops", {}) for lvl in STOP_LEVELS)]
+    books = pmap(lambda b: get(BOOK_URL, {"token_id": b["asset"]}), watch)
+    for bet, book in zip(watch, books):
+        stops = bet.setdefault("stops", {})
+        todo = [lvl for lvl in STOP_LEVELS if str(lvl) not in stops]
+        bids = [num(b.get("price")) for b in (book or {}).get("bids", [])]
+        bid = max(bids) if bids else 0.0
+        if bid <= 0:
+            continue  # empty book: nothing to sell into
+        for lvl in todo:
+            if bid > bet["price"] * (1 - lvl):
+                continue
+            sell_fee = bet["shares"] * FEE_RATE * bid * (1 - bid)
+            pnl = bet["shares"] * bid - sell_fee - bet["stake"] - bet["fee"]
+            stops[str(lvl)] = {"time": datetime.now(timezone.utc).isoformat(),
+                               "bid": bid, "pnl": pnl}
+            msgs.append(f"🛑 Stop -{lvl:.0%} hit: {bet['outcome']} @ {bid:.2f} "
+                        f"(entry {bet['price']:.2f}) → would lock ${pnl:+.2f} "
+                        f"| {bet['title']}")
+    return msgs
+
+
 def notify(lines):
     url = os.environ.get("DISCORD_WEBHOOK_URL")
     if not url or not lines:
@@ -476,19 +525,22 @@ if __name__ == "__main__":
           f"| fee rate {FEE_RATE} ===")
     ledger = load_ledger()
     exit_msgs = check_exits(ledger)  # before settling, so bogus shadows get cleaned
+    exit_msgs += check_stops(ledger)
     msgs = settle(ledger) + exit_msgs
 
     good = good_traders()
     candidates = find_candidates(good)
     print(f"{len(candidates)} candidate(s) before order book checks.")
-    signals = [s for s in (size_bet(c) for c in candidates) if s]
+    signals = [s for s in pmap(size_bet, candidates) if s]
     print(f"{len(signals)} signal(s) after sizing and fee checks.")
 
     msgs += open_paper_bets(ledger, signals)
     save_ledger(ledger)
     if len(TAGS) > 30000:
         TAGS.clear()   # keep the cache from growing forever
-    write_json(TAGS_FILE, TAGS)
+    tmp = f"{TAGS_FILE}.{SCAN}.tmp"
+    write_json(tmp, TAGS)
+    os.replace(tmp, TAGS_FILE)   # atomic: safe if scans run side by side
 
     if msgs:
         done = [b for b in ledger["bets"] if b["status"] != "open"]
@@ -505,6 +557,14 @@ if __name__ == "__main__":
         if shadowed:
             msgs.append(f"🔁 Following exits instead: ${follow:+.2f} "
                         f"({shadowed} settled bet(s) had a shadow exit)")
+        if done:
+            parts = []
+            for lvl in STOP_LEVELS:
+                hit = [b for b in done if str(lvl) in b.get("stops", {})]
+                total = sum(b["stops"][str(lvl)]["pnl"] if b in hit else b["pnl"]
+                            for b in done)
+                parts.append(f"-{lvl:.0%}: ${total:+.2f} ({len(hit)} hit)")
+            msgs.append("🛑 With stop-loss " + " | ".join(parts))
         msgs = [f"**[{SCAN}]**"] + msgs
     print("\n".join(msgs))
     notify(msgs)
