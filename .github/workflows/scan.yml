@@ -37,22 +37,24 @@ jobs:
       - name: Arbitrage scanner
         run: python scanner.py
 
-      # Each scan runs even if an earlier one failed (a failure still shows red).
-      - name: Smart-money signals (general)
+      # All five scans run side by side (separate ledgers), then their logs
+      # are printed one after another. The step fails if any scan failed.
+      - name: Smart-money signals (general + categories)
         if: ${{ !cancelled() }}
-        run: python signals.py
-      - name: Sports signals
-        if: ${{ !cancelled() }}
-        run: python signals.py SPORTS
-      - name: Esports signals
-        if: ${{ !cancelled() }}
-        run: python signals.py ESPORTS
-      - name: Tech signals
-        if: ${{ !cancelled() }}
-        run: python signals.py TECH
-      - name: Weather signals
-        if: ${{ !cancelled() }}
-        run: python signals.py WEATHER
+        run: |
+          for scan in GENERAL SPORTS ESPORTS TECH WEATHER; do
+            arg=$scan; [ "$scan" = GENERAL ] && arg=""
+            python signals.py $arg > "log_$scan.txt" 2>&1 &
+            echo "$! $scan" >> pids.txt
+          done
+          fail=0
+          while read pid scan; do
+            if ! wait "$pid"; then echo "::error::$scan scan failed"; fail=1; fi
+          done < pids.txt
+          for scan in GENERAL SPORTS ESPORTS TECH WEATHER; do
+            echo "::group::$scan"; cat "log_$scan.txt"; echo "::endgroup::"
+          done
+          exit $fail
 
       - name: Save ledgers
         if: ${{ !cancelled() }}
