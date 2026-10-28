@@ -1,5 +1,5 @@
 {
- "cash": 42.948049999999995,
+ "cash": 40.948049999999995,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -119,6 +119,44 @@
    "reason": "favourite 23\u00b0C mid 0.74, local 15:31",
    "status": "open",
    "opened": "2026-10-28T14:31:07.972507+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "73598335101769944912071858023406232374691295801506114023244310791108908158140",
+   "condition": "0x86a9d86a61f92d2056400cd189d6f582aff925f556eecb279e79fef26b4f500f",
+   "event": "highest-temperature-in-sao-paulo-on-october-28-2026",
+   "title": "Will the highest temperature in Sao Paulo be 21\u00b0C on October 28?",
+   "outcome": "YES",
+   "bucket": "21\u00b0C",
+   "price": 0.91,
+   "shares": 1.0989010989010988,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.09890109890109877,
+   "reason": "favourite 21\u00b0C mid 0.93, local 15:00",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-28T18:00:53.106953+00:00",
+   "expires": "2026-10-28T22:00:00+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "58690285260133962223864751130563876163528173448194579993384037671381017191864",
+   "condition": "0x8a0ac31e60f5fdf6fc3092179da1470a30477a2a54318aa26b3ebfef9ac40b7b",
+   "event": "highest-temperature-in-buenos-aires-on-october-28-2026",
+   "title": "Will the highest temperature in Buenos Aires be 25\u00b0C on October 28?",
+   "outcome": "YES",
+   "bucket": "25\u00b0C",
+   "price": 0.89,
+   "shares": 1.1235955056179776,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.12359550561797761,
+   "reason": "favourite 25\u00b0C mid 0.90, local 15:00",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-28T18:00:53.215467+00:00",
+   "expires": "2026-10-28T22:00:00+00:00"
   }
  ]
 }
