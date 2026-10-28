@@ -1,5 +1,5 @@
 {
-  "cash": 44.53897876465584,
+  "cash": 43.52247876465584,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -622,6 +622,35 @@
         "bid": 0.999,
         "pnl": 0.2697051923076922
       }
+    },
+    {
+      "asset": "106497463055786295061829707731959720232198149718306426834859568550242598189680",
+      "condition": "0xc4dec30140b18c65e5c76feebd42ae3ed694c9a56615dda2f03465d836ec07da",
+      "title": "Dota 2: GamerLegion vs LEGION - Game 1 Winner",
+      "outcome": "GamerLegion",
+      "event": "dota2-gl-legion1-2026-10-28",
+      "price": 0.67,
+      "shares": 1.4925373134328357,
+      "stake": 1.0,
+      "fee": 0.016499999999999997,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Sisyphus-",
+        "yadens"
+      ],
+      "holders": {
+        "0xf3ce7f04dde4f8c5aed19a20e5ecd8520e5ca57a": {
+          "name": "Sisyphus-",
+          "size": 29278.6865
+        },
+        "0x6e553015227ef6f43683a866bec357d6608368d0": {
+          "name": "yadens",
+          "size": 9229.2278
+        }
+      },
+      "opened": "2026-10-28T21:17:32.031905+00:00",
+      "ends": "2026-10-29T00:00:00.337703+00:00"
     }
   ]
 }
