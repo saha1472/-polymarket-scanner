@@ -17,8 +17,10 @@ BOOK_URL = "https://clob.polymarket.com/book"
 # Each category: leaderboard filter, Gamma tag slug used to recognise its
 # markets, taker fee rate, and the price band to buy in.
 CATEGORIES = {
-    "SPORTS":  {"tag": "sports",  "fee": 0.05, "min_price": 0.40, "max_price": 0.90},
-    "ESPORTS": {"tag": "esports", "fee": 0.05, "min_price": 0.40, "max_price": 0.90},
+    "SPORTS":  {"tag": "sports",  "fee": 0.05, "min_price": 0.40, "max_price": 0.90,
+                "stop": 0.40},
+    "ESPORTS": {"tag": "esports", "fee": 0.05, "min_price": 0.40, "max_price": 0.90,
+                "stop": 0.40},
     "TECH":    {"tag": "tech",    "fee": 0.04, "min_price": 0.40, "max_price": 0.90},
     "WEATHER": {"tag": "weather", "fee": 0.05, "min_price": 0.40, "max_price": 0.90},
 }
@@ -46,9 +48,9 @@ MIN_RETURN_IF_WIN = 0.03   # need at least 3% profit on the stake if it wins
 # ---------- Trader filter ----------
 LEADERBOARD_SIZE = 100 if SCAN == "GENERAL" else 50
 HISTORY_DAYS = 30          # judge traders on bets resolved in the last 30 days
-MIN_RESOLVED = 15          # need at least this many resolved bets to judge
-MIN_WIN_RATE = 0.55
-MIN_ROI = 0.02
+MIN_RESOLVED = 30          # need at least this many resolved bets to judge
+MIN_WIN_RATE = 0.58
+MIN_ROI = 0.10
 SCORE_REFRESH_HOURS = 6    # re-score traders this often (slow step)
 MIN_PNL_TO_VOLUME = 0.01   # weeds out market makers
 MIN_POSITION_USD = 50      # ignore tiny positions
@@ -62,6 +64,14 @@ EXIT_MAJORITY = 0.50       # shadow-sell once this share of a bet's traders exit
 # ---------- Stop-loss test (shadow only) ----------
 # Record the first time the best bid falls this far below the entry price.
 STOP_LEVELS = (0.25, 0.40, 0.60)
+
+# ---------- Loss controls ----------
+# Real stop-loss: actually sell (on paper) when the bid falls this far below
+# entry. On for sports/esports, where the shadow test showed it helps.
+REAL_STOP = CAT.get("stop") if CAT else None
+MAX_BETS_PER_EVENT = 1     # one bet per match/event (game 1, game 2, handicap... are one bet)
+MAX_OPEN_PER_TRADER = 2    # one trader's opinion can't drive more than this
+DAILY_LOSS_LIMIT = 3.00    # stop opening bets after losing this much in 24h
 
 SESSION = requests.Session()
 
@@ -226,7 +236,7 @@ def score_traders(traders):
         if not hist:
             continue
         bets = [x for x in hist if in_scan(x[0])]
-        if len(bets) < MIN_RESOLVED:
+        if len(bets) < 15:
             continue
         wins = sum(1 for _, pnl, _ in bets if pnl > 0)
         cost = sum(c for _, _, c in bets)
@@ -250,7 +260,8 @@ def good_traders():
             "scored_at": datetime.now(timezone.utc).isoformat(),
             "scores": scores}, indent=1)
     good = {w: s for w, s in scores.items()
-            if s["win_rate"] >= MIN_WIN_RATE and s["roi"] >= MIN_ROI}
+            if s["win_rate"] >= MIN_WIN_RATE and s["roi"] >= MIN_ROI
+            and s["n"] >= MIN_RESOLVED}
     print(f"{len(good)} of {len(scores)} scored traders pass: " + ", ".join(
         f"{s['name']} ({s['win_rate']:.0%}, ROI {s['roi']:+.0%}, n={s['n']})"
         for s in good.values()))
@@ -289,6 +300,7 @@ def find_candidates(good):
             s = by_asset.setdefault(asset, {
                 "asset": asset, "condition": cond,
                 "title": p.get("title", "?"),
+                "event": p.get("eventSlug"),
                 "outcome": p.get("outcome", "?"),
                 "price": price, "hours": hrs,
                 "traders": [], "entries": [], "holders": {},
@@ -365,7 +377,8 @@ def save_ledger(ledger):
 
 def settle(ledger):
     msgs = []
-    open_bets = [b for b in ledger["bets"] if b["status"] == "open"]
+    open_bets = [b for b in ledger["bets"] if b["status"] == "open"
+                 or (b["status"] == "stopped" and "hold_pnl" not in b)]
     markets = pmap(lambda b: get(f"{GAMMA_API}/markets",
                                  {"condition_ids": b["condition"],
                                   "closed": "true"}) or [], open_bets)
@@ -382,7 +395,15 @@ def settle(ledger):
         except (ValueError, IndexError):
             continue
         payout = bet["shares"] if won else 0.0
+        if bet["status"] == "stopped":
+            # already sold; just record what holding would have done
+            bet["hold_pnl"] = payout - bet["stake"] - bet["fee"]
+            msgs.append(f"ℹ️ Stopped bet resolved {'WON' if won else 'LOST'}: "
+                        f"stop {bet['pnl']:+.2f} vs hold {bet['hold_pnl']:+.2f} "
+                        f"| {bet['title']}")
+            continue
         ledger["cash"] += payout
+        bet["closed"] = datetime.now(timezone.utc).isoformat()
         bet["status"] = "won" if won else "lost"
         bet["pnl"] = payout - bet["stake"] - bet["fee"]
         msgs.append(f"{'✅ WON' if won else '❌ LOST'} {bet['outcome']} | "
@@ -392,18 +413,44 @@ def settle(ledger):
 
 def open_paper_bets(ledger, signals):
     msgs = []
-    held = {b["asset"] for b in ledger["bets"] if b["status"] == "open"}
+    open_bets = [b for b in ledger["bets"] if b["status"] == "open"]
+    held = {b["asset"] for b in open_bets}
+    held_markets = {b["condition"] for b in open_bets}
+    per_event, per_trader = {}, {}
+    for b in open_bets:
+        if b.get("event"):
+            per_event[b["event"]] = per_event.get(b["event"], 0) + 1
+        for t in b["traders"]:
+            per_trader[t] = per_trader.get(t, 0) + 1
+
+    cutoff = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
+    lost_24h = sum(b["pnl"] for b in ledger["bets"]
+                   if b["status"] != "open" and b.get("closed", "") >= cutoff)
+    paused = lost_24h <= -DAILY_LOSS_LIMIT
+    if paused != ledger.get("paused", False):
+        ledger["paused"] = paused
+        msgs.append(f"⏸️ Paused new bets: ${lost_24h:+.2f} in the last 24h "
+                    f"(limit -${DAILY_LOSS_LIMIT:.2f})" if paused else
+                    "▶️ Resumed new bets (24h loss back under the limit)")
+    if paused:
+        return msgs
+
     for s in signals:
         if len(held) >= MAX_OPEN_BETS:
             break
-        if s["asset"] in held:
-            continue
+        if s["asset"] in held or s["condition"] in held_markets:
+            continue  # never hold both sides (or two bets) of one market
+        if s.get("event") and per_event.get(s["event"], 0) >= MAX_BETS_PER_EVENT:
+            continue  # already have a bet on this match/event
+        if min(per_trader.get(t, 0) for t in s["traders"]) >= MAX_OPEN_PER_TRADER:
+            continue  # this trader already drives enough open bets
         if ledger["cash"] < s["stake"] + s["fee"]:
             continue  # try cheaper signals further down the list
         ledger["cash"] -= s["stake"] + s["fee"]
         ledger["bets"].append({
             "asset": s["asset"], "condition": s["condition"],
             "title": s["title"], "outcome": s["outcome"],
+            "event": s.get("event"),
             "price": s["price"], "shares": s["shares"],
             "stake": s["stake"], "fee": s["fee"], "order": s["order"],
             "status": "open", "traders": s["traders"],
@@ -413,6 +460,11 @@ def open_paper_bets(ledger, signals):
                      if s["hours"] else None),
         })
         held.add(s["asset"])
+        held_markets.add(s["condition"])
+        if s.get("event"):
+            per_event[s["event"]] = per_event.get(s["event"], 0) + 1
+        for t in s["traders"]:
+            per_trader[t] = per_trader.get(t, 0) + 1
         ends = f"ends in {s['hours']:.0f}h | " if s["hours"] else ""
         msgs.append(
             f"📝 Paper bet ${s['stake']:.2f} ({s['shares']:.2f} shares, "
@@ -489,7 +541,8 @@ def check_stops(ledger):
     watch = [b for b in ledger["bets"] if b["status"] == "open"
              and not (b.get("ends") and hours_until(b["ends"]) is not None
                       and hours_until(b["ends"]) <= 0)
-             and any(str(lvl) not in b.get("stops", {}) for lvl in STOP_LEVELS)]
+             and (REAL_STOP or any(str(lvl) not in b.get("stops", {})
+                                   for lvl in STOP_LEVELS))]
     books = pmap(lambda b: get(BOOK_URL, {"token_id": b["asset"]}), watch)
     for bet, book in zip(watch, books):
         stops = bet.setdefault("stops", {})
@@ -508,6 +561,15 @@ def check_stops(ledger):
             msgs.append(f"🛑 Stop -{lvl:.0%} hit: {bet['outcome']} @ {bid:.2f} "
                         f"(entry {bet['price']:.2f}) → would lock ${pnl:+.2f} "
                         f"| {bet['title']}")
+        if REAL_STOP and bid <= bet["price"] * (1 - REAL_STOP):
+            sell_fee = bet["shares"] * FEE_RATE * bid * (1 - bid)
+            proceeds = bet["shares"] * bid - sell_fee
+            ledger["cash"] += proceeds
+            bet["status"] = "stopped"
+            bet["pnl"] = proceeds - bet["stake"] - bet["fee"]
+            bet["closed"] = datetime.now(timezone.utc).isoformat()
+            msgs.append(f"✂️ STOPPED OUT {bet['outcome']} @ {bid:.2f} (entry "
+                        f"{bet['price']:.2f}) | P&L ${bet['pnl']:+.2f} | {bet['title']}")
     return msgs
 
 
@@ -545,12 +607,22 @@ if __name__ == "__main__":
     if msgs:
         done = [b for b in ledger["bets"] if b["status"] != "open"]
         wins = sum(1 for b in done if b["status"] == "won")
+        stopped = [b for b in done if b["status"] == "stopped"]
         open_n = sum(1 for b in ledger["bets"] if b["status"] == "open")
         msgs.append(
             f"💰 Cash ${ledger['cash']:.2f} | open bets {open_n} | "
-            f"record {wins}-{len(done) - wins} | realized P&L "
-            f"${sum(b['pnl'] for b in done):+.2f}"
+            f"record {wins}-{len(done) - wins - len(stopped)}"
+            + (f" (+{len(stopped)} stopped)" if stopped else "")
+            + f" | realized P&L ${sum(b['pnl'] for b in done):+.2f}"
         )
+        judged = [b for b in stopped if "hold_pnl" in b]
+        if judged:
+            diff = sum(b["pnl"] - b["hold_pnl"] for b in judged)
+            msgs.append(f"✂️ Stop-loss so far: ${diff:+.2f} vs holding "
+                        f"({len(judged)} stopped bet(s) resolved)")
+        # comparisons below use what holding would have done
+        done = [dict(b, pnl=b["hold_pnl"]) if b["status"] == "stopped" else b
+                for b in done if b["status"] != "stopped" or "hold_pnl" in b]
         follow = sum(b["shadow_exit"]["pnl"] if b.get("shadow_exit")
                      else b["pnl"] for b in done)
         shadowed = sum(1 for b in done if b.get("shadow_exit"))
