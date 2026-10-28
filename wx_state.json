@@ -422,6 +422,11 @@
   "SBGR|2026-10-30|lowest": 17.25,
   "SAEZ|2026-10-30|lowest": 13.45,
   "CYYZ|2026-10-30|lowest": 6.65,
-  "MMMX|2026-10-30|lowest": 15.4
+  "MMMX|2026-10-30|lowest": 15.4,
+  "SBGR|2026-10-30|highest": 24.5,
+  "SAEZ|2026-10-30|highest": 23.65,
+  "CYYZ|2026-10-30|highest": 14.55,
+  "MMMX|2026-10-30|highest": 25.8,
+  "MPMG|2026-10-30|highest": 31.299999999999997
  }
 }
