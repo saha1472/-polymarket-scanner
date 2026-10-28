@@ -1,0 +1,22 @@
+{
+ "cash": 48.99755,
+ "bets": [
+  {
+   "strategy": "AFTERNOON",
+   "asset": "773261982889383398422976661983263615804148707723494951331023902014895165164",
+   "condition": "0xb3dee7efadae827ee732a51c16fb4ed1e9d3f6c172b56c35f12e378f3b5cb33b",
+   "event": "highest-temperature-in-karachi-on-october-28-2026",
+   "title": "Will the highest temperature in Karachi be 37\u00b0C on October 28?",
+   "outcome": "YES",
+   "bucket": "37\u00b0C",
+   "price": 0.9509999999999998,
+   "shares": 1.0515247108307046,
+   "stake": 1.0,
+   "fee": 0.0024500000000000025,
+   "profit_if_win": 0.049074710830704645,
+   "reason": "favourite 37\u00b0C mid 0.93, local 15:15",
+   "status": "open",
+   "opened": "2026-10-28T10:15:32.654545+00:00"
+  }
+ ]
+}

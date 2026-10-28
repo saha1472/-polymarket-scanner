@@ -1,0 +1,417 @@
+{
+ "coords": {
+  "UUWW": [
+   55.592,
+   37.261
+  ],
+  "SAEZ": [
+   -34.822,
+   -58.536
+  ],
+  "RKPK": [
+   35.179,
+   128.938
+  ],
+  "RPLL": [
+   14.507,
+   121.004
+  ],
+  "WMKK": [
+   2.747,
+   101.714
+  ],
+  "RJTT": [
+   35.553,
+   139.781
+  ],
+  "OPKC": [
+   24.902,
+   67.139
+  ],
+  "FACT": [
+   -33.965,
+   18.602
+  ],
+  "LEMD": [
+   40.466,
+   -3.555
+  ],
+  "LFPB": [
+   48.967,
+   2.428
+  ],
+  "NZWN": [
+   -41.331,
+   174.806
+  ],
+  "CYYZ": [
+   43.679,
+   -79.629
+  ],
+  "OEJN": [
+   21.685,
+   39.166
+  ],
+  "RCSS": [
+   25.069,
+   121.552
+  ],
+  "EPWA": [
+   52.163,
+   20.961
+  ],
+  "MPMG": [
+   8.967,
+   -79.555
+  ],
+  "VILK": [
+   26.761,
+   80.889
+  ],
+  "SBGR": [
+   -23.432,
+   -46.469
+  ],
+  "RKSI": [
+   37.469,
+   126.451
+  ],
+  "WSSS": [
+   1.368,
+   103.982
+  ],
+  "KSFO": [
+   37.6196,
+   -122.3656
+  ],
+  "EHAM": [
+   52.315,
+   4.79
+  ],
+  "KDAL": [
+   32.8384,
+   -96.8358
+  ],
+  "KSEA": [
+   47.4447,
+   -122.3144
+  ],
+  "KDEN": [
+   39.8466,
+   -104.6562
+  ],
+  "KLAX": [
+   33.9382,
+   -118.3866
+  ],
+  "KAUS": [
+   30.1831,
+   -97.6806
+  ],
+  "KHOU": [
+   29.6458,
+   -95.2821
+  ],
+  "KMIA": [
+   25.7881,
+   -80.3169
+  ],
+  "KATL": [
+   33.6297,
+   -84.4422
+  ],
+  "KORD": [
+   41.9602,
+   -87.9316
+  ],
+  "KLGA": [
+   40.7794,
+   -73.8803
+  ],
+  "LIMC": [
+   45.631,
+   8.728
+  ],
+  "EGLC": [
+   51.505,
+   0.055
+  ],
+  "EFHK": [
+   60.327,
+   24.957
+  ],
+  "LTAC": [
+   40.128,
+   32.995
+  ],
+  "EDDM": [
+   48.348,
+   11.813
+  ],
+  "LLBG": [
+   32.011,
+   34.887
+  ],
+  "LTFM": [
+   41.262,
+   28.74
+  ],
+  "MMMX": [
+   19.436,
+   -99.072
+  ],
+  "ZHHH": [
+   30.783,
+   114.205
+  ],
+  "ZUCK": [
+   29.718,
+   106.639
+  ],
+  "ZGGG": [
+   23.392,
+   113.307
+  ],
+  "ZUUU": [
+   30.576,
+   103.95
+  ],
+  "ZBAA": [
+   40.082,
+   116.603
+  ],
+  "ZSPD": [
+   31.146,
+   121.8
+  ],
+  "ZGSZ": [
+   22.639,
+   113.803
+  ],
+  "ZSQD": [
+   36.362,
+   120.087
+  ]
+ },
+ "tz": {
+  "CYYZ": "America/Toronto",
+  "EDDM": "Europe/Berlin",
+  "EFHK": "Europe/Helsinki",
+  "EGLC": "Europe/London",
+  "EHAM": "Europe/Amsterdam",
+  "EPWA": "Europe/Warsaw",
+  "FACT": "Africa/Johannesburg",
+  "KATL": "America/New_York",
+  "KAUS": "America/Chicago",
+  "KDAL": "America/Chicago",
+  "KDEN": "America/Denver",
+  "KHOU": "America/Chicago",
+  "KLAX": "America/Los_Angeles",
+  "KLGA": "America/New_York",
+  "KMIA": "America/New_York",
+  "KORD": "America/Chicago",
+  "KSEA": "America/Los_Angeles",
+  "KSFO": "America/Los_Angeles",
+  "LEMD": "Europe/Madrid",
+  "LFPB": "Europe/Paris",
+  "LIMC": "Europe/Rome",
+  "LLBG": "Asia/Jerusalem",
+  "LTAC": "Europe/Istanbul",
+  "LTFM": "Europe/Istanbul",
+  "MMMX": "America/Mexico_City",
+  "MPMG": "America/Panama",
+  "NZWN": "Pacific/Auckland",
+  "OEJN": "Asia/Riyadh",
+  "OPKC": "Asia/Karachi",
+  "RCSS": "Asia/Taipei",
+  "RJTT": "Asia/Tokyo",
+  "RKPK": "Asia/Seoul",
+  "RKSI": "Asia/Seoul",
+  "RPLL": "Asia/Manila",
+  "SAEZ": "America/Argentina/Buenos_Aires",
+  "SBGR": "America/Sao_Paulo",
+  "UUWW": "Europe/Moscow",
+  "VILK": "Asia/Kolkata",
+  "WMKK": "Asia/Kuala_Lumpur",
+  "WSSS": "Asia/Singapore",
+  "ZBAA": "Asia/Shanghai",
+  "ZGGG": "Asia/Shanghai",
+  "ZGSZ": "Asia/Shanghai",
+  "ZHHH": "Asia/Shanghai",
+  "ZSPD": "Asia/Shanghai",
+  "ZSQD": "Asia/Shanghai",
+  "ZUCK": "Asia/Shanghai",
+  "ZUUU": "Asia/Shanghai"
+ },
+ "forecast": {
+  "LFPB|2026-10-29|lowest": 8.05,
+  "RKSI|2026-10-29|lowest": 9.05,
+  "LTAC|2026-10-29|lowest": 10.3,
+  "NZWN|2026-10-29|lowest": 10.85,
+  "EDDM|2026-10-29|lowest": 3.55,
+  "LLBG|2026-10-29|lowest": 20.0,
+  "RJTT|2026-10-29|lowest": 12.0,
+  "ZSPD|2026-10-29|lowest": 15.8,
+  "LIMC|2026-10-29|lowest": 8.95,
+  "LEMD|2026-10-29|lowest": 9.65,
+  "EPWA|2026-10-29|lowest": 8.15,
+  "RCSS|2026-10-29|lowest": 20.55,
+  "ZUCK|2026-10-29|lowest": 15.2,
+  "ZBAA|2026-10-29|lowest": 7.2,
+  "ZHHH|2026-10-29|lowest": 15.05,
+  "ZUUU|2026-10-29|lowest": 15.0,
+  "ZGSZ|2026-10-29|lowest": 24.4,
+  "UUWW|2026-10-29|lowest": 3.05,
+  "LTFM|2026-10-29|lowest": 13.8,
+  "RKPK|2026-10-29|lowest": 7.35,
+  "EHAM|2026-10-29|lowest": 10.05,
+  "EFHK|2026-10-29|lowest": 7.85,
+  "OEJN|2026-10-29|lowest": 27.15,
+  "ZGGG|2026-10-29|lowest": 22.75,
+  "ZSQD|2026-10-29|lowest": 10.85,
+  "LFPB|2026-10-29|highest": 14.8,
+  "RKSI|2026-10-29|highest": 14.45,
+  "LTAC|2026-10-29|highest": 15.15,
+  "NZWN|2026-10-29|highest": 16.450000000000003,
+  "VILK|2026-10-29|highest": 29.35,
+  "EDDM|2026-10-29|highest": 11.7,
+  "LLBG|2026-10-29|highest": 27.2,
+  "RJTT|2026-10-29|highest": 15.75,
+  "ZSPD|2026-10-29|highest": 23.3,
+  "WSSS|2026-10-29|highest": 28.5,
+  "LIMC|2026-10-29|highest": 18.0,
+  "LEMD|2026-10-29|highest": 20.9,
+  "EPWA|2026-10-29|highest": 12.05,
+  "RCSS|2026-10-29|highest": 27.9,
+  "ZUCK|2026-10-29|highest": 17.1,
+  "ZBAA|2026-10-29|highest": 17.85,
+  "ZHHH|2026-10-29|highest": 18.3,
+  "ZUUU|2026-10-29|highest": 22.3,
+  "ZGSZ|2026-10-29|highest": 31.15,
+  "UUWW|2026-10-29|highest": 10.3,
+  "LTFM|2026-10-29|highest": 16.15,
+  "RKPK|2026-10-29|highest": 15.75,
+  "EHAM|2026-10-29|highest": 15.75,
+  "EFHK|2026-10-29|highest": 10.850000000000001,
+  "WMKK|2026-10-29|highest": 31.1,
+  "OEJN|2026-10-29|highest": 35.3,
+  "FACT|2026-10-29|highest": 27.1,
+  "ZGGG|2026-10-29|highest": 30.85,
+  "ZSQD|2026-10-29|highest": 20.25,
+  "OPKC|2026-10-29|highest": 35.55,
+  "RPLL|2026-10-29|highest": 31.65,
+  "VILK|2026-10-29|lowest": 21.799999999999997,
+  "FACT|2026-10-29|lowest": 15.35,
+  "OPKC|2026-10-29|lowest": 24.450000000000003,
+  "EGLC|2026-10-29|lowest": 9.45,
+  "EGLC|2026-10-29|highest": 15.5,
+  "KLGA|2026-10-29|highest": 19.6,
+  "KAUS|2026-10-29|highest": 24.55,
+  "KLGA|2026-10-29|lowest": 6.35,
+  "KDAL|2026-10-29|lowest": 18.95,
+  "KATL|2026-10-29|lowest": 11.8,
+  "KMIA|2026-10-29|lowest": 23.299999999999997,
+  "KORD|2026-10-29|lowest": 11.1,
+  "KAUS|2026-10-29|lowest": 19.05,
+  "KDEN|2026-10-29|lowest": 2.3,
+  "KHOU|2026-10-29|lowest": 18.9,
+  "KDAL|2026-10-29|highest": 26.9,
+  "KATL|2026-10-29|highest": 23.5,
+  "KMIA|2026-10-29|highest": 28.75,
+  "KORD|2026-10-29|highest": 18.700000000000003,
+  "KDEN|2026-10-29|highest": 19.4,
+  "KHOU|2026-10-29|highest": 27.85,
+  "KSEA|2026-10-29|lowest": 5.1,
+  "KLAX|2026-10-29|lowest": 15.85,
+  "KSFO|2026-10-29|lowest": 10.55,
+  "KSEA|2026-10-29|highest": 10.75,
+  "KLAX|2026-10-29|highest": 21.5,
+  "KSFO|2026-10-29|highest": 20.200000000000003,
+  "SBGR|2026-10-29|lowest": 16.4,
+  "SAEZ|2026-10-29|lowest": 13.25,
+  "CYYZ|2026-10-29|lowest": 6.65,
+  "MMMX|2026-10-29|lowest": 14.05,
+  "SBGR|2026-10-29|highest": 20.55,
+  "SAEZ|2026-10-29|highest": 23.7,
+  "CYYZ|2026-10-29|highest": 21.65,
+  "MMMX|2026-10-29|highest": 25.15,
+  "MPMG|2026-10-29|highest": 30.8,
+  "LFPB|2026-10-30|lowest": 7.0,
+  "RKSI|2026-10-30|lowest": 11.55,
+  "LTAC|2026-10-30|lowest": 10.15,
+  "NZWN|2026-10-30|lowest": 8.649999999999999,
+  "VILK|2026-10-30|lowest": 20.65,
+  "EDDM|2026-10-30|lowest": 2.4,
+  "LLBG|2026-10-30|lowest": 18.5,
+  "RJTT|2026-10-30|lowest": 13.25,
+  "ZSPD|2026-10-30|lowest": 15.2,
+  "LIMC|2026-10-30|lowest": 10.7,
+  "LEMD|2026-10-30|lowest": 11.65,
+  "EPWA|2026-10-30|lowest": 5.4,
+  "RCSS|2026-10-30|lowest": 20.0,
+  "ZUCK|2026-10-30|lowest": 14.55,
+  "ZBAA|2026-10-30|lowest": 8.7,
+  "ZHHH|2026-10-30|lowest": 12.75,
+  "ZUUU|2026-10-30|lowest": 13.65,
+  "ZGSZ|2026-10-30|lowest": 24.299999999999997,
+  "UUWW|2026-10-30|lowest": 3.7,
+  "LTFM|2026-10-30|lowest": 12.75,
+  "RKPK|2026-10-30|lowest": 10.9,
+  "EHAM|2026-10-30|lowest": 8.2,
+  "EFHK|2026-10-30|lowest": 5.25,
+  "OEJN|2026-10-30|lowest": 25.65,
+  "FACT|2026-10-30|lowest": 16.5,
+  "ZGGG|2026-10-30|lowest": 21.5,
+  "ZSQD|2026-10-30|lowest": 10.100000000000001,
+  "OPKC|2026-10-30|lowest": 25.15,
+  "LFPB|2026-10-30|highest": 15.3,
+  "RKSI|2026-10-30|highest": 17.45,
+  "LTAC|2026-10-30|highest": 15.7,
+  "NZWN|2026-10-30|highest": 16.5,
+  "VILK|2026-10-30|highest": 22.6,
+  "EDDM|2026-10-30|highest": 11.2,
+  "LLBG|2026-10-30|highest": 24.5,
+  "RJTT|2026-10-30|highest": 19.1,
+  "ZSPD|2026-10-30|highest": 22.6,
+  "WSSS|2026-10-30|highest": 29.9,
+  "LIMC|2026-10-30|highest": 15.7,
+  "LEMD|2026-10-30|highest": 21.95,
+  "EPWA|2026-10-30|highest": 11.2,
+  "RCSS|2026-10-30|highest": 26.9,
+  "ZUCK|2026-10-30|highest": 18.4,
+  "ZBAA|2026-10-30|highest": 18.95,
+  "ZHHH|2026-10-30|highest": 23.15,
+  "ZUUU|2026-10-30|highest": 22.5,
+  "ZGSZ|2026-10-30|highest": 32.05,
+  "UUWW|2026-10-30|highest": 10.1,
+  "LTFM|2026-10-30|highest": 14.5,
+  "RKPK|2026-10-30|highest": 19.950000000000003,
+  "EHAM|2026-10-30|highest": 13.95,
+  "EFHK|2026-10-30|highest": 8.8,
+  "WMKK|2026-10-30|highest": 29.15,
+  "OEJN|2026-10-30|highest": 34.9,
+  "FACT|2026-10-30|highest": 25.75,
+  "ZGGG|2026-10-30|highest": 32.35,
+  "ZSQD|2026-10-30|highest": 22.85,
+  "OPKC|2026-10-30|highest": 35.3,
+  "RPLL|2026-10-30|highest": 31.85,
+  "EGLC|2026-10-30|lowest": 9.05,
+  "EGLC|2026-10-30|highest": 15.6,
+  "KDAL|2026-10-30|highest": 24.25,
+  "KATL|2026-10-30|highest": 25.1,
+  "KMIA|2026-10-30|highest": 29.6,
+  "KLGA|2026-10-30|lowest": 11.35,
+  "KDAL|2026-10-30|lowest": 20.05,
+  "KATL|2026-10-30|lowest": 13.8,
+  "KMIA|2026-10-30|lowest": 24.1,
+  "KORD|2026-10-30|lowest": 9.1,
+  "KAUS|2026-10-30|lowest": 18.799999999999997,
+  "KDEN|2026-10-30|lowest": 5.449999999999999,
+  "KHOU|2026-10-30|lowest": 20.9,
+  "KLGA|2026-10-30|highest": 21.0,
+  "KORD|2026-10-30|highest": 15.95,
+  "KAUS|2026-10-30|highest": 24.45,
+  "KDEN|2026-10-30|highest": 18.85,
+  "KHOU|2026-10-30|highest": 25.4
+ }
+}

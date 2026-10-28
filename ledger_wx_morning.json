@@ -1,0 +1,24 @@
+{
+ "cash": 49.0,
+ "bets": [
+  {
+   "strategy": "MORNING",
+   "asset": "74265713636875337430237146536306812135051799561116824492435274131793810639446",
+   "condition": "0x7fa0ff633731d1ec42475682545a6f2892c1c89b80c8141aa00932a6ab662d01",
+   "event": "lowest-temperature-in-milan-on-october-28-2026",
+   "title": "Will the lowest temperature in Milan be 7\u00b0C on October 28?",
+   "outcome": "YES",
+   "bucket": "7\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 7\u00b0C mid 0.94, local 11:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-28T10:15:32.534225+00:00",
+   "expires": "2026-10-28T11:00:00+00:00"
+  }
+ ]
+}
