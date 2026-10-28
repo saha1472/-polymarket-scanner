@@ -53,8 +53,10 @@
    "fee": 0.012000000000000002,
    "profit_if_win": 0.3037894736842106,
    "reason": "favourite 15\u00b0C mid 0.73, local 15:01",
-   "status": "open",
-   "opened": "2026-10-28T12:01:08.669987+00:00"
+   "status": "lost",
+   "opened": "2026-10-28T12:01:08.669987+00:00",
+   "pnl": -1.012,
+   "closed": "2026-10-28T21:45:36.551718+00:00"
   },
   {
    "strategy": "AFTERNOON",

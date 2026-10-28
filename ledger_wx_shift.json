@@ -1,5 +1,5 @@
 {
- "cash": 4.3681749999999955,
+ "cash": 3.3316749999999953,
  "bets": [
   {
    "strategy": "SHIFT",
@@ -748,6 +748,23 @@
    "reason": "forecast 25.9\u219225.1\u00b0C, favourite 25\u00b0C",
    "status": "open",
    "opened": "2026-10-28T20:45:49.397765+00:00"
+  },
+  {
+   "strategy": "SHIFT",
+   "asset": "106528127173612030332351073425719771962573022468000054417077109891824717254229",
+   "condition": "0xea7db2794a3233ae59d55e0ba9655c1d175a59e694d0299613357a5469fbb7f9",
+   "event": "lowest-temperature-in-los-angeles-on-october-29-2026",
+   "title": "Will the lowest temperature in Los Angeles be between 64-65\u00b0F on October 29?",
+   "outcome": "YES",
+   "bucket": "64-65\u00b0F",
+   "price": 0.27,
+   "shares": 3.7037037037037033,
+   "stake": 1.0,
+   "fee": 0.0365,
+   "profit_if_win": 2.667203703703703,
+   "reason": "forecast 15.2\u219215.8\u00b0C, favourite 62-63\u00b0F",
+   "status": "open",
+   "opened": "2026-10-28T21:45:36.494613+00:00"
   }
  ]
 }
