@@ -1,5 +1,5 @@
 {
- "cash": 50.0,
+ "cash": 49.0,
  "bets": [
   {
    "strategy": "MORNING",
@@ -38,6 +38,25 @@
    "status": "cancelled",
    "placed": "2026-10-28T14:16:01.731351+00:00",
    "expires": "2026-10-28T16:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "21859983909201304081210899628575516903231238412233875303399217643112199470909",
+   "condition": "0xadae1f469dbd2a0c42111c479b243926b551a69e2f39aa743584c6f6dc51155f",
+   "event": "lowest-temperature-in-mexico-city-on-october-28-2026",
+   "title": "Will the lowest temperature in Mexico City be 13\u00b0C on October 28?",
+   "outcome": "YES",
+   "bucket": "13\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 13\u00b0C mid 0.94, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-28T16:15:47.122181+00:00",
+   "expires": "2026-10-28T18:00:00+00:00"
   }
  ]
 }
