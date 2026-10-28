@@ -1,5 +1,5 @@
 {
- "cash": 38.9720747108307,
+ "cash": 37.966074710830696,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -210,6 +210,23 @@
    "reason": "favourite 16\u00b0C mid 0.94, local 15:15",
    "status": "open",
    "opened": "2026-10-28T19:15:32.833043+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "31043383187957888671645065485652242894656378496240575215181068426894205328352",
+   "condition": "0xbfc1190cd58ed0914b7de9802f16cc57702a89bc89fc750ed82fbf0af16def31",
+   "event": "highest-temperature-in-dallas-on-october-28-2026",
+   "title": "Will the highest temperature in Dallas be between 82-83\u00b0F on October 28?",
+   "outcome": "YES",
+   "bucket": "82-83\u00b0F",
+   "price": 0.8799999999999999,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.006,
+   "profit_if_win": 0.13036363636363646,
+   "reason": "favourite 82-83\u00b0F mid 0.89, local 15:01",
+   "status": "open",
+   "opened": "2026-10-28T20:01:22.572627+00:00"
   }
  ]
 }
