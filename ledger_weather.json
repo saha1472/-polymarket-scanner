@@ -1,5 +1,5 @@
 {
-  "cash": 50.45100481677946,
+  "cash": 48.43150481677946,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -175,6 +175,52 @@
         "pnl": 0.028633802816901487
       },
       "pnl": 0.3939507042253522
+    },
+    {
+      "asset": "67977906236846900689533862952047661811713748576654338138949492051451513291684",
+      "condition": "0x72beec99ca2b607b4fac258756e5a2c5985f3bafead97b5525bf9937c9788d22",
+      "title": "Will the highest temperature in Chongqing be 16\u00b0C on October 29?",
+      "outcome": "No",
+      "price": 0.76,
+      "shares": 1.3157894736842106,
+      "stake": 1.0,
+      "fee": 0.012000000000000002,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Bakuskyvs"
+      ],
+      "holders": {
+        "0xf3618ba9f63638ab77e85553c67dbb9aaeba783a": {
+          "name": "Bakuskyvs",
+          "size": 308.21
+        }
+      },
+      "opened": "2026-10-28T07:30:41.097225+00:00",
+      "ends": "2026-10-29T00:00:00.295339+00:00"
+    },
+    {
+      "asset": "107553076302782878127235003107975131623011617599893795982422942882384810382684",
+      "condition": "0x2fca2cd06ab7d2f9932e1809c4a1d288582aec2334c6dd9de2115bcb0d203c2a",
+      "title": "Will the highest temperature in Seoul (Incheon) be 12\u00b0C on October 29?",
+      "outcome": "No",
+      "price": 0.85,
+      "shares": 1.1764705882352942,
+      "stake": 1.0,
+      "fee": 0.0075000000000000015,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Bakuskyvs"
+      ],
+      "holders": {
+        "0xf3618ba9f63638ab77e85553c67dbb9aaeba783a": {
+          "name": "Bakuskyvs",
+          "size": 275.23
+        }
+      },
+      "opened": "2026-10-28T07:30:41.097257+00:00",
+      "ends": "2026-10-29T00:00:00.295352+00:00"
     }
   ]
 }
