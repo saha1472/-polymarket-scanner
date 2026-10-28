@@ -1,5 +1,5 @@
 {
- "cash": 46.982049999999994,
+ "cash": 44.967549999999996,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -51,6 +51,40 @@
    "reason": "favourite 15\u00b0C mid 0.73, local 15:01",
    "status": "open",
    "opened": "2026-10-28T12:01:08.669987+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "112051026673866029944485898900394697639576572248799776841155389826164360028671",
+   "condition": "0x7a9befb06a31461e5d1b9db3de3928cbb45c3262b7b73b3688a30552996d0a46",
+   "event": "highest-temperature-in-paris-on-october-28-2026",
+   "title": "Will the highest temperature in Paris be 16\u00b0C on October 28?",
+   "outcome": "YES",
+   "bucket": "16\u00b0C",
+   "price": 0.9400000000000001,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0030000000000000022,
+   "profit_if_win": 0.06082978723404253,
+   "reason": "favourite 16\u00b0C mid 0.88, local 15:00",
+   "status": "open",
+   "opened": "2026-10-28T14:01:01.076944+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "70343586701433704651344757825779885127255335011985544205278336025261183681058",
+   "condition": "0x7fa3ce04c162dcf7abb62c11635e56019d0205dcc16b9d6df44aff95a545e711",
+   "event": "highest-temperature-in-warsaw-on-october-28-2026",
+   "title": "Will the highest temperature in Warsaw be 10\u00b0C on October 28?",
+   "outcome": "YES",
+   "bucket": "10\u00b0C",
+   "price": 0.77,
+   "shares": 1.2987012987012987,
+   "stake": 1.0,
+   "fee": 0.011500000000000002,
+   "profit_if_win": 0.2872012987012987,
+   "reason": "favourite 10\u00b0C mid 0.72, local 15:00",
+   "status": "open",
+   "opened": "2026-10-28T14:01:01.185257+00:00"
   }
  ]
 }
