@@ -1,5 +1,5 @@
 {
- "cash": 38.922549999999994,
+ "cash": 37.92054999999999,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -191,6 +191,23 @@
    "reason": "favourite 72-73\u00b0F mid 0.73, local 15:00",
    "status": "open",
    "opened": "2026-10-28T19:00:53.447761+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "111884582789738565622027805272695830016132553359202430710258067497666013912200",
+   "condition": "0x4055e1a12aebc00a197be30f5e2e2ef8eee791dff5f7bc0792e349645c5d5230",
+   "event": "highest-temperature-in-toronto-on-october-28-2026",
+   "title": "Will the highest temperature in Toronto be 16\u00b0C on October 28?",
+   "outcome": "YES",
+   "bucket": "16\u00b0C",
+   "price": 0.96,
+   "shares": 1.0416666666666667,
+   "stake": 1.0,
+   "fee": 0.002000000000000002,
+   "profit_if_win": 0.03966666666666674,
+   "reason": "favourite 16\u00b0C mid 0.94, local 15:15",
+   "status": "open",
+   "opened": "2026-10-28T19:15:32.833043+00:00"
   }
  ]
 }
