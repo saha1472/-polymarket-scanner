@@ -1,4 +1,22 @@
 {
- "cash": 50.0,
- "bets": []
+ "cash": 48.9985,
+ "bets": [
+  {
+   "strategy": "LATE",
+   "asset": "46353838432015698888566723935033065092508404633088245247787277090428022928537",
+   "condition": "0xc8e50b755f91f9442e3b89b2f4a4e70ffe2a6d701cbaed8b9cb66d1d1e9f9191",
+   "event": "lowest-temperature-in-tokyo-on-october-28-2026",
+   "title": "Will the lowest temperature in Tokyo be 13\u00b0C on October 28?",
+   "outcome": "NO",
+   "bucket": "13\u00b0C",
+   "price": 0.9699999999999999,
+   "shares": 1.0309278350515465,
+   "stake": 1.0,
+   "fee": 0.0015000000000000015,
+   "profit_if_win": 0.029427835051546503,
+   "reason": "lowe so far 15\u00b0C at local 21:01",
+   "status": "open",
+   "opened": "2026-10-28T12:01:07.869737+00:00"
+  }
+ ]
 }

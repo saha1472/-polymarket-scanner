@@ -1,5 +1,5 @@
 {
- "cash": 48.99755,
+ "cash": 46.982049999999994,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -17,6 +17,40 @@
    "reason": "favourite 37\u00b0C mid 0.93, local 15:15",
    "status": "open",
    "opened": "2026-10-28T10:15:32.654545+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "75723459439194148011654947382361963186256189733918817533457656024879431194777",
+   "condition": "0x04506da17bbab37013fb4c7ff3e6caa0b1f62099b726a3da7cd0b8e7c069194e",
+   "event": "highest-temperature-in-moscow-on-october-28-2026",
+   "title": "Will the highest temperature in Moscow be 13\u00b0C on October 28?",
+   "outcome": "YES",
+   "bucket": "13\u00b0C",
+   "price": 0.93,
+   "shares": 1.075268817204301,
+   "stake": 1.0,
+   "fee": 0.003499999999999998,
+   "profit_if_win": 0.071768817204301,
+   "reason": "favourite 13\u00b0C mid 0.84, local 15:01",
+   "status": "open",
+   "opened": "2026-10-28T12:01:08.538479+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "115380810471467048704680050788028519088094186069656468556623411168437511630988",
+   "condition": "0x6cc54bbf99f84f393fbd73cca45cd93498b65bf05c510bfc24df85df0d1bfb5d",
+   "event": "highest-temperature-in-istanbul-on-october-28-2026",
+   "title": "Will the highest temperature in Istanbul be 15\u00b0C on October 28?",
+   "outcome": "YES",
+   "bucket": "15\u00b0C",
+   "price": 0.7599999999999999,
+   "shares": 1.3157894736842106,
+   "stake": 1.0,
+   "fee": 0.012000000000000002,
+   "profit_if_win": 0.3037894736842106,
+   "reason": "favourite 15\u00b0C mid 0.73, local 15:01",
+   "status": "open",
+   "opened": "2026-10-28T12:01:08.669987+00:00"
   }
  ]
 }

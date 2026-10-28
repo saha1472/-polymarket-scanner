@@ -415,6 +415,9 @@
   "KHOU|2026-10-30|highest": 25.4,
   "KSEA|2026-10-30|lowest": 3.6,
   "KLAX|2026-10-30|lowest": 17.9,
-  "KSFO|2026-10-30|lowest": 11.8
+  "KSFO|2026-10-30|lowest": 11.8,
+  "KSEA|2026-10-30|highest": 11.3,
+  "KLAX|2026-10-30|highest": 22.25,
+  "KSFO|2026-10-30|highest": 19.4
  }
 }
