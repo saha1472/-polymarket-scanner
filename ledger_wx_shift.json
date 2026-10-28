@@ -1,5 +1,5 @@
 {
- "cash": 27.223499999999998,
+ "cash": 23.075124999999996,
  "bets": [
   {
    "strategy": "SHIFT",
@@ -374,6 +374,74 @@
    "reason": "forecast 24.5\u219225.2\u00b0C, favourite 25\u00b0C",
    "status": "open",
    "opened": "2026-10-28T14:01:00.850319+00:00"
+  },
+  {
+   "strategy": "SHIFT",
+   "asset": "108761853510816368698333878393433324770229054709977292200664742319884532494532",
+   "condition": "0x66b081b5306cde4520c6cba9f9aff75e81049d13b7a678212c30de3abf36ff5b",
+   "event": "highest-temperature-in-austin-on-october-29-2026",
+   "title": "Will the highest temperature in Austin be between 78-79\u00b0F on October 29?",
+   "outcome": "YES",
+   "bucket": "78-79\u00b0F",
+   "price": 0.24,
+   "shares": 4.166666666666667,
+   "stake": 1.0,
+   "fee": 0.038000000000000006,
+   "profit_if_win": 3.128666666666667,
+   "reason": "forecast 24.1\u219225.0\u00b0C, favourite 76-77\u00b0F",
+   "status": "open",
+   "opened": "2026-10-28T14:31:07.128890+00:00"
+  },
+  {
+   "strategy": "SHIFT",
+   "asset": "44574078165634915528407161161996213394999433200007714007042439833147906034240",
+   "condition": "0x0e46a0cb1ddb5655444cec9c5e53eb0ca7e38ba79219e238aa621d51297b62aa",
+   "event": "lowest-temperature-in-nyc-on-october-29-2026",
+   "title": "Will the lowest temperature in New York City be between 56-57\u00b0F on October 29?",
+   "outcome": "YES",
+   "bucket": "56-57\u00b0F",
+   "price": 0.1523809523809524,
+   "shares": 6.5625,
+   "stake": 1.0,
+   "fee": 0.042375,
+   "profit_if_win": 5.520125,
+   "reason": "forecast 6.0\u21926.8\u00b0C, favourite 54-55\u00b0F",
+   "status": "open",
+   "opened": "2026-10-28T14:31:07.297144+00:00"
+  },
+  {
+   "strategy": "SHIFT",
+   "asset": "60332695420752215655801011526352921753534263725074199287373518993781443811477",
+   "condition": "0x41d911551c1bd4c1a68d4f415c5b049ef4f377f8e141dabd1760bfc2f16fe150",
+   "event": "highest-temperature-in-los-angeles-on-october-29-2026",
+   "title": "Will the highest temperature in Los Angeles be between 74-75\u00b0F on October 29?",
+   "outcome": "YES",
+   "bucket": "74-75\u00b0F",
+   "price": 0.18,
+   "shares": 5.555555555555555,
+   "stake": 1.0,
+   "fee": 0.04100000000000001,
+   "profit_if_win": 4.514555555555555,
+   "reason": "forecast 21.6\u219222.2\u00b0C, favourite 72-73\u00b0F",
+   "status": "open",
+   "opened": "2026-10-28T14:31:07.455056+00:00"
+  },
+  {
+   "strategy": "SHIFT",
+   "asset": "102782283662931353439098951999939030620660530064324719466913172429015965908201",
+   "condition": "0x6135df8aebb6bbbb785cc40a4376c772e9dfb38e67f9124ae1021ef01699f637",
+   "event": "lowest-temperature-in-miami-on-october-30-2026",
+   "title": "Will the lowest temperature in Miami be between 74-75\u00b0F on October 30?",
+   "outcome": "YES",
+   "bucket": "74-75\u00b0F",
+   "price": 0.46,
+   "shares": 2.1739130434782608,
+   "stake": 1.0,
+   "fee": 0.027000000000000003,
+   "profit_if_win": 1.1469130434782608,
+   "reason": "forecast 24.0\u219223.5\u00b0C, favourite 76-77\u00b0F",
+   "status": "open",
+   "opened": "2026-10-28T14:31:07.634193+00:00"
   }
  ]
 }

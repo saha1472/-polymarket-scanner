@@ -1,5 +1,5 @@
 {
- "cash": 43.95755,
+ "cash": 42.948049999999995,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -102,6 +102,23 @@
    "reason": "favourite 17\u00b0C mid 0.74, local 15:16",
    "status": "open",
    "opened": "2026-10-28T14:16:02.049424+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "54230405358138332828090732296049713034077959749101553812710353674559967625411",
+   "condition": "0x08e5c903fa8ab6d752fda087483117665e83e5699140d50d2af288f57a42a0a2",
+   "event": "highest-temperature-in-madrid-on-october-28-2026",
+   "title": "Will the highest temperature in Madrid be 23\u00b0C on October 28?",
+   "outcome": "YES",
+   "bucket": "23\u00b0C",
+   "price": 0.81,
+   "shares": 1.2345679012345678,
+   "stake": 1.0,
+   "fee": 0.009499999999999998,
+   "profit_if_win": 0.22506790123456782,
+   "reason": "favourite 23\u00b0C mid 0.74, local 15:31",
+   "status": "open",
+   "opened": "2026-10-28T14:31:07.972507+00:00"
   }
  ]
 }
