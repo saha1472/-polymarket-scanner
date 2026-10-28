@@ -1,5 +1,5 @@
 {
- "cash": 40.948049999999995,
+ "cash": 38.922549999999994,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -157,6 +157,40 @@
    "status": "resting",
    "placed": "2026-10-28T18:00:53.215467+00:00",
    "expires": "2026-10-28T22:00:00+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "20836301129515590218550847802029731510680522408327137006943683564740245049344",
+   "condition": "0x1999eacd824792390884d3fd73577edd20a08bdda2bd82f97a3a4073104fc272",
+   "event": "highest-temperature-in-nyc-on-october-28-2026",
+   "title": "Will the highest temperature in New York City be between 60-61\u00b0F on October 28?",
+   "outcome": "YES",
+   "bucket": "60-61\u00b0F",
+   "price": 0.79,
+   "shares": 1.2658227848101264,
+   "stake": 1.0,
+   "fee": 0.010499999999999997,
+   "profit_if_win": 0.25532278481012644,
+   "reason": "favourite 60-61\u00b0F mid 0.73, local 15:00",
+   "status": "open",
+   "opened": "2026-10-28T19:00:53.330142+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "111037972147370630175724121145475076563804291508786849742647178997193259962468",
+   "condition": "0xa7796905662ec6189a70c09980de2731963deea56f2507e6d3a3065ad692a94d",
+   "event": "highest-temperature-in-atlanta-on-october-28-2026",
+   "title": "Will the highest temperature in Atlanta be between 72-73\u00b0F on October 28?",
+   "outcome": "YES",
+   "bucket": "72-73\u00b0F",
+   "price": 0.7,
+   "shares": 1.4285714285714286,
+   "stake": 1.0,
+   "fee": 0.015000000000000003,
+   "profit_if_win": 0.4135714285714286,
+   "reason": "favourite 72-73\u00b0F mid 0.73, local 15:00",
+   "status": "open",
+   "opened": "2026-10-28T19:00:53.447761+00:00"
   }
  ]
 }

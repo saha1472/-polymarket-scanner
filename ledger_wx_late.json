@@ -1,5 +1,5 @@
 {
- "cash": 49.09305390342762,
+ "cash": 48.088053903427614,
  "bets": [
   {
    "strategy": "LATE",
@@ -55,6 +55,23 @@
    "reason": "lowe so far 12\u00b0C at local 21:45",
    "status": "open",
    "opened": "2026-10-28T18:45:40.621129+00:00"
+  },
+  {
+   "strategy": "LATE",
+   "asset": "74323759065413266723510671762119348016353006310671396720603862688626758448500",
+   "condition": "0x7509ea068918a69d8ce61f4101b81f24215bf4b61b0a5b560cef49e39248fad5",
+   "event": "lowest-temperature-in-tel-aviv-on-october-28-2026",
+   "title": "Will the lowest temperature in Tel Aviv be 21\u00b0C on October 28?",
+   "outcome": "NO",
+   "bucket": "21\u00b0C",
+   "price": 0.8999999999999999,
+   "shares": 1.1111111111111112,
+   "stake": 1.0,
+   "fee": 0.004999999999999999,
+   "profit_if_win": 0.10611111111111116,
+   "reason": "lowe so far 23\u00b0C at local 21:00",
+   "status": "open",
+   "opened": "2026-10-28T19:00:53.089826+00:00"
   }
  ]
 }
