@@ -1,5 +1,5 @@
 {
- "cash": 35.954224710830694,
+ "cash": 34.954224710830694,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -261,6 +261,25 @@
    "reason": "favourite 80-81\u00b0F mid 0.72, local 15:30",
    "status": "open",
    "opened": "2026-10-28T20:30:40.783963+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "43810656160551678530464891818992366576954720652254527785357521971544815664347",
+   "condition": "0x9f29c87cf47a73a5343fe5f31c7cf61130e85a02cd8b305d7390402014db9ba3",
+   "event": "highest-temperature-in-denver-on-october-28-2026",
+   "title": "Will the highest temperature in Denver be between 66-67\u00b0F on October 28?",
+   "outcome": "YES",
+   "bucket": "66-67\u00b0F",
+   "price": 0.94,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.06382978723404253,
+   "reason": "favourite 66-67\u00b0F mid 0.95, local 15:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-28T21:01:12.989330+00:00",
+   "expires": "2026-10-29T01:00:00+00:00"
   }
  ]
 }
