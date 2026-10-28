@@ -1,5 +1,5 @@
 {
- "cash": 3.3316749999999953,
+ "cash": 0.21267499999999528,
  "bets": [
   {
    "strategy": "SHIFT",
@@ -765,6 +765,57 @@
    "reason": "forecast 15.2\u219215.8\u00b0C, favourite 62-63\u00b0F",
    "status": "open",
    "opened": "2026-10-28T21:45:36.494613+00:00"
+  },
+  {
+   "strategy": "SHIFT",
+   "asset": "19029621297394175603643271729196065757962445545280641112617790505389004301867",
+   "condition": "0xefb9382f9e40e77c82494a87e76b9a8b489ea6a22ed0a3e99ffc25ab2784a79b",
+   "event": "highest-temperature-in-lucknow-on-october-30-2026",
+   "title": "Will the highest temperature in Lucknow be 23\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "23\u00b0C",
+   "price": 0.2,
+   "shares": 5.0,
+   "stake": 1.0,
+   "fee": 0.04000000000000001,
+   "profit_if_win": 3.96,
+   "reason": "forecast 23.8\u219223.2\u00b0C, favourite 24\u00b0C",
+   "status": "open",
+   "opened": "2026-10-28T23:30:39.314698+00:00"
+  },
+  {
+   "strategy": "SHIFT",
+   "asset": "29346561571561174690802574538576776103017812318152253624809119528581239648654",
+   "condition": "0x02afd2653fe371bc8f64928c0392eea109edbc95ba6cf3b723fa1fecf0d81fdf",
+   "event": "highest-temperature-in-denver-on-october-30-2026",
+   "title": "Will the highest temperature in Denver be between 66-67\u00b0F on October 30?",
+   "outcome": "YES",
+   "bucket": "66-67\u00b0F",
+   "price": 0.24,
+   "shares": 4.166666666666667,
+   "stake": 1.0,
+   "fee": 0.038000000000000006,
+   "profit_if_win": 3.128666666666667,
+   "reason": "forecast 17.8\u219218.4\u00b0C, favourite 64-65\u00b0F",
+   "status": "open",
+   "opened": "2026-10-28T23:30:39.422352+00:00"
+  },
+  {
+   "strategy": "SHIFT",
+   "asset": "65479473856028779532930529189733197748508573127090734096911282251581534531423",
+   "condition": "0x14d842e65d9f8f0841c684e0432c3b5679e71a92dd5ece91d8584b15f2a4cb14",
+   "event": "highest-temperature-in-seattle-on-october-30-2026",
+   "title": "Will the highest temperature in Seattle be between 44-45\u00b0F on October 30?",
+   "outcome": "YES",
+   "bucket": "44-45\u00b0F",
+   "price": 0.18,
+   "shares": 5.555555555555555,
+   "stake": 1.0,
+   "fee": 0.04100000000000001,
+   "profit_if_win": 4.514555555555555,
+   "reason": "forecast 9.7\u219211.0\u00b0C, favourite 43\u00b0F or below",
+   "status": "open",
+   "opened": "2026-10-28T23:30:39.523561+00:00"
   }
  ]
 }
