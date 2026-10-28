@@ -1,5 +1,5 @@
 {
- "cash": 35.024993528035,
+ "cash": 35.018493528035,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -141,7 +141,7 @@
    "profit_if_win": 0.09890109890109877,
    "reason": "favourite 21\u00b0C mid 0.93, local 15:00",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-10-28T18:00:53.106953+00:00",
    "expires": "2026-10-28T22:00:00+00:00"
   },
@@ -160,7 +160,7 @@
    "profit_if_win": 0.12359550561797761,
    "reason": "favourite 25\u00b0C mid 0.90, local 15:00",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-10-28T18:00:53.215467+00:00",
    "expires": "2026-10-28T22:00:00+00:00"
   },
@@ -301,6 +301,40 @@
    "reason": "favourite 24\u00b0C mid 0.90, local 15:15",
    "status": "open",
    "opened": "2026-10-28T21:15:41.079773+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "96829818154535267182074264595163419779130523327588921793087541572236877997736",
+   "condition": "0x1386b6da92112e955c145a73e24f4e8943627daf56dd254cc2fc6439611af1a3",
+   "event": "highest-temperature-in-seattle-on-october-28-2026",
+   "title": "Will the highest temperature in Seattle be between 52-53\u00b0F on October 28?",
+   "outcome": "YES",
+   "bucket": "52-53\u00b0F",
+   "price": 0.92,
+   "shares": 1.0869565217391304,
+   "stake": 1.0,
+   "fee": 0.003999999999999998,
+   "profit_if_win": 0.08295652173913037,
+   "reason": "favourite 52-53\u00b0F mid 0.90, local 15:00",
+   "status": "open",
+   "opened": "2026-10-28T22:00:56.884932+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "100145893607448545328297082552582570025622900042058632117747963501994861694005",
+   "condition": "0x16efb293f46e1640274353a6e2336ac6b68b1a88c13321703077fddebfc920d2",
+   "event": "highest-temperature-in-san-francisco-on-october-28-2026",
+   "title": "Will the highest temperature in San Francisco be between 68-69\u00b0F on October 28?",
+   "outcome": "YES",
+   "bucket": "68-69\u00b0F",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "favourite 68-69\u00b0F mid 0.88, local 15:00",
+   "status": "open",
+   "opened": "2026-10-28T22:00:57.062416+00:00"
   }
  ]
 }
