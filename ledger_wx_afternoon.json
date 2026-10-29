@@ -1,5 +1,5 @@
 {
- "cash": 34.053188960392774,
+ "cash": 33.053188960392774,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -797,6 +797,25 @@
    "reason": "favourite 54-55\u00b0F mid 0.84, local 15:00",
    "status": "open",
    "opened": "2026-10-29T22:01:00.194434+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "106806052422818914767812473950581354098904411750141370937787064716133017787115",
+   "condition": "0xd84b489dee6e47ac7507537e4c43e968894efa1dff335d10ff8c03eba941f991",
+   "event": "highest-temperature-in-mexico-city-on-october-29-2026",
+   "title": "Will the highest temperature in Mexico City be 25\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "25\u00b0C",
+   "price": 0.86,
+   "shares": 1.1627906976744187,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.16279069767441867,
+   "reason": "favourite 25\u00b0C mid 0.93, local 16:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-29T22:15:40.767597+00:00",
+   "expires": "2026-10-30T01:00:00+00:00"
   }
  ]
 }

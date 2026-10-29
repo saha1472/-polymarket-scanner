@@ -1,5 +1,5 @@
 {
-  "cash": 50.92376487869897,
+  "cash": 49.91026487869897,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -233,6 +233,30 @@
       "stops": {},
       "closed": "2026-10-29T15:30:42.542835+00:00",
       "pnl": 0.16897058823529415
+    },
+    {
+      "asset": "9266594082474866380980380589108811260818187616919350155159721453179735889044",
+      "condition": "0x6b7f26100afa5cdb860883d58f8d24048f655d8449b36def0b3eb7fb49533630",
+      "title": "Will the lowest temperature in Hong Kong be 25\u00b0C on October 30?",
+      "outcome": "No",
+      "event": "lowest-temperature-in-hong-kong-on-october-30-2026",
+      "price": 0.73,
+      "shares": 1.36986301369863,
+      "stake": 1.0,
+      "fee": 0.0135,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Leclerc04"
+      ],
+      "holders": {
+        "0x38cf9743eb70188664d388d84d4aa4c6f40fd885": {
+          "name": "Leclerc04",
+          "size": 294.5882
+        }
+      },
+      "opened": "2026-10-29T22:17:13.280135+00:00",
+      "ends": "2026-10-30T00:00:00.281718+00:00"
     }
   ]
 }
