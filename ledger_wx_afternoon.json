@@ -1,5 +1,5 @@
 {
- "cash": 40.86559251520491,
+ "cash": 39.86259251520491,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -343,6 +343,23 @@
    "reason": "favourite 68-69\u00b0F mid 0.88, local 15:00",
    "status": "open",
    "opened": "2026-10-28T22:00:57.062416+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "11160776475367883055739205216150572153649623050942104368491000527266486015885",
+   "condition": "0x134d19c9348d953fe0befd04fb90e6e192ea5de1b7ac782e994a6affaccad579",
+   "event": "highest-temperature-in-wellington-on-october-29-2026",
+   "title": "Will the highest temperature in Wellington be 18\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "18\u00b0C",
+   "price": 0.9400000000000001,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0030000000000000022,
+   "profit_if_win": 0.06082978723404253,
+   "reason": "favourite 18\u00b0C mid 0.90, local 15:00",
+   "status": "open",
+   "opened": "2026-10-29T02:00:52.604373+00:00"
   }
  ]
 }
