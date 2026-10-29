@@ -1,5 +1,5 @@
 {
- "cash": 46.992999999999995,
+ "cash": 45.992999999999995,
  "bets": [
   {
    "strategy": "MORNING",
@@ -279,6 +279,25 @@
    "status": "cancelled",
    "placed": "2026-10-29T09:45:31.582292+00:00",
    "expires": "2026-10-29T11:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "71400412453360757441110510764709960565735559249362532984347435299276959949985",
+   "condition": "0x2aee400d9d28c8da4e7c73408fcd2cb482bb56feb7105d93e2a4ea299cb3fab7",
+   "event": "lowest-temperature-in-toronto-on-october-29-2026",
+   "title": "Will the lowest temperature in Toronto be 6\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "6\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 6\u00b0C mid 0.94, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-29T14:15:37.004832+00:00",
+   "expires": "2026-10-29T16:00:00+00:00"
   }
  ]
 }
