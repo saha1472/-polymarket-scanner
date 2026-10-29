@@ -1,5 +1,5 @@
 {
- "cash": 38.93767532402914,
+ "cash": 35.92232532402914,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -691,6 +691,57 @@
    "reason": "favourite 68-69\u00b0F mid 0.72, local 15:45",
    "status": "open",
    "opened": "2026-10-29T19:45:33.391961+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "45736508171354090233460012760845367308346199561055371279360511118755209536111",
+   "condition": "0x997cf6953b836879c4edb60581daf792427d0edb89249cf44d579369ce56c486",
+   "event": "highest-temperature-in-austin-on-october-29-2026",
+   "title": "Will the highest temperature in Austin be between 74-75\u00b0F on October 29?",
+   "outcome": "YES",
+   "bucket": "74-75\u00b0F",
+   "price": 0.86,
+   "shares": 1.1627906976744187,
+   "stake": 1.0,
+   "fee": 0.007000000000000001,
+   "profit_if_win": 0.15579069767441867,
+   "reason": "favourite 74-75\u00b0F mid 0.85, local 15:01",
+   "status": "open",
+   "opened": "2026-10-29T20:01:15.940592+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "61784742104125392089279352381133840816409853057432170788521108616635282426923",
+   "condition": "0x9c14202bdec9d5a728d2972e0af491b622a7ce3ec569406c99f15608c46e2a2f",
+   "event": "highest-temperature-in-dallas-on-october-29-2026",
+   "title": "Will the highest temperature in Dallas be between 78-79\u00b0F on October 29?",
+   "outcome": "YES",
+   "bucket": "78-79\u00b0F",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "favourite 78-79\u00b0F mid 0.92, local 15:01",
+   "status": "open",
+   "opened": "2026-10-29T20:01:16.099680+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "50383273898567916499765874229953672509672857323291116421143457848131575311038",
+   "condition": "0xd270e55b959a9152ee735251e7b0670faebb3fcea712a22018b984a2683746a9",
+   "event": "highest-temperature-in-chicago-on-october-29-2026",
+   "title": "Will the highest temperature in Chicago be between 68-69\u00b0F on October 29?",
+   "outcome": "YES",
+   "bucket": "68-69\u00b0F",
+   "price": 0.883,
+   "shares": 1.1325028312570782,
+   "stake": 1.0,
+   "fee": 0.00585,
+   "profit_if_win": 0.12665283125707819,
+   "reason": "favourite 68-69\u00b0F mid 0.79, local 15:01",
+   "status": "open",
+   "opened": "2026-10-29T20:01:16.247874+00:00"
   }
  ]
 }

@@ -1,5 +1,5 @@
 {
- "cash": 41.09872057009427,
+ "cash": 40.09722057009427,
  "bets": [
   {
    "strategy": "LATE",
@@ -228,6 +228,23 @@
    "opened": "2026-10-29T08:00:55.656372+00:00",
    "pnl": 0.03966666666666674,
    "closed": "2026-10-29T11:30:44.730941+00:00"
+  },
+  {
+   "strategy": "LATE",
+   "asset": "31708108808046735181529507193632354329146688487249718205724090788074125532374",
+   "condition": "0x9f3d54a360dd94aa1f24af189a3aa7a02a7d9b0a2474dd2fc99b50d49fdcd5ac",
+   "event": "lowest-temperature-in-warsaw-on-october-29-2026",
+   "title": "Will the lowest temperature in Warsaw be 6\u00b0C on October 29?",
+   "outcome": "NO",
+   "bucket": "6\u00b0C",
+   "price": 0.9699999999999999,
+   "shares": 1.0309278350515465,
+   "stake": 1.0,
+   "fee": 0.0015000000000000015,
+   "profit_if_win": 0.029427835051546503,
+   "reason": "lowe so far 8\u00b0C at local 21:01",
+   "status": "open",
+   "opened": "2026-10-29T20:01:14.976889+00:00"
   }
  ]
 }
