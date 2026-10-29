@@ -1,5 +1,5 @@
 {
- "cash": 48.998,
+ "cash": 47.998,
  "bets": [
   {
    "strategy": "MORNING",
@@ -150,6 +150,25 @@
    "status": "cancelled",
    "placed": "2026-10-29T02:14:55.595660+00:00",
    "expires": "2026-10-29T04:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "105511083989295857743924271822549552995384810080778556914091963947279903736828",
+   "condition": "0xd862fe667f7491ac5767ed5dd56d2bd2a1785185e52f397f9be9d0c4d90a4f34",
+   "event": "lowest-temperature-in-jeddah-on-october-29-2026",
+   "title": "Will the lowest temperature in Jeddah be 29\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "29\u00b0C",
+   "price": 0.8,
+   "shares": 1.25,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.25,
+   "reason": "favourite 29\u00b0C mid 0.90, local 08:00",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-29T05:00:54.628605+00:00",
+   "expires": "2026-10-29T09:00:00+00:00"
   }
  ]
 }
