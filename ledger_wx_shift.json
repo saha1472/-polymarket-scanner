@@ -206,8 +206,10 @@
    "fee": 0.0415,
    "profit_if_win": 4.84085294117647,
    "reason": "forecast 14.7\u219215.2\u00b0C, favourite 15\u00b0C",
-   "status": "open",
-   "opened": "2026-10-28T14:00:59.768524+00:00"
+   "status": "lost",
+   "opened": "2026-10-28T14:00:59.768524+00:00",
+   "pnl": -1.0415,
+   "closed": "2026-10-29T21:45:34.780709+00:00"
   },
   {
    "strategy": "SHIFT",
