@@ -1,5 +1,5 @@
 {
- "cash": 48.088053903427614,
+ "cash": 47.08305390342761,
  "bets": [
   {
    "strategy": "LATE",
@@ -76,6 +76,23 @@
    "opened": "2026-10-28T19:00:53.089826+00:00",
    "pnl": -1.005,
    "closed": "2026-10-28T22:45:31.325343+00:00"
+  },
+  {
+   "strategy": "LATE",
+   "asset": "20574851543436201966162898987823520404710037421177011264784900989512001700612",
+   "condition": "0xa3db5c6d7433d17be39f2cc0d3178e3f61f7317f30cbcbf48f104052c2c9db21",
+   "event": "lowest-temperature-in-sao-paulo-on-october-28-2026",
+   "title": "Will the lowest temperature in Sao Paulo be 15\u00b0C on October 28?",
+   "outcome": "NO",
+   "bucket": "15\u00b0C",
+   "price": 0.8999999999999999,
+   "shares": 1.1111111111111112,
+   "stake": 1.0,
+   "fee": 0.004999999999999999,
+   "profit_if_win": 0.10611111111111116,
+   "reason": "lowe so far 17\u00b0C at local 21:30",
+   "status": "open",
+   "opened": "2026-10-29T00:30:43.821624+00:00"
   }
  ]
 }
