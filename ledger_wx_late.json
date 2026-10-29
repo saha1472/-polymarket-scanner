@@ -1,5 +1,5 @@
 {
- "cash": 45.07455390342761,
+ "cash": 44.07155390342761,
  "bets": [
   {
    "strategy": "LATE",
@@ -129,6 +129,23 @@
    "reason": "lowe so far 70\u00b0F at local 22:01",
    "status": "open",
    "opened": "2026-10-29T03:01:02.388046+00:00"
+  },
+  {
+   "strategy": "LATE",
+   "asset": "76226876961631318844099599497735935959183126203158143915970481261700900089919",
+   "condition": "0x909c1d5fcb5d700f004eb6d15f78b27bc219e5faa4f0f4045fab824723795322",
+   "event": "lowest-temperature-in-san-francisco-on-october-28-2026",
+   "title": "Will the lowest temperature in San Francisco be between 52-53\u00b0F on October 28?",
+   "outcome": "NO",
+   "bucket": "52-53\u00b0F",
+   "price": 0.9400000000000001,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0030000000000000022,
+   "profit_if_win": 0.06082978723404253,
+   "reason": "lowe so far 59\u00b0F at local 21:00",
+   "status": "open",
+   "opened": "2026-10-29T04:00:51.193842+00:00"
   }
  ]
 }
