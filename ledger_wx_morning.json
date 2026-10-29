@@ -1,5 +1,5 @@
 {
- "cash": 44.995,
+ "cash": 43.995,
  "bets": [
   {
    "strategy": "MORNING",
@@ -224,6 +224,25 @@
    "status": "resting",
    "placed": "2026-10-29T07:15:34.524742+00:00",
    "expires": "2026-10-29T09:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "66674629738991295429985018326650987673136876138838230623295581745944970295768",
+   "condition": "0xc84d1d1c88e86cecea18f27d646765e0721786df7f2d121945c68ee212f6141f",
+   "event": "lowest-temperature-in-cape-town-on-october-29-2026",
+   "title": "Will the lowest temperature in Cape Town be 14\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "14\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 14\u00b0C mid 0.94, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-29T08:15:31.748547+00:00",
+   "expires": "2026-10-29T10:00:00+00:00"
   }
  ]
 }
