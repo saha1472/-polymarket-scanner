@@ -1,5 +1,5 @@
 {
- "cash": 50.0,
+ "cash": 49.0,
  "bets": [
   {
    "strategy": "MORNING",
@@ -57,6 +57,25 @@
    "status": "cancelled",
    "placed": "2026-10-28T16:15:47.122181+00:00",
    "expires": "2026-10-28T18:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "12129435594936697909115695970676533747552080124474264945184758804178420895230",
+   "condition": "0x038c7942d17128879e5a92892eec85b1ee6613fda28f338a1065d537dec76fb8",
+   "event": "lowest-temperature-in-shanghai-on-october-29-2026",
+   "title": "Will the lowest temperature in Shanghai be 15\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "15\u00b0C",
+   "price": 0.85,
+   "shares": 1.1764705882352942,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.17647058823529416,
+   "reason": "favourite 15\u00b0C mid 0.92, local 08:00",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-29T00:00:55.092153+00:00",
+   "expires": "2026-10-29T04:00:00+00:00"
   }
  ]
 }
