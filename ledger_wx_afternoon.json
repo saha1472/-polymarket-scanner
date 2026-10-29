@@ -1,5 +1,5 @@
 {
- "cash": 43.16044364690262,
+ "cash": 42.15144364690262,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -372,6 +372,23 @@
    "reason": "favourite 18\u00b0C mid 0.90, local 15:00",
    "status": "open",
    "opened": "2026-10-29T02:00:52.604373+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "34847955998884829500983270296101112234897121768181444963176581243076439322573",
+   "condition": "0xbc7ffb82cd82edcfe2cd4be15739e66168d86e94f79ead958e31ff4e1ed3d8d3",
+   "event": "highest-temperature-in-seoul-on-october-29-2026",
+   "title": "Will the highest temperature in Seoul (Incheon) be 13\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "13\u00b0C",
+   "price": 0.8200000000000001,
+   "shares": 1.2195121951219512,
+   "stake": 1.0,
+   "fee": 0.009000000000000001,
+   "profit_if_win": 0.21051219512195118,
+   "reason": "favourite 13\u00b0C mid 0.74, local 15:45",
+   "status": "open",
+   "opened": "2026-10-29T06:45:31.254581+00:00"
   }
  ]
 }
