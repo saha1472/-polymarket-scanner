@@ -1,5 +1,5 @@
 {
- "cash": 47.03466666666666,
+ "cash": 47.03216666666666,
  "bets": [
   {
    "strategy": "MORNING",
@@ -335,9 +335,26 @@
    "profit_if_win": 0.36986301369863006,
    "reason": "favourite 9\u00b0C mid 0.84, local 08:15",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-10-29T19:15:37.235034+00:00",
    "expires": "2026-10-29T23:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "81550815960416788120382037914001330284467680980677171096812385888669563460964",
+   "condition": "0x413ddff06d14278c1cc785e0c194833231ce3dc518ff5411695e0e835e3222ca",
+   "event": "lowest-temperature-in-tokyo-on-october-30-2026",
+   "title": "Will the lowest temperature in Tokyo be 14\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "14\u00b0C",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "favourite 14\u00b0C mid 0.76, local 08:00",
+   "status": "open",
+   "opened": "2026-10-29T23:00:56.550587+00:00"
   }
  ]
 }
