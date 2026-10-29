@@ -1,5 +1,5 @@
 {
- "cash": 37.25997632475109,
+ "cash": 35.253976324751086,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -535,6 +535,42 @@
    "reason": "favourite 24\u00b0C mid 0.84, local 15:15",
    "status": "open",
    "opened": "2026-10-29T07:15:34.942858+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "89807852838212871920692289461514767598446679010450583983809157872824718589203",
+   "condition": "0xf8c3932469af1383c8298317a2cef2c774de3eaaffa5a31b05388754899d1d84",
+   "event": "highest-temperature-in-ankara-on-october-29-2026",
+   "title": "Will the highest temperature in Ankara be 14\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "14\u00b0C",
+   "price": 0.8799999999999999,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.006,
+   "profit_if_win": 0.13036363636363646,
+   "reason": "favourite 14\u00b0C mid 0.74, local 15:00",
+   "status": "open",
+   "opened": "2026-10-29T12:00:57.827877+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "28582593552603405154921665993201759476619121874619301253193974214245353559041",
+   "condition": "0x2846087d8028780617ee5ccf31062f0ca9bec185e23d0af772025d053c51a500",
+   "event": "highest-temperature-in-istanbul-on-october-29-2026",
+   "title": "Will the highest temperature in Istanbul be 17\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "17\u00b0C",
+   "price": 0.93,
+   "shares": 1.075268817204301,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.07526881720430101,
+   "reason": "favourite 17\u00b0C mid 0.95, local 15:00",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-29T12:00:57.933347+00:00",
+   "expires": "2026-10-29T16:00:00+00:00"
   }
  ]
 }
