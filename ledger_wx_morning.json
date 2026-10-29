@@ -1,5 +1,5 @@
 {
- "cash": 47.998,
+ "cash": 45.995,
  "bets": [
   {
    "strategy": "MORNING",
@@ -169,6 +169,42 @@
    "status": "resting",
    "placed": "2026-10-29T05:00:54.628605+00:00",
    "expires": "2026-10-29T09:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "59634260994052918247590838147819708819129231343955247293243973319157736139329",
+   "condition": "0x7d149a42747725065c82b037c0627c3f815b25ddc7211be9214d2491bbbf2653",
+   "event": "lowest-temperature-in-milan-on-october-29-2026",
+   "title": "Will the lowest temperature in Milan be 5\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "5\u00b0C",
+   "price": 0.82,
+   "shares": 1.2195121951219512,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.2195121951219512,
+   "reason": "favourite 5\u00b0C mid 0.90, local 08:00",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-29T07:00:52.482327+00:00",
+   "expires": "2026-10-29T11:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "32949027847058492978013668285871029940277574122311340652528006444037086231999",
+   "condition": "0xa6374f5e8463c0266c90d5b46aac7066fb8523f2e2c57372c6772252c12d5cae",
+   "event": "lowest-temperature-in-madrid-on-october-29-2026",
+   "title": "Will the lowest temperature in Madrid be 6\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "6\u00b0C",
+   "price": 0.9400000000000001,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0030000000000000022,
+   "profit_if_win": 0.06082978723404253,
+   "reason": "favourite 6\u00b0C mid 0.82, local 08:00",
+   "status": "open",
+   "opened": "2026-10-29T07:00:52.637173+00:00"
   }
  ]
 }
