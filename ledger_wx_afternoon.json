@@ -1,5 +1,5 @@
 {
- "cash": 35.253976324751086,
+ "cash": 33.237276324751086,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -571,6 +571,40 @@
    "status": "resting",
    "placed": "2026-10-29T12:00:57.933347+00:00",
    "expires": "2026-10-29T16:00:00+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "87949106706981962416554755061789239313897387196516894265382366557823109678691",
+   "condition": "0xdb2d6878ca873e1570f8cc7d5dc2e5eda3113a95f2d36c363c2f708044b8456a",
+   "event": "highest-temperature-in-munich-on-october-29-2026",
+   "title": "Will the highest temperature in Munich be 10\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "10\u00b0C",
+   "price": 0.746,
+   "shares": 1.3404825737265416,
+   "stake": 1.0,
+   "fee": 0.012700000000000001,
+   "profit_if_win": 0.32778257372654157,
+   "reason": "favourite 10\u00b0C mid 0.71, local 15:00",
+   "status": "open",
+   "opened": "2026-10-29T14:00:59.979690+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "2597507212831855456261873236299234429538562617742916564004498273829134611508",
+   "condition": "0x5edbd09107ed270a688418a639d0c3b8808be37a6c09d0978086241988a30ea7",
+   "event": "highest-temperature-in-milan-on-october-29-2026",
+   "title": "Will the highest temperature in Milan be 18\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "18\u00b0C",
+   "price": 0.92,
+   "shares": 1.0869565217391304,
+   "stake": 1.0,
+   "fee": 0.003999999999999998,
+   "profit_if_win": 0.08295652173913037,
+   "reason": "favourite 18\u00b0C mid 0.91, local 15:00",
+   "status": "open",
+   "opened": "2026-10-29T14:01:00.117561+00:00"
   }
  ]
 }
