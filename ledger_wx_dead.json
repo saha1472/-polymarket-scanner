@@ -1,5 +1,5 @@
 {
- "cash": 45.99165,
+ "cash": 44.99065,
  "bets": [
   {
    "strategy": "DEAD",
@@ -68,6 +68,23 @@
    "reason": "observed lowe so far 9\u00b0C",
    "status": "open",
    "opened": "2026-10-29T18:15:30.754559+00:00"
+  },
+  {
+   "strategy": "DEAD",
+   "asset": "72549901184498193320952663356849607549015574013155399849262425313782916310566",
+   "condition": "0x1a4852cc13b9475ee9d1646b0315d480cb2e5156b016549f3cc66793ed66b1f5",
+   "event": "lowest-temperature-in-helsinki-on-october-29-2026",
+   "title": "Will the lowest temperature in Helsinki be 7\u00b0C on October 29?",
+   "outcome": "NO",
+   "bucket": "7\u00b0C",
+   "price": 0.98,
+   "shares": 1.0204081632653061,
+   "stake": 1.0,
+   "fee": 0.0010000000000000009,
+   "profit_if_win": 0.019408163265306144,
+   "reason": "observed lowe so far 6\u00b0C",
+   "status": "open",
+   "opened": "2026-10-29T18:30:46.928755+00:00"
   }
  ]
 }
