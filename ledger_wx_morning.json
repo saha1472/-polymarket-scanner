@@ -1,5 +1,5 @@
 {
- "cash": 44.992999999999995,
+ "cash": 43.992999999999995,
  "bets": [
   {
    "strategy": "MORNING",
@@ -260,6 +260,25 @@
    "reason": "favourite 7\u00b0C mid 0.92, local 10:01",
    "status": "open",
    "opened": "2026-10-29T09:01:01.924899+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "91146712235823569825718810069367457189540980393127874869213072940723634530780",
+   "condition": "0xb485a001e9eadc47b4ffed22be2a455facd0367dabb9e2bffae2599a6f8e5ba7",
+   "event": "lowest-temperature-in-munich-on-october-29-2026",
+   "title": "Will the lowest temperature in Munich be 2\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "2\u00b0C",
+   "price": 0.87,
+   "shares": 1.1494252873563218,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.14942528735632177,
+   "reason": "favourite 2\u00b0C mid 0.92, local 10:45",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-29T09:45:31.582292+00:00",
+   "expires": "2026-10-29T11:00:00+00:00"
   }
  ]
 }
