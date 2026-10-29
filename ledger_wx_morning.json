@@ -1,5 +1,5 @@
 {
- "cash": 43.995,
+ "cash": 44.992999999999995,
  "bets": [
   {
    "strategy": "MORNING",
@@ -166,7 +166,7 @@
    "profit_if_win": 0.25,
    "reason": "favourite 29\u00b0C mid 0.90, local 08:00",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-10-29T05:00:54.628605+00:00",
    "expires": "2026-10-29T09:00:00+00:00"
   },
@@ -221,7 +221,7 @@
    "profit_if_win": 0.16279069767441867,
    "reason": "favourite 3\u00b0C mid 0.93, local 10:15",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-10-29T07:15:34.524742+00:00",
    "expires": "2026-10-29T09:00:00+00:00"
   },
@@ -243,6 +243,23 @@
    "status": "resting",
    "placed": "2026-10-29T08:15:31.748547+00:00",
    "expires": "2026-10-29T10:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "44499650275227159670225327038565656538384196794279176982574309974885788259300",
+   "condition": "0x0d8fc7f7496c09c45c3566d4bd97575fe0d9ceb300d6fff0fd1a9a1083d8bad2",
+   "event": "lowest-temperature-in-warsaw-on-october-29-2026",
+   "title": "Will the lowest temperature in Warsaw be 7\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "7\u00b0C",
+   "price": 0.96,
+   "shares": 1.0416666666666667,
+   "stake": 1.0,
+   "fee": 0.002000000000000002,
+   "profit_if_win": 0.03966666666666674,
+   "reason": "favourite 7\u00b0C mid 0.92, local 10:01",
+   "status": "open",
+   "opened": "2026-10-29T09:01:01.924899+00:00"
   }
  ]
 }
