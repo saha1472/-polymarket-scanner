@@ -1,5 +1,5 @@
 {
- "cash": 48.0,
+ "cash": 47.0,
  "bets": [
   {
    "strategy": "MORNING",
@@ -94,6 +94,25 @@
    "order": "maker",
    "status": "resting",
    "placed": "2026-10-29T00:45:33.142031+00:00",
+   "expires": "2026-10-29T03:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "14271298416713930532655675445133621789346847806657804013697804809435373506118",
+   "condition": "0x000b1d7f74bf38a9306f2cf9109050ed7c134f395383c585ee47b1ebfd28456b",
+   "event": "lowest-temperature-in-busan-on-october-29-2026",
+   "title": "Will the lowest temperature in Busan be 6\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "6\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 6\u00b0C mid 0.94, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-29T01:15:52.672637+00:00",
    "expires": "2026-10-29T03:00:00+00:00"
   }
  ]
