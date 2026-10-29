@@ -1,5 +1,5 @@
 {
- "cash": 33.053188960392774,
+ "cash": 32.043188960392776,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -816,6 +816,23 @@
    "status": "resting",
    "placed": "2026-10-29T22:15:40.767597+00:00",
    "expires": "2026-10-30T01:00:00+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "11329666842398994906934005783789003652609456340630967860865226869915063903841",
+   "condition": "0xe4a2eed307dec4bc40e0b50d93e4f05c6ffb425ba3e56a10784a0d3da45a7679",
+   "event": "highest-temperature-in-san-francisco-on-october-29-2026",
+   "title": "Will the highest temperature in San Francisco be between 64-65\u00b0F on October 29?",
+   "outcome": "YES",
+   "bucket": "64-65\u00b0F",
+   "price": 0.8,
+   "shares": 1.25,
+   "stake": 1.0,
+   "fee": 0.009999999999999998,
+   "profit_if_win": 0.24,
+   "reason": "favourite 64-65\u00b0F mid 0.75, local 15:45",
+   "status": "open",
+   "opened": "2026-10-29T22:45:40.499338+00:00"
   }
  ]
 }
