@@ -1,5 +1,5 @@
 {
- "cash": 39.94717532402914,
+ "cash": 38.93767532402914,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -674,6 +674,23 @@
    "reason": "favourite 74-75\u00b0F mid 0.78, local 15:15",
    "status": "open",
    "opened": "2026-10-29T19:15:37.649751+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "36699059170475527150726677530148488005745634841584642924209306488009403933345",
+   "condition": "0x07c93a96333a84a02a485b1f6aeeb8452343e1f4a9252837c56c106744f0a519",
+   "event": "highest-temperature-in-nyc-on-october-29-2026",
+   "title": "Will the highest temperature in New York City be between 68-69\u00b0F on October 29?",
+   "outcome": "YES",
+   "bucket": "68-69\u00b0F",
+   "price": 0.81,
+   "shares": 1.2345679012345678,
+   "stake": 1.0,
+   "fee": 0.009499999999999998,
+   "profit_if_win": 0.22506790123456782,
+   "reason": "favourite 68-69\u00b0F mid 0.72, local 15:45",
+   "status": "open",
+   "opened": "2026-10-29T19:45:33.391961+00:00"
   }
  ]
 }
