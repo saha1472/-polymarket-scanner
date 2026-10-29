@@ -1,5 +1,5 @@
 {
- "cash": 35.92232532402914,
+ "cash": 34.92232532402914,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -742,6 +742,25 @@
    "reason": "favourite 68-69\u00b0F mid 0.79, local 15:01",
    "status": "open",
    "opened": "2026-10-29T20:01:16.247874+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "67435837148045985687201236863688011778154143701618831641132988143810723943023",
+   "condition": "0x97245b7918dc648d424e08a8504a7f1d8939c455f10f4477ffca46d939f753b7",
+   "event": "highest-temperature-in-houston-on-october-29-2026",
+   "title": "Will the highest temperature in Houston be between 82-83\u00b0F on October 29?",
+   "outcome": "YES",
+   "bucket": "82-83\u00b0F",
+   "price": 0.9,
+   "shares": 1.1111111111111112,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.11111111111111116,
+   "reason": "favourite 82-83\u00b0F mid 0.93, local 16:00",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-29T21:00:52.985712+00:00",
+   "expires": "2026-10-30T00:00:00+00:00"
   }
  ]
 }

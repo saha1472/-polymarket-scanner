@@ -1,5 +1,5 @@
 {
- "cash": 40.09722057009427,
+ "cash": 39.094720570094275,
  "bets": [
   {
    "strategy": "LATE",
@@ -245,6 +245,23 @@
    "reason": "lowe so far 8\u00b0C at local 21:01",
    "status": "open",
    "opened": "2026-10-29T20:01:14.976889+00:00"
+  },
+  {
+   "strategy": "LATE",
+   "asset": "75390734807716565790863399033144341491209928011135103567922581609544801812040",
+   "condition": "0x2de5041541de3803f16dc68a66b7dae969bb7596ac45f9540c6780f7f5ca151a",
+   "event": "lowest-temperature-in-london-on-october-29-2026",
+   "title": "Will the lowest temperature in London be 10\u00b0C on October 29?",
+   "outcome": "NO",
+   "bucket": "10\u00b0C",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "lowe so far 12\u00b0C at local 21:00",
+   "status": "open",
+   "opened": "2026-10-29T21:00:52.050715+00:00"
   }
  ]
 }
