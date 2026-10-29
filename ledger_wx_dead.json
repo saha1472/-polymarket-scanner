@@ -1,4 +1,73 @@
 {
- "cash": 50.0,
- "bets": []
+ "cash": 45.99165,
+ "bets": [
+  {
+   "strategy": "DEAD",
+   "asset": "54114336406843877706656079278216918983891000857614130218965618000257777013838",
+   "condition": "0xcc3b1f6f726d46719100e165e5a1ff18415f753ea21403eb8d7791cd47f293ec",
+   "event": "highest-temperature-in-buenos-aires-on-october-29-2026",
+   "title": "Will the highest temperature in Buenos Aires be 23\u00b0C on October 29?",
+   "outcome": "NO",
+   "bucket": "23\u00b0C",
+   "price": 0.943,
+   "shares": 1.0604453870625663,
+   "stake": 1.0,
+   "fee": 0.0028500000000000023,
+   "profit_if_win": 0.0575953870625663,
+   "reason": "observed high so far 24\u00b0C",
+   "status": "open",
+   "opened": "2026-10-29T18:15:30.411100+00:00"
+  },
+  {
+   "strategy": "DEAD",
+   "asset": "37351033225445257274402176244110385249686047597032682587129955746514787150672",
+   "condition": "0x59192b973585f40bfb4245d1da9a6c96d7cd70c3176de11ef933d7055f9d8c11",
+   "event": "highest-temperature-in-toronto-on-october-29-2026",
+   "title": "Will the highest temperature in Toronto be 22\u00b0C on October 29?",
+   "outcome": "NO",
+   "bucket": "22\u00b0C",
+   "price": 0.98,
+   "shares": 1.0204081632653061,
+   "stake": 1.0,
+   "fee": 0.0010000000000000009,
+   "profit_if_win": 0.019408163265306144,
+   "reason": "observed high so far 23\u00b0C",
+   "status": "open",
+   "opened": "2026-10-29T18:15:30.514470+00:00"
+  },
+  {
+   "strategy": "DEAD",
+   "asset": "37267911310634661889058325249890057018387678242213465584771978582758549960425",
+   "condition": "0x6b1b11de12c2c9152c623f325901487067ce5b6ead81f07c249f165024d52f30",
+   "event": "lowest-temperature-in-seoul-on-october-30-2026",
+   "title": "Will the lowest temperature in Seoul (Incheon) be 9\u00b0C on October 30?",
+   "outcome": "NO",
+   "bucket": "9\u00b0C",
+   "price": 0.93,
+   "shares": 1.075268817204301,
+   "stake": 1.0,
+   "fee": 0.003499999999999998,
+   "profit_if_win": 0.071768817204301,
+   "reason": "observed lowe so far 8\u00b0C",
+   "status": "open",
+   "opened": "2026-10-29T18:15:30.633444+00:00"
+  },
+  {
+   "strategy": "DEAD",
+   "asset": "74707523365125495769497328411898096050783934051399145668516158971685296061794",
+   "condition": "0x0aab552823caebaba7e66e681e8c4692568a4c658314d465ac650dd069e7bbf5",
+   "event": "lowest-temperature-in-qingdao-on-october-30-2026",
+   "title": "Will the lowest temperature in Qingdao be 10\u00b0C on October 30?",
+   "outcome": "NO",
+   "bucket": "10\u00b0C",
+   "price": 0.98,
+   "shares": 1.0204081632653061,
+   "stake": 1.0,
+   "fee": 0.0010000000000000009,
+   "profit_if_win": 0.019408163265306144,
+   "reason": "observed lowe so far 9\u00b0C",
+   "status": "open",
+   "opened": "2026-10-29T18:15:30.754559+00:00"
+  }
+ ]
 }
