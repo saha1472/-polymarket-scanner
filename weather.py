@@ -2,7 +2,7 @@
 
   DEAD  - buy NO on buckets the day's airport readings have already ruled out
           (the high can only go up, the low only down). Near-certain, small gain.
-  SHIFT - when a new forecast moves a city's high/low by 0.5C+, buy YES on the
+  SHIFT - (OFF, see settings) when a new forecast moves a city's high/low by 0.5C+, buy YES on the
           bucket next to the market favourite, in the direction of the move,
           while it is still cheap (5-60c).
   LATE  - riskier DEAD: late in the local day, buy NO at 85-97c on buckets
@@ -51,7 +51,10 @@ DEAD_MAX_PRICE = 0.985       # pay at most this for NO (need ~1.5%+ to be worth 
 DEAD_MIN_RETURN = 0.01       # after fees
 DEAD_PER_EVENT = 3
 
-# SHIFT
+# SHIFT - OFF since 2026-10-29: backtest (Oct 5-27, 994 bets) lost ~33% per
+# bet, no better than betting against the move or picking a random neighbour.
+# Its ledger stays as a record; set True to re-enable.
+SHIFT_ENABLED = False
 SHIFT_MIN_MOVE_C = 0.5       # forecast must move at least this much (in C)
 SHIFT_MIN_PRICE = 0.05
 SHIFT_MAX_PRICE = 0.60
@@ -387,6 +390,8 @@ def late_signals(events, obs, fc):
 
 def shift_signals(events, fc, state):
     out = []
+    if not SHIFT_ENABLED:
+        return out
     seen = state.setdefault("forecast", {})
     for e in events:
         f = fc.get(e["station"])
