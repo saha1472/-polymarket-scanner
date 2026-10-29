@@ -1,5 +1,5 @@
 {
- "cash": 32.447788519873036,
+ "cash": 33.447788519873036,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -570,7 +570,7 @@
    "profit_if_win": 0.07526881720430101,
    "reason": "favourite 17\u00b0C mid 0.95, local 15:00",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-10-29T12:00:57.933347+00:00",
    "expires": "2026-10-29T16:00:00+00:00"
   },

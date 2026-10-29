@@ -1,5 +1,5 @@
 {
-  "cash": 44.18209834215925,
+  "cash": 42.162498342159246,
   "bets": [
     {
       "asset": "27670129619626213108912772417909250054836917373961985276008181424732686448004",
@@ -965,6 +965,54 @@
       "stops": {},
       "closed": "2026-10-29T05:30:39.587166+00:00",
       "pnl": -1.0266
+    },
+    {
+      "asset": "1614570625134171105705330302098782313694925198138750110593615039648487260818",
+      "condition": "0xf7be09aa32a8148c15f8877b06626f17c2a5e8331600486a285ec146a82d6b1b",
+      "title": "Will Gold (XAUUSD) hit (LOW) $3,950 Week of October 26 2026?",
+      "outcome": "No",
+      "event": "will-xauusd-hit-week-of-october-26-2026",
+      "price": 0.87,
+      "shares": 1.1494252873563218,
+      "stake": 1.0,
+      "fee": 0.009099999999999999,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Tokor"
+      ],
+      "holders": {
+        "0xa19cbababc312f9df185e49d7004c249ed1ade6b": {
+          "name": "Tokor",
+          "size": 1500.0
+        }
+      },
+      "opened": "2026-10-29T16:02:23.730978+00:00",
+      "ends": "2026-10-30T00:00:00.348121+00:00"
+    },
+    {
+      "asset": "111863237096343453921941336833919098058632586036922061990473632182697882196944",
+      "condition": "0xebd71741aa1ea06f75706d0aa7107012e00fb00e4754e4328a71f9fd89b77007",
+      "title": "Will the price of Ethereum be above $2,300 on October 31?",
+      "outcome": "Yes",
+      "event": "ethereum-above-on-october-31-2026",
+      "price": 0.85,
+      "shares": 1.1764705882352942,
+      "stake": 1.0,
+      "fee": 0.010500000000000002,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Tokor"
+      ],
+      "holders": {
+        "0xa19cbababc312f9df185e49d7004c249ed1ade6b": {
+          "name": "Tokor",
+          "size": 185.0
+        }
+      },
+      "opened": "2026-10-29T16:02:23.731008+00:00",
+      "ends": "2026-10-31T00:00:00.348097+00:00"
     }
   ]
 }
