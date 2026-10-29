@@ -1,5 +1,5 @@
 {
- "cash": 45.995,
+ "cash": 44.995,
  "bets": [
   {
    "strategy": "MORNING",
@@ -205,6 +205,25 @@
    "reason": "favourite 6\u00b0C mid 0.82, local 08:00",
    "status": "open",
    "opened": "2026-10-29T07:00:52.637173+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "32889560123917751995792969705973323570022416312693321979144914776772137171672",
+   "condition": "0xbc7d843364b408fd87a223a6e081748fb3eed9f0d24d8a4e786d7b79ec638641",
+   "event": "lowest-temperature-in-moscow-on-october-29-2026",
+   "title": "Will the lowest temperature in Moscow be 3\u00b0C on October 29?",
+   "outcome": "YES",
+   "bucket": "3\u00b0C",
+   "price": 0.86,
+   "shares": 1.1627906976744187,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.16279069767441867,
+   "reason": "favourite 3\u00b0C mid 0.93, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-29T07:15:34.524742+00:00",
+   "expires": "2026-10-29T09:00:00+00:00"
   }
  ]
 }
