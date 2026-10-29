@@ -1,5 +1,5 @@
 {
- "cash": 36.05868896039277,
+ "cash": 34.053188960392774,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -763,6 +763,40 @@
    "status": "resting",
    "placed": "2026-10-29T21:00:52.985712+00:00",
    "expires": "2026-10-30T00:00:00+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "87791874025147489441128042388106688293746265952101429295654094312262270804397",
+   "condition": "0xf3fe7efd3b43b78aef4cef3f0d126ce321a3e328a6aaafe3c93e269bcf1a5d33",
+   "event": "highest-temperature-in-denver-on-october-29-2026",
+   "title": "Will the highest temperature in Denver be between 64-65\u00b0F on October 29?",
+   "outcome": "YES",
+   "bucket": "64-65\u00b0F",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "favourite 64-65\u00b0F mid 0.91, local 16:00",
+   "status": "open",
+   "opened": "2026-10-29T22:01:00.069266+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "9069164209545874561063452838153350453183181203834562692560490620670396092772",
+   "condition": "0x1b4ca5bb70fcababba2b5d38f5853af986a8e0ad412971c6428899f91b65548d",
+   "event": "highest-temperature-in-seattle-on-october-29-2026",
+   "title": "Will the highest temperature in Seattle be between 54-55\u00b0F on October 29?",
+   "outcome": "YES",
+   "bucket": "54-55\u00b0F",
+   "price": 0.9400000000000001,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0030000000000000022,
+   "profit_if_win": 0.06082978723404253,
+   "reason": "favourite 54-55\u00b0F mid 0.84, local 15:00",
+   "status": "open",
+   "opened": "2026-10-29T22:01:00.194434+00:00"
   }
  ]
 }
