@@ -1,5 +1,5 @@
 {
- "cash": 48.03466666666666,
+ "cash": 47.03466666666666,
  "bets": [
   {
    "strategy": "MORNING",
@@ -319,6 +319,25 @@
    "status": "cancelled",
    "placed": "2026-10-29T16:15:52.567661+00:00",
    "expires": "2026-10-29T18:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "97409722030199415846354871415708323502277237536129929552497835825519257564382",
+   "condition": "0x014206374e5b2956bf206e50d38dd6dc3d8659af8722cfeee1c048c29231d8c9",
+   "event": "lowest-temperature-in-wellington-on-october-30-2026",
+   "title": "Will the lowest temperature in Wellington be 9\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "9\u00b0C",
+   "price": 0.73,
+   "shares": 1.36986301369863,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.36986301369863006,
+   "reason": "favourite 9\u00b0C mid 0.84, local 08:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-29T19:15:37.235034+00:00",
+   "expires": "2026-10-29T23:00:00+00:00"
   }
  ]
 }

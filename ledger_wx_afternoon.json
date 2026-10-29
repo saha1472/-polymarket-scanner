@@ -1,5 +1,5 @@
 {
- "cash": 40.95567532402914,
+ "cash": 39.94717532402914,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -657,6 +657,23 @@
    "status": "cancelled",
    "placed": "2026-10-29T15:33:49.025612+00:00",
    "expires": "2026-10-29T17:00:00+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "30685947540739431844026956917887611003627045076664836646776796401031627516933",
+   "condition": "0x49dc7dd4d1ddb38eff6636dd635f23e0e0754dae7b4cdf370f121ca0c56aaf74",
+   "event": "highest-temperature-in-atlanta-on-october-29-2026",
+   "title": "Will the highest temperature in Atlanta be between 74-75\u00b0F on October 29?",
+   "outcome": "YES",
+   "bucket": "74-75\u00b0F",
+   "price": 0.83,
+   "shares": 1.2048192771084338,
+   "stake": 1.0,
+   "fee": 0.008500000000000002,
+   "profit_if_win": 0.19631927710843383,
+   "reason": "favourite 74-75\u00b0F mid 0.78, local 15:15",
+   "status": "open",
+   "opened": "2026-10-29T19:15:37.649751+00:00"
   }
  ]
 }
