@@ -475,8 +475,8 @@ def open_paper_bets(ledger, signals):
             continue  # stopped out of this event before: no re-entry
         if s.get("event") and per_event.get(s["event"], 0) >= MAX_BETS_PER_EVENT:
             continue  # already have a bet on this match/event
-        if min(per_trader.get(t, 0) for t in s["traders"]) >= MAX_OPEN_PER_TRADER:
-            continue  # this trader already drives enough open bets
+        if max(per_trader.get(t, 0) for t in s["traders"]) >= MAX_OPEN_PER_TRADER:
+            continue  # strict cap: ANY supporting trader already drives enough open bets
         if ledger["cash"] < s["stake"] + s["fee"]:
             continue  # try cheaper signals further down the list
         ledger["cash"] -= s["stake"] + s["fee"]
@@ -625,12 +625,11 @@ def check_stops(ledger):
 
 
 def notify(lines):
+    """True if delivered (or nothing to send / no webhook configured)."""
     url = os.environ.get("DISCORD_WEBHOOK_URL")
     if not url or not lines:
-        return
-    text = "\n".join(lines)
-    for i in range(0, len(text), 1900):   # Discord caps messages at 2000 chars
-        requests.post(url, json={"content": text[i:i + 1900]}, timeout=10)
+        return True
+    return simcore.post_discord(url, "\n".join(lines))
 
 
 if __name__ == "__main__":
@@ -694,4 +693,5 @@ if __name__ == "__main__":
             msgs.append("🛑 With stop-loss " + " | ".join(parts))
         msgs = [f"**[{SCAN}]**"] + msgs
     print("\n".join(msgs))
-    notify(msgs)
+    if not notify(msgs):
+        sys.exit("Discord delivery failed (ledger was saved). Failing the run so it's visible.")
