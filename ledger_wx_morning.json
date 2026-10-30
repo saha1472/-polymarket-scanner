@@ -1,5 +1,5 @@
 {
- "cash": 47.0959964539007,
+ "cash": 44.0959964539007,
  "bets": [
   {
    "strategy": "MORNING",
@@ -378,6 +378,63 @@
    "status": "resting",
    "placed": "2026-10-29T23:30:41.226617+00:00",
    "expires": "2026-10-30T03:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "89881314390422822174775246342424403325900882984317908891207518536941195196575",
+   "condition": "0x3d7bfcde1ee1d0df9c4af1eba56cc53498179b62e044e7a6176e5fd6a2a6174d",
+   "event": "lowest-temperature-in-chongqing-on-october-30-2026",
+   "title": "Will the lowest temperature in Chongqing be 14\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "14\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 14\u00b0C mid 0.94, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-30T02:15:31.210110+00:00",
+   "expires": "2026-10-30T04:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "11272273270204750933192130106346304607629454844955684398449771666142946543374",
+   "condition": "0xe12e7a8bfccb24ac0540630802deeb340103b9144175c20d20fb306512385ec2",
+   "event": "lowest-temperature-in-wuhan-on-october-30-2026",
+   "title": "Will the lowest temperature in Wuhan be 13\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "13\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 13\u00b0C mid 0.94, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-30T02:15:31.314674+00:00",
+   "expires": "2026-10-30T04:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "110783019217630157094953877491740467525247807802191899491053780364315261581942",
+   "condition": "0xe28474f507207dd524dcea80d399e3b5e8ece24e67971da0077f19d0ec11228f",
+   "event": "lowest-temperature-in-qingdao-on-october-30-2026",
+   "title": "Will the lowest temperature in Qingdao be 7\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "7\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 7\u00b0C mid 0.94, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-30T02:15:31.494201+00:00",
+   "expires": "2026-10-30T04:00:00+00:00"
   }
  ]
 }
