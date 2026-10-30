@@ -1,5 +1,5 @@
 {
- "cash": 45.0884964539007,
+ "cash": 44.0884964539007,
  "bets": [
   {
    "strategy": "MORNING",
@@ -488,6 +488,25 @@
    "status": "resting",
    "placed": "2026-10-30T07:15:38.181361+00:00",
    "expires": "2026-10-30T09:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "16205632152923324787981964916970274890091436298557097989413782890795532762078",
+   "condition": "0x133ce055315e145b2d16d417848f2dc5b73d84c04bc5cc415a90db457283869b",
+   "event": "lowest-temperature-in-paris-on-october-30-2026",
+   "title": "Will the lowest temperature in Paris be 5\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "5\u00b0C",
+   "price": 0.93,
+   "shares": 1.075268817204301,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.07526881720430101,
+   "reason": "favourite 5\u00b0C mid 0.95, local 08:30",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-30T07:30:44.381046+00:00",
+   "expires": "2026-10-30T11:00:00+00:00"
   }
  ]
 }
