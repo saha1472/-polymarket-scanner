@@ -1,5 +1,5 @@
 {
- "cash": 38.09007057009428,
+ "cash": 37.08857057009428,
  "bets": [
   {
    "strategy": "LATE",
@@ -283,6 +283,23 @@
    "reason": "high so far 64\u00b0F at local 17:30",
    "status": "open",
    "opened": "2026-10-30T00:30:50.679929+00:00"
+  },
+  {
+   "strategy": "LATE",
+   "asset": "33932211176416253130076446947906389736981070662969373553316894222666506459278",
+   "condition": "0xc75aeecc59e488b55270f464a08945a8750d1f6a6f962505d78d06380f93e3f8",
+   "event": "lowest-temperature-in-miami-on-october-29-2026",
+   "title": "Will the lowest temperature in Miami be between 74-75\u00b0F on October 29?",
+   "outcome": "NO",
+   "bucket": "74-75\u00b0F",
+   "price": 0.9699999999999999,
+   "shares": 1.0309278350515465,
+   "stake": 1.0,
+   "fee": 0.0015000000000000015,
+   "profit_if_win": 0.029427835051546503,
+   "reason": "lowe so far 80\u00b0F at local 21:00",
+   "status": "open",
+   "opened": "2026-10-30T01:00:56.218584+00:00"
   }
  ]
 }
