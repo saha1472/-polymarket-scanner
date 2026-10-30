@@ -4,9 +4,10 @@ guessing whether the bot is alive."""
 import glob
 import json
 import os
+import sys
 from datetime import datetime, timedelta, timezone
 
-import requests
+import simcore
 
 JST = timezone(timedelta(hours=9))
 SEND_AFTER_HOUR = 8
@@ -21,8 +22,8 @@ NAMES = {
     "ledger_wx_dead.json": "WX dead buckets",
     "ledger_wx_late.json": "WX late (risky)",
     "ledger_wx_shift.json": "WX forecast shift",
-    "ledger_wx_morning.json": "WX morning low (maker)",
-    "ledger_wx_afternoon.json": "WX afternoon high (maker)",
+    "ledger_wx_morning.json": "WX morning low (maker, proxy fills)",
+    "ledger_wx_afternoon.json": "WX afternoon high (maker, proxy fills)",
 }
 
 
@@ -35,9 +36,12 @@ def read_json(path, default):
 
 
 def line(path, since):
-    led = read_json(path, None)
-    if not led:
-        return None
+    name = NAMES.get(path, path.replace("ledger_", "").replace(".json", ""))
+    try:
+        led = simcore.load_ledger(path, 50.0)   # same validation the bots use
+    except SystemExit as err:
+        # never hide a broken ledger from the daily summary
+        return (float("-inf"), f"⚠️ **{name}**: ledger can't be read or is invalid ({err})")
     bets = led.get("bets", [])
     done = [b for b in bets if b.get("status") in ("won", "lost", "stopped", "split")]
     open_n = sum(1 for b in bets if b.get("status") == "open")
@@ -53,7 +57,6 @@ def line(path, since):
     rec = (f"{wins}-{len(done) - wins - stopped - split}"
            + (f" (+{stopped} stopped)" if stopped else "")
            + (f" (+{split} split)" if split else ""))
-    name = NAMES.get(path, path.replace("ledger_", "").replace(".json", ""))
     return (pnl, f"{'🟢' if pnl > 0 else '🔴' if pnl < 0 else '⚪'} **{name}**: {rec} | "
                  f"P&L ${pnl:+.2f} (ROI {roi}) | 24h {len(day)} settled ${day_pnl:+.2f} | "
                  f"open {open_n}" + (f" (+{resting} resting bids)" if resting else "")
@@ -69,19 +72,23 @@ def main():
         return
     since = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
     rows = [r for r in (line(p, since) for p in sorted(glob.glob("ledger*.json"))) if r]
-    total = sum(r[0] for r in rows)
+    total = sum(r[0] for r in rows if r[0] != float("-inf"))
     msg = [f"🫀 **Daily heartbeat {now:%a %d %b, %H:%M} JST** | all paper ledgers "
            f"${total:+.2f}"] + [r[1] for r in sorted(rows, key=lambda r: -r[0])]
     text = "\n".join(msg)
     print(text)
     url = os.environ.get("DISCORD_WEBHOOK_URL")
-    if url:
-        for i in range(0, len(text), 1900):
-            requests.post(url, json={"content": text[i:i + 1900]}, timeout=10)
+    if not url:
+        print("No DISCORD_WEBHOOK_URL set; heartbeat not sent (and not marked as sent).")
+        return 0
+    if not simcore.post_discord(url, text):
+        # don't mark it as sent: the next run tries again
+        print("Heartbeat NOT delivered; will retry next run.")
+        return 1
     state["last"] = now.date().isoformat()
-    with open(STATE_FILE, "w") as fh:
-        json.dump(state, fh)
+    simcore.write_json_atomic(STATE_FILE, state)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
