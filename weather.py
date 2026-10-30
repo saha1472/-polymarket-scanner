@@ -464,21 +464,49 @@ def ledger_file(strategy):
     return f"ledger_wx_{strategy.lower()}.json"
 
 
+def resolved_win(row, asset):
+    """True/False once the market is FINALLY resolved, None otherwise."""
+    if not row or not row.get("closed"):
+        return None
+    status = row.get("umaResolutionStatus")
+    if status and status != "resolved":
+        return None          # proposed / disputed: not final yet
+    try:
+        ids = json.loads(row.get("clobTokenIds") or "[]")
+        prices = [num(x) for x in json.loads(row.get("outcomePrices") or "[]")]
+    except ValueError:
+        return None
+    if asset not in ids or len(prices) != len(ids) or not prices:
+        return None
+    top = max(prices)
+    if top < 0.99 or prices.count(top) > 1:
+        return None
+    return prices[ids.index(asset)] == top
+
+
+def load_ledger(path):
+    """Missing -> fresh $50. Present but unreadable -> stop loudly."""
+    if not os.path.exists(path):
+        return {"cash": START_BANKROLL, "bets": []}
+    try:
+        with open(path) as fh:
+            led = json.load(fh)
+    except (OSError, ValueError) as err:
+        raise SystemExit(f"{path} exists but can't be read ({err}). Not trading.")
+    if not isinstance(led, dict) or not isinstance(led.get("cash"), (int, float)) \
+            or not isinstance(led.get("bets"), list):
+        raise SystemExit(f"{path} has an unexpected format. Not trading.")
+    return led
+
+
 def settle(ledger):
     msgs = []
     open_bets = [b for b in ledger["bets"] if b["status"] == "open"]
     rows = pmap(lambda b: get(f"{GAMMA_API}/markets", {"condition_ids": b["condition"],
                                                        "closed": "true"}) or [], open_bets)
     for bet, r in zip(open_bets, rows):
-        if not r or not r[0].get("closed"):
-            continue
-        try:
-            ids = json.loads(r[0].get("clobTokenIds") or "[]")
-            prices = [num(x) for x in json.loads(r[0].get("outcomePrices") or "[]")]
-            if max(prices) < 0.99:
-                continue
-            won = prices[ids.index(bet["asset"])] > 0.99
-        except (ValueError, IndexError):
+        won = resolved_win(r[0] if r else None, bet["asset"])
+        if won is None:
             continue
         payout = bet["shares"] if won else 0.0
         ledger["cash"] += payout
@@ -552,21 +580,27 @@ def resting_bid(strategy, e, b, reason):
 
 
 def check_resting(ledger, asks, active):
-    """asks: YES token -> current best ask (only where a seller exists);
-    active: every YES token still trading in this run's market scan."""
+    """asks: YES token -> current best ask (only where a seller exists).
+    This is a FILL PROXY: a seller at or below our price on a later snapshot.
+    It can't see queue position, sizes or fills between snapshots.
+    Expiry is checked first: a quote seen after the deadline can't prove the
+    order filled before it."""
     msgs = []
     now = now_utc().isoformat()
     for bet in ledger["bets"]:
         if bet["status"] != "resting":
+            continue
+        if now >= bet["expires"]:
+            bet["status"] = "cancelled"          # releases the reserved cash once
+            ledger["cash"] += bet["stake"]
             continue
         ask = asks.get(bet["asset"])
         if ask is not None and ask <= bet["price"]:
             bet["status"] = "open"
             bet["opened"] = now
             msgs.append(f"✅ Bid filled: YES {bet['bucket']} @ {bet['price']:.2f} | {bet['title']}")
-        elif now >= bet["expires"] or bet["asset"] not in active:
-            bet["status"] = "cancelled"
-            ledger["cash"] += bet["stake"]
+        # a market missing from this run's scan (e.g. an API hiccup) is NOT
+        # treated as closed; the expiry deadline cancels the bid instead
     return msgs
 
 
@@ -626,7 +660,7 @@ if __name__ == "__main__":
     }
     out = []
     for strat in STRATEGIES:
-        led = read_json(ledger_file(strat), {"cash": START_BANKROLL, "bets": []})
+        led = load_ledger(ledger_file(strat))
         msgs = check_resting(led, asks, active) + settle(led) + open_bets(led, signals[strat])
         write_json(ledger_file(strat), led)
         print(f"{strat}: {len(signals[strat])} signal(s) | {summary(led)}")
