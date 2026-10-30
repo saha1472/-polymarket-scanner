@@ -211,6 +211,19 @@ class Settlement(unittest.TestCase):
             self.assertAlmostEqual(led["cash"], 49.625)
 
 
+class SplitDisplay(unittest.TestCase):
+    def test_weather_summary_counts_split_separately(self):
+        led = {"cash": 50.0, "bets": [
+            {"status": "won", "pnl": 0.2}, {"status": "lost", "pnl": -1.0},
+            {"status": "split", "pnl": -0.38}]}
+        text = weather.summary(led)
+        self.assertIn("record 1-1 (+1 split)", text)
+
+    def test_weather_summary_single_split_is_not_a_loss(self):
+        text = weather.summary({"cash": 50.0, "bets": [{"status": "split", "pnl": -0.38}]})
+        self.assertIn("record 0-0 (+1 split)", text)
+
+
 # ---------- Follow-up #2: partial stops vs holding ----------
 
 class PartialStopSequences(unittest.TestCase):
@@ -376,3 +389,108 @@ class LedgerLoading(InTempDir):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# ---------- Audit trail and the read-only settlement checker ----------
+
+import verify_settlements  # noqa: E402
+
+
+class AuditTrail(unittest.TestCase):
+    BOOK = book(bids=[(0.58, 10), (0.60, 5), (0.55, 1)],
+                asks=[(0.66, 3), (0.62, 2), (0.70, 9), (0.64, 1), (0.68, 1), (0.75, 1)])
+
+    def test_book_snapshot_best_first_and_capped(self):
+        snap = simcore.book_snapshot(self.BOOK, levels=5)
+        self.assertEqual([a[0] for a in snap["asks"]], [0.62, 0.64, 0.66, 0.68, 0.70])
+        self.assertEqual([b[0] for b in snap["bids"]], [0.60, 0.58, 0.55])
+        self.assertIsNone(simcore.book_snapshot(None))
+
+    def test_code_version_prefers_github_sha(self):
+        old = (os.environ.get("GITHUB_SHA"), simcore._CODE_VERSION)
+        os.environ["GITHUB_SHA"] = "abcdef1234567890"
+        simcore._CODE_VERSION = None
+        try:
+            self.assertEqual(simcore.code_version(), "abcdef123456")
+        finally:
+            simcore._CODE_VERSION = old[1]
+            if old[0] is None:
+                os.environ.pop("GITHUB_SHA", None)
+            else:
+                os.environ["GITHUB_SHA"] = old[0]
+
+    def test_copy_bet_records_audit(self):
+        s = {"asset": "A2", "condition": "c9", "event": "e9", "stake": 1, "fee": 0.01,
+             "price": 0.62, "shares": 1.6, "order": "market", "traders": ["x"],
+             "holders": {"w": {"name": "x", "size": 100, "win_rate": 0.6, "roi": 0.2, "n": 40}},
+             "hours": 5, "title": "t", "outcome": "o", "avg_entry": 0.6,
+             "profit_if_win": 0.5, "breakeven": 0.63, "book": self.BOOK}
+        led = {"cash": 50, "bets": []}
+        signals.open_paper_bets(led, [s])
+        a = led["bets"][0]["audit"]
+        self.assertEqual(a["scan"], signals.SCAN)
+        self.assertIn("code", a)
+        self.assertEqual(a["settings"]["min_price"], signals.MIN_PRICE)
+        self.assertEqual(a["book"]["asks"][0], [0.62, 2.0])
+        self.assertEqual(led["bets"][0]["holders"]["w"]["win_rate"], 0.6)
+        json.dumps(led, allow_nan=False)            # must stay serialisable
+
+    def test_weather_bet_records_audit(self):
+        old = weather.get
+        weather.get = lambda u, p=None, timeout=25: self.BOOK
+        try:
+            bet = weather.make_bet("MORNING", {"slug": "ev"},
+                                   {"yes": "Y", "no": "N", "condition": "c", "question": "q",
+                                    "label": "7°C"}, "YES", "test")
+        finally:
+            weather.get = old
+        self.assertEqual(bet["audit"]["scan"], "WX-MORNING")
+        self.assertEqual(bet["audit"]["settings"]["hours"], [8, 12])
+        self.assertEqual(bet["audit"]["book"]["asks"][0], [0.62, 2.0])
+
+    def test_resting_fill_records_evidence(self):
+        led = {"cash": 49.0, "bets": [{"status": "resting", "asset": "A", "price": 0.80,
+                                       "stake": 1.0, "expires": iso(60), "bucket": "x",
+                                       "title": "t"}]}
+        weather.check_resting(led, {"A": 0.79}, {"A"})
+        ev = led["bets"][0]["fill_evidence"]
+        self.assertEqual(ev["seen_ask"], 0.79)
+        self.assertIn("proxy", ev["note"])
+
+
+class SettlementChecker(unittest.TestCase):
+    def _bet(self, **kw):
+        b = {"status": "won", "asset": "A", "shares": 1.25, "stake": 1.0, "fee": 0.01,
+             "price": 0.8, "pnl": 0.24, "title": "t"}
+        b.update(kw)
+        return b
+
+    def _check(self, bets, payouts, cash=None):
+        realized = sum(b.get("pnl", 0) for b in bets if b["status"] in verify_settlements.SETTLED)
+        led = {"cash": 50 + realized if cash is None else cash, "bets": bets}
+        return verify_settlements.check_ledger("L", led, payouts)
+
+    def test_clean_ledger_passes(self):
+        rows, problems, gap = self._check([self._bet()], {"A": 1.0})
+        self.assertEqual(problems, [])
+
+    def test_catches_wrong_outcome(self):
+        _, problems, _ = self._check([self._bet()], {"A": 0.0})
+        self.assertTrue(any("ledger says won" in p for p in problems))
+
+    def test_catches_wrong_pnl(self):
+        _, problems, _ = self._check([self._bet(pnl=0.5)], {"A": 1.0})
+        self.assertTrue(any("pnl" in p for p in problems))
+
+    def test_checks_hold_for_partial_stops(self):
+        b = self._bet(shares=0.75, recovered=0.14475, pnl=-0.11525, orig_shares=1.25,
+                      hold_pnl=0.24)
+        self.assertEqual(self._check([b], {"A": 1.0})[1], [])
+        b["hold_pnl"] = -0.11525                     # the old bug: hold == actual
+        self.assertTrue(any("hold_pnl" in p for p in self._check([b], {"A": 1.0})[1]))
+
+    def test_catches_cash_gap_and_unresolved(self):
+        _, problems, gap = self._check([self._bet()], {"A": 1.0}, cash=10.0)
+        self.assertTrue(any("reconcile" in p for p in problems))
+        _, problems, _ = self._check([self._bet()], {})
+        self.assertTrue(any("no resolved payout" in p for p in problems))
