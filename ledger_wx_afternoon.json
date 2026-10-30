@@ -1,5 +1,5 @@
 {
- "cash": 41.51514598006969,
+ "cash": 42.50914598006969,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -1118,7 +1118,7 @@
    "profit_if_win": 0.08695652173913038,
    "reason": "favourite 18\u00b0C mid 0.94, local 15:01",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-10-30T14:01:16.894650+00:00",
    "expires": "2026-10-30T18:00:00+00:00",
    "audit": {
@@ -1341,7 +1341,7 @@
    "profit_if_win": 0.09890109890109877,
    "reason": "favourite 13\u00b0C mid 0.94, local 15:01",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-10-30T14:01:17.252041+00:00",
    "expires": "2026-10-30T18:00:00+00:00",
    "audit": {
@@ -1459,6 +1459,87 @@
    },
    "status": "open",
    "opened": "2026-10-30T15:01:02.706974+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "69619560634526323610959869311133445914696536020978592501116997748420159543824",
+   "condition": "0xfe90708053892d714ee6a3c5cbc7b5bc45f15c6da334bfc3366f3276dca878ad",
+   "event": "highest-temperature-in-buenos-aires-on-october-30-2026",
+   "title": "Will the highest temperature in Buenos Aires be 24\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "24\u00b0C",
+   "price": 0.8799999999999999,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.006,
+   "profit_if_win": 0.13036363636363646,
+   "reason": "favourite 24\u00b0C mid 0.84, local 15:01",
+   "audit": {
+    "code": "8c48d01c2f4b",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-30T18:01:10.006617+00:00",
+    "book": {
+     "asks": [
+      [
+       0.88,
+       55.43
+      ],
+      [
+       0.98,
+       20.0
+      ],
+      [
+       0.99,
+       159.27
+      ]
+     ],
+     "bids": [
+      [
+       0.8,
+       9.34
+      ],
+      [
+       0.76,
+       15.19
+      ],
+      [
+       0.18,
+       20.0
+      ],
+      [
+       0.16,
+       40.0
+      ],
+      [
+       0.15,
+       6.41
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793383269745",
+     "hash": "edfc550f1d4e351e56bf1a941203c89137171923"
+    }
+   },
+   "status": "open",
+   "opened": "2026-10-30T18:01:10.006659+00:00"
   }
  ]
 }
