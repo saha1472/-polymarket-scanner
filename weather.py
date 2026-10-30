@@ -281,7 +281,7 @@ def forecasts(stations, coords):
 
 def fill(token, dollars):
     """Walk the asks like a real market order. Returns (avg price, shares,
-    fee) for spending `dollars`, or None if the book can't fill it."""
+    fee, book) for spending `dollars`, or None if the book can't fill it."""
     book = get(BOOK_URL, {"token_id": token})
     if not book:
         return None
@@ -295,8 +295,29 @@ def fill(token, dollars):
         fee += take * FEE_RATE * price * (1 - price)
         left -= take * price
         if left <= 1e-9:
-            return dollars / shares, shares, fee
+            return dollars / shares, shares, fee, book
     return None
+
+
+def strategy_settings(strategy):
+    """The rules in force for a strategy, stored with every bet."""
+    common = {"bet_size": BET_SIZE, "fee_rate": FEE_RATE}
+    if strategy == "DEAD":
+        return dict(common, margin=DEAD_MARGIN, max_price=DEAD_MAX_PRICE,
+                    min_return=DEAD_MIN_RETURN, per_event=DEAD_PER_EVENT)
+    if strategy == "LATE":
+        return dict(common, gap=LATE_GAP, price=[LATE_MIN_PRICE, LATE_MAX_PRICE],
+                    high_from=LATE_HIGH_FROM, low_from=LATE_LOW_FROM,
+                    kinds=list(LATE_KINDS), per_event=LATE_PER_EVENT)
+    if strategy == "SHIFT":
+        return dict(common, enabled=SHIFT_ENABLED, min_move_c=SHIFT_MIN_MOVE_C,
+                    price=[SHIFT_MIN_PRICE, SHIFT_MAX_PRICE],
+                    days_ahead=list(SHIFT_DAYS_AHEAD))
+    if strategy in FAV_RULES:
+        r = FAV_RULES[strategy]
+        return dict(common, kind=r["kind"], hours=list(r["hours"]), units=list(r["units"]),
+                    price=[FAV_MIN_PRICE, FAV_MAX_PRICE], max_fill=FAV_MAX_FILL)
+    return common
 
 
 def make_bet(strategy, event, bucket, side, reason):
@@ -304,12 +325,13 @@ def make_bet(strategy, event, bucket, side, reason):
     got = fill(token, BET_SIZE)
     if not got:
         return None
-    ask, shares, fee = got
+    ask, shares, fee, book = got
     return {"strategy": strategy, "asset": token, "condition": bucket["condition"],
             "event": event["slug"], "title": bucket["question"], "outcome": side,
             "bucket": bucket["label"], "price": ask, "shares": shares,
             "stake": BET_SIZE, "fee": fee, "profit_if_win": shares - BET_SIZE - fee,
-            "reason": reason}
+            "reason": reason,
+            "audit": simcore.audit(f"WX-{strategy}", strategy_settings(strategy), book)}
 
 
 # ---------- strategies ----------
@@ -548,7 +570,9 @@ def resting_bid(strategy, e, b, reason):
             "bucket": b["label"], "price": price, "shares": shares, "stake": BET_SIZE,
             "fee": 0.0, "profit_if_win": shares - BET_SIZE, "reason": reason,
             "order": "maker", "status": "resting", "placed": now_utc().isoformat(),
-            "expires": expires.astimezone(timezone.utc).isoformat()}
+            "expires": expires.astimezone(timezone.utc).isoformat(),
+            "audit": simcore.audit(f"WX-{strategy}", strategy_settings(strategy),
+                                   quote={"yes_bid": b["yes_bid"], "yes_ask": b["yes_ask"]})}
 
 
 def check_resting(ledger, asks, active):
@@ -570,6 +594,9 @@ def check_resting(ledger, asks, active):
         if ask is not None and ask <= bet["price"]:
             bet["status"] = "open"
             bet["opened"] = now
+            bet["fill_evidence"] = {"time": now, "seen_ask": ask,
+                                    "code": simcore.code_version(),
+                                    "note": "snapshot proxy: ask at/below our bid"}
             msgs.append(f"✅ Bid filled: YES {bet['bucket']} @ {bet['price']:.2f} | {bet['title']}")
         # a market missing from this run's scan (e.g. an API hiccup) is NOT
         # treated as closed; the expiry deadline cancels the bid instead
@@ -579,12 +606,15 @@ def check_resting(ledger, asks, active):
 def summary(ledger):
     done = [b for b in ledger["bets"] if b["status"] in ("won", "lost", "split")]
     wins = sum(1 for b in done if b["status"] == "won")
+    losses = sum(1 for b in done if b["status"] == "lost")
+    split = sum(1 for b in done if b["status"] == "split")
     open_n = sum(1 for b in ledger["bets"] if b["status"] == "open")
     resting = sum(1 for b in ledger["bets"] if b["status"] == "resting")
     unfilled = sum(1 for b in ledger["bets"] if b["status"] == "cancelled")
     extra = f" | resting {resting}, unfilled {unfilled}" if resting or unfilled else ""
-    return (f"💰 Cash ${ledger['cash']:.2f} | open {open_n} | record {wins}-{len(done) - wins}"
-            f" | realized P&L ${sum(b['pnl'] for b in done):+.2f}{extra}")
+    return (f"💰 Cash ${ledger['cash']:.2f} | open {open_n} | record {wins}-{losses}"
+            + (f" (+{split} split)" if split else "")
+            + f" | realized P&L ${sum(b['pnl'] for b in done):+.2f}{extra}")
 
 
 def notify(lines):
