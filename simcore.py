@@ -160,3 +160,54 @@ def final_payouts(get, bets):
 
 def outcome_label(payout):
     return "won" if payout >= 0.99 else "lost" if payout <= 0.01 else "split"
+
+
+# ---------- audit trail (what we knew when a bet was made) ----------
+
+import subprocess                      # noqa: E402
+from datetime import datetime, timezone  # noqa: E402
+
+_CODE_VERSION = None
+
+
+def code_version():
+    """The git commit this run is executing: GITHUB_SHA in Actions, else
+    `git rev-parse`, else 'unknown'."""
+    global _CODE_VERSION
+    if _CODE_VERSION is None:
+        sha = os.environ.get("GITHUB_SHA")
+        if not sha:
+            try:
+                sha = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
+                                     text=True, timeout=5).stdout.strip()
+            except (OSError, subprocess.SubprocessError):
+                sha = ""
+        _CODE_VERSION = sha[:12] if sha else "unknown"
+    return _CODE_VERSION
+
+
+def book_snapshot(book, levels=5):
+    """Top `levels` of each side, best first, as [[price, size], ...]."""
+    if not isinstance(book, dict):
+        return None
+    asks = sorted(([num(a.get("price")), num(a.get("size"))] for a in book.get("asks", [])),
+                  key=lambda x: x[0])[:levels]
+    bids = sorted(([num(b.get("price")), num(b.get("size"))] for b in book.get("bids", [])),
+                  key=lambda x: -x[0])[:levels]
+    snap = {"asks": asks, "bids": bids}
+    for key in ("min_order_size", "tick_size", "timestamp", "hash"):
+        if book.get(key) is not None:
+            snap[key] = book.get(key)
+    return snap
+
+
+def audit(scan, settings, book=None, quote=None):
+    """Everything needed to re-check a decision later. `quote` is used when
+    there was no order book fetch (e.g. a resting bid placed from a quote)."""
+    rec = {"code": code_version(), "scan": scan, "settings": dict(settings),
+           "time": datetime.now(timezone.utc).isoformat()}
+    if book is not None:
+        rec["book"] = book_snapshot(book)
+    if quote is not None:
+        rec["quote"] = quote
+    return rec
