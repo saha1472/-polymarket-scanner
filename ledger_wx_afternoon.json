@@ -1,5 +1,5 @@
 {
- "cash": 34.34759462627525,
+ "cash": 35.59759462627525,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -851,8 +851,10 @@
    "fee": 0.009999999999999998,
    "profit_if_win": 0.24,
    "reason": "favourite 64-65\u00b0F mid 0.75, local 15:45",
-   "status": "open",
-   "opened": "2026-10-29T22:45:40.499338+00:00"
+   "status": "won",
+   "opened": "2026-10-29T22:45:40.499338+00:00",
+   "pnl": 0.24,
+   "closed": "2026-10-30T08:45:34.101592+00:00"
   },
   {
    "strategy": "AFTERNOON",
