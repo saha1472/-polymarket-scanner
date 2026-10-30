@@ -135,8 +135,50 @@ def read_json(path, default):
 
 
 def write_json(path, data, indent=None):
-    with open(path, "w") as fh:
+    """Atomic: write a temp file, then swap it in, so a crash mid-write
+    can never leave a half-written ledger behind."""
+    tmp = f"{path}.{os.getpid()}.tmp"
+    with open(tmp, "w") as fh:
         json.dump(data, fh, indent=indent)
+    os.replace(tmp, path)
+
+
+def sell_fill(book, shares):
+    """Walk the bids like a real sell order. Returns (shares sold, cash
+    received after fees, average price). Can sell fewer than asked."""
+    bids = sorted(((num(b.get("price")), num(b.get("size")))
+                   for b in (book or {}).get("bids", [])), reverse=True)
+    left, sold, cash = shares, 0.0, 0.0
+    for price, size in bids:
+        if price <= 0 or size <= 0 or left <= 1e-9:
+            continue
+        take = min(size, left)
+        cash += take * price - take * FEE_RATE * price * (1 - price)
+        sold += take
+        left -= take
+    return sold, cash, (cash / sold if sold else 0.0)
+
+
+def resolved_win(row, asset):
+    """True/False once the market is FINALLY resolved, None otherwise.
+    Uses Polymarket's resolution status when present, and the winning
+    outcome (highest final price, which must be >= 0.99)."""
+    if not row or not row.get("closed"):
+        return None
+    status = row.get("umaResolutionStatus")
+    if status and status != "resolved":
+        return None          # proposed / disputed: not final yet
+    try:
+        ids = json.loads(row.get("clobTokenIds") or "[]")
+        prices = [num(x) for x in json.loads(row.get("outcomePrices") or "[]")]
+    except ValueError:
+        return None
+    if asset not in ids or len(prices) != len(ids) or not prices:
+        return None
+    top = max(prices)
+    if top < 0.99 or prices.count(top) > 1:
+        return None          # not settled to a single winner (e.g. a 50/50 split)
+    return prices[ids.index(asset)] == top
 
 
 # ---------- Category tags (which markets belong to which category) ----------
@@ -368,7 +410,20 @@ def size_bet(s):
 # ---------- Step 4: paper trading ledger ----------
 
 def load_ledger():
-    return read_json(LEDGER_FILE, {"cash": START_BANKROLL, "bets": []})
+    """A missing ledger starts fresh. A ledger that exists but can't be read
+    stops the run loudly instead of silently becoming a new $50 account."""
+    if not os.path.exists(LEDGER_FILE):
+        return {"cash": START_BANKROLL, "bets": []}
+    try:
+        with open(LEDGER_FILE) as fh:
+            led = json.load(fh)
+    except (OSError, ValueError) as err:
+        raise SystemExit(f"{LEDGER_FILE} exists but can't be read ({err}). "
+                         f"Not trading on a broken ledger; fix or restore it.")
+    if not isinstance(led, dict) or not isinstance(led.get("cash"), (int, float)) \
+            or not isinstance(led.get("bets"), list):
+        raise SystemExit(f"{LEDGER_FILE} has an unexpected format. Not trading.")
+    return led
 
 
 def save_ledger(ledger):
@@ -383,21 +438,14 @@ def settle(ledger):
                                  {"condition_ids": b["condition"],
                                   "closed": "true"}) or [], open_bets)
     for bet, rows in zip(open_bets, markets):
-        if not rows or not rows[0].get("closed"):
-            continue
-        try:
-            ids = json.loads(rows[0].get("clobTokenIds") or "[]")
-            prices = [num(x) for x in
-                      json.loads(rows[0].get("outcomePrices") or "[]")]
-            if max(prices) < 0.99:
-                continue  # closed but not resolved yet
-            won = prices[ids.index(bet["asset"])] > 0.99
-        except (ValueError, IndexError):
+        won = resolved_win(rows[0] if rows else None, bet["asset"])
+        if won is None:
             continue
         payout = bet["shares"] if won else 0.0
         if bet["status"] == "stopped":
             # already sold; just record what holding would have done
-            bet["hold_pnl"] = payout - bet["stake"] - bet["fee"]
+            full = bet.get("orig_shares", bet["shares"])
+            bet["hold_pnl"] = (full if won else 0.0) - bet["stake"] - bet["fee"]
             msgs.append(f"ℹ️ Stopped bet resolved {'WON' if won else 'LOST'}: "
                         f"stop {bet['pnl']:+.2f} vs hold {bet['hold_pnl']:+.2f} "
                         f"| {bet['title']}")
@@ -405,7 +453,8 @@ def settle(ledger):
         ledger["cash"] += payout
         bet["closed"] = datetime.now(timezone.utc).isoformat()
         bet["status"] = "won" if won else "lost"
-        bet["pnl"] = payout - bet["stake"] - bet["fee"]
+        # "recovered" = cash already taken out by a partial stop-loss sale
+        bet["pnl"] = payout + bet.get("recovered", 0.0) - bet["stake"] - bet["fee"]
         msgs.append(f"{'✅ WON' if won else '❌ LOST'} {bet['outcome']} | "
                     f"{bet['title']} | P&L ${bet['pnl']:+.2f}")
     return msgs
@@ -416,6 +465,10 @@ def open_paper_bets(ledger, signals):
     open_bets = [b for b in ledger["bets"] if b["status"] == "open"]
     held = {b["asset"] for b in open_bets}
     held_markets = {b["condition"] for b in open_bets}
+    # never re-enter a market or event we were stopped out of
+    stopped = [b for b in ledger["bets"] if b["status"] == "stopped" or b.get("recovered")]
+    held_markets |= {b["condition"] for b in stopped}
+    stopped_events = {b.get("event") for b in stopped if b.get("event")}
     per_event, per_trader = {}, {}
     for b in open_bets:
         if b.get("event"):
@@ -440,6 +493,8 @@ def open_paper_bets(ledger, signals):
             break
         if s["asset"] in held or s["condition"] in held_markets:
             continue  # never hold both sides (or two bets) of one market
+        if s.get("event") in stopped_events:
+            continue  # stopped out of this event before: no re-entry
         if s.get("event") and per_event.get(s["event"], 0) >= MAX_BETS_PER_EVENT:
             continue  # already have a bet on this match/event
         if min(per_trader.get(t, 0) for t in s["traders"]) >= MAX_OPEN_PER_TRADER:
@@ -516,16 +571,14 @@ def check_exits(ledger):
         if exited / len(bet["holders"]) < EXIT_MAJORITY:
             continue
         book = get(BOOK_URL, {"token_id": bet["asset"]})
-        bids = sorted((num(b.get("price")) for b in (book or {}).get("bids", [])),
-                      reverse=True)
-        bid = bids[0] if bids else 0.0
-        if bid <= 0:
-            continue  # nothing to sell into; try again next run
-        sell_fee = bet["shares"] * FEE_RATE * bid * (1 - bid)
+        sold, cash, avg = sell_fill(book, bet["shares"])
+        if sold < bet["shares"] - 1e-9 or avg <= 0:
+            continue  # the book can't absorb the whole position yet; retry next run
+        bid = avg
         bet["shadow_exit"] = {
             "time": datetime.now(timezone.utc).isoformat(),
             "bid": bid,
-            "pnl": bet["shares"] * bid - sell_fee - bet["stake"] - bet["fee"],
+            "pnl": cash - bet["stake"] - bet["fee"],
         }
         msgs.append(f"🚪 Shadow exit {bet['outcome']} @ {bid:.2f} "
                     f"(entry {bet['price']:.2f}) → would lock "
@@ -551,24 +604,38 @@ def check_stops(ledger):
         bid = max(bids) if bids else 0.0
         if bid <= 0:
             continue  # empty book: nothing to sell into
+        full = bet.get("orig_shares", bet["shares"])
+        sold_all, cash_all, avg_all = sell_fill(book, full)
         for lvl in todo:
             if bid > bet["price"] * (1 - lvl):
                 continue
-            sell_fee = bet["shares"] * FEE_RATE * bid * (1 - bid)
-            pnl = bet["shares"] * bid - sell_fee - bet["stake"] - bet["fee"]
+            if sold_all < full - 1e-9:
+                continue  # shadow stop only counts if the whole position could be sold
+            pnl = cash_all - bet["stake"] - bet["fee"]
             stops[str(lvl)] = {"time": datetime.now(timezone.utc).isoformat(),
-                               "bid": bid, "pnl": pnl}
+                               "bid": avg_all, "pnl": pnl}
             msgs.append(f"🛑 Stop -{lvl:.0%} hit: {bet['outcome']} @ {bid:.2f} "
                         f"(entry {bet['price']:.2f}) → would lock ${pnl:+.2f} "
                         f"| {bet['title']}")
         if REAL_STOP and bid <= bet["price"] * (1 - REAL_STOP):
-            sell_fee = bet["shares"] * FEE_RATE * bid * (1 - bid)
-            proceeds = bet["shares"] * bid - sell_fee
-            ledger["cash"] += proceeds
+            # sell only what the book can actually take; keep the rest open
+            sold, cash, avg = sell_fill(book, bet["shares"])
+            if sold <= 1e-9:
+                continue
+            bet.setdefault("orig_shares", bet["shares"])
+            ledger["cash"] += cash
+            bet["recovered"] = bet.get("recovered", 0.0) + cash
+            bet["shares"] -= sold
+            if bet["shares"] > 1e-9:
+                msgs.append(f"✂️ Partly stopped: sold {sold:.2f} of "
+                            f"{bet['orig_shares']:.2f} shares @ ~{avg:.2f}, "
+                            f"{bet['shares']:.2f} left open | {bet['title']}")
+                continue
+            bet["shares"] = 0.0
             bet["status"] = "stopped"
-            bet["pnl"] = proceeds - bet["stake"] - bet["fee"]
+            bet["pnl"] = bet["recovered"] - bet["stake"] - bet["fee"]
             bet["closed"] = datetime.now(timezone.utc).isoformat()
-            msgs.append(f"✂️ STOPPED OUT {bet['outcome']} @ {bid:.2f} (entry "
+            msgs.append(f"✂️ STOPPED OUT {bet['outcome']} @ ~{avg:.2f} (entry "
                         f"{bet['price']:.2f}) | P&L ${bet['pnl']:+.2f} | {bet['title']}")
     return msgs
 
