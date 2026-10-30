@@ -1,5 +1,5 @@
 {
- "cash": 39.08349645390071,
+ "cash": 38.08099645390071,
  "bets": [
   {
    "strategy": "MORNING",
@@ -617,6 +617,23 @@
    "status": "resting",
    "placed": "2026-10-30T09:30:44.210511+00:00",
    "expires": "2026-10-30T11:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "114470267253714003954491501317845068822211896585238897491052922722383022282131",
+   "condition": "0xa478dda977b4e7b190508f5c039deae66225f9aaea2fe4f23661f2322bb01267",
+   "event": "lowest-temperature-in-london-on-october-30-2026",
+   "title": "Will the lowest temperature in London be 9\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "9\u00b0C",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "favourite 9\u00b0C mid 0.94, local 10:00",
+   "status": "open",
+   "opened": "2026-10-30T10:00:52.436870+00:00"
   }
  ]
 }
