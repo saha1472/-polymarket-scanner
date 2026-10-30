@@ -1,5 +1,5 @@
 {
- "cash": 32.74238532394967,
+ "cash": 31.73938532394967,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -1356,6 +1356,95 @@
      "yes_ask": 0.976
     }
    }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "82291046687159755297344590768243523495020630799721997361697480780331065928563",
+   "condition": "0x9b59e9182a76f45b59a35e92e4d1ad8cda09290a1b48e7a88a07b9076f27d64d",
+   "event": "highest-temperature-in-london-on-october-30-2026",
+   "title": "Will the highest temperature in London be 15\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "15\u00b0C",
+   "price": 0.9400000000000001,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0030000000000000022,
+   "profit_if_win": 0.06082978723404253,
+   "reason": "favourite 15\u00b0C mid 0.93, local 15:00",
+   "audit": {
+    "code": "4d8926a323e2",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-30T15:01:02.706895+00:00",
+    "book": {
+     "asks": [
+      [
+       0.94,
+       10.0
+      ],
+      [
+       0.95,
+       53.0
+      ],
+      [
+       0.97,
+       33.33
+      ],
+      [
+       0.98,
+       120.0
+      ],
+      [
+       0.99,
+       194.1
+      ]
+     ],
+     "bids": [
+      [
+       0.92,
+       85.34
+      ],
+      [
+       0.91,
+       168.83
+      ],
+      [
+       0.9,
+       219.04
+      ],
+      [
+       0.89,
+       15.23
+      ],
+      [
+       0.88,
+       5.14
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793372450542",
+     "hash": "f5ba9ad96ec8d2ff1c43c75a4323ee30506c6295"
+    }
+   },
+   "status": "open",
+   "opened": "2026-10-30T15:01:02.706974+00:00"
   }
  ]
 }
