@@ -453,8 +453,10 @@
    "fee": 0.04100000000000001,
    "profit_if_win": 4.514555555555555,
    "reason": "forecast 21.6\u219222.2\u00b0C, favourite 72-73\u00b0F",
-   "status": "open",
-   "opened": "2026-10-28T14:31:07.455056+00:00"
+   "status": "lost",
+   "opened": "2026-10-28T14:31:07.455056+00:00",
+   "pnl": -1.041,
+   "closed": "2026-10-30T08:15:31.629193+00:00"
   },
   {
    "strategy": "SHIFT",
@@ -733,8 +735,10 @@
    "fee": 0.0365,
    "profit_if_win": 2.667203703703703,
    "reason": "forecast 22.2\u219221.6\u00b0C, favourite 72-73\u00b0F",
-   "status": "open",
-   "opened": "2026-10-28T20:45:48.970236+00:00"
+   "status": "lost",
+   "opened": "2026-10-28T20:45:48.970236+00:00",
+   "pnl": -1.0365,
+   "closed": "2026-10-30T08:15:31.629230+00:00"
   },
   {
    "strategy": "SHIFT",
@@ -801,8 +805,10 @@
    "fee": 0.0365,
    "profit_if_win": 2.667203703703703,
    "reason": "forecast 15.2\u219215.8\u00b0C, favourite 62-63\u00b0F",
-   "status": "open",
-   "opened": "2026-10-28T21:45:36.494613+00:00"
+   "status": "lost",
+   "opened": "2026-10-28T21:45:36.494613+00:00",
+   "pnl": -1.0365,
+   "closed": "2026-10-30T08:15:31.629243+00:00"
   },
   {
    "strategy": "SHIFT",
