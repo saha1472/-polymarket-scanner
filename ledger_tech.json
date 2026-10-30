@@ -1,4 +1,29 @@
 {
-  "cash": 50.0,
-  "bets": []
+  "cash": 48.99476,
+  "bets": [
+    {
+      "asset": "26922035314154497018737638829774069315488348073215105242613348160492279741517",
+      "condition": "0xbf61d7d262bc61f3fafc5f81631737117659d864aa3d31e1a1bca146c8f4a284",
+      "title": "Next Astra Model (6.1+) released by October 31, 2026?",
+      "outcome": "No",
+      "event": "gpt-astra-6pt1-released-byptptpt",
+      "price": 0.869,
+      "shares": 1.1507479861910241,
+      "stake": 1.0,
+      "fee": 0.005240000000000001,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "rewardbots"
+      ],
+      "holders": {
+        "0x876bb030ddd424ef505ae02914024cf18c6a1703": {
+          "name": "rewardbots",
+          "size": 2813.9802
+        }
+      },
+      "opened": "2026-10-30T12:30:43.653105+00:00",
+      "ends": "2026-10-31T00:00:00.264544+00:00"
+    }
+  ]
 }
