@@ -31,6 +31,8 @@ from zoneinfo import ZoneInfo
 
 import requests
 
+import simcore
+
 GAMMA_API = "https://gamma-api.polymarket.com"
 BOOK_URL = "https://clob.polymarket.com/book"
 METAR_URL = "https://aviationweather.gov/api/data/metar"
@@ -134,10 +136,7 @@ def read_json(path, default):
 
 
 def write_json(path, data):
-    tmp = path + ".tmp"
-    with open(tmp, "w") as fh:
-        json.dump(data, fh, indent=1)
-    os.replace(tmp, path)
+    simcore.write_json_atomic(path, data, indent=1)
 
 
 def round_half_up(x):
@@ -464,56 +463,29 @@ def ledger_file(strategy):
     return f"ledger_wx_{strategy.lower()}.json"
 
 
-def resolved_win(row, asset):
-    """True/False once the market is FINALLY resolved, None otherwise."""
-    if not row or not row.get("closed"):
-        return None
-    status = row.get("umaResolutionStatus")
-    if status and status != "resolved":
-        return None          # proposed / disputed: not final yet
-    try:
-        ids = json.loads(row.get("clobTokenIds") or "[]")
-        prices = [num(x) for x in json.loads(row.get("outcomePrices") or "[]")]
-    except ValueError:
-        return None
-    if asset not in ids or len(prices) != len(ids) or not prices:
-        return None
-    top = max(prices)
-    if top < 0.99 or prices.count(top) > 1:
-        return None
-    return prices[ids.index(asset)] == top
-
-
 def load_ledger(path):
-    """Missing -> fresh $50. Present but unreadable -> stop loudly."""
-    if not os.path.exists(path):
-        return {"cash": START_BANKROLL, "bets": []}
-    try:
-        with open(path) as fh:
-            led = json.load(fh)
-    except (OSError, ValueError) as err:
-        raise SystemExit(f"{path} exists but can't be read ({err}). Not trading.")
-    if not isinstance(led, dict) or not isinstance(led.get("cash"), (int, float)) \
-            or not isinstance(led.get("bets"), list):
-        raise SystemExit(f"{path} has an unexpected format. Not trading.")
-    return led
+    """Missing -> fresh $50. Unreadable, NaN/infinite or malformed -> stop."""
+    return simcore.load_ledger(path, START_BANKROLL)
 
 
 def settle(ledger):
+    """Settle on Polymarket's final payout (see simcore)."""
     msgs = []
-    open_bets = [b for b in ledger["bets"] if b["status"] == "open"]
-    rows = pmap(lambda b: get(f"{GAMMA_API}/markets", {"condition_ids": b["condition"],
-                                                       "closed": "true"}) or [], open_bets)
-    for bet, r in zip(open_bets, rows):
-        won = resolved_win(r[0] if r else None, bet["asset"])
-        if won is None:
+    todo = [b for b in ledger["bets"] if b["status"] == "open"]
+    if not todo:
+        return msgs
+    payouts = simcore.final_payouts(get, todo)
+    for bet in todo:
+        pay = payouts.get(bet["asset"])
+        if pay is None:
             continue
-        payout = bet["shares"] if won else 0.0
+        payout = bet["shares"] * pay
         ledger["cash"] += payout
-        bet["status"] = "won" if won else "lost"
+        bet["status"] = simcore.outcome_label(pay)
         bet["pnl"] = payout - bet["stake"] - bet["fee"]
         bet["closed"] = now_utc().isoformat()
-        msgs.append(f"{'✅ WON' if won else '❌ LOST'} {bet['outcome']} {bet['bucket']} | "
+        icon = {"won": "✅ WON", "lost": "❌ LOST", "split": "➗ SPLIT 50/50"}[bet["status"]]
+        msgs.append(f"{icon} {bet['outcome']} {bet['bucket']} | "
                     f"{bet['title']} | P&L ${bet['pnl']:+.2f}")
     return msgs
 
@@ -605,7 +577,7 @@ def check_resting(ledger, asks, active):
 
 
 def summary(ledger):
-    done = [b for b in ledger["bets"] if b["status"] in ("won", "lost")]
+    done = [b for b in ledger["bets"] if b["status"] in ("won", "lost", "split")]
     wins = sum(1 for b in done if b["status"] == "won")
     open_n = sum(1 for b in ledger["bets"] if b["status"] == "open")
     resting = sum(1 for b in ledger["bets"] if b["status"] == "resting")
