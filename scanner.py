@@ -1,6 +1,9 @@
 import os
+import sys
 import time
 import requests
+
+import simcore
 
 GAMMA_URL = "https://gamma-api.polymarket.com/events"
 MIN_EDGE = 0.01  # ignore anything under 1 cent of profit per set
@@ -74,11 +77,11 @@ def scan():
 
 
 def notify(lines):
+    """True if delivered (or nothing to send / no webhook configured)."""
     url = os.environ.get("DISCORD_WEBHOOK_URL")
     if not url or not lines:
-        return
-    message = "\n".join(lines)[:1900]
-    requests.post(url, json={"content": message}, timeout=10)
+        return True
+    return simcore.post_discord(url, "\n".join(lines))
 
 
 if __name__ == "__main__":
@@ -88,4 +91,5 @@ if __name__ == "__main__":
         for s, t, n, c, p in results
     ]
     print("\n".join(lines) or "No opportunities above the threshold right now.")
-    notify(lines)
+    if not notify(lines):
+        sys.exit("Discord delivery failed. Failing the run so it's visible.")
