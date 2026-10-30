@@ -39,7 +39,7 @@ def line(path, since):
     if not led:
         return None
     bets = led.get("bets", [])
-    done = [b for b in bets if b.get("status") in ("won", "lost", "stopped")]
+    done = [b for b in bets if b.get("status") in ("won", "lost", "stopped", "split")]
     open_n = sum(1 for b in bets if b.get("status") == "open")
     resting = sum(1 for b in bets if b.get("status") == "resting")
     wins = sum(1 for b in done if b.get("status") == "won")
@@ -49,7 +49,10 @@ def line(path, since):
     day_pnl = sum(b.get("pnl", 0) for b in day)
     staked = sum(b.get("stake", 0) + b.get("fee", 0) for b in done)
     roi = f"{pnl / staked:+.0%}" if staked else "n/a"
-    rec = f"{wins}-{len(done) - wins - stopped}" + (f" (+{stopped} stopped)" if stopped else "")
+    split = sum(1 for b in done if b.get("status") == "split")
+    rec = (f"{wins}-{len(done) - wins - stopped - split}"
+           + (f" (+{stopped} stopped)" if stopped else "")
+           + (f" (+{split} split)" if split else ""))
     name = NAMES.get(path, path.replace("ledger_", "").replace(".json", ""))
     return (pnl, f"{'🟢' if pnl > 0 else '🔴' if pnl < 0 else '⚪'} **{name}**: {rec} | "
                  f"P&L ${pnl:+.2f} (ROI {roi}) | 24h {len(day)} settled ${day_pnl:+.2f} | "
