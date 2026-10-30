@@ -1,5 +1,5 @@
 {
- "cash": 47.0924964539007,
+ "cash": 45.0884964539007,
  "bets": [
   {
    "strategy": "MORNING",
@@ -452,6 +452,42 @@
    "reason": "favourite 16\u00b0C mid 0.72, local 10:30",
    "status": "open",
    "opened": "2026-10-30T02:30:43.505395+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "57814264446942985525097442153624202287263637088862355597643105798304129928730",
+   "condition": "0x189c46919d1046f5c131c545c9f7ff6d6b6bf5b465de4d3683f8c411a3a7739a",
+   "event": "lowest-temperature-in-ankara-on-october-30-2026",
+   "title": "Will the lowest temperature in Ankara be 8\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "8\u00b0C",
+   "price": 0.92,
+   "shares": 1.0869565217391304,
+   "stake": 1.0,
+   "fee": 0.003999999999999998,
+   "profit_if_win": 0.08295652173913037,
+   "reason": "favourite 8\u00b0C mid 0.88, local 10:15",
+   "status": "open",
+   "opened": "2026-10-30T07:15:38.055956+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "27059719897362796833233803554799055141683722557220854797382512472170960893351",
+   "condition": "0x69e3fd398da39c21499fdfd2a4dcc59a5985e6109157a390c65d2e1a3397697d",
+   "event": "lowest-temperature-in-moscow-on-october-30-2026",
+   "title": "Will the lowest temperature in Moscow be 4\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "4\u00b0C",
+   "price": 0.79,
+   "shares": 1.2658227848101264,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.26582278481012644,
+   "reason": "favourite 4\u00b0C mid 0.88, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-30T07:15:38.181361+00:00",
+   "expires": "2026-10-30T09:00:00+00:00"
   }
  ]
 }

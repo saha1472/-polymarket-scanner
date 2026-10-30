@@ -1,5 +1,5 @@
 {
- "cash": 34.243633260093844,
+ "cash": 34.28976483904121,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -794,8 +794,10 @@
    "fee": 0.0025000000000000022,
    "profit_if_win": 0.05013157894736836,
    "reason": "favourite 64-65\u00b0F mid 0.91, local 16:00",
-   "status": "open",
-   "opened": "2026-10-29T22:01:00.069266+00:00"
+   "status": "won",
+   "opened": "2026-10-29T22:01:00.069266+00:00",
+   "pnl": 0.05013157894736836,
+   "closed": "2026-10-30T07:15:38.332232+00:00"
   },
   {
    "strategy": "AFTERNOON",
@@ -989,6 +991,23 @@
    "reason": "favourite 32\u00b0C mid 0.80, local 15:00",
    "status": "open",
    "opened": "2026-10-30T07:00:52.566094+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "92257609727277433157222946911975983079240418910532912611433844620439384667268",
+   "condition": "0xcd36e1db7771f1ae19d459fb005ec938d68710845b3d18a7701ea66455074f0a",
+   "event": "highest-temperature-in-chengdu-on-october-30-2026",
+   "title": "Will the highest temperature in Chengdu be 23\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "23\u00b0C",
+   "price": 0.8700000000000001,
+   "shares": 1.1494252873563218,
+   "stake": 1.0,
+   "fee": 0.0065,
+   "profit_if_win": 0.14292528735632176,
+   "reason": "favourite 23\u00b0C mid 0.84, local 15:15",
+   "status": "open",
+   "opened": "2026-10-30T07:15:38.460005+00:00"
   }
  ]
 }
