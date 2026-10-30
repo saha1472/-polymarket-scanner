@@ -1,5 +1,5 @@
 {
- "cash": 36.76038532394967,
+ "cash": 35.76038532394967,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -1069,6 +1069,25 @@
    "status": "resting",
    "placed": "2026-10-30T12:15:35.099327+00:00",
    "expires": "2026-10-30T16:00:00+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "59160055699996906440374075975737760604582736285135303551862644299583641071210",
+   "condition": "0x6d4da60c5772658511384ca58509f5bdd629fde6fbf1592bdd72febeea8318c7",
+   "event": "highest-temperature-in-helsinki-on-october-30-2026",
+   "title": "Will the highest temperature in Helsinki be 9\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "9\u00b0C",
+   "price": 0.89,
+   "shares": 1.1235955056179776,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.12359550561797761,
+   "reason": "favourite 9\u00b0C mid 0.93, local 15:00",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-30T13:00:56.795312+00:00",
+   "expires": "2026-10-30T17:00:00+00:00"
   }
  ]
 }
