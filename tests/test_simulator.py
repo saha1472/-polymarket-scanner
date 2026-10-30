@@ -406,18 +406,55 @@ class AuditTrail(unittest.TestCase):
         self.assertEqual([b[0] for b in snap["bids"]], [0.60, 0.58, 0.55])
         self.assertIsNone(simcore.book_snapshot(None))
 
-    def test_code_version_prefers_github_sha(self):
-        old = (os.environ.get("GITHUB_SHA"), simcore._CODE_VERSION)
-        os.environ["GITHUB_SHA"] = "abcdef1234567890"
+    def _fresh_version(self, sha_env, git_out):
+        old = (os.environ.get("GITHUB_SHA"), simcore._CODE_VERSION, simcore.subprocess.run)
+        if sha_env is None:
+            os.environ.pop("GITHUB_SHA", None)
+        else:
+            os.environ["GITHUB_SHA"] = sha_env
+
+        class R:
+            stdout = git_out
+
+        def fake_run(*a, **k):
+            if git_out is None:
+                raise OSError("no git")
+            return R()
+        simcore.subprocess.run = fake_run
         simcore._CODE_VERSION = None
+        return old
+
+    def _restore(self, old):
+        simcore._CODE_VERSION = old[1]
+        simcore.subprocess.run = old[2]
+        if old[0] is None:
+            os.environ.pop("GITHUB_SHA", None)
+        else:
+            os.environ["GITHUB_SHA"] = old[0]
+
+    def test_code_version_is_the_checked_out_commit(self):
+        old = self._fresh_version("111111111111aaaa", "222222222222bbbb\n")
         try:
-            self.assertEqual(simcore.code_version(), "abcdef123456")
+            self.assertEqual(simcore.code_version(), "222222222222")     # HEAD wins
+            a = simcore.audit("X", {})
+            self.assertEqual(a["code"], "222222222222")
+            self.assertEqual(a["trigger_sha"], "111111111111")          # kept separately
         finally:
-            simcore._CODE_VERSION = old[1]
-            if old[0] is None:
-                os.environ.pop("GITHUB_SHA", None)
-            else:
-                os.environ["GITHUB_SHA"] = old[0]
+            self._restore(old)
+
+    def test_trigger_sha_only_stored_when_different(self):
+        old = self._fresh_version("222222222222bbbb", "222222222222bbbb\n")
+        try:
+            self.assertNotIn("trigger_sha", simcore.audit("X", {}))
+        finally:
+            self._restore(old)
+
+    def test_falls_back_to_github_sha_without_git(self):
+        old = self._fresh_version("333333333333cccc", None)
+        try:
+            self.assertEqual(simcore.code_version(), "333333333333")
+        finally:
+            self._restore(old)
 
     def test_copy_bet_records_audit(self):
         s = {"asset": "A2", "condition": "c9", "event": "e9", "stake": 1, "fee": 0.01,
@@ -466,8 +503,10 @@ class SettlementChecker(unittest.TestCase):
         return b
 
     def _check(self, bets, payouts, cash=None):
-        realized = sum(b.get("pnl", 0) for b in bets if b["status"] in verify_settlements.SETTLED)
-        led = {"cash": 50 + realized if cash is None else cash, "bets": bets}
+        if cash is None:
+            cash = 50 + sum(b.get("pnl", 0) for b in bets
+                            if b["status"] in verify_settlements.SETTLED)
+        led = {"cash": cash, "bets": bets}
         return verify_settlements.check_ledger("L", led, payouts)
 
     def test_clean_ledger_passes(self):
@@ -488,6 +527,38 @@ class SettlementChecker(unittest.TestCase):
         self.assertEqual(self._check([b], {"A": 1.0})[1], [])
         b["hold_pnl"] = -0.11525                     # the old bug: hold == actual
         self.assertTrue(any("hold_pnl" in p for p in self._check([b], {"A": 1.0})[1]))
+
+    def test_missing_hold_on_partial_stop_fails(self):
+        b = self._bet(shares=0.75, recovered=0.14475, pnl=-0.11525, orig_shares=1.25)
+        _, problems, _ = self._check([b], {"A": 1.0})
+        self.assertTrue(any("no hold_pnl" in p for p in problems))
+
+    def test_missing_hold_on_full_stop_fails(self):
+        b = self._bet(status="stopped", shares=0.0, recovered=0.4, pnl=-0.61, orig_shares=1.25)
+        _, problems, _ = self._check([b], {"A": 1.0})
+        self.assertTrue(any("no hold_pnl" in p for p in problems))
+
+    def test_missing_or_non_finite_numbers_fail(self):
+        nan, inf = float("nan"), float("inf")
+        cases = [{"pnl": nan}, {"pnl": inf}, {"stake": nan}, {"fee": -inf},
+                 {"shares": nan}, {"pnl": "0.24"}, {"pnl": None}]
+        for change in cases:
+            _, problems, _ = self._check([self._bet(**change)], {"A": 1.0}, cash=50.24)
+            self.assertTrue(problems, msg=repr(change))
+        for key in ("pnl", "stake", "fee", "shares"):
+            b = self._bet()
+            b.pop(key)
+            _, problems, _ = self._check([b], {"A": 1.0}, cash=50.24)
+            self.assertTrue(any("missing" in p for p in problems), msg=key)
+        b = self._bet(shares=0.75, recovered=nan, pnl=-0.11525, orig_shares=1.25, hold_pnl=0.24)
+        self.assertTrue(self._check([b], {"A": 1.0}, cash=50)[1])
+        b = self._bet(shares=0.75, recovered=0.14475, pnl=-0.11525, orig_shares=1.25,
+                      hold_pnl=inf)
+        self.assertTrue(self._check([b], {"A": 1.0}, cash=50)[1])
+
+    def test_non_finite_cash_fails(self):
+        _, problems, _ = self._check([self._bet()], {"A": 1.0}, cash=float("nan"))
+        self.assertTrue(any("cash" in p for p in problems))
 
     def test_catches_cash_gap_and_unresolved(self):
         _, problems, gap = self._check([self._bet()], {"A": 1.0}, cash=10.0)
