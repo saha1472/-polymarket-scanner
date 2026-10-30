@@ -15,6 +15,7 @@ Usage:  python verify_settlements.py              (all ledger*.json)
 """
 import glob
 import json
+import math
 import sys
 
 import requests
@@ -41,6 +42,10 @@ def official_payouts(assets, session=None):
     return out
 
 
+def finite(x):
+    return isinstance(x, (int, float)) and not isinstance(x, bool) and math.isfinite(x)
+
+
 def label(payout):
     return "won" if payout >= 0.99 else "lost" if payout <= 0.01 else "split"
 
@@ -60,12 +65,27 @@ def check_ledger(name, led, payouts):
                                 f"has no resolved payout for this token")
             continue
         notes = []
+        # every number used below must be present and finite: a missing or
+        # NaN value must FAIL, never slip through a comparison
+        need = ["stake", "fee", "shares"] + (["pnl"] if b["status"] != "stopped" else [])
+        need += [k for k in ("recovered", "orig_shares", "hold_pnl") if k in b]
+        broken = [k for k in need if not finite(b.get(k))]
+        if broken:
+            problems.append(f"{where}: missing or non-finite {', '.join(broken)}")
+            rows.append((where, b["status"], pay, "MISSING/NON-FINITE FIELDS"))
+            continue
+        # a stop-loss touched this bet (fully or partly): the holding baseline
+        # must exist once the market has resolved
+        if ("orig_shares" in b or b["status"] == "stopped") and "hold_pnl" not in b:
+            problems.append(f"{where}: resolved bet touched by a stop-loss has no hold_pnl "
+                            f"(if it resolved after the bot's last run, re-check after the next run)")
+            notes.append("HOLD MISSING")
         if b["status"] != "stopped":
             if label(pay) != b["status"]:
                 problems.append(f"{where}: ledger says {b['status']}, Polymarket payout {pay}")
                 notes.append("OUTCOME MISMATCH")
             want = b["shares"] * pay + b.get("recovered", 0.0) - b["stake"] - b["fee"]
-            if abs(want - b.get("pnl", float("nan"))) > TOL:
+            if abs(want - b["pnl"]) > TOL:
                 problems.append(f"{where}: pnl {b.get('pnl')} != expected {want:.6f}")
                 notes.append("PNL MISMATCH")
         if "hold_pnl" in b:
@@ -77,11 +97,24 @@ def check_ledger(name, led, payouts):
         rows.append((where, b["status"], pay, ", ".join(notes) or "ok"))
 
     bets = led.get("bets", [])
-    realized = sum(b.get("pnl", 0.0) for b in bets if b.get("status") in SETTLED)
-    tied = sum(b["stake"] + b.get("fee", 0.0) - b.get("recovered", 0.0)
-               for b in bets if b.get("status") in ("open", "resting"))
+    if not finite(led.get("cash")):
+        problems.append(f"{name}: cash is missing or non-finite ({led.get('cash')!r})")
+        return rows, problems, float("nan")
+    def val(b, key):                     # bad values are reported above / below,
+        v = b.get(key, 0.0)                 # never allowed to crash the check
+        return v if finite(v) else None
+    settled = [b for b in bets if b.get("status") in SETTLED]
+    live = [b for b in bets if b.get("status") in ("open", "resting")]
+    parts = ([val(b, "pnl") for b in settled]
+             + [val(b, k) for b in live for k in ("stake", "fee", "recovered")])
+    if None in parts:
+        problems.append(f"{name}: cash can't be reconciled - a bet has a missing or "
+                        f"non-finite stake/fee/pnl/recovered value")
+        return rows, problems, float("nan")
+    realized = sum(val(b, "pnl") for b in settled)
+    tied = sum(val(b, "stake") + val(b, "fee") - val(b, "recovered") for b in live)
     gap = led["cash"] + tied - (START_BANKROLL + realized)
-    if abs(gap) > 1e-6:
+    if not finite(gap) or abs(gap) > 1e-6:
         problems.append(f"{name}: cash does not reconcile (off by {gap:+.6f})")
     return rows, problems, gap
 
