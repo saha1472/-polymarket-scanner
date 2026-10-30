@@ -312,7 +312,12 @@ def find_candidates(good):
             })
             s["traders"].append(name)
             s["entries"].append(num(p.get("avgPrice")))
-            s["holders"][wallet] = {"name": name, "size": num(p.get("size"))}
+            g = good[wallet]
+            s["holders"][wallet] = {"name": name, "size": num(p.get("size")),
+                                    "entry": num(p.get("avgPrice")),
+                                    # the trader's score when we copied them
+                                    "win_rate": g.get("win_rate"), "roi": g.get("roi"),
+                                    "n": g.get("n")}
             assets_by_condition.setdefault(cond, set()).add(asset)
 
     candidates = []
@@ -366,11 +371,22 @@ def size_bet(s):
         return None
 
     s.update(price=ask, order=order, shares=shares, stake=stake, fee=fee,
-             profit_if_win=profit, breakeven=(stake + fee) / shares)
+             profit_if_win=profit, breakeven=(stake + fee) / shares, book=book)
     return s
 
 
 # ---------- Step 4: paper trading ledger ----------
+
+def settings_snapshot():
+    """The rules in force for this scan, stored with every bet."""
+    return {"min_price": MIN_PRICE, "max_price": MAX_PRICE, "fee_rate": FEE_RATE,
+            "max_bet": MAX_BET, "max_chase": MAX_CHASE, "hours": [HOURS_MIN, HOURS_MAX],
+            "min_return_if_win": MIN_RETURN_IF_WIN, "min_traders_agree": MIN_TRADERS_AGREE,
+            "trader_bar": {"win_rate": MIN_WIN_RATE, "roi": MIN_ROI, "n": MIN_RESOLVED,
+                           "days": HISTORY_DAYS},
+            "real_stop": REAL_STOP, "per_event": MAX_BETS_PER_EVENT,
+            "per_trader": MAX_OPEN_PER_TRADER, "daily_loss_limit": DAILY_LOSS_LIMIT}
+
 
 def load_ledger():
     """Missing -> fresh account. Unreadable, NaN/infinite or malformed -> stop."""
@@ -472,6 +488,7 @@ def open_paper_bets(ledger, signals):
             "stake": s["stake"], "fee": s["fee"], "order": s["order"],
             "status": "open", "traders": s["traders"],
             "holders": s["holders"],
+            "audit": simcore.audit(SCAN, settings_snapshot(), s.get("book")),
             "opened": datetime.now(timezone.utc).isoformat(),
             "ends": ((datetime.now(timezone.utc) + timedelta(hours=s["hours"])).isoformat()
                      if s["hours"] else None),
@@ -587,6 +604,9 @@ def check_stops(ledger):
             if sold <= 1e-9:
                 continue
             bet.setdefault("orig_shares", bet["shares"])
+            bet.setdefault("stop_audit", []).append(dict(
+                simcore.audit(SCAN, settings_snapshot(), book),
+                sold=sold, cash=cash, avg_price=avg))
             ledger["cash"] += cash
             bet["recovered"] = bet.get("recovered", 0.0) + cash
             bet["shares"] -= sold
