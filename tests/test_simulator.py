@@ -617,3 +617,197 @@ class SettlementChecker(unittest.TestCase):
         self.assertTrue(any("reconcile" in p for p in problems))
         _, problems, _ = self._check([self._bet()], {})
         self.assertTrue(any("no resolved payout" in p for p in problems))
+
+
+# ---------- Consolidated review batch (f25af6c) ----------
+
+import heartbeat  # noqa: E402
+
+
+class PerTraderCap(unittest.TestCase):
+    def _sig(self, traders, n):
+        return {"asset": f"N{n}", "condition": f"cN{n}", "event": f"eN{n}", "stake": 1,
+                "fee": 0.01, "price": 0.6, "shares": 1.6, "order": "market",
+                "traders": traders, "holders": {}, "hours": 5, "title": "t", "outcome": "o",
+                "avg_entry": 0.6, "profit_if_win": 0.5, "breakeven": 0.6}
+
+    def _ledger_with(self, trader, count):
+        return {"cash": 50, "bets": [{"status": "open", "condition": f"c{i}", "event": f"e{i}",
+                                      "asset": f"a{i}", "traders": [trader]}
+                                     for i in range(count)]}
+
+    def test_capped_trader_blocks_even_with_uncapped_partner(self):
+        led = self._ledger_with("A", signals.MAX_OPEN_PER_TRADER)
+        signals.open_paper_bets(led, [self._sig(["A", "B"], 1), self._sig(["B", "A"], 2)])
+        self.assertEqual(len(led["bets"]), signals.MAX_OPEN_PER_TRADER)
+
+    def test_uncapped_group_allowed_and_cap_applies_within_one_run(self):
+        led = self._ledger_with("A", signals.MAX_OPEN_PER_TRADER - 1)
+        signals.open_paper_bets(led, [self._sig(["A", "B"], 1), self._sig(["A"], 2),
+                                      self._sig(["B"], 3)])
+        opened = [b["asset"] for b in led["bets"][signals.MAX_OPEN_PER_TRADER - 1:]]
+        self.assertEqual(opened, ["N1", "N3"])    # N2 blocked: A reached the cap via N1
+
+
+class CheckerValidation(unittest.TestCase):
+    """One suite for the checker: structure, identity, fields, payouts, stops."""
+
+    def _bet(self, **kw):
+        b = {"status": "won", "asset": "A", "shares": 1.25, "stake": 1.0, "fee": 0.01,
+             "price": 0.8, "pnl": 0.24, "title": "t"}
+        b.update(kw)
+        return b
+
+    def _problems(self, led, payouts=None, invalid=None):
+        return verify_settlements.check_ledger("L", led, payouts or {}, invalid)[1]
+
+    def test_ledger_structure(self):
+        self.assertTrue(self._problems({"cash": 50}))                    # no bets field
+        self.assertTrue(self._problems({"cash": 50, "bets": {}}))        # bets not a list
+        self.assertTrue(self._problems({"bets": []}))                    # no cash
+        self.assertTrue(self._problems({"cash": True, "bets": []}))      # boolean cash
+        self.assertTrue(self._problems([]))                              # not an object
+        self.assertEqual(self._problems({"cash": 50, "bets": []}), [])
+
+    def test_bet_identity_and_types_no_crash(self):
+        b = self._bet()
+        b.pop("asset")
+        self.assertTrue(any("asset" in p for p in self._problems({"cash": 50.24, "bets": [b]},
+                                                                  {"A": 1.0})))
+        for bad in ("not a bet", 7, None, self._bet(asset=""), self._bet(asset=5),
+                    self._bet(stake=True), self._bet(pnl=False), self._bet(price="0.8")):
+            self.assertTrue(self._problems({"cash": 50.24, "bets": [bad]}, {"A": 1.0}),
+                            msg=repr(bad))
+
+    def test_unresolved_stop_with_wrong_pnl_fails(self):
+        stop = {"status": "stopped", "asset": "A", "shares": 0.0, "stake": 1.0, "fee": 0.01,
+                "price": 0.6, "title": "t", "recovered": 0.4, "orig_shares": 1.25, "pnl": 0.5}
+        self.assertTrue(any("recovered - stake - fee" in p
+                            for p in self._problems({"cash": 50.5, "bets": [stop]}, {})))
+        stop["pnl"] = -0.61                                              # correct: passes,
+        self.assertEqual(self._problems({"cash": 49.39, "bets": [stop]}, {}), [])   # pending
+
+    def test_invalid_official_payouts_are_rejected(self):
+        good, invalid = verify_settlements.parse_payout_records([
+            {"token_id": "A", "resolved": True, "final_price": float("nan")},
+            {"token_id": "B", "resolved": True, "final_price": 0.99},
+            {"token_id": "C", "resolved": True, "final_price": True},
+            {"token_id": "D", "resolved": True, "final_price": "1"},
+            {"token_id": "E", "resolved": True, "final_price": 0.5},
+            {"token_id": "F", "resolved": False, "final_price": None},
+            {"token_id": "G", "resolved": "true", "final_price": 1.0},
+        ])
+        self.assertEqual(good, {"E": 0.5})
+        self.assertEqual(set(invalid), {"A", "B", "C", "D"})
+        split = self._bet(status="split", pnl=123.0)
+        probs = self._problems({"cash": 173.0, "bets": [split]}, {}, {"A": invalid["A"]})
+        self.assertTrue(any("invalid payout" in p for p in probs))
+
+    def test_main_with_no_ledgers_and_end_to_end(self):
+        self.assertEqual(verify_settlements.main([]), 2)
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "ledger.json")
+            with open(p, "w") as fh:
+                json.dump({"cash": 50.24, "bets": [self._bet()]}, fh)
+
+            class Resp:
+                def raise_for_status(self):
+                    pass
+
+                def json(self):
+                    return {"data": [{"token_id": "A", "resolved": True, "final_price": 1.0}]}
+
+            class Http:
+                def get(self, *a, **k):
+                    return Resp()
+            self.assertEqual(verify_settlements.main([p], http=Http()), 0)
+            with open(p, "w") as fh:
+                fh.write("{broken")
+            self.assertEqual(verify_settlements.main([p], http=Http()), 1)
+
+
+class DiscordDelivery(unittest.TestCase):
+    class Resp:
+        def __init__(self, code, body=None, headers=None):
+            self.status_code, self._body, self.headers = code, body, headers or {}
+
+        def json(self):
+            if self._body is None:
+                raise ValueError("no json")
+            return self._body
+
+    def _http(self, *responses):
+        seq = list(responses)
+        sent = []
+
+        class H:
+            def post(self, url, json=None, timeout=None):
+                sent.append(json["content"])
+                r = seq.pop(0)
+                if isinstance(r, Exception):
+                    raise r
+                return r
+        return H(), sent
+
+    def test_success(self):
+        h, sent = self._http(self.Resp(204))
+        self.assertTrue(simcore.post_discord("u", "hi", http=h, sleep=lambda s: None))
+
+    def test_rate_limit_is_retried_with_retry_after(self):
+        waits = []
+        h, _ = self._http(self.Resp(429, {"retry_after": 2.5}), self.Resp(204))
+        self.assertTrue(simcore.post_discord("u", "hi", http=h, sleep=waits.append))
+        self.assertEqual(waits, [2.5])
+
+    def test_server_errors_eventually_fail(self):
+        h, _ = self._http(*[self.Resp(500)] * simcore.DISCORD_ATTEMPTS)
+        self.assertFalse(simcore.post_discord("u", "hi", http=h, sleep=lambda s: None))
+
+    def test_client_error_fails_without_retry(self):
+        h, sent = self._http(self.Resp(400), self.Resp(204))
+        self.assertFalse(simcore.post_discord("u", "hi", http=h, sleep=lambda s: None))
+        self.assertEqual(len(sent), 1)
+
+    def test_network_error_then_success(self):
+        h, _ = self._http(OSError("down"), self.Resp(200))
+        self.assertTrue(simcore.post_discord("u", "hi", http=h, sleep=lambda s: None))
+
+    def test_every_chunk_must_be_delivered(self):
+        text = "x" * (simcore.DISCORD_CHUNK + 10)
+        h, sent = self._http(self.Resp(204), self.Resp(403))
+        self.assertFalse(simcore.post_discord("u", text, http=h, sleep=lambda s: None))
+        self.assertEqual(len(sent), 2)
+
+
+class HeartbeatDelivery(InTempDir):
+    def _run(self, delivered):
+        with open("ledger.json", "w") as fh:
+            json.dump({"cash": 50, "bets": []}, fh)
+        old = (simcore.post_discord, os.environ.get("DISCORD_WEBHOOK_URL"), heartbeat.SEND_AFTER_HOUR)
+        heartbeat.simcore.post_discord = lambda url, text: delivered
+        os.environ["DISCORD_WEBHOOK_URL"] = "https://example.invalid/hook"
+        heartbeat.SEND_AFTER_HOUR = 0
+        try:
+            return heartbeat.main()
+        finally:
+            heartbeat.simcore.post_discord = old[0]
+            heartbeat.SEND_AFTER_HOUR = old[2]
+            if old[1] is None:
+                os.environ.pop("DISCORD_WEBHOOK_URL", None)
+            else:
+                os.environ["DISCORD_WEBHOOK_URL"] = old[1]
+
+    def test_failed_delivery_is_not_marked_sent(self):
+        self.assertEqual(self._run(False), 1)
+        self.assertFalse(os.path.exists(heartbeat.STATE_FILE))
+
+    def test_successful_delivery_is_marked_sent(self):
+        self.assertEqual(self._run(True), 0)
+        with open(heartbeat.STATE_FILE) as fh:
+            self.assertIn("last", json.load(fh))
+
+    def test_broken_ledger_is_shown_not_hidden(self):
+        with open("ledger_x.json", "w") as fh:
+            fh.write('{"cash": NaN, "bets": []}')
+        row = heartbeat.line("ledger_x.json", "2000")
+        self.assertIn("can't be read or is invalid", row[1])
