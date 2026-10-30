@@ -1,5 +1,5 @@
 {
- "cash": 44.0959964539007,
+ "cash": 43.0924964539007,
  "bets": [
   {
    "strategy": "MORNING",
@@ -435,6 +435,23 @@
    "status": "resting",
    "placed": "2026-10-30T02:15:31.494201+00:00",
    "expires": "2026-10-30T04:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "72338580822266524409948816497992038019459113172540511525448914696693300712162",
+   "condition": "0xed29d846b2e3c4001142c808d63e556900e54d165635b45abd0da9d19543575b",
+   "event": "lowest-temperature-in-chengdu-on-october-30-2026",
+   "title": "Will the lowest temperature in Chengdu be 16\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "16\u00b0C",
+   "price": 0.93,
+   "shares": 1.075268817204301,
+   "stake": 1.0,
+   "fee": 0.003499999999999998,
+   "profit_if_win": 0.071768817204301,
+   "reason": "favourite 16\u00b0C mid 0.72, local 10:30",
+   "status": "open",
+   "opened": "2026-10-30T02:30:43.505395+00:00"
   }
  ]
 }

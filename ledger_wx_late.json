@@ -1,5 +1,5 @@
 {
- "cash": 35.08007057009427,
+ "cash": 34.07347057009427,
  "bets": [
   {
    "strategy": "LATE",
@@ -334,6 +334,23 @@
    "reason": "lowe so far 71\u00b0F at local 21:00",
    "status": "open",
    "opened": "2026-10-30T02:00:53.729519+00:00"
+  },
+  {
+   "strategy": "LATE",
+   "asset": "105770105599548483518002788588715487310913551729874942087308766007869586148724",
+   "condition": "0x2776c85dcc7b1d1a74389610e8e46b3f1239c1f630b8bad2f715ecbe74da2c1f",
+   "event": "lowest-temperature-in-austin-on-october-29-2026",
+   "title": "Will the lowest temperature in Austin be between 64-65\u00b0F on October 29?",
+   "outcome": "NO",
+   "bucket": "64-65\u00b0F",
+   "price": 0.8679999999999999,
+   "shares": 1.1520737327188941,
+   "stake": 1.0,
+   "fee": 0.006600000000000001,
+   "profit_if_win": 0.14547373271889413,
+   "reason": "lowe so far 70\u00b0F at local 21:30",
+   "status": "open",
+   "opened": "2026-10-30T02:30:42.691589+00:00"
   }
  ]
 }
