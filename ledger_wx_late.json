@@ -1,5 +1,5 @@
 {
- "cash": 32.067970570094275,
+ "cash": 31.066470570094275,
  "bets": [
   {
    "strategy": "LATE",
@@ -385,6 +385,23 @@
    "reason": "lowe so far 56\u00b0F at local 22:15",
    "status": "open",
    "opened": "2026-10-30T03:15:32.396965+00:00"
+  },
+  {
+   "strategy": "LATE",
+   "asset": "65234624296119932473926747022830639135153080573450189200068211593501188402808",
+   "condition": "0x2b6f9589d6a943d78fa0a56999720b14bcfe04d05514a31afb3c4bd4ca4ac54c",
+   "event": "lowest-temperature-in-seattle-on-october-29-2026",
+   "title": "Will the lowest temperature in Seattle be between 42-43\u00b0F on October 29?",
+   "outcome": "NO",
+   "bucket": "42-43\u00b0F",
+   "price": 0.9699999999999999,
+   "shares": 1.0309278350515465,
+   "stake": 1.0,
+   "fee": 0.0015000000000000015,
+   "profit_if_win": 0.029427835051546503,
+   "reason": "lowe so far 45\u00b0F at local 21:00",
+   "status": "open",
+   "opened": "2026-10-30T04:00:55.274286+00:00"
   }
  ]
 }
