@@ -1,5 +1,5 @@
 {
- "cash": 36.59759462627525,
+ "cash": 35.59759462627525,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -1029,6 +1029,25 @@
    "reason": "favourite 19\u00b0C mid 0.79, local 16:45",
    "status": "open",
    "opened": "2026-10-30T07:45:35.965609+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "19029621297394175603643271729196065757962445545280641112617790505389004301867",
+   "condition": "0xefb9382f9e40e77c82494a87e76b9a8b489ea6a22ed0a3e99ffc25ab2784a79b",
+   "event": "highest-temperature-in-lucknow-on-october-30-2026",
+   "title": "Will the highest temperature in Lucknow be 23\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "23\u00b0C",
+   "price": 0.91,
+   "shares": 1.0989010989010988,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.09890109890109877,
+   "reason": "favourite 23\u00b0C mid 0.94, local 16:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-30T10:45:31.865181+00:00",
+   "expires": "2026-10-30T13:30:00+00:00"
   }
  ]
 }
