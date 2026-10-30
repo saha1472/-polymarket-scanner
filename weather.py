@@ -65,14 +65,18 @@ LATE_GAP = 2                 # bucket must be this many degrees past the reading
 LATE_MIN_PRICE = 0.85        # NO price band
 LATE_MAX_PRICE = 0.97
 LATE_HIGH_FROM = 17          # local hour after which today's high has usually happened
-LATE_LOW_FROM = 21           # local hour after which a big further drop is unlikely
+LATE_LOW_FROM = 21           # (unused while LATE_KINDS excludes "lowest")
+# LATE on lowest-temperature markets is OFF since 2026-10-30: paper 5-16, -$15.86.
+# Clear nights keep cooling until midnight, so "already ruled out" lows aren't.
+LATE_KINDS = ("highest",)
 LATE_PER_EVENT = 2
 
 # MORNING / AFTERNOON: buy the favourite once the day's low/high has
 # probably happened. kind, local hours, units allowed.
 FAV_RULES = {
     "MORNING":   {"kind": "lowest",  "hours": (8, 12),  "units": ("C",)},
-    "AFTERNOON": {"kind": "highest", "hours": (15, 19), "units": ("C", "F")},
+    # C only since 2026-10-30: paper C 19-3 (-$0.52), F 8-5 (-$4.14).
+    "AFTERNOON": {"kind": "highest", "hours": (15, 19), "units": ("C",)},
 }
 FAV_MIN_PRICE = 0.70
 FAV_MAX_PRICE = 0.95
@@ -364,6 +368,8 @@ def late_signals(events, obs, fc):
         tz = (fc.get(e["station"]) or {}).get("tz")
         now = local_now(tz) if tz else None
         if not now or now.date() != e["date"]:
+            continue
+        if e["kind"] not in LATE_KINDS:
             continue
         start = LATE_HIGH_FROM if e["kind"] == "highest" else LATE_LOW_FROM
         if now.hour < start:
