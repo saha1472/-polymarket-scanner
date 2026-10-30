@@ -24,6 +24,7 @@ import json
 import math
 import os
 import re
+import sys
 import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
@@ -618,12 +619,11 @@ def summary(ledger):
 
 
 def notify(lines):
+    """True if delivered (or nothing to send / no webhook configured)."""
     url = os.environ.get("DISCORD_WEBHOOK_URL")
     if not url or not lines:
-        return
-    text = "\n".join(lines)
-    for i in range(0, len(text), 1900):
-        requests.post(url, json={"content": text[i:i + 1900]}, timeout=10)
+        return True
+    return simcore.post_discord(url, "\n".join(lines))
 
 
 if __name__ == "__main__":
@@ -670,4 +670,5 @@ if __name__ == "__main__":
             out += [f"**[WX-{strat}]**"] + msgs + [summary(led)]
     write_json(STATE_FILE, state)
     print("\n".join(out))
-    notify(out)
+    if not notify(out):
+        sys.exit("Discord delivery failed (ledgers were saved). Failing the run so it's visible.")
