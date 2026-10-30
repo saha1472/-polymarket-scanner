@@ -1,5 +1,5 @@
 {
- "cash": 37.91770815221497,
+ "cash": 36.91770815221497,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -860,6 +860,25 @@
    "reason": "favourite 18\u00b0C mid 0.81, local 15:15",
    "status": "open",
    "opened": "2026-10-30T02:15:31.604455+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "15364998360809734183105331984462544461197174373098852781151920948635422249311",
+   "condition": "0xf885571cbe5c73a3820aed2c005c4624080ad13bf8e3be364b39500b1014409e",
+   "event": "highest-temperature-in-busan-on-october-30-2026",
+   "title": "Will the highest temperature in Busan be 21\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "21\u00b0C",
+   "price": 0.72,
+   "shares": 1.3888888888888888,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.38888888888888884,
+   "reason": "favourite 21\u00b0C mid 0.80, local 15:00",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-30T06:00:51.739941+00:00",
+   "expires": "2026-10-30T10:00:00+00:00"
   }
  ]
 }
