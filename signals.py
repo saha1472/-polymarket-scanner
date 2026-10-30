@@ -7,6 +7,8 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 
+import simcore
+
 DATA_API = "https://data-api.polymarket.com"
 GAMMA_API = "https://gamma-api.polymarket.com"
 BOOK_URL = "https://clob.polymarket.com/book"
@@ -135,50 +137,11 @@ def read_json(path, default):
 
 
 def write_json(path, data, indent=None):
-    """Atomic: write a temp file, then swap it in, so a crash mid-write
-    can never leave a half-written ledger behind."""
-    tmp = f"{path}.{os.getpid()}.tmp"
-    with open(tmp, "w") as fh:
-        json.dump(data, fh, indent=indent)
-    os.replace(tmp, path)
+    simcore.write_json_atomic(path, data, indent)
 
 
 def sell_fill(book, shares):
-    """Walk the bids like a real sell order. Returns (shares sold, cash
-    received after fees, average price). Can sell fewer than asked."""
-    bids = sorted(((num(b.get("price")), num(b.get("size")))
-                   for b in (book or {}).get("bids", [])), reverse=True)
-    left, sold, cash = shares, 0.0, 0.0
-    for price, size in bids:
-        if price <= 0 or size <= 0 or left <= 1e-9:
-            continue
-        take = min(size, left)
-        cash += take * price - take * FEE_RATE * price * (1 - price)
-        sold += take
-        left -= take
-    return sold, cash, (cash / sold if sold else 0.0)
-
-
-def resolved_win(row, asset):
-    """True/False once the market is FINALLY resolved, None otherwise.
-    Uses Polymarket's resolution status when present, and the winning
-    outcome (highest final price, which must be >= 0.99)."""
-    if not row or not row.get("closed"):
-        return None
-    status = row.get("umaResolutionStatus")
-    if status and status != "resolved":
-        return None          # proposed / disputed: not final yet
-    try:
-        ids = json.loads(row.get("clobTokenIds") or "[]")
-        prices = [num(x) for x in json.loads(row.get("outcomePrices") or "[]")]
-    except ValueError:
-        return None
-    if asset not in ids or len(prices) != len(ids) or not prices:
-        return None
-    top = max(prices)
-    if top < 0.99 or prices.count(top) > 1:
-        return None          # not settled to a single winner (e.g. a 50/50 split)
-    return prices[ids.index(asset)] == top
+    return simcore.sell_fill(book, shares, FEE_RATE)
 
 
 # ---------- Category tags (which markets belong to which category) ----------
@@ -410,53 +373,52 @@ def size_bet(s):
 # ---------- Step 4: paper trading ledger ----------
 
 def load_ledger():
-    """A missing ledger starts fresh. A ledger that exists but can't be read
-    stops the run loudly instead of silently becoming a new $50 account."""
-    if not os.path.exists(LEDGER_FILE):
-        return {"cash": START_BANKROLL, "bets": []}
-    try:
-        with open(LEDGER_FILE) as fh:
-            led = json.load(fh)
-    except (OSError, ValueError) as err:
-        raise SystemExit(f"{LEDGER_FILE} exists but can't be read ({err}). "
-                         f"Not trading on a broken ledger; fix or restore it.")
-    if not isinstance(led, dict) or not isinstance(led.get("cash"), (int, float)) \
-            or not isinstance(led.get("bets"), list):
-        raise SystemExit(f"{LEDGER_FILE} has an unexpected format. Not trading.")
-    return led
+    """Missing -> fresh account. Unreadable, NaN/infinite or malformed -> stop."""
+    return simcore.load_ledger(LEDGER_FILE, START_BANKROLL)
 
 
 def save_ledger(ledger):
     write_json(LEDGER_FILE, ledger, indent=2)
 
 
+def hold_baseline(bet):
+    """P&L of simply holding the ORIGINAL position to resolution."""
+    return bet["hold_pnl"] if "hold_pnl" in bet else bet["pnl"]
+
+
 def settle(ledger):
+    """Settle on Polymarket's final payout (see simcore). Every bet touched by
+    a stop-loss, partial or full, also gets `hold_pnl`: what holding all the
+    original shares would have made."""
     msgs = []
-    open_bets = [b for b in ledger["bets"] if b["status"] == "open"
-                 or (b["status"] == "stopped" and "hold_pnl" not in b)]
-    markets = pmap(lambda b: get(f"{GAMMA_API}/markets",
-                                 {"condition_ids": b["condition"],
-                                  "closed": "true"}) or [], open_bets)
-    for bet, rows in zip(open_bets, markets):
-        won = resolved_win(rows[0] if rows else None, bet["asset"])
-        if won is None:
+    todo = [b for b in ledger["bets"] if b["status"] == "open"
+            or (b["status"] == "stopped" and "hold_pnl" not in b)]
+    if not todo:
+        return msgs
+    payouts = simcore.final_payouts(get, todo)
+    now = datetime.now(timezone.utc).isoformat()
+    for bet in todo:
+        pay = payouts.get(bet["asset"])
+        if pay is None:
             continue
-        payout = bet["shares"] if won else 0.0
+        if "orig_shares" in bet:
+            bet["hold_pnl"] = bet["orig_shares"] * pay - bet["stake"] - bet["fee"]
         if bet["status"] == "stopped":
-            # already sold; just record what holding would have done
-            full = bet.get("orig_shares", bet["shares"])
-            bet["hold_pnl"] = (full if won else 0.0) - bet["stake"] - bet["fee"]
-            msgs.append(f"ℹ️ Stopped bet resolved {'WON' if won else 'LOST'}: "
+            msgs.append(f"ℹ️ Stopped bet resolved ({simcore.outcome_label(pay)}): "
                         f"stop {bet['pnl']:+.2f} vs hold {bet['hold_pnl']:+.2f} "
                         f"| {bet['title']}")
             continue
+        payout = bet["shares"] * pay                 # remaining shares only
         ledger["cash"] += payout
-        bet["closed"] = datetime.now(timezone.utc).isoformat()
-        bet["status"] = "won" if won else "lost"
+        bet["closed"] = now
+        bet["status"] = simcore.outcome_label(pay)
         # "recovered" = cash already taken out by a partial stop-loss sale
         bet["pnl"] = payout + bet.get("recovered", 0.0) - bet["stake"] - bet["fee"]
-        msgs.append(f"{'✅ WON' if won else '❌ LOST'} {bet['outcome']} | "
-                    f"{bet['title']} | P&L ${bet['pnl']:+.2f}")
+        icon = {"won": "✅ WON", "lost": "❌ LOST", "split": "➗ SPLIT 50/50"}[bet["status"]]
+        extra = (f" (holding all shares: {bet['hold_pnl']:+.2f})"
+                 if "hold_pnl" in bet else "")
+        msgs.append(f"{icon} {bet['outcome']} | {bet['title']} | "
+                    f"P&L ${bet['pnl']:+.2f}{extra}")
     return msgs
 
 
@@ -570,9 +532,11 @@ def check_exits(ledger):
         exited = sum(1 for h in bet["holders"].values() if h.get("exited"))
         if exited / len(bet["holders"]) < EXIT_MAJORITY:
             continue
+        # shadow exit = exiting the ORIGINAL position (as if no stop had sold any)
+        full = bet.get("orig_shares", bet["shares"])
         book = get(BOOK_URL, {"token_id": bet["asset"]})
-        sold, cash, avg = sell_fill(book, bet["shares"])
-        if sold < bet["shares"] - 1e-9 or avg <= 0:
+        sold, cash, avg = sell_fill(book, full)
+        if sold < full - 1e-9 or avg <= 0:
             continue  # the book can't absorb the whole position yet; retry next run
         bid = avg
         bet["shadow_exit"] = {
@@ -675,21 +639,25 @@ if __name__ == "__main__":
         done = [b for b in ledger["bets"] if b["status"] != "open"]
         wins = sum(1 for b in done if b["status"] == "won")
         stopped = [b for b in done if b["status"] == "stopped"]
+        split = sum(1 for b in done if b["status"] == "split")
         open_n = sum(1 for b in ledger["bets"] if b["status"] == "open")
         msgs.append(
             f"💰 Cash ${ledger['cash']:.2f} | open bets {open_n} | "
-            f"record {wins}-{len(done) - wins - len(stopped)}"
+            f"record {wins}-{len(done) - wins - len(stopped) - split}"
             + (f" (+{len(stopped)} stopped)" if stopped else "")
+            + (f" (+{split} split)" if split else "")
             + f" | realized P&L ${sum(b['pnl'] for b in done):+.2f}"
         )
-        judged = [b for b in stopped if "hold_pnl" in b]
+        # every resolved bet a stop touched (fully OR partly): actual vs holding
+        judged = [b for b in done if "hold_pnl" in b]
         if judged:
             diff = sum(b["pnl"] - b["hold_pnl"] for b in judged)
             msgs.append(f"✂️ Stop-loss so far: ${diff:+.2f} vs holding "
                         f"({len(judged)} stopped bet(s) resolved)")
-        # comparisons below use what holding would have done
-        done = [dict(b, pnl=b["hold_pnl"]) if b["status"] == "stopped" else b
-                for b in done if b["status"] != "stopped" or "hold_pnl" in b]
+        # comparisons below are all against HOLDING THE ORIGINAL POSITION;
+        # stopped bets whose market hasn't resolved yet are left out
+        done = [dict(b, pnl=hold_baseline(b)) for b in done
+                if b["status"] != "stopped" or "hold_pnl" in b]
         follow = sum(b["shadow_exit"]["pnl"] if b.get("shadow_exit")
                      else b["pnl"] for b in done)
         shadowed = sum(1 for b in done if b.get("shadow_exit"))
