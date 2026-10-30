@@ -219,3 +219,57 @@ def audit(scan, settings, book=None, quote=None):
     if quote is not None:
         rec["quote"] = quote
     return rec
+
+
+# ---------- Discord delivery (checked) ----------
+
+import time  # noqa: E402
+
+DISCORD_CHUNK = 1900          # Discord rejects messages over 2000 characters
+DISCORD_ATTEMPTS = 4
+DISCORD_MAX_WAIT = 30         # never sleep longer than this for one retry
+
+
+def _retry_after(resp):
+    """Seconds Discord asks us to wait on a 429 (JSON body or header)."""
+    try:
+        wait = float(resp.json().get("retry_after"))
+    except (ValueError, TypeError, AttributeError):
+        wait = num(resp.headers.get("Retry-After"), 1.0) if hasattr(resp, "headers") else 1.0
+    return min(max(wait, 0.5), DISCORD_MAX_WAIT)
+
+
+def post_discord(url, text, http=None, sleep=time.sleep):
+    """Send `text` to a Discord webhook, split into chunks. Returns True only if
+    EVERY chunk was accepted (2xx). Retries rate limits (429, honouring
+    retry_after) and server/network errors; other 4xx fail immediately."""
+    if http is None:
+        import requests as http
+    if not url:
+        return False
+    chunks = [text[i:i + DISCORD_CHUNK] for i in range(0, len(text), DISCORD_CHUNK)] or [""]
+    for chunk in chunks:
+        delivered = False
+        for attempt in range(DISCORD_ATTEMPTS):
+            try:
+                resp = http.post(url, json={"content": chunk}, timeout=10)
+            except Exception as err:            # network error: back off and retry
+                print(f"Discord send failed ({err}); retry {attempt + 1}")
+                sleep(min(2 ** attempt, DISCORD_MAX_WAIT))
+                continue
+            code = getattr(resp, "status_code", 0)
+            if 200 <= code < 300:
+                delivered = True
+                break
+            if code == 429:
+                sleep(_retry_after(resp))
+                continue
+            if code >= 500:
+                sleep(min(2 ** attempt, DISCORD_MAX_WAIT))
+                continue
+            print(f"Discord rejected the message (HTTP {code}); not retrying")
+            return False
+        if not delivered:
+            print("Discord message NOT delivered after retries")
+            return False
+    return True
