@@ -1,5 +1,5 @@
 {
-  "cash": 49.91026487869897,
+  "cash": 48.893264878698965,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -274,6 +274,112 @@
           "pnl": -0.9351712328767123
         }
       }
+    },
+    {
+      "asset": "86062205576259820713998362806306981171199757788190972092158810192581720246434",
+      "condition": "0x12227cc25b845fed26d4d73ad4a1a341483bb925057dff94bf8841d96ce49c1a",
+      "title": "Will the highest temperature in Istanbul be 15\u00b0C on October 31?",
+      "outcome": "Yes",
+      "event": "highest-temperature-in-istanbul-on-october-31-2026",
+      "price": 0.66,
+      "shares": 1.5151515151515151,
+      "stake": 1.0,
+      "fee": 0.016999999999999998,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "quqqq"
+      ],
+      "holders": {
+        "0x1b29fd072a61e82c870034e25bd81169ef70f288": {
+          "name": "quqqq",
+          "size": 1134.4752,
+          "entry": 0.5905,
+          "win_rate": 0.5901639344262295,
+          "roi": 0.12836422983864285,
+          "n": 122
+        }
+      },
+      "audit": {
+        "code": "26e15e54207c",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-10-30T17:02:36.291247+00:00",
+        "book": {
+          "asks": [
+            [
+              0.66,
+              124.45
+            ],
+            [
+              0.67,
+              60.0
+            ],
+            [
+              0.68,
+              41.0
+            ],
+            [
+              0.71,
+              7.88
+            ],
+            [
+              0.72,
+              77.51
+            ]
+          ],
+          "bids": [
+            [
+              0.65,
+              203.62
+            ],
+            [
+              0.64,
+              135.79
+            ],
+            [
+              0.63,
+              265.42
+            ],
+            [
+              0.62,
+              20189.64
+            ],
+            [
+              0.61,
+              37.47
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793379754990",
+          "hash": "8b16a3f0f7a285d123985819c94cd9327137fb83"
+        }
+      },
+      "opened": "2026-10-30T17:02:36.291277+00:00",
+      "ends": "2026-10-31T00:00:00.345968+00:00"
     }
   ]
 }
