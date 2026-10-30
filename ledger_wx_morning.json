@@ -1,5 +1,5 @@
 {
- "cash": 44.085996453900705,
+ "cash": 40.08349645390071,
  "bets": [
   {
    "strategy": "MORNING",
@@ -524,6 +524,80 @@
    "reason": "favourite 17\u00b0C mid 0.71, local 10:15",
    "status": "open",
    "opened": "2026-10-30T08:15:32.166317+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "52349766807425994031299779710195241763959064290163293000543831055468254479058",
+   "condition": "0xcc01fc89d6ddd310b2ce14172b3cf6738f87581a602acdb4c2992d31bbcaed68",
+   "event": "lowest-temperature-in-munich-on-october-30-2026",
+   "title": "Will the lowest temperature in Munich be 1\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "1\u00b0C",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "favourite 1\u00b0C mid 0.92, local 10:15",
+   "status": "open",
+   "opened": "2026-10-30T09:15:30.656075+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "7058519143296515227133190579273393907885571065142771625693999394741801688029",
+   "condition": "0xd58b7d151ac80470b76d9aeda7af3b7ff2450dcf70c1011ab63d15765a04f06b",
+   "event": "lowest-temperature-in-milan-on-october-30-2026",
+   "title": "Will the lowest temperature in Milan be 9\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "9\u00b0C",
+   "price": 0.75,
+   "shares": 1.3333333333333333,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.33333333333333326,
+   "reason": "favourite 9\u00b0C mid 0.86, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-30T09:15:30.752003+00:00",
+   "expires": "2026-10-30T11:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "102549174927055815592619203990266272348676644737852201231738303771185291221947",
+   "condition": "0x28829855b390cd9ca02205eee24e33d843d61b2e814015d1e7cc7e16655175e2",
+   "event": "lowest-temperature-in-warsaw-on-october-30-2026",
+   "title": "Will the lowest temperature in Warsaw be 4\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "4\u00b0C",
+   "price": 0.76,
+   "shares": 1.3157894736842106,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.3157894736842106,
+   "reason": "favourite 4\u00b0C mid 0.88, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-30T09:15:30.939306+00:00",
+   "expires": "2026-10-30T11:00:00+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "51885845102509983882896822161948535532211470614734531102321173141098993481822",
+   "condition": "0x425fd1d9641b9208adb209d2f3f93b055a6aa2cdccd1ef4247c2c99a5dcc84d8",
+   "event": "lowest-temperature-in-amsterdam-on-october-30-2026",
+   "title": "Will the lowest temperature in Amsterdam be 7\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "7\u00b0C",
+   "price": 0.87,
+   "shares": 1.1494252873563218,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.14942528735632177,
+   "reason": "favourite 7\u00b0C mid 0.93, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-30T09:15:31.034906+00:00",
+   "expires": "2026-10-30T11:00:00+00:00"
   }
  ]
 }
