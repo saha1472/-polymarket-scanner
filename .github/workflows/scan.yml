@@ -21,7 +21,9 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          ref: main   # always start from the latest ledgers, even if this run waited in the queue
+          # the branch this run was started on (main for the schedule); always its
+          # latest commit, even if the run waited in the queue
+          ref: ${{ github.ref_name }}
           fetch-depth: 50   # enough history to work out what changed if a save is rejected
       - uses: actions/setup-python@v6
         with:
@@ -35,17 +37,19 @@ jobs:
           key: tags-${{ github.run_id }}
           restore-keys: tags-
 
+      # GATE: if any test fails, nothing below trades, notifies or saves.
       - name: Simulator self-tests
-        run: python -m unittest discover -s tests
+        id: tests
+        run: python -m unittest discover -s tests -v
 
       - name: Arbitrage scanner
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
         run: python scanner.py
 
       # All five scans run side by side (separate ledgers), then their logs
       # are printed one after another. The step fails if any scan failed.
       - name: Smart-money signals (general + categories) + weather desk
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
         run: |
           for scan in GENERAL SPORTS ESPORTS TECH WEATHER; do
             arg=$scan; [ "$scan" = GENERAL ] && arg=""
@@ -64,28 +68,36 @@ jobs:
           exit $fail
 
       - name: Daily heartbeat
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
         run: python heartbeat.py
 
       - name: Save ledgers
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add ledger*.json traders_*.json $(ls wx_state.json heartbeat.json 2>/dev/null)
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Update paper ledgers"
-          git push && exit 0
-          # Push rejected: something changed on GitHub during this run.
-          git fetch --depth=50 origin main
-          base=$(git merge-base HEAD origin/main)
-          if git diff --name-only "$base" origin/main | grep -qE '^(ledger.*|traders_.*|wx_state|heartbeat)\.json$'; then
-            echo "::error::State files changed on GitHub during this run. This run's ledgers were NOT saved (copy kept as a run artifact)."
-            exit 1
-          fi
-          # Only code/other files changed (e.g. a pasted update): replay our save on top.
-          git rebase origin/main && git push && exit 0
-          echo "::error::Could not save ledgers after rebasing. Copy kept as a run artifact."
+          # A push can fail because files changed on GitHub during the run, or
+          # because of a network / authentication problem. Try a few times.
+          for attempt in 1 2 3; do
+            git push && exit 0
+            echo "Push attempt $attempt failed; checking why..."
+            if ! git fetch --depth=50 origin "$GITHUB_REF_NAME"; then
+              echo "Can't reach GitHub (network or auth); retrying in $((attempt * 15))s"
+              sleep $((attempt * 15)); continue
+            fi
+            base=$(git merge-base HEAD "origin/$GITHUB_REF_NAME")
+            if git diff --name-only "$base" "origin/$GITHUB_REF_NAME" | grep -qE '^(ledger.*|traders_.*|wx_state|heartbeat)\.json$'; then
+              echo "::error::State files changed on GitHub during this run. This run's ledgers were NOT saved (copy kept as a run artifact)."
+              exit 1
+            fi
+            # only code/other files changed (e.g. a pasted update): replay our save on top
+            git rebase "origin/$GITHUB_REF_NAME" || { git rebase --abort; break; }
+            sleep $((attempt * 5))
+          done
+          echo "::error::Could not save ledgers (network, auth or conflict). Copy kept as a run artifact."
           exit 1
 
       - name: Keep this run's ledgers if saving failed
@@ -105,4 +117,4 @@ jobs:
         run: |
           [ -z "$DISCORD_WEBHOOK_URL" ] && exit 0
           curl -s -H "Content-Type: application/json" -X POST "$DISCORD_WEBHOOK_URL" \
-            -d "{\"content\": \"⚠️ A bot run failed (scan error or ledgers not saved). Alerts from this run may not be in the saved ledgers. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
+            -d "{\"content\": \"⚠️ A bot run failed (tests, a scan, or saving). If tests failed, nothing was traded or saved. Otherwise alerts from this run may not be in the saved ledgers. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\"}"
