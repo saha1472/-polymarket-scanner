@@ -1,5 +1,5 @@
 {
- "cash": 33.069470570094275,
+ "cash": 32.067970570094275,
  "bets": [
   {
    "strategy": "LATE",
@@ -368,6 +368,23 @@
    "reason": "lowe so far 79\u00b0F at local 23:00",
    "status": "open",
    "opened": "2026-10-30T03:00:54.722496+00:00"
+  },
+  {
+   "strategy": "LATE",
+   "asset": "60290191630611442221797536335339652455767719922109512642405337712124111667324",
+   "condition": "0x5bdf34d21e2a6248a40532c6c4b2bf2e2e90790dd149e2cb8dcdd863c91f08b8",
+   "event": "lowest-temperature-in-chicago-on-october-29-2026",
+   "title": "Will the lowest temperature in Chicago be between 52-53\u00b0F on October 29?",
+   "outcome": "NO",
+   "bucket": "52-53\u00b0F",
+   "price": 0.9699999999999999,
+   "shares": 1.0309278350515465,
+   "stake": 1.0,
+   "fee": 0.0015000000000000015,
+   "profit_if_win": 0.029427835051546503,
+   "reason": "lowe so far 56\u00b0F at local 22:15",
+   "status": "open",
+   "opened": "2026-10-30T03:15:32.396965+00:00"
   }
  ]
 }
