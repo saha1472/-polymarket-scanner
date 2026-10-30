@@ -556,6 +556,58 @@ class SettlementChecker(unittest.TestCase):
                       hold_pnl=inf)
         self.assertTrue(self._check([b], {"A": 1.0}, cash=50)[1])
 
+    # --- GPT's fourth-round cases: required fields by status, no zero defaults ---
+    def _stopped(self, **kw):
+        b = {"status": "stopped", "asset": "A", "shares": 0.0, "stake": 1.0, "fee": 0.01,
+             "price": 0.6, "title": "t", "recovered": 0.4, "orig_shares": 1.25,
+             "hold_pnl": 0.24, "pnl": -0.61}
+        b.update(kw)
+        return b
+
+    def test_modern_stop_correct_passes(self):
+        self.assertEqual(self._check([self._stopped()], {"A": 1.0})[1], [])
+
+    def test_stopped_missing_pnl_fails(self):
+        b = self._stopped()
+        b.pop("pnl")
+        _, problems, _ = self._check([b], {"A": 1.0}, cash=50.0)
+        self.assertTrue(any("pnl" in p for p in problems))
+
+    def test_stopped_wrong_pnl_with_matching_cash_fails(self):
+        b = self._stopped(pnl=0.5)                       # truth: 0.4 - 1.01 = -0.61
+        _, problems, _ = self._check([b], {"A": 1.0}, cash=50.5)
+        self.assertTrue(any("recovered - stake - fee" in p for p in problems))
+
+    def test_open_missing_stake_with_matching_cash_fails(self):
+        b = {"status": "open", "asset": "B", "shares": 1.2, "fee": 0.01, "price": 0.8,
+             "title": "t"}
+        _, problems, _ = self._check([b], {}, cash=49.99)
+        self.assertTrue(any("stake" in p for p in problems))
+        self.assertTrue(any("not reconciled" in p for p in problems))
+
+    def test_open_and_resting_required_fields(self):
+        for status in ("open", "resting"):
+            for key in ("stake", "fee", "shares", "price"):
+                b = {"status": status, "asset": "B", "shares": 1.2, "stake": 1.0,
+                     "fee": 0.0, "price": 0.8, "title": "t"}
+                b.pop(key)
+                self.assertTrue(self._check([b], {}, cash=49)[1], msg=(status, key))
+
+    def test_legacy_stop_is_range_checked_not_rederived(self):
+        legacy = {"status": "stopped", "asset": "A", "shares": 1.49, "stake": 1.0,
+                  "fee": 0.0165, "price": 0.67, "title": "t", "pnl": -0.90,
+                  "hold_pnl": -1.0165}
+        rows, problems, _ = self._check([legacy], {"A": 0.0})
+        self.assertEqual(problems, [])
+        self.assertEqual(rows[0][3], "legacy")
+        impossible = dict(legacy, pnl=-5.0)              # lost more than was staked
+        self.assertTrue(any("outside the possible range" in p
+                            for p in self._check([impossible], {"A": 0.0})[1]))
+
+    def test_unknown_status_fails(self):
+        _, problems, _ = self._check([self._bet(status="weird")], {"A": 1.0}, cash=50)
+        self.assertTrue(any("unknown status" in p for p in problems))
+
     def test_non_finite_cash_fails(self):
         _, problems, _ = self._check([self._bet()], {"A": 1.0}, cash=float("nan"))
         self.assertTrue(any("cash" in p for p in problems))
