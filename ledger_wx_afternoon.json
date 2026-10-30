@@ -1,5 +1,5 @@
 {
- "cash": 36.76038532394967,
+ "cash": 32.74238532394967,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -1088,6 +1088,274 @@
    "status": "resting",
    "placed": "2026-10-30T13:00:56.795312+00:00",
    "expires": "2026-10-30T17:00:00+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "83511616074603627670406755127778775768387453213409627724622930789352573322606",
+   "condition": "0x2a86738005a6ce61ba5e001727338c9ce09821fb8a5155c9a95a17b22ebd30ae",
+   "event": "highest-temperature-in-milan-on-october-30-2026",
+   "title": "Will the highest temperature in Milan be 18\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "18\u00b0C",
+   "price": 0.92,
+   "shares": 1.0869565217391304,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.08695652173913038,
+   "reason": "favourite 18\u00b0C mid 0.94, local 15:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-30T14:01:16.894650+00:00",
+   "expires": "2026-10-30T18:00:00+00:00",
+   "audit": {
+    "code": "f25af6cc092b",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-30T14:01:16.894665+00:00",
+    "quote": {
+     "yes_bid": 0.91,
+     "yes_ask": 0.96
+    }
+   }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "62877421881253775574791969757770092291215225777869964422264267392800843431887",
+   "condition": "0xd347a6d997bfb8fdadbaee90b02bc3a3c4146c0707d01a8845a1201c00550255",
+   "event": "highest-temperature-in-madrid-on-october-30-2026",
+   "title": "Will the highest temperature in Madrid be 23\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "23\u00b0C",
+   "price": 0.75,
+   "shares": 1.3333333333333333,
+   "stake": 1.0,
+   "fee": 0.0125,
+   "profit_if_win": 0.32083333333333325,
+   "reason": "favourite 23\u00b0C mid 0.72, local 15:01",
+   "audit": {
+    "code": "f25af6cc092b",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-30T14:01:17.015160+00:00",
+    "book": {
+     "asks": [
+      [
+       0.75,
+       5.0
+      ],
+      [
+       0.76,
+       40.28
+      ],
+      [
+       0.78,
+       11.45
+      ],
+      [
+       0.79,
+       10.18
+      ],
+      [
+       0.81,
+       20.0
+      ]
+     ],
+     "bids": [
+      [
+       0.65,
+       26.0
+      ],
+      [
+       0.61,
+       40.5
+      ],
+      [
+       0.6,
+       165.0
+      ],
+      [
+       0.23,
+       5.0
+      ],
+      [
+       0.11,
+       22.41
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793368867511",
+     "hash": "b0d1ebebac62126fb8b66ddf02e0ec9902f261c8"
+    }
+   },
+   "status": "open",
+   "opened": "2026-10-30T14:01:17.015205+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "90938742167928393673802384007169101853023760686476283876120731849340006570479",
+   "condition": "0x447f7b0ea9f6bd745ce2bc85b812c37495208be24525ab15ce6c3f801b8d598d",
+   "event": "highest-temperature-in-warsaw-on-october-30-2026",
+   "title": "Will the highest temperature in Warsaw be 9\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "9\u00b0C",
+   "price": 0.8899999999999999,
+   "shares": 1.1235955056179776,
+   "stake": 1.0,
+   "fee": 0.0055,
+   "profit_if_win": 0.1180955056179776,
+   "reason": "favourite 9\u00b0C mid 0.84, local 15:01",
+   "audit": {
+    "code": "f25af6cc092b",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-30T14:01:17.134664+00:00",
+    "book": {
+     "asks": [
+      [
+       0.89,
+       15.27
+      ],
+      [
+       0.9,
+       33.12
+      ],
+      [
+       0.93,
+       32.36
+      ],
+      [
+       0.98,
+       30.0
+      ],
+      [
+       0.99,
+       60.39
+      ]
+     ],
+     "bids": [
+      [
+       0.48,
+       19.99
+      ],
+      [
+       0.47,
+       5.0
+      ],
+      [
+       0.46,
+       5.01
+      ],
+      [
+       0.35,
+       20.0
+      ],
+      [
+       0.34,
+       21.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793368876963",
+     "hash": "5cd18854081aafaf102b54379da64ab7d9085a01"
+    }
+   },
+   "status": "open",
+   "opened": "2026-10-30T14:01:17.134702+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "25576863340870655289571358007649808372894689395770898609665446337643086058435",
+   "condition": "0x4ae9c818480daeb69a754bae51625a1198adbee24186c4a477834675b0430d5d",
+   "event": "highest-temperature-in-amsterdam-on-october-30-2026",
+   "title": "Will the highest temperature in Amsterdam be 13\u00b0C on October 30?",
+   "outcome": "YES",
+   "bucket": "13\u00b0C",
+   "price": 0.91,
+   "shares": 1.0989010989010988,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.09890109890109877,
+   "reason": "favourite 13\u00b0C mid 0.94, local 15:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-30T14:01:17.252041+00:00",
+   "expires": "2026-10-30T18:00:00+00:00",
+   "audit": {
+    "code": "f25af6cc092b",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-30T14:01:17.252054+00:00",
+    "quote": {
+     "yes_bid": 0.901,
+     "yes_ask": 0.976
+    }
+   }
   }
  ]
 }
