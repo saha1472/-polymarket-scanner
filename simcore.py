@@ -171,19 +171,24 @@ _CODE_VERSION = None
 
 
 def code_version():
-    """The git commit this run is executing: GITHUB_SHA in Actions, else
-    `git rev-parse`, else 'unknown'."""
+    """The commit actually checked out and running (`git rev-parse HEAD`).
+    Falls back to GITHUB_SHA only if git isn't available."""
     global _CODE_VERSION
     if _CODE_VERSION is None:
-        sha = os.environ.get("GITHUB_SHA")
-        if not sha:
-            try:
-                sha = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
-                                     text=True, timeout=5).stdout.strip()
-            except (OSError, subprocess.SubprocessError):
-                sha = ""
-        _CODE_VERSION = sha[:12] if sha else "unknown"
+        sha = ""
+        try:
+            sha = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True,
+                                 text=True, timeout=5).stdout.strip()
+        except (OSError, subprocess.SubprocessError):
+            sha = ""
+        _CODE_VERSION = sha[:12] if sha else (os.environ.get("GITHUB_SHA", "")[:12] or "unknown")
     return _CODE_VERSION
+
+
+def trigger_sha():
+    """The commit that TRIGGERED the run (GITHUB_SHA). It can differ from the
+    code that ran when the branch moved on while the run waited in the queue."""
+    return os.environ.get("GITHUB_SHA", "")[:12] or None
 
 
 def book_snapshot(book, levels=5):
@@ -206,6 +211,9 @@ def audit(scan, settings, book=None, quote=None):
     there was no order book fetch (e.g. a resting bid placed from a quote)."""
     rec = {"code": code_version(), "scan": scan, "settings": dict(settings),
            "time": datetime.now(timezone.utc).isoformat()}
+    trig = trigger_sha()
+    if trig and trig != rec["code"]:
+        rec["trigger_sha"] = trig          # only stored when it differs
     if book is not None:
         rec["book"] = book_snapshot(book)
     if quote is not None:
