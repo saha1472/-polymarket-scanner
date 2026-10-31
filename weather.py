@@ -54,6 +54,11 @@ DEAD_MAX_PRICE = 0.985       # pay at most this for NO (need ~1.5%+ to be worth 
 DEAD_MIN_RETURN = 0.01       # after fees
 DEAD_PER_EVENT = 3
 
+# DEAD and LATE trust today's airport readings. If a station has gone quiet
+# (outage, holiday, strike), skip it: the reading so far may be incomplete and
+# the market may end up settling some other way.
+MAX_OBS_AGE_H = 3
+
 # SHIFT - OFF since 2026-10-29: backtest (Oct 5-27, 994 bets) lost ~33% per
 # bet, no better than betting against the move or picking a random neighbour.
 # Its ledger stays as a record; set True to re-enable.
@@ -69,8 +74,11 @@ LATE_MIN_PRICE = 0.85        # NO price band
 LATE_MAX_PRICE = 0.97
 LATE_HIGH_FROM = 17          # local hour after which today's high has usually happened
 LATE_LOW_FROM = 21           # (unused while LATE_KINDS excludes "lowest")
-# LATE on lowest-temperature markets is OFF since 2026-10-30: paper 5-16, -$15.86.
-# Clear nights keep cooling until midnight, so "already ruled out" lows aren't.
+# LATE on lowest-temperature markets is OFF since 2026-10-30 (paper 5-18). Found
+# 2026-10-31: those bets were made on only the last ~6h of readings (the METAR
+# API caps a response at 400 rows), so the "low so far" missed the dawn low and
+# many buckets "2 below" had in fact already been reached. Fixed in metar_obs;
+# lows stay off until the fixed version has been re-checked on paper.
 LATE_KINDS = ("highest",)
 LATE_PER_EVENT = 2
 
@@ -220,14 +228,31 @@ def load_events():
 
 # ---------- weather data ----------
 
+METAR_ROW_CAP = 400     # aviationweather.gov returns at most this many rows per call
+METAR_BATCH = 4         # 36h x up to 2 reports/hour x 4 stations = 288 rows, under the cap
+DAY_START_SLACK_H = 2   # today's first reading must be before 02:00 local
+
+
+def metar_rows(ids):
+    """All rows for these stations. If a response hits the row cap it may be
+    cut short (newest first), so split the batch and ask again."""
+    rows = get(METAR_URL, {"ids": ",".join(ids), "hours": 36, "format": "json"}) or []
+    if len(rows) < METAR_ROW_CAP:
+        return rows
+    if len(ids) == 1:
+        print(f"METAR for {ids[0]} hit the {METAR_ROW_CAP}-row cap; its early readings may be missing")
+        return rows
+    half = len(ids) // 2
+    return metar_rows(ids[:half]) + metar_rows(ids[half:])
+
+
 def metar_obs(stations):
     """Routine METAR temperatures (C, tenths when the T-group is present) for
     the last 36h, plus each station's coordinates."""
     obs, coords = {}, {}
     st = sorted(stations)
-    for i in range(0, len(st), 40):
-        rows = get(METAR_URL, {"ids": ",".join(st[i:i + 40]), "hours": 36,
-                               "format": "json"}) or []
+    batches = [st[i:i + METAR_BATCH] for i in range(0, len(st), METAR_BATCH)]
+    for rows in pmap(metar_rows, batches, workers=4):
         for r in rows:
             raw = r.get("rawOb") or ""
             if r.get("metarType") == "SPECI" or raw.startswith("SPECI"):
@@ -305,11 +330,13 @@ def strategy_settings(strategy):
     common = {"bet_size": BET_SIZE, "fee_rate": FEE_RATE}
     if strategy == "DEAD":
         return dict(common, margin=DEAD_MARGIN, max_price=DEAD_MAX_PRICE,
-                    min_return=DEAD_MIN_RETURN, per_event=DEAD_PER_EVENT)
+                    min_return=DEAD_MIN_RETURN, per_event=DEAD_PER_EVENT,
+                    max_obs_age_h=MAX_OBS_AGE_H)
     if strategy == "LATE":
         return dict(common, gap=LATE_GAP, price=[LATE_MIN_PRICE, LATE_MAX_PRICE],
                     high_from=LATE_HIGH_FROM, low_from=LATE_LOW_FROM,
-                    kinds=list(LATE_KINDS), per_event=LATE_PER_EVENT)
+                    kinds=list(LATE_KINDS), per_event=LATE_PER_EVENT,
+                    max_obs_age_h=MAX_OBS_AGE_H)
     if strategy == "SHIFT":
         return dict(common, enabled=SHIFT_ENABLED, min_move_c=SHIFT_MIN_MOVE_C,
                     price=[SHIFT_MIN_PRICE, SHIFT_MAX_PRICE],
@@ -344,14 +371,30 @@ def local_now(tz):
         return None
 
 
+def obs_age_hours(station, obs, now=None):
+    """Hours since the station's latest routine reading, or None if it has none."""
+    times = [ts for ts, _ in obs.get(station, [])]
+    if not times:
+        return None
+    return ((now or now_utc()).timestamp() - max(times)) / 3600
+
+
+def station_fresh(station, obs, now=None):
+    age = obs_age_hours(station, obs, now)
+    return age is not None and age <= MAX_OBS_AGE_H
+
+
 def observed_extreme(event, obs, tz):
-    """Highest/lowest reading so far on the event's local date (market unit)."""
-    vals = []
+    """Highest/lowest reading so far on the event's local date (market unit).
+    None unless the readings cover the day from its start: a partial day
+    (missing night readings) would give a wrong low or high."""
+    vals, first = [], None
     for ts, temp in obs.get(event["station"], []):
         t = datetime.fromtimestamp(ts, timezone.utc).astimezone(ZoneInfo(tz))
         if t.date() == event["date"]:
             vals.append(temp)
-    if not vals:
+            first = t if first is None or t < first else first
+    if not vals or first.hour >= DAY_START_SLACK_H:
         return None
     ext = max(vals) if event["kind"] == "highest" else min(vals)
     return to_unit(ext, event["unit"])
@@ -365,8 +408,8 @@ def dead_signals(events, obs, fc):
         if not now or now.date() != e["date"]:
             continue  # only today's markets, in the station's own time zone
         ext = observed_extreme(e, obs, tz)
-        if ext is None:
-            continue
+        if ext is None or not station_fresh(e["station"], obs):
+            continue      # no reading today, or the station has gone quiet
         picks = []
         for b in e["buckets"]:
             if e["kind"] == "highest":
@@ -397,8 +440,8 @@ def late_signals(events, obs, fc):
         if now.hour < start:
             continue
         ext = observed_extreme(e, obs, tz)
-        if ext is None:
-            continue
+        if ext is None or not station_fresh(e["station"], obs):
+            continue      # no reading today, or the station has gone quiet
         picks = []
         for b in e["buckets"]:
             if e["kind"] == "highest":   # buckets ABOVE today's high so far
@@ -646,6 +689,9 @@ if __name__ == "__main__":
         if sid not in fc and sid in tzs:
             fc[sid] = {"tz": tzs[sid], "days": {}}
     print(f"METAR for {len(obs)} stations, forecasts for {len(fc)}")
+    quiet = sorted(s for s in stations if not station_fresh(s, obs))
+    if quiet:
+        print(f"Skipped by DEAD/LATE (no routine reading in {MAX_OBS_AGE_H}h): {', '.join(quiet)}")
 
     for e in events:
         e["tz"] = (fc.get(e["station"]) or {}).get("tz") or "UTC"
