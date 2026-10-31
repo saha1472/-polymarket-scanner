@@ -1,5 +1,5 @@
 {
-  "cash": 48.893264878698965,
+  "cash": 47.878764878698966,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -381,6 +381,112 @@
       "opened": "2026-10-30T17:02:36.291277+00:00",
       "ends": "2026-10-31T00:00:00.345968+00:00",
       "stops": {}
+    },
+    {
+      "asset": "106958095541583047946880890622965475542703845412747895087393436779240223446743",
+      "condition": "0x0dfd68c828c0d8ec2b8192194ae1d6cc35128be2a043064c782b789c47f0a337",
+      "title": "Will the lowest temperature in New York City be between 48-49\u00b0F on November 1?",
+      "outcome": "No",
+      "event": "lowest-temperature-in-nyc-on-november-1-2026",
+      "price": 0.71,
+      "shares": 1.4084507042253522,
+      "stake": 1.0,
+      "fee": 0.014500000000000002,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "0bot"
+      ],
+      "holders": {
+        "0xf787b8a3a4c6990f48614a0b9af8422e3e7a1b63": {
+          "name": "0bot",
+          "size": 420.92,
+          "entry": 0.7157,
+          "win_rate": 0.5833333333333334,
+          "roi": 0.26896433593009617,
+          "n": 84
+        }
+      },
+      "audit": {
+        "code": "f3d82660a027",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-10-31T05:32:41.528566+00:00",
+        "book": {
+          "asks": [
+            [
+              0.71,
+              95.0
+            ],
+            [
+              0.72,
+              312.15
+            ],
+            [
+              0.74,
+              19.24
+            ],
+            [
+              0.76,
+              10.0
+            ],
+            [
+              0.79,
+              59.0
+            ]
+          ],
+          "bids": [
+            [
+              0.68,
+              75.0
+            ],
+            [
+              0.67,
+              312.14
+            ],
+            [
+              0.66,
+              20.0
+            ],
+            [
+              0.65,
+              20.0
+            ],
+            [
+              0.57,
+              20.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793424754869",
+          "hash": "f3daf6d3cf143f0b57efc74234e6a8701fc80676"
+        }
+      },
+      "opened": "2026-10-31T05:32:41.528612+00:00",
+      "ends": "2026-11-01T00:00:00.270883+00:00"
     }
   ]
 }
