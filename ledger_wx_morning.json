@@ -1,5 +1,5 @@
 {
- "cash": 47.45174810863362,
+ "cash": 41.44974810863362,
  "bets": [
   {
    "strategy": "MORNING",
@@ -819,6 +819,296 @@
     "quote": {
      "yes_bid": 0.89,
      "yes_ask": 0.97
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "71681100952652527570969925563276512650509704783115104488148915889430999572859",
+   "condition": "0x6b35312e741d27ca4e42e7f9bd35f9f689cb7352ae43974cb6f767ae5e921a04",
+   "event": "lowest-temperature-in-taipei-on-october-31-2026",
+   "title": "Will the lowest temperature in Taipei be 21\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "21\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 21\u00b0C mid 0.92, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-31T02:15:30.570104+00:00",
+   "expires": "2026-10-31T04:00:00+00:00",
+   "audit": {
+    "code": "71383a4e5432",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T02:15:30.570120+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 0.97
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "77735745997491550320340440430882806513709427284545424855953410392710003905710",
+   "condition": "0x9c00a643819c2b4af1b79161ef3fc5571ea6d6cfd05c9518ee65e5402c0b184d",
+   "event": "lowest-temperature-in-beijing-on-october-31-2026",
+   "title": "Will the lowest temperature in Beijing be 2\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "2\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 2\u00b0C mid 0.94, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-31T02:15:30.663742+00:00",
+   "expires": "2026-10-31T04:00:00+00:00",
+   "audit": {
+    "code": "71383a4e5432",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T02:15:30.663764+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "56047739512795219571024735003284850878569896852127168478281112162945250285845",
+   "condition": "0x1690604f5d995eb135d9730b6db57ec119df7f103519162f2a6c9bcd95db7a68",
+   "event": "lowest-temperature-in-wuhan-on-october-31-2026",
+   "title": "Will the lowest temperature in Wuhan be 17\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "17\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 17\u00b0C mid 0.93, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-31T02:15:30.756429+00:00",
+   "expires": "2026-10-31T04:00:00+00:00",
+   "audit": {
+    "code": "71383a4e5432",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T02:15:30.756442+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 0.98
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "101861200418876940302483298726666282697388719900838897195027278864400235648430",
+   "condition": "0x79d549d5256ea909eadd6b8fd4913ae41a11fdf9d2ef12b8eb846deca8281963",
+   "event": "lowest-temperature-in-chengdu-on-october-31-2026",
+   "title": "Will the lowest temperature in Chengdu be 17\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "17\u00b0C",
+   "price": 0.96,
+   "shares": 1.0416666666666667,
+   "stake": 1.0,
+   "fee": 0.002000000000000002,
+   "profit_if_win": 0.03966666666666674,
+   "reason": "favourite 17\u00b0C mid 0.79, local 10:15",
+   "audit": {
+    "code": "71383a4e5432",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T02:15:30.848601+00:00",
+    "book": {
+     "asks": [
+      [
+       0.96,
+       5.0
+      ],
+      [
+       0.97,
+       5.0
+      ],
+      [
+       0.98,
+       20.0
+      ]
+     ],
+     "bids": [
+      [
+       0.6,
+       45.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793412930162",
+     "hash": "75f499ad940bb27bb4279b0792b3543fe73a051f"
+    }
+   },
+   "status": "open",
+   "opened": "2026-10-31T02:15:30.848647+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "70433082516609707304457965662949768347039286830441397758768302259779480873151",
+   "condition": "0x92e61e33abfc873c8b90b7ee87a5d972f9d286c869d4fde6cdd6b64deeef7c67",
+   "event": "lowest-temperature-in-shenzhen-on-october-31-2026",
+   "title": "Will the lowest temperature in Shenzhen be 25\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "25\u00b0C",
+   "price": 0.79,
+   "shares": 1.2658227848101264,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.26582278481012644,
+   "reason": "favourite 25\u00b0C mid 0.89, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-31T02:15:30.945463+00:00",
+   "expires": "2026-10-31T04:00:00+00:00",
+   "audit": {
+    "code": "71383a4e5432",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T02:15:30.945474+00:00",
+    "quote": {
+     "yes_bid": 0.78,
+     "yes_ask": 0.99
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "41539497072155060856642953603637932554491355012893575430243036046498914909960",
+   "condition": "0xe7835dd43aa07f333a1c1da87b952aa6cc3f257a009bfa0d6d71f540257e7650",
+   "event": "lowest-temperature-in-qingdao-on-october-31-2026",
+   "title": "Will the lowest temperature in Qingdao be 8\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "8\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 8\u00b0C mid 0.94, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-31T02:15:31.138460+00:00",
+   "expires": "2026-10-31T04:00:00+00:00",
+   "audit": {
+    "code": "71383a4e5432",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T02:15:31.138483+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
     }
    }
   }
