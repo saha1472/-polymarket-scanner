@@ -1,5 +1,5 @@
 {
- "cash": 41.85370157595201,
+ "cash": 39.844201575952006,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -1992,6 +1992,184 @@
    },
    "status": "open",
    "opened": "2026-10-31T06:00:53.491772+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "21174768742567802354529202888627312924770091995231425665137776512263012479226",
+   "condition": "0xf87cb2b7f4baac9cc6fd39b7c196f353cd67ad9fd89d879e4f315ea847c737ac",
+   "event": "highest-temperature-in-wuhan-on-october-31-2026",
+   "title": "Will the highest temperature in Wuhan be 25\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "25\u00b0C",
+   "price": 0.8799999999999999,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.006,
+   "profit_if_win": 0.13036363636363646,
+   "reason": "favourite 25\u00b0C mid 0.78, local 15:00",
+   "audit": {
+    "code": "2e0f29b91874",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T07:00:59.419369+00:00",
+    "book": {
+     "asks": [
+      [
+       0.88,
+       12.32
+      ],
+      [
+       0.89,
+       227.03
+      ],
+      [
+       0.97,
+       30.0
+      ],
+      [
+       0.98,
+       50.0
+      ],
+      [
+       0.99,
+       126.0
+      ]
+     ],
+     "bids": [
+      [
+       0.72,
+       12.32
+      ],
+      [
+       0.71,
+       5.0
+      ],
+      [
+       0.7,
+       20.0
+      ],
+      [
+       0.68,
+       40.0
+      ],
+      [
+       0.67,
+       96.32
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793430059342",
+     "hash": "1e8253ebec8cc11a266027623a7d8c83f75647fd"
+    }
+   },
+   "status": "open",
+   "opened": "2026-10-31T07:00:59.419413+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "113478945762690219024545119239594426232716466936528542682459638178502449430853",
+   "condition": "0xc46b78cbf86f8cec6fa1808c0ccba5bfbf414ace34f82494884563f41c2d09bf",
+   "event": "highest-temperature-in-shenzhen-on-october-31-2026",
+   "title": "Will the highest temperature in Shenzhen be 30\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "30\u00b0C",
+   "price": 0.93,
+   "shares": 1.075268817204301,
+   "stake": 1.0,
+   "fee": 0.003499999999999998,
+   "profit_if_win": 0.071768817204301,
+   "reason": "favourite 30\u00b0C mid 0.79, local 15:00",
+   "audit": {
+    "code": "2e0f29b91874",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T07:00:59.567869+00:00",
+    "book": {
+     "asks": [
+      [
+       0.93,
+       10.07
+      ],
+      [
+       0.931,
+       5.09
+      ],
+      [
+       0.933,
+       14.22
+      ],
+      [
+       0.935,
+       6.0
+      ],
+      [
+       0.949,
+       29.81
+      ]
+     ],
+     "bids": [
+      [
+       0.782,
+       6.31
+      ],
+      [
+       0.765,
+       5.0
+      ],
+      [
+       0.662,
+       20.0
+      ],
+      [
+       0.641,
+       99.99
+      ],
+      [
+       0.626,
+       200.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.001",
+     "timestamp": "1793430059482",
+     "hash": "e091ba0e80b88220f5676423c63f7e494318fe7e"
+    }
+   },
+   "status": "open",
+   "opened": "2026-10-31T07:00:59.567919+00:00"
   }
  ]
 }

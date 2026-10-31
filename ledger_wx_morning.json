@@ -1,5 +1,5 @@
 {
- "cash": 46.44974810863362,
+ "cash": 45.44974810863362,
  "bets": [
   {
    "strategy": "MORNING",
@@ -1127,7 +1127,7 @@
    "profit_if_win": 0.13636363636363646,
    "reason": "favourite 24\u00b0C mid 0.92, local 10:15",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-10-31T05:15:28.910717+00:00",
    "expires": "2026-10-31T07:00:00+00:00",
    "audit": {
@@ -1199,6 +1199,96 @@
     "quote": {
      "yes_bid": 0.76,
      "yes_ask": 0.97
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "8337596344973794103697288649521270839772582647229935438933910418561951971992",
+   "condition": "0x7fd3accba7cc6181e33d0170cf2c97bc1bb927a1515bd0d43a9f9cdc01cd87db",
+   "event": "lowest-temperature-in-paris-on-october-31-2026",
+   "title": "Will the lowest temperature in Paris be 5\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "5\u00b0C",
+   "price": 0.7,
+   "shares": 1.4285714285714286,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.4285714285714286,
+   "reason": "favourite 5\u00b0C mid 0.84, local 08:00",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-31T07:00:58.383042+00:00",
+   "expires": "2026-10-31T11:00:00+00:00",
+   "audit": {
+    "code": "2e0f29b91874",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T07:00:58.383054+00:00",
+    "quote": {
+     "yes_bid": 0.691,
+     "yes_ask": 0.991
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "58652803751143521506472919662418806548649403242007151694528945428691952735679",
+   "condition": "0x4799bac89336dabfed5cb2f5f552d02fdbc9e6ee68e70789bf5a03711d344d4e",
+   "event": "lowest-temperature-in-munich-on-october-31-2026",
+   "title": "Will the lowest temperature in Munich be 2\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "2\u00b0C",
+   "price": 0.91,
+   "shares": 1.0989010989010988,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.09890109890109877,
+   "reason": "favourite 2\u00b0C mid 0.94, local 08:00",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-31T07:00:58.537048+00:00",
+   "expires": "2026-10-31T11:00:00+00:00",
+   "audit": {
+    "code": "2e0f29b91874",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T07:00:58.537059+00:00",
+    "quote": {
+     "yes_bid": 0.9,
+     "yes_ask": 0.98
     }
    }
   }
