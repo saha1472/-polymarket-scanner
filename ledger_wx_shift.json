@@ -1,5 +1,5 @@
 {
- "cash": 30.689043702175148,
+ "cash": 34.39274740587885,
  "bets": [
   {
    "strategy": "SHIFT",
@@ -410,8 +410,10 @@
    "fee": 0.037,
    "profit_if_win": 2.809153846153846,
    "reason": "forecast 24.5\u219225.2\u00b0C, favourite 25\u00b0C",
-   "status": "open",
-   "opened": "2026-10-28T14:01:00.850319+00:00"
+   "status": "lost",
+   "opened": "2026-10-28T14:01:00.850319+00:00",
+   "pnl": -1.037,
+   "closed": "2026-10-31T03:30:42.784222+00:00"
   },
   {
    "strategy": "SHIFT",
@@ -660,8 +662,10 @@
    "fee": 0.0365,
    "profit_if_win": 2.667203703703703,
    "reason": "forecast 25.2\u219225.9\u00b0C, favourite 24\u00b0C",
-   "status": "open",
-   "opened": "2026-10-28T17:30:46.041635+00:00"
+   "status": "won",
+   "opened": "2026-10-28T17:30:46.041635+00:00",
+   "pnl": 2.667203703703703,
+   "closed": "2026-10-31T03:30:42.784250+00:00"
   },
   {
    "strategy": "SHIFT",
@@ -677,8 +681,10 @@
    "fee": 0.033999999999999996,
    "profit_if_win": 2.091,
    "reason": "forecast 23.6\u219223.0\u00b0C, favourite 23\u00b0C",
-   "status": "open",
-   "opened": "2026-10-28T17:30:46.167780+00:00"
+   "status": "lost",
+   "opened": "2026-10-28T17:30:46.167780+00:00",
+   "pnl": -1.034,
+   "closed": "2026-10-31T03:30:42.784257+00:00"
   },
   {
    "strategy": "SHIFT",
@@ -806,8 +812,10 @@
    "fee": 0.0425,
    "profit_if_win": 5.6241666666666665,
    "reason": "forecast 25.9\u219225.1\u00b0C, favourite 25\u00b0C",
-   "status": "open",
-   "opened": "2026-10-28T20:45:49.397765+00:00"
+   "status": "lost",
+   "opened": "2026-10-28T20:45:49.397765+00:00",
+   "pnl": -1.0425,
+   "closed": "2026-10-31T03:30:42.784262+00:00"
   },
   {
    "strategy": "SHIFT",
