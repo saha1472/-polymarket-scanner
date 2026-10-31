@@ -1,5 +1,5 @@
 {
- "cash": 39.21178842402456,
+ "cash": 37.209288424024564,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -2612,6 +2612,140 @@
    },
    "status": "open",
    "opened": "2026-10-31T12:45:36.385815+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "53642551985790384559816831212930548515281629960138916776873814023930993198647",
+   "condition": "0x1f0afe29179dc52a2faba990b3c7612467fb43628ce1a7a0016fa25d7449b935",
+   "event": "highest-temperature-in-munich-on-october-31-2026",
+   "title": "Will the highest temperature in Munich be 9\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "9\u00b0C",
+   "price": 0.94,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.06382978723404253,
+   "reason": "favourite 9\u00b0C mid 0.95, local 15:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-31T14:01:12.657941+00:00",
+   "expires": "2026-10-31T18:00:00+00:00",
+   "audit": {
+    "code": "59a0910499d6",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T14:01:12.657953+00:00",
+    "quote": {
+     "yes_bid": 0.929,
+     "yes_ask": 0.968
+    }
+   }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "695041226108385945427680761433914550669650841742717199325574947332871474214",
+   "condition": "0xf1469a7c9e77c1b24400aef572a92937d45e074e9a250fa3f8133be3d950414e",
+   "event": "highest-temperature-in-milan-on-october-31-2026",
+   "title": "Will the highest temperature in Milan be 17\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "17\u00b0C",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "favourite 17\u00b0C mid 0.92, local 15:01",
+   "audit": {
+    "code": "59a0910499d6",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T14:01:12.809881+00:00",
+    "book": {
+     "asks": [
+      [
+       0.95,
+       23.35
+      ],
+      [
+       0.96,
+       67.25
+      ],
+      [
+       0.97,
+       91.04
+      ],
+      [
+       0.98,
+       155.11
+      ],
+      [
+       0.99,
+       245.45
+      ]
+     ],
+     "bids": [
+      [
+       0.91,
+       25.37
+      ],
+      [
+       0.9,
+       238.21
+      ],
+      [
+       0.89,
+       35.48
+      ],
+      [
+       0.88,
+       65.4
+      ],
+      [
+       0.87,
+       71.46
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793455248093",
+     "hash": "625773bcb059174f3ef94fef2e79991bf9a1211d"
+    }
+   },
+   "status": "open",
+   "opened": "2026-10-31T14:01:12.809926+00:00"
   }
  ]
 }
