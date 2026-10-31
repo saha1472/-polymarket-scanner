@@ -1,0 +1,52 @@
+# Manual only: estimate liquidity-reward earnings. Read-only - it never
+# trades, never saves anything to the repo and never posts to Discord.
+# Run it from Actions -> "Rewards estimate" -> Run workflow.
+name: Rewards estimate
+
+on:
+  workflow_dispatch:
+    inputs:
+      top:
+        description: "How many markets to check"
+        default: "20"
+      max_capital:
+        description: "Skip markets needing more than this ($) for a two-sided quote"
+        default: "25"
+      samples:
+        description: "Order book snapshots per market (1 minute apart)"
+        default: "3"
+
+permissions:
+  contents: read
+
+jobs:
+  estimate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Offline tests
+        run: python -m unittest tests.test_rewards_estimate -v
+
+      - name: Estimate
+        env:
+          TOP: ${{ inputs.top }}
+          MAX_CAPITAL: ${{ inputs.max_capital }}
+          SAMPLES: ${{ inputs.samples }}
+        shell: bash   # adds pipefail, so a failed script still fails the step despite tee
+        run: |
+          python rewards_estimate.py --top "$TOP" --max-capital "$MAX_CAPITAL" \
+            --samples "$SAMPLES" | tee rewards_estimate.txt
+          {
+            echo '```'
+            cat rewards_estimate.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
