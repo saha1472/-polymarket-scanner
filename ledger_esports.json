@@ -1,5 +1,5 @@
 {
-  "cash": 49.97125659300392,
+  "cash": 48.94175659300392,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -875,6 +875,112 @@
       "stops": {},
       "closed": "2026-10-30T23:45:28.658632+00:00",
       "pnl": 1.4095243902439023
+    },
+    {
+      "asset": "96038268606692110284134061686512272381730248546076864382836854869002340563181",
+      "condition": "0x391943685dc764fac6323035245edbba15dbb8fb54508af1ef081660844c8402",
+      "title": "LoL: Hanwha Life Esports vs Bilibili Gaming (BO3) - Worlds Group Stage",
+      "outcome": "Bilibili Gaming",
+      "event": "lol-hle1-blg-2026-10-31",
+      "price": 0.41,
+      "shares": 2.4390243902439024,
+      "stake": 1.0,
+      "fee": 0.029500000000000002,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "GAMBLINGISCANCER69"
+      ],
+      "holders": {
+        "0x9c56304c8840621ef4c1e707b4c7d708d09878d1": {
+          "name": "GAMBLINGISCANCER69",
+          "size": 488.2666,
+          "entry": 0.4,
+          "win_rate": 0.6382978723404256,
+          "roi": 0.8852676896624081,
+          "n": 47
+        }
+      },
+      "audit": {
+        "code": "75e3dc596f0c",
+        "scan": "ESPORTS",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": 0.4,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-10-31T07:15:29.262764+00:00",
+        "book": {
+          "asks": [
+            [
+              0.41,
+              49169.93
+            ],
+            [
+              0.42,
+              47498.57
+            ],
+            [
+              0.43,
+              14385.94
+            ],
+            [
+              0.44,
+              2726.99
+            ],
+            [
+              0.45,
+              3537.71
+            ]
+          ],
+          "bids": [
+            [
+              0.4,
+              149814.29
+            ],
+            [
+              0.39,
+              102668.19
+            ],
+            [
+              0.38,
+              45463.58
+            ],
+            [
+              0.37,
+              5302.0
+            ],
+            [
+              0.36,
+              3288.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793430924276",
+          "hash": "5622dce565b68c0af3e742cddd2acc8dbeaaef25"
+        }
+      },
+      "opened": "2026-10-31T07:15:29.262908+00:00",
+      "ends": "2026-11-01T00:00:00.351538+00:00"
     }
   ]
 }
