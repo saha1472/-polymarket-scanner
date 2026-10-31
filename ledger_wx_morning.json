@@ -1,5 +1,5 @@
 {
- "cash": 48.53058144196695,
+ "cash": 47.528081441966954,
  "bets": [
   {
    "strategy": "MORNING",
@@ -1646,6 +1646,95 @@
      "yes_ask": 1.0
     }
    }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "30005987074564477238421290596146202839386311063191688760408196818234725418851",
+   "condition": "0x9b2af447e1a345fa0679cda1d57a83e25224da3de78c33be0ad18ceb30724b5b",
+   "event": "lowest-temperature-in-wellington-on-november-1-2026",
+   "title": "Will the lowest temperature in Wellington be 8\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "8\u00b0C",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "favourite 8\u00b0C mid 0.85, local 08:00",
+   "audit": {
+    "code": "d3746f278a55",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T19:00:53.668799+00:00",
+    "book": {
+     "asks": [
+      [
+       0.95,
+       5.0
+      ],
+      [
+       0.96,
+       188.9
+      ],
+      [
+       0.97,
+       20.0
+      ],
+      [
+       0.98,
+       44.0
+      ],
+      [
+       0.99,
+       54.83
+      ]
+     ],
+     "bids": [
+      [
+       0.84,
+       20.0
+      ],
+      [
+       0.83,
+       20.0
+      ],
+      [
+       0.8,
+       62.5
+      ],
+      [
+       0.35,
+       66.58
+      ],
+      [
+       0.33,
+       100.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793473241361",
+     "hash": "d4b11f7218e77d370683c11641ad2fa1ce7b740c"
+    }
+   },
+   "status": "open",
+   "opened": "2026-10-31T19:00:53.668847+00:00"
   }
  ]
 }

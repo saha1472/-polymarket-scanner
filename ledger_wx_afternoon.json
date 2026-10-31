@@ -1,5 +1,5 @@
 {
- "cash": 40.59817385323234,
+ "cash": 39.59417385323234,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -3023,6 +3023,95 @@
    },
    "status": "open",
    "opened": "2026-10-31T18:00:56.066994+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "36469130576937132048959990626890447548917236631658794404782341312231949633760",
+   "condition": "0xd564a0075bb6520c0763d3307e2992c76ca850eedab5da548923258e7f9c09b2",
+   "event": "highest-temperature-in-toronto-on-october-31-2026",
+   "title": "Will the highest temperature in Toronto be 15\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "15\u00b0C",
+   "price": 0.92,
+   "shares": 1.0869565217391304,
+   "stake": 1.0,
+   "fee": 0.003999999999999998,
+   "profit_if_win": 0.08295652173913037,
+   "reason": "favourite 15\u00b0C mid 0.73, local 15:00",
+   "audit": {
+    "code": "d3746f278a55",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T19:00:54.973004+00:00",
+    "book": {
+     "asks": [
+      [
+       0.92,
+       12.5
+      ],
+      [
+       0.93,
+       14.28
+      ],
+      [
+       0.94,
+       16.66
+      ],
+      [
+       0.95,
+       25.32
+      ],
+      [
+       0.96,
+       30.06
+      ]
+     ],
+     "bids": [
+      [
+       0.85,
+       5.0
+      ],
+      [
+       0.84,
+       5.07
+      ],
+      [
+       0.49,
+       5.0
+      ],
+      [
+       0.48,
+       10.13
+      ],
+      [
+       0.35,
+       6.12
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793473237959",
+     "hash": "2b27460d51d1562880747fb50401a3ec4b66f7ed"
+    }
+   },
+   "status": "open",
+   "opened": "2026-10-31T19:00:54.973050+00:00"
   }
  ]
 }
