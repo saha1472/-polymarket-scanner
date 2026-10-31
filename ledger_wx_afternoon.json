@@ -1,5 +1,5 @@
 {
- "cash": 40.60217385323234,
+ "cash": 40.59817385323234,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -2638,7 +2638,7 @@
    "profit_if_win": 0.06382978723404253,
    "reason": "favourite 9\u00b0C mid 0.95, local 15:01",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-10-31T14:01:12.657941+00:00",
    "expires": "2026-10-31T18:00:00+00:00",
    "audit": {
@@ -2934,6 +2934,95 @@
    },
    "status": "open",
    "opened": "2026-10-31T14:14:51.379457+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "56391038741741727729039328595358720776906675720754200751935256915151170523829",
+   "condition": "0xdc299b4c07b4b7d9f72d9dfe8b98518416a0c8a94687e9cfc5e194645fe68b00",
+   "event": "highest-temperature-in-buenos-aires-on-october-31-2026",
+   "title": "Will the highest temperature in Buenos Aires be 26\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "26\u00b0C",
+   "price": 0.92,
+   "shares": 1.0869565217391304,
+   "stake": 1.0,
+   "fee": 0.003999999999999998,
+   "profit_if_win": 0.08295652173913037,
+   "reason": "favourite 26\u00b0C mid 0.88, local 15:00",
+   "audit": {
+    "code": "e9e19530b165",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T18:00:56.066935+00:00",
+    "book": {
+     "asks": [
+      [
+       0.92,
+       44.51
+      ],
+      [
+       0.93,
+       209.58
+      ],
+      [
+       0.94,
+       76.26
+      ],
+      [
+       0.95,
+       74.71
+      ],
+      [
+       0.97,
+       80.0
+      ]
+     ],
+     "bids": [
+      [
+       0.73,
+       10.0
+      ],
+      [
+       0.72,
+       5.0
+      ],
+      [
+       0.58,
+       13.51
+      ],
+      [
+       0.47,
+       5.0
+      ],
+      [
+       0.46,
+       34.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793469655438",
+     "hash": "bf776ea8408ec84edfad6c4f4f70179b9b0e6cfc"
+    }
+   },
+   "status": "open",
+   "opened": "2026-10-31T18:00:56.066994+00:00"
   }
  ]
 }
