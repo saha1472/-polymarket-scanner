@@ -1,5 +1,5 @@
 {
- "cash": 40.219988424024564,
+ "cash": 39.21178842402456,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -2523,6 +2523,95 @@
    },
    "status": "open",
    "opened": "2026-10-31T12:01:05.394517+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "23997629528401288938408896633291533549114239226571255418021112304010657458421",
+   "condition": "0x7b32c8adc8aaee596f2eec7d131860277db301c9dc237e45f3866129e6e84168",
+   "event": "highest-temperature-in-ankara-on-october-31-2026",
+   "title": "Will the highest temperature in Ankara be 14\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "14\u00b0C",
+   "price": 0.836,
+   "shares": 1.1961722488038278,
+   "stake": 1.0,
+   "fee": 0.008200000000000002,
+   "profit_if_win": 0.18797224880382776,
+   "reason": "favourite 14\u00b0C mid 0.75, local 15:45",
+   "audit": {
+    "code": "62e24dc81cad",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T12:45:36.385751+00:00",
+    "book": {
+     "asks": [
+      [
+       0.836,
+       20.41
+      ],
+      [
+       0.84,
+       10.41
+      ],
+      [
+       0.854,
+       30.0
+      ],
+      [
+       0.879,
+       20.0
+      ],
+      [
+       0.9,
+       6.66
+      ]
+     ],
+     "bids": [
+      [
+       0.725,
+       5.0
+      ],
+      [
+       0.724,
+       20.0
+      ],
+      [
+       0.72,
+       29.49
+      ],
+      [
+       0.7,
+       25.0
+      ],
+      [
+       0.689,
+       8.04
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.001",
+     "timestamp": "1793450736202",
+     "hash": "2be07cad85558df2f516a46e7d7366e29ad1fd88"
+    }
+   },
+   "status": "open",
+   "opened": "2026-10-31T12:45:36.385815+00:00"
   }
  ]
 }
