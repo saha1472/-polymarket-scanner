@@ -1,5 +1,5 @@
 {
- "cash": 37.209288424024564,
+ "cash": 35.19808842402456,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -2746,6 +2746,184 @@
    },
    "status": "open",
    "opened": "2026-10-31T14:01:12.809926+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "88581135584338958340140342328426582797523680001882109211843503735556486143540",
+   "condition": "0x33cec2c172896dc25b12e441b35ce38ea11c184ccafd12b50928367620629206",
+   "event": "highest-temperature-in-paris-on-october-31-2026",
+   "title": "Will the highest temperature in Paris be 15\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "15\u00b0C",
+   "price": 0.8799999999999999,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.006,
+   "profit_if_win": 0.13036363636363646,
+   "reason": "favourite 15\u00b0C mid 0.86, local 15:14",
+   "audit": {
+    "code": "6c42c8976dab",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T14:14:51.272591+00:00",
+    "book": {
+     "asks": [
+      [
+       0.88,
+       10.0
+      ],
+      [
+       0.89,
+       14.77
+      ],
+      [
+       0.9,
+       70.0
+      ],
+      [
+       0.92,
+       12.5
+      ],
+      [
+       0.93,
+       94.28
+      ]
+     ],
+     "bids": [
+      [
+       0.83,
+       8.0
+      ],
+      [
+       0.69,
+       25.0
+      ],
+      [
+       0.68,
+       6.5
+      ],
+      [
+       0.67,
+       6.5
+      ],
+      [
+       0.53,
+       39.99
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793456090689",
+     "hash": "1b3fdef5d43ed4f2ef54b127ce6ecc845ccadbe4"
+    }
+   },
+   "status": "open",
+   "opened": "2026-10-31T14:14:51.272650+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "77846543228911638706657647481065544456534907045880452438893024112748923160376",
+   "condition": "0xf6b6f9775d42784c7080314afd3a6a4a7e536a9e23286f0ac54c5daaed2659cc",
+   "event": "highest-temperature-in-amsterdam-on-october-31-2026",
+   "title": "Will the highest temperature in Amsterdam be 9\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "9\u00b0C",
+   "price": 0.896,
+   "shares": 1.1160714285714286,
+   "stake": 1.0,
+   "fee": 0.0052,
+   "profit_if_win": 0.1108714285714286,
+   "reason": "favourite 9\u00b0C mid 0.87, local 15:14",
+   "audit": {
+    "code": "6c42c8976dab",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T14:14:51.379398+00:00",
+    "book": {
+     "asks": [
+      [
+       0.896,
+       40.3
+      ],
+      [
+       0.897,
+       10.17
+      ],
+      [
+       0.92,
+       20.0
+      ],
+      [
+       0.937,
+       10.0
+      ],
+      [
+       0.94,
+       10.0
+      ]
+     ],
+     "bids": [
+      [
+       0.832,
+       5.0
+      ],
+      [
+       0.831,
+       59.99
+      ],
+      [
+       0.83,
+       14.94
+      ],
+      [
+       0.821,
+       242.0
+      ],
+      [
+       0.82,
+       100.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.001",
+     "timestamp": "1793456090718",
+     "hash": "229f704b00c1542f08a0116c02338d9c533f809e"
+    }
+   },
+   "status": "open",
+   "opened": "2026-10-31T14:14:51.379457+00:00"
   }
  ]
 }
