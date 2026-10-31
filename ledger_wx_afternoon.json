@@ -1,5 +1,5 @@
 {
- "cash": 36.838201575952006,
+ "cash": 36.971988424024566,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -1767,8 +1767,10 @@
      "hash": "f0ac2ea25bea612ae39c58b86d8fc111722b8dd5"
     }
    },
-   "status": "open",
-   "opened": "2026-10-30T22:15:32.802323+00:00"
+   "status": "won",
+   "opened": "2026-10-30T22:15:32.802323+00:00",
+   "pnl": 0.12788684807256237,
+   "closed": "2026-10-31T07:30:36.236604+00:00"
   },
   {
    "strategy": "AFTERNOON",
@@ -2389,6 +2391,51 @@
    },
    "status": "open",
    "opened": "2026-10-31T07:15:34.413854+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "54405675167315491981020558677091475576844236777041704554886998137497850847335",
+   "condition": "0xc8ba4e67daab659a5896f4a37488a1a8f3f26aa93c45609a547a87c6968d158a",
+   "event": "highest-temperature-in-beijing-on-october-31-2026",
+   "title": "Will the highest temperature in Beijing be 12\u00b0C on October 31?",
+   "outcome": "YES",
+   "bucket": "12\u00b0C",
+   "price": 0.92,
+   "shares": 1.0869565217391304,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.08695652173913038,
+   "reason": "favourite 12\u00b0C mid 0.95, local 15:30",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-10-31T07:30:36.327032+00:00",
+   "expires": "2026-10-31T11:00:00+00:00",
+   "audit": {
+    "code": "69cd873acab6",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-10-31T07:30:36.327046+00:00",
+    "quote": {
+     "yes_bid": 0.905,
+     "yes_ask": 0.991
+    }
+   }
   }
  ]
 }
