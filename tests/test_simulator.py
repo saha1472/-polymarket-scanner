@@ -811,3 +811,151 @@ class HeartbeatDelivery(InTempDir):
             fh.write('{"cash": NaN, "bets": []}')
         row = heartbeat.line("ledger_x.json", "2000")
         self.assertIn("can't be read or is invalid", row[1])
+
+
+# ---------- weather readings (Oct 31) ----------
+
+import wx_ensemble                             # noqa: E402
+import wx_ensemble_eval                        # noqa: E402
+from datetime import date                      # noqa: E402
+from zoneinfo import ZoneInfo                  # noqa: E402
+
+
+def ts_local(tz, d, hour, minute=0):
+    return int(datetime(d.year, d.month, d.day, hour, minute, tzinfo=ZoneInfo(tz)).timestamp())
+
+
+class MetarReadings(unittest.TestCase):
+    """The METAR API returns at most 400 rows per call (newest first). Asking
+    for 40 stations x 36h used to cut every station down to ~6 hours, so the
+    'low so far' at night missed the dawn low."""
+
+    def test_capped_batch_is_split_until_complete(self):
+        calls = []
+
+        def fake_get(url, params=None, timeout=25):
+            ids = params["ids"].split(",")
+            calls.append(ids)
+            rows = [{"icaoId": s, "n": i} for s in ids for i in range(72)]
+            return rows[:weather.METAR_ROW_CAP]          # API truncation
+        old = weather.get
+        weather.get = fake_get
+        try:
+            rows = weather.metar_rows(["A", "B", "C", "D", "E", "F", "G", "H"])
+        finally:
+            weather.get = old
+        for s in "ABCDEFGH":
+            self.assertEqual(sum(1 for r in rows if r["icaoId"] == s), 72)
+        self.assertGreater(len(calls), 1)
+
+    def test_partial_day_gives_no_extreme(self):
+        tz, d = "UTC", date(2026, 10, 31)
+        ev = {"station": "X", "date": d, "kind": "lowest", "unit": "C"}
+        late_only = {"X": [(ts_local(tz, d, h), 15.0) for h in range(15, 21)]}
+        self.assertIsNone(weather.observed_extreme(ev, late_only, tz))
+        whole = {"X": [(ts_local(tz, d, 0, 20), 9.0)] + late_only["X"]}
+        self.assertEqual(weather.observed_extreme(ev, whole, tz), 9)
+
+
+class StaleStation(unittest.TestCase):
+    def _event(self, d):
+        return {"station": "X", "date": d, "kind": "highest", "unit": "C", "slug": "s",
+                "buckets": [{"label": "5°C", "lo": 5, "hi": 5, "yes_bid": 0.05, "yes_ask": 0.06,
+                             "yes": "y", "no": "n", "condition": "c", "question": "q"}]}
+
+    def _run(self, last_hour_ago):
+        now = datetime.now(timezone.utc)
+        d = now.date()
+        start = int(datetime(d.year, d.month, d.day, tzinfo=timezone.utc).timestamp())
+        last = int((now - timedelta(hours=last_hour_ago)).timestamp())
+        if last < start + 60:
+            self.skipTest("too close to UTC midnight for this test")
+        obs = {"X": [(start + 60, 10.0), (last, 12.0)]}
+        fc = {"X": {"tz": "UTC", "days": {}}}
+        return weather.dead_signals([self._event(d)], obs, fc)
+
+    def test_quiet_station_is_skipped(self):
+        self.assertEqual(self._run(weather.MAX_OBS_AGE_H + 1), [])
+
+    def test_fresh_station_still_trades(self):
+        self.assertEqual(len(self._run(0.5)), 1)
+
+    def test_age(self):
+        now = datetime(2026, 10, 31, 12, tzinfo=timezone.utc)
+        obs = {"X": [(int(now.timestamp()) - 7200, 1.0)]}
+        self.assertAlmostEqual(weather.obs_age_hours("X", obs, now), 2.0)
+        self.assertIsNone(weather.obs_age_hours("Y", obs, now))
+        self.assertFalse(weather.station_fresh("Y", obs, now))
+
+
+class EnsembleShadow(unittest.TestCase):
+    BUCKETS = [{"label": "60°F or below", "lo": None, "hi": 60},
+               {"label": "61-62°F", "lo": 61, "hi": 62},
+               {"label": "63°F or higher", "lo": 63, "hi": None}]
+
+    def test_members_combine_readings_so_far_with_remaining_hours(self):
+        d = date(2026, 10, 31)
+        times = [f"2026-10-31T{h:02d}:00" for h in range(24)] + ["2026-11-01T00:00"]
+        member = [10.0] * 25
+        member[14] = 20.0        # afternoon peak, still ahead
+        member[8] = 30.0         # morning hour already past: ignored
+        member[24] = 40.0        # tomorrow: ignored
+        now = datetime(2026, 10, 31, 10, 30)
+        self.assertEqual(wx_ensemble.member_extremes(times, [member], d, now, "highest", 18.0),
+                         [20.0])
+        self.assertEqual(wx_ensemble.member_extremes(times, [member], d, now, "highest", 25.0),
+                         [25.0])
+        self.assertEqual(wx_ensemble.member_extremes(times, [member], d, now, "lowest", 12.0),
+                         [10.0])
+
+    def test_bucket_probs_use_market_rounding(self):
+        # 16.1C = 60.98F -> 61 ; 16.95C = 62.51F -> 63 (half up) ; 15C = 59F
+        p = wx_ensemble.bucket_probs([16.1, 16.95, 15.0, 15.0], self.BUCKETS, "F")
+        self.assertEqual(p, {"61-62°F": 0.25, "63°F or higher": 0.25, "60°F or below": 0.5})
+
+    def test_values_outside_listed_buckets_are_counted_separately(self):
+        p = wx_ensemble.bucket_probs([10.0, 5.0], [{"label": "10°C", "lo": 10, "hi": 10}], "C")
+        self.assertEqual(p, {"10°C": 0.5, None: 0.5})
+
+    def test_each_checkpoint_logged_once(self):
+        now = datetime(2026, 10, 31, 1, 30, tzinfo=timezone.utc)      # 10:30 Tokyo
+        ev = {"station": "RJTT", "date": date(2026, 10, 31), "kind": "highest", "slug": "e"}
+        tzs = {"RJTT": "Asia/Tokyo"}
+        self.assertEqual(len(wx_ensemble.due_checkpoints([ev], tzs, set(), now)), 1)
+        self.assertEqual(wx_ensemble.due_checkpoints([ev], tzs, {("e", 10)}, now), [])
+        other_day = dict(ev, date=date(2026, 11, 1))
+        self.assertEqual(wx_ensemble.due_checkpoints([other_day], tzs, set(), now), [])
+        self.assertEqual(wx_ensemble.due_checkpoints([ev], {}, set(), now), [])
+
+    def test_split_members_by_model(self):
+        hourly = {"time": ["t"], "temperature_2m_ecmwf_ifs025_ensemble": [1],
+                  "temperature_2m_member01_ecmwf_ifs025_ensemble": [2],
+                  "temperature_2m_ncep_gefs025": [3], "temperature_2m_member01_ncep_gefs025": [4]}
+        got = wx_ensemble.split_members(hourly)
+        self.assertEqual(sorted(map(tuple, got["ecmwf"])), [(1,), (2,)])
+        self.assertEqual(sorted(map(tuple, got["gefs"])), [(3,), (4,)])
+
+
+class EnsembleEval(unittest.TestCase):
+    def test_brier_and_unlisted_winner(self):
+        self.assertAlmostEqual(wx_ensemble_eval.brier([1.0, 0.0], 0), 0.0)
+        self.assertAlmostEqual(wx_ensemble_eval.brier([0.5, 0.5], 0), 0.5)
+        self.assertAlmostEqual(wx_ensemble_eval.brier([0.5, 0.3], None, 0.2), 0.25 + 0.09 + 0.64)
+
+    def test_lone_offer_is_not_a_favourite(self):
+        m = wx_ensemble_eval.market_probs([{"bid": None, "ask": 0.9}, {"bid": 0.8, "ask": 0.85}])
+        self.assertLess(m[0], m[1])
+
+    def test_hypothetical_pnl_includes_fee(self):
+        rec = {"buckets": [{"p": 0.7, "ask": 0.5}, {"p": 0.3, "ask": 0.4}]}
+        won = wx_ensemble_eval.hypo_bets(rec, 0, 0.08)
+        self.assertEqual(len(won), 1)
+        self.assertAlmostEqual(won[0][1], 2.0 - 1.0 - 2.0 * 0.05 * 0.25)
+        lost = wx_ensemble_eval.hypo_bets(rec, 1, 0.08)
+        self.assertAlmostEqual(lost[0][1], -1.0 - 0.025)
+
+    def test_winner_index(self):
+        rec = {"buckets": [{"yes": "a"}, {"yes": "b"}]}
+        self.assertEqual(wx_ensemble_eval.winner_index(rec, {"a": 0.0, "b": 1.0}), 1)
+        self.assertIsNone(wx_ensemble_eval.winner_index(rec, {"a": 0.0, "b": 0.0}))
+        self.assertEqual(wx_ensemble_eval.winner_index(rec, {"a": 0.0}), "pending")
