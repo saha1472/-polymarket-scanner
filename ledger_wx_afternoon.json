@@ -1,5 +1,5 @@
 {
- "cash": 39.22297782789994,
+ "cash": 36.20547782789994,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -4045,6 +4045,229 @@
     "quote": {
      "yes_bid": 0.883,
      "yes_ask": 0.979
+    }
+   }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "62816125235111488361666409402669054154580888379068055557366867180148626894833",
+   "condition": "0x8f33c44793e82ca3cdeafb4afe7e13e178f8622beba35158121e6a8b498544da",
+   "event": "highest-temperature-in-milan-on-november-1-2026",
+   "title": "Will the highest temperature in Milan be 14\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "14\u00b0C",
+   "price": 0.8899999999999999,
+   "shares": 1.1235955056179776,
+   "stake": 1.0,
+   "fee": 0.0055,
+   "profit_if_win": 0.1180955056179776,
+   "reason": "favourite 14\u00b0C mid 0.76, local 15:01",
+   "audit": {
+    "code": "8f0c6740f1fd",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T14:01:07.979757+00:00",
+    "book": {
+     "asks": [
+      [
+       0.89,
+       25.0
+      ],
+      [
+       0.9,
+       40.0
+      ],
+      [
+       0.91,
+       22.0
+      ],
+      [
+       0.92,
+       31.48
+      ],
+      [
+       0.96,
+       10.0
+      ]
+     ],
+     "bids": [
+      [
+       0.82,
+       24.99
+      ],
+      [
+       0.81,
+       208.0
+      ],
+      [
+       0.79,
+       34.49
+      ],
+      [
+       0.78,
+       12.21
+      ],
+      [
+       0.1,
+       20.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793541647183",
+     "hash": "91baebfa3311f715f6a70e3dd95ff265056d31ff"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-01T14:01:07.979796+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "21751195056007820499968864772685741999092104732713200089013587710572890883261",
+   "condition": "0x15afe0bf0fdedbb96ff17ae32fba5f811139eac21db1a1a153e1ed47aa41343d",
+   "event": "highest-temperature-in-madrid-on-november-1-2026",
+   "title": "Will the highest temperature in Madrid be 21\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "21\u00b0C",
+   "price": 0.7599999999999999,
+   "shares": 1.3157894736842106,
+   "stake": 1.0,
+   "fee": 0.012000000000000002,
+   "profit_if_win": 0.3037894736842106,
+   "reason": "favourite 21\u00b0C mid 0.71, local 15:01",
+   "audit": {
+    "code": "8f0c6740f1fd",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T14:01:08.132741+00:00",
+    "book": {
+     "asks": [
+      [
+       0.76,
+       5.0
+      ],
+      [
+       0.77,
+       18.75
+      ],
+      [
+       0.78,
+       30.49
+      ],
+      [
+       0.79,
+       8.11
+      ],
+      [
+       0.85,
+       10.0
+      ]
+     ],
+     "bids": [
+      [
+       0.6,
+       20.0
+      ],
+      [
+       0.59,
+       10.0
+      ],
+      [
+       0.57,
+       79.99
+      ],
+      [
+       0.56,
+       60.5
+      ],
+      [
+       0.55,
+       100.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793541668021",
+     "hash": "9a1ee0289712e4ac1b53f39a9628f410c72c8836"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-01T14:01:08.132785+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "64200280050862504700261641122792906448712976922920592534492506997750946061485",
+   "condition": "0x67465e976df3bb7e86d367a14a1068fd22b253ab4cbd7ef83d459110c77d4410",
+   "event": "highest-temperature-in-amsterdam-on-november-1-2026",
+   "title": "Will the highest temperature in Amsterdam be 12\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "12\u00b0C",
+   "price": 0.9,
+   "shares": 1.1111111111111112,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.11111111111111116,
+   "reason": "favourite 12\u00b0C mid 0.93, local 15:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-01T14:01:08.260708+00:00",
+   "expires": "2026-11-01T18:00:00+00:00",
+   "audit": {
+    "code": "8f0c6740f1fd",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T14:01:08.260717+00:00",
+    "quote": {
+     "yes_bid": 0.89,
+     "yes_ask": 0.96
     }
    }
   }
