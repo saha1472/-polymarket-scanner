@@ -1,5 +1,5 @@
 {
- "cash": 36.20547782789994,
+ "cash": 35.19797782789994,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -4270,6 +4270,95 @@
      "yes_ask": 0.96
     }
    }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "109261960063559296624679059539915559830094267139560230914163200886656949163677",
+   "condition": "0x2754660f1bbceb08d6a58fa58fedec897ec95014b5e7394a98c9a2bd43a3b2f8",
+   "event": "highest-temperature-in-paris-on-november-1-2026",
+   "title": "Will the highest temperature in Paris be 13\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "13\u00b0C",
+   "price": 0.85,
+   "shares": 1.1764705882352942,
+   "stake": 1.0,
+   "fee": 0.0075000000000000015,
+   "profit_if_win": 0.16897058823529415,
+   "reason": "favourite 13\u00b0C mid 0.80, local 15:15",
+   "audit": {
+    "code": "b627cf7bd55e",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T14:15:38.156066+00:00",
+    "book": {
+     "asks": [
+      [
+       0.85,
+       10.0
+      ],
+      [
+       0.86,
+       22.21
+      ],
+      [
+       0.88,
+       34.65
+      ],
+      [
+       0.89,
+       20.0
+      ],
+      [
+       0.9,
+       60.0
+      ]
+     ],
+     "bids": [
+      [
+       0.7,
+       10.16
+      ],
+      [
+       0.48,
+       5.0
+      ],
+      [
+       0.47,
+       20.0
+      ],
+      [
+       0.4,
+       12.5
+      ],
+      [
+       0.11,
+       51.17
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793542537032",
+     "hash": "d8c9068ae3193995e4c2c5f3b2e6a38d7eae642e"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-01T14:15:38.156114+00:00"
   }
  ]
 }
