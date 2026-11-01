@@ -1,5 +1,5 @@
 {
- "cash": 42.93640716378144,
+ "cash": 41.93240716378144,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -3211,6 +3211,95 @@
    },
    "status": "open",
    "opened": "2026-10-31T21:45:37.714894+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "16924240829687538089726685579718340477934898881195957660774031039042821603034",
+   "condition": "0x649c5d97a563c0a57b3998ebaa28407147c935269b9c8fa2f97f010089e0a92c",
+   "event": "highest-temperature-in-wellington-on-november-1-2026",
+   "title": "Will the highest temperature in Wellington be 16\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "16\u00b0C",
+   "price": 0.92,
+   "shares": 1.0869565217391304,
+   "stake": 1.0,
+   "fee": 0.003999999999999998,
+   "profit_if_win": 0.08295652173913037,
+   "reason": "favourite 16\u00b0C mid 0.81, local 15:00",
+   "audit": {
+    "code": "5481dbe09f72",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T02:00:59.292083+00:00",
+    "book": {
+     "asks": [
+      [
+       0.92,
+       5.29
+      ],
+      [
+       0.93,
+       20.42
+      ],
+      [
+       0.94,
+       68.69
+      ],
+      [
+       0.95,
+       36.0
+      ],
+      [
+       0.96,
+       60.0
+      ]
+     ],
+     "bids": [
+      [
+       0.84,
+       5.0
+      ],
+      [
+       0.83,
+       10.0
+      ],
+      [
+       0.82,
+       15.3
+      ],
+      [
+       0.81,
+       10.12
+      ],
+      [
+       0.8,
+       25.11
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793498459142",
+     "hash": "1025b9a2a4507d172ff978d823682a8bc79db9c1"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-01T02:00:59.292154+00:00"
   }
  ]
 }
