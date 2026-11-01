@@ -1,5 +1,5 @@
 {
- "cash": 44.57021302091432,
+ "cash": 43.56671302091432,
  "bets": [
   {
    "strategy": "MORNING",
@@ -1977,7 +1977,7 @@
    "profit_if_win": 0.11111111111111116,
    "reason": "favourite 20\u00b0C mid 0.94, local 10:15",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-01T05:15:35.414464+00:00",
    "expires": "2026-11-01T07:00:00+00:00",
    "audit": {
@@ -2091,6 +2091,132 @@
    },
    "status": "open",
    "opened": "2026-11-01T06:01:05.345280+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "47640048537946082306319973327889250233848642288710950607427202523219625776684",
+   "condition": "0x9b2bddf11f77db4407888e9e13015172179b148fb8a8c09a9c4a97bce5c69237",
+   "event": "lowest-temperature-in-paris-on-november-1-2026",
+   "title": "Will the lowest temperature in Paris be 5\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "5\u00b0C",
+   "price": 0.93,
+   "shares": 1.075268817204301,
+   "stake": 1.0,
+   "fee": 0.003499999999999998,
+   "profit_if_win": 0.071768817204301,
+   "reason": "favourite 5\u00b0C mid 0.88, local 08:01",
+   "audit": {
+    "code": "4ab33fedf600",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T07:01:10.649279+00:00",
+    "book": {
+     "asks": [
+      [
+       0.93,
+       11.0
+      ],
+      [
+       0.94,
+       13.01
+      ],
+      [
+       0.97,
+       30.0
+      ]
+     ],
+     "bids": [
+      [
+       0.07,
+       5.0
+      ],
+      [
+       0.06,
+       5.0
+      ],
+      [
+       0.03,
+       40.0
+      ],
+      [
+       0.02,
+       5.0
+      ],
+      [
+       0.01,
+       23.8
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793516309015",
+     "hash": "aeec3c99a089ff896bdf87a5974b08422a8c3ff8"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-01T07:01:10.649326+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "24414952265916741889146403039294951075426304462187906190990940512129965774875",
+   "condition": "0x888b0c4b9b50d4b9c7fd45168624c2d00fe693a53a7f2fa19bd52609b98a4007",
+   "event": "lowest-temperature-in-amsterdam-on-november-1-2026",
+   "title": "Will the lowest temperature in Amsterdam be 4\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "4\u00b0C",
+   "price": 0.91,
+   "shares": 1.0989010989010988,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.09890109890109877,
+   "reason": "favourite 4\u00b0C mid 0.95, local 08:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-01T07:01:10.804519+00:00",
+   "expires": "2026-11-01T11:00:00+00:00",
+   "audit": {
+    "code": "4ab33fedf600",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T07:01:10.804543+00:00",
+    "quote": {
+     "yes_bid": 0.9,
+     "yes_ask": 1.0
+    }
+   }
   }
  ]
 }

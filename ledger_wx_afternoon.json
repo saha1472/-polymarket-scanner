@@ -1,5 +1,5 @@
 {
- "cash": 41.092820207259706,
+ "cash": 35.037120207259704,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -3527,6 +3527,387 @@
    },
    "status": "open",
    "opened": "2026-11-01T06:30:40.872144+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "28728725381534113875368406265813363853405131381459275283909919790882210991313",
+   "condition": "0x66375d0eee0dcdcbafa6b379e8cd5397b3784fe5b8af06c106ba002cbbf1b85a",
+   "event": "highest-temperature-in-taipei-on-november-1-2026",
+   "title": "Will the highest temperature in Taipei be 32\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "32\u00b0C",
+   "price": 0.01,
+   "shares": 100.0,
+   "stake": 1.0,
+   "fee": 0.0495,
+   "profit_if_win": 98.9505,
+   "reason": "favourite 32\u00b0C mid 0.95, local 15:01",
+   "audit": {
+    "code": "4ab33fedf600",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T07:01:11.798409+00:00",
+    "book": {
+     "asks": [
+      [
+       0.01,
+       393.9
+      ],
+      [
+       0.02,
+       15.29
+      ],
+      [
+       0.03,
+       89.47
+      ],
+      [
+       0.04,
+       119.5
+      ],
+      [
+       0.14,
+       60.0
+      ]
+     ],
+     "bids": [],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793516465609",
+     "hash": "17ba52e05a098a4e4b6962df700e2f979d6ebe22"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-01T07:01:11.798456+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "21565618622105926030821865814739836472475140601473037295239357527481840226611",
+   "condition": "0x33b62d02112a258ac7766efdfd24b55f706a17c3a1cd2691a5f91d3b3495faa6",
+   "event": "highest-temperature-in-beijing-on-november-1-2026",
+   "title": "Will the highest temperature in Beijing be 18\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "18\u00b0C",
+   "price": 0.94,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.06382978723404253,
+   "reason": "favourite 18\u00b0C mid 0.95, local 15:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-01T07:01:11.978734+00:00",
+   "expires": "2026-11-01T11:00:00+00:00",
+   "audit": {
+    "code": "4ab33fedf600",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T07:01:11.978748+00:00",
+    "quote": {
+     "yes_bid": 0.93,
+     "yes_ask": 0.97
+    }
+   }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "110983784886791227541749928436089277047475705634743510310659311003907654792565",
+   "condition": "0xf17050ad243048a84b5f183107a344ad94e771cb9803aa24d1ecc0e6ad580361",
+   "event": "highest-temperature-in-shenzhen-on-november-1-2026",
+   "title": "Will the highest temperature in Shenzhen be 30\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "30\u00b0C",
+   "price": 0.93,
+   "shares": 1.075268817204301,
+   "stake": 1.0,
+   "fee": 0.003499999999999998,
+   "profit_if_win": 0.071768817204301,
+   "reason": "favourite 30\u00b0C mid 0.89, local 15:01",
+   "audit": {
+    "code": "4ab33fedf600",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T07:01:12.130747+00:00",
+    "book": {
+     "asks": [
+      [
+       0.93,
+       42.53
+      ],
+      [
+       0.94,
+       38.13
+      ],
+      [
+       0.95,
+       134.54
+      ],
+      [
+       0.96,
+       69.36
+      ],
+      [
+       0.97,
+       57.7
+      ]
+     ],
+     "bids": [
+      [
+       0.68,
+       5.0
+      ],
+      [
+       0.67,
+       3.97
+      ],
+      [
+       0.66,
+       5.17
+      ],
+      [
+       0.65,
+       20.52
+      ],
+      [
+       0.4,
+       7.56
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793516471802",
+     "hash": "6f611574eabb9ff1dbf027c83981ddcf0df6cfe2"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-01T07:01:12.130797+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "12472742438420373608986265608301034224965253999075220845348843966626618984453",
+   "condition": "0xbaee281653d8899b4fd3541bee7179c21add869effd6e65fc08d4e703ad8d917",
+   "event": "highest-temperature-in-kuala-lumpur-on-november-1-2026",
+   "title": "Will the highest temperature in Kuala Lumpur be 34\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "34\u00b0C",
+   "price": 0.93,
+   "shares": 1.075268817204301,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.07526881720430101,
+   "reason": "favourite 34\u00b0C mid 0.95, local 15:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-01T07:01:12.279183+00:00",
+   "expires": "2026-11-01T11:00:00+00:00",
+   "audit": {
+    "code": "4ab33fedf600",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T07:01:12.279195+00:00",
+    "quote": {
+     "yes_bid": 0.92,
+     "yes_ask": 0.98
+    }
+   }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "799040839095045240007247909488412823411507934804426229485909685733093459437",
+   "condition": "0x2d270e2ede8927f6cf1e3f63c3a7f5e16c4a5284a81fdf6023c01fb0d9597266",
+   "event": "highest-temperature-in-guangzhou-on-november-1-2026",
+   "title": "Will the highest temperature in Guangzhou be 33\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "33\u00b0C",
+   "price": 0.9460000000000001,
+   "shares": 1.0570824524312896,
+   "stake": 1.0,
+   "fee": 0.0027000000000000023,
+   "profit_if_win": 0.05438245243128962,
+   "reason": "favourite 33\u00b0C mid 0.90, local 15:01",
+   "audit": {
+    "code": "4ab33fedf600",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T07:01:12.429786+00:00",
+    "book": {
+     "asks": [
+      [
+       0.946,
+       41.61
+      ],
+      [
+       0.948,
+       16.14
+      ],
+      [
+       0.958,
+       20.0
+      ],
+      [
+       0.959,
+       51.0
+      ],
+      [
+       0.96,
+       121.41
+      ]
+     ],
+     "bids": [
+      [
+       0.451,
+       14.17
+      ],
+      [
+       0.436,
+       5.0
+      ],
+      [
+       0.142,
+       77.7
+      ],
+      [
+       0.101,
+       11.17
+      ],
+      [
+       0.091,
+       5.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.001",
+     "timestamp": "1793516472335",
+     "hash": "b6c7ac48fc887b1397a95b92fd9706e86eec80e2"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-01T07:01:12.429820+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "109706383624720937185895909005651344927467569868559573654931239690014733025124",
+   "condition": "0xdae0a8a2b7baeee4731281b6f31eebf1be675cde12496a53fed431c19496426f",
+   "event": "highest-temperature-in-manila-on-november-1-2026",
+   "title": "Will the highest temperature in Manila be 33\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "33\u00b0C",
+   "price": 0.91,
+   "shares": 1.0989010989010988,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.09890109890109877,
+   "reason": "favourite 33\u00b0C mid 0.94, local 15:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-01T07:01:12.583352+00:00",
+   "expires": "2026-11-01T11:00:00+00:00",
+   "audit": {
+    "code": "4ab33fedf600",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T07:01:12.583363+00:00",
+    "quote": {
+     "yes_bid": 0.9,
+     "yes_ask": 0.98
+    }
+   }
   }
  ]
 }
