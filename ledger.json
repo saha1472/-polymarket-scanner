@@ -1,5 +1,5 @@
 {
-  "cash": 45.4084605372812,
+  "cash": 44.3958605372812,
   "bets": [
     {
       "asset": "27670129619626213108912772417909250054836917373961985276008181424732686448004",
@@ -1185,6 +1185,112 @@
       "opened": "2026-10-30T15:30:50.647183+00:00",
       "ends": "2026-11-01T00:00:00.333467+00:00",
       "stops": {}
+    },
+    {
+      "asset": "46874056753841149858883937980401219860069331899637857017346101742361863192908",
+      "condition": "0xfa676feebe50215516a64159d8dbb5af8567509a9067ccddcd2ce2ed1e03ae55",
+      "title": "Will Ethereum reach $2,300 October 26-November 1?",
+      "outcome": "No",
+      "event": "what-price-will-ethereum-hit-october-26-november-1-2026",
+      "price": 0.82,
+      "shares": 1.2195121951219512,
+      "stake": 1.0,
+      "fee": 0.012600000000000005,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "getbipped"
+      ],
+      "holders": {
+        "0x252d7bae5ec87553dcafb23e275c202ac0d3c456": {
+          "name": "getbipped",
+          "size": 105.4495,
+          "entry": 0.7678,
+          "win_rate": 0.5854700854700855,
+          "roi": 0.3177631021598831,
+          "n": 234
+        }
+      },
+      "audit": {
+        "code": "f00a34f0c734",
+        "scan": "GENERAL",
+        "settings": {
+          "min_price": 0.55,
+          "max_price": 0.95,
+          "fee_rate": 0.07,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-01T00:17:01.258609+00:00",
+        "book": {
+          "asks": [
+            [
+              0.82,
+              213.87
+            ],
+            [
+              0.83,
+              116.0
+            ],
+            [
+              0.84,
+              3000.0
+            ],
+            [
+              0.85,
+              106.0
+            ],
+            [
+              0.86,
+              1680.0
+            ]
+          ],
+          "bids": [
+            [
+              0.77,
+              212.0
+            ],
+            [
+              0.75,
+              10.0
+            ],
+            [
+              0.74,
+              212.0
+            ],
+            [
+              0.73,
+              65.0
+            ],
+            [
+              0.72,
+              5.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793492220788",
+          "hash": "915eecdd96a9ff1d564cc8520f7ba9dd2ca43bd0"
+        }
+      },
+      "opened": "2026-11-01T00:17:01.258659+00:00",
+      "ends": "2026-11-02T00:00:00.271679+00:00"
     }
   ]
 }
