@@ -1,5 +1,5 @@
 {
- "cash": 40.6044816695797,
+ "cash": 39.6044816695797,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -4571,6 +4571,51 @@
    },
    "status": "open",
    "opened": "2026-11-01T20:01:09.312492+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "5138419786974041925035864562273209123203014764001613503416878262481460402068",
+   "condition": "0x5d9ac71b45bbac035db614cac71a0a13865c9e9bf36edd153fa65c3385cf1d22",
+   "event": "highest-temperature-in-mexico-city-on-november-1-2026",
+   "title": "Will the highest temperature in Mexico City be 24\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "24\u00b0C",
+   "price": 0.91,
+   "shares": 1.0989010989010988,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.09890109890109877,
+   "reason": "favourite 24\u00b0C mid 0.95, local 16:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-01T22:15:42.448197+00:00",
+   "expires": "2026-11-02T01:00:00+00:00",
+   "audit": {
+    "code": "3bf912f796da",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T22:15:42.448211+00:00",
+    "quote": {
+     "yes_bid": 0.903,
+     "yes_ask": 0.989
+    }
+   }
   }
  ]
 }
