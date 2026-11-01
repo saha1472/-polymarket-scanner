@@ -1,5 +1,5 @@
 {
- "cash": 42.56671302091432,
+ "cash": 40.562713020914316,
  "bets": [
   {
    "strategy": "MORNING",
@@ -2262,6 +2262,164 @@
      "yes_ask": 1.0
     }
    }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "63724636765174563138352802078708175767583690897763564177877506115396592595927",
+   "condition": "0xa0228e92e7a20fac037739fa8d7ad467a6c3762a4f5f1fb03b33a3c688fff821",
+   "event": "lowest-temperature-in-istanbul-on-november-1-2026",
+   "title": "Will the lowest temperature in Istanbul be 14\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "14\u00b0C",
+   "price": 0.96,
+   "shares": 1.0416666666666667,
+   "stake": 1.0,
+   "fee": 0.002000000000000002,
+   "profit_if_win": 0.03966666666666674,
+   "reason": "favourite 14\u00b0C mid 0.80, local 11:00",
+   "audit": {
+    "code": "a8bf0f014248",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T08:00:53.315230+00:00",
+    "book": {
+     "asks": [
+      [
+       0.96,
+       5.0
+      ],
+      [
+       0.97,
+       20.0
+      ]
+     ],
+     "bids": [
+      [
+       0.63,
+       23.0
+      ],
+      [
+       0.09,
+       25.0
+      ],
+      [
+       0.02,
+       5.0
+      ],
+      [
+       0.01,
+       10.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793519923870",
+     "hash": "c98b68c4ac50adaaffa6acb53dd3032405468816"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-01T08:00:53.315269+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "80603932185838380740170929368087768995732390063057863786709044087715273077775",
+   "condition": "0x1060685497297b2611fc98ae5f7f8fbca37cae9ab5ddb5e4af3f3af59ebc3466",
+   "event": "lowest-temperature-in-london-on-november-1-2026",
+   "title": "Will the lowest temperature in London be 8\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "8\u00b0C",
+   "price": 0.96,
+   "shares": 1.0416666666666667,
+   "stake": 1.0,
+   "fee": 0.002000000000000002,
+   "profit_if_win": 0.03966666666666674,
+   "reason": "favourite 8\u00b0C mid 0.70, local 08:00",
+   "audit": {
+    "code": "a8bf0f014248",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T08:00:53.468418+00:00",
+    "book": {
+     "asks": [
+      [
+       0.96,
+       10.0
+      ],
+      [
+       0.97,
+       80.0
+      ],
+      [
+       0.98,
+       80.5
+      ],
+      [
+       0.99,
+       201.14
+      ]
+     ],
+     "bids": [
+      [
+       0.46,
+       5.0
+      ],
+      [
+       0.45,
+       20.0
+      ],
+      [
+       0.08,
+       5.0
+      ],
+      [
+       0.06,
+       5.0
+      ],
+      [
+       0.03,
+       59.99
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793520016132",
+     "hash": "9f1d4450b25e179185d82c0912d80b8ea0e59877"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-01T08:00:53.468458+00:00"
   }
  ]
 }
