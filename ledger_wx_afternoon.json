@@ -1,5 +1,5 @@
 {
- "cash": 39.22297782789994,
+ "cash": 38.22297782789994,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -4000,6 +4000,51 @@
     "quote": {
      "yes_bid": 0.89,
      "yes_ask": 0.95
+    }
+   }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "28289191791921317674134209340717147806233751404584011688546825006748242606202",
+   "condition": "0x20e37a0a90ebf2b91754932f85d3cb1cce494c6aff81b711ee165f6c50d99283",
+   "event": "highest-temperature-in-istanbul-on-november-1-2026",
+   "title": "Will the highest temperature in Istanbul be 17\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "17\u00b0C",
+   "price": 0.89,
+   "shares": 1.1235955056179776,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.12359550561797761,
+   "reason": "favourite 17\u00b0C mid 0.93, local 16:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-01T13:15:50.341345+00:00",
+   "expires": "2026-11-01T16:00:00+00:00",
+   "audit": {
+    "code": "16260fe8c7cf",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T13:15:50.341360+00:00",
+    "quote": {
+     "yes_bid": 0.883,
+     "yes_ask": 0.979
     }
    }
   }
