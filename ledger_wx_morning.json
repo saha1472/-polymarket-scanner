@@ -1,5 +1,5 @@
 {
- "cash": 46.573213020914324,
+ "cash": 45.573213020914324,
  "bets": [
   {
    "strategy": "MORNING",
@@ -1866,6 +1866,51 @@
      "max_fill": 0.96
     },
     "time": "2026-11-01T01:15:30.899636+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "92786032351207196221651490475739885864759826324714361432371534343768899246076",
+   "condition": "0xf86e77a28c020c44243e27f95a15188dfcd87d336492767f7fa5e312be2e7770",
+   "event": "lowest-temperature-in-guangzhou-on-november-1-2026",
+   "title": "Will the lowest temperature in Guangzhou be 23\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "23\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 23\u00b0C mid 0.94, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-01T02:15:35.342368+00:00",
+   "expires": "2026-11-01T04:00:00+00:00",
+   "audit": {
+    "code": "9529fbebabbb",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T02:15:35.344466+00:00",
     "quote": {
      "yes_bid": 0.87,
      "yes_ask": 1.0
