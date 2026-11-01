@@ -1,5 +1,5 @@
 {
- "cash": 42.6599816695797,
+ "cash": 41.6539816695797,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -4369,6 +4369,95 @@
    },
    "status": "open",
    "opened": "2026-11-01T14:15:38.156114+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "28052683941685945786215108530941278126763774674715543257385203697248805664450",
+   "condition": "0x530a55688db76b86940fd2dc3947fd026e9764b4d845e7faecba6b7d06fe3674",
+   "event": "highest-temperature-in-buenos-aires-on-november-1-2026",
+   "title": "Will the highest temperature in Buenos Aires be 22\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "22\u00b0C",
+   "price": 0.8799999999999999,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.006,
+   "profit_if_win": 0.13036363636363646,
+   "reason": "favourite 22\u00b0C mid 0.85, local 15:15",
+   "audit": {
+    "code": "3cd0261e6064",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T18:15:53.772246+00:00",
+    "book": {
+     "asks": [
+      [
+       0.88,
+       5.0
+      ],
+      [
+       0.881,
+       20.0
+      ],
+      [
+       0.894,
+       20.0
+      ],
+      [
+       0.895,
+       20.0
+      ],
+      [
+       0.903,
+       40.0
+      ]
+     ],
+     "bids": [
+      [
+       0.83,
+       10.0
+      ],
+      [
+       0.829,
+       20.0
+      ],
+      [
+       0.812,
+       8.53
+      ],
+      [
+       0.811,
+       8.53
+      ],
+      [
+       0.81,
+       26.17
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.001",
+     "timestamp": "1793556951518",
+     "hash": "a8be76ff823d30a5d028ec9365911f7038be8fd8"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-01T18:15:53.772301+00:00"
   }
  ]
 }
