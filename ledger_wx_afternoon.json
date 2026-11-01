@@ -1,5 +1,5 @@
 {
- "cash": 40.22297782789994,
+ "cash": 39.22297782789994,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -3955,6 +3955,51 @@
     "quote": {
      "yes_bid": 0.911,
      "yes_ask": 0.989
+    }
+   }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "80903921371169727719576272880319964222430067421075826575219744933507749949960",
+   "condition": "0x13fed99951a0fcb7b383654644ba70c8496f10b59239788b2f8be8d4384f5bc3",
+   "event": "highest-temperature-in-ankara-on-november-1-2026",
+   "title": "Will the highest temperature in Ankara be 17\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "17\u00b0C",
+   "price": 0.9,
+   "shares": 1.1111111111111112,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.11111111111111116,
+   "reason": "favourite 17\u00b0C mid 0.92, local 15:30",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-01T12:30:46.393810+00:00",
+   "expires": "2026-11-01T16:00:00+00:00",
+   "audit": {
+    "code": "d556864a93ff",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T12:30:46.393824+00:00",
+    "quote": {
+     "yes_bid": 0.89,
+     "yes_ask": 0.95
     }
    }
   }
