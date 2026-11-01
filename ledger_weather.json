@@ -1,5 +1,5 @@
 {
-  "cash": 45.30541639385047,
+  "cash": 44.298416393850474,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -918,6 +918,112 @@
       "opened": "2026-10-31T21:45:39.342269+00:00",
       "ends": "2026-11-01T00:00:00.611050+00:00",
       "stops": {}
+    },
+    {
+      "asset": "5683218152469988722868763369956009247496128363068087361645216846316355051804",
+      "condition": "0xe0f85231b34d6e10be889815c0f814cd32c18c74722c015788dcd1c9a5bdf1cb",
+      "title": "Will the highest temperature in Hong Kong be 29\u00b0C on November 2?",
+      "outcome": "No",
+      "event": "highest-temperature-in-hong-kong-on-november-2-2026",
+      "price": 0.86,
+      "shares": 1.1627906976744187,
+      "stake": 1.0,
+      "fee": 0.007000000000000001,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Poligarch"
+      ],
+      "holders": {
+        "0xb40e89677d59665d5188541ad860450a6e2a7cc9": {
+          "name": "Poligarch",
+          "size": 60.35,
+          "entry": 0.803,
+          "win_rate": 0.5973534971644613,
+          "roi": 0.40170025781878305,
+          "n": 1058
+        }
+      },
+      "audit": {
+        "code": "dc6268ba1cca",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-01T10:15:31.068648+00:00",
+        "book": {
+          "asks": [
+            [
+              0.86,
+              66.79
+            ],
+            [
+              0.87,
+              329.1
+            ],
+            [
+              0.88,
+              13.17
+            ],
+            [
+              0.89,
+              46.0
+            ],
+            [
+              0.9,
+              49.72
+            ]
+          ],
+          "bids": [
+            [
+              0.83,
+              25.0
+            ],
+            [
+              0.82,
+              315.17
+            ],
+            [
+              0.77,
+              78.42
+            ],
+            [
+              0.76,
+              19.26
+            ],
+            [
+              0.75,
+              25.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793528128496",
+          "hash": "2f8bb39a7fb9c4f0458331f1439b9c1fab58d27d"
+        }
+      },
+      "opened": "2026-11-01T10:15:31.068703+00:00",
+      "ends": "2026-11-02T00:00:00.306677+00:00"
     }
   ]
 }
