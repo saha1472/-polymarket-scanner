@@ -1,5 +1,5 @@
 {
- "cash": 45.573213020914324,
+ "cash": 44.57021302091432,
  "bets": [
   {
    "strategy": "MORNING",
@@ -2006,6 +2006,91 @@
      "yes_ask": 0.99
     }
    }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "27856331619634466212351602729397888393394115108153040440968242139302038346707",
+   "condition": "0x2f40c5ee63db9e25178c147c18884584a730902c5ceb5eb69f80752ec1cc73c6",
+   "event": "lowest-temperature-in-helsinki-on-november-1-2026",
+   "title": "Will the lowest temperature in Helsinki be 5\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "5\u00b0C",
+   "price": 0.9400000000000001,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0030000000000000022,
+   "profit_if_win": 0.06082978723404253,
+   "reason": "favourite 5\u00b0C mid 0.86, local 08:01",
+   "audit": {
+    "code": "aa1c02027272",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T06:01:05.345228+00:00",
+    "book": {
+     "asks": [
+      [
+       0.94,
+       5.0
+      ],
+      [
+       0.95,
+       13.91
+      ],
+      [
+       0.97,
+       30.0
+      ],
+      [
+       0.98,
+       65.0
+      ]
+     ],
+     "bids": [
+      [
+       0.78,
+       0.4
+      ],
+      [
+       0.08,
+       6.08
+      ],
+      [
+       0.07,
+       5.0
+      ],
+      [
+       0.03,
+       20.0
+      ],
+      [
+       0.02,
+       20.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793512490033",
+     "hash": "2ff5fb462478025c28802745231f1d9f664e0ddf"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-01T06:01:05.345280+00:00"
   }
  ]
 }

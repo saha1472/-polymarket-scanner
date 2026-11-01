@@ -1,5 +1,5 @@
 {
- "cash": 44.10632020725971,
+ "cash": 43.095820207259706,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -3304,6 +3304,95 @@
    },
    "status": "open",
    "opened": "2026-11-01T02:00:59.292154+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "22394903063174324441641787134239137797680546470241243219101611231584825980306",
+   "condition": "0x825bef081f7ddf168a90ef903d4821aaaa90f5f325cd6ecafc9ef32b65855873",
+   "event": "highest-temperature-in-seoul-on-november-1-2026",
+   "title": "Will the highest temperature in Seoul (Incheon) be 11\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "11\u00b0C",
+   "price": 0.79,
+   "shares": 1.2658227848101264,
+   "stake": 1.0,
+   "fee": 0.010499999999999997,
+   "profit_if_win": 0.25532278481012644,
+   "reason": "favourite 11\u00b0C mid 0.74, local 15:01",
+   "audit": {
+    "code": "aa1c02027272",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T06:01:05.860420+00:00",
+    "book": {
+     "asks": [
+      [
+       0.79,
+       28.98
+      ],
+      [
+       0.8,
+       20.0
+      ],
+      [
+       0.86,
+       17.09
+      ],
+      [
+       0.87,
+       20.0
+      ],
+      [
+       0.89,
+       65.0
+      ]
+     ],
+     "bids": [
+      [
+       0.66,
+       14.56
+      ],
+      [
+       0.65,
+       5.0
+      ],
+      [
+       0.62,
+       20.0
+      ],
+      [
+       0.47,
+       19.0
+      ],
+      [
+       0.24,
+       6.25
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793512865699",
+     "hash": "44ac3d063ee39fbb2c6010d9409d620ee8f0640e"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-01T06:01:05.860481+00:00"
   }
  ]
 }
