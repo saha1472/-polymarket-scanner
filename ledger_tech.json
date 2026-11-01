@@ -1,5 +1,5 @@
 {
-  "cash": 50.14550798619102,
+  "cash": 49.12230798619102,
   "bets": [
     {
       "asset": "26922035314154497018737638829774069315488348073215105242613348160492279741517",
@@ -34,6 +34,112 @@
       },
       "closed": "2026-11-01T06:15:30.745894+00:00",
       "pnl": 0.14550798619102415
+    },
+    {
+      "asset": "103987766917606700700254242301657966893444803890352484216095113619382458616256",
+      "condition": "0x33caf7331629dade3fe304cbe20673416cb357c8541dee342173e519603716c9",
+      "title": "Will OpenRouter process between 185T and 195T tokens the week of October 26?",
+      "outcome": "Yes",
+      "event": "openrouter-token-usage-week-of-october-26",
+      "price": 0.42,
+      "shares": 2.380952380952381,
+      "stake": 1.0,
+      "fee": 0.0232,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Hannah-Montana"
+      ],
+      "holders": {
+        "0x521bf1c6a5435219b599127d85b7afe28758db60": {
+          "name": "Hannah-Montana",
+          "size": 170.8833,
+          "entry": 0.5824,
+          "win_rate": 0.5813953488372093,
+          "roi": 0.38540118806090495,
+          "n": 86
+        }
+      },
+      "audit": {
+        "code": "acf108cc16d6",
+        "scan": "TECH",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.04,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-01T15:15:31.310935+00:00",
+        "book": {
+          "asks": [
+            [
+              0.42,
+              120.0
+            ],
+            [
+              0.43,
+              40.0
+            ],
+            [
+              0.44,
+              83.03
+            ],
+            [
+              0.45,
+              139.8
+            ],
+            [
+              0.46,
+              20.0
+            ]
+          ],
+          "bids": [
+            [
+              0.4,
+              59.8
+            ],
+            [
+              0.39,
+              50.0
+            ],
+            [
+              0.04,
+              29.89
+            ],
+            [
+              0.03,
+              30.0
+            ],
+            [
+              0.02,
+              50.6
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793546126750",
+          "hash": "01e849768bf993067d3e6e3e7ed23d80f348f388"
+        }
+      },
+      "opened": "2026-11-01T15:15:31.310967+00:00",
+      "ends": "2026-11-02T00:00:00.308907+00:00"
     }
   ]
 }
