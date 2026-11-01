@@ -1,5 +1,5 @@
 {
- "cash": 42.095820207259706,
+ "cash": 41.092820207259706,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -3438,6 +3438,95 @@
      "yes_ask": 0.959
     }
    }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "2585505882985873615554327509812621535110209460372502159516167903385155595119",
+   "condition": "0x518429ff32593283619c87904fd1244f926c06cb246f9e939f3265604e66a728",
+   "event": "highest-temperature-in-tokyo-on-november-1-2026",
+   "title": "Will the highest temperature in Tokyo be 20\u00b0C on November 1?",
+   "outcome": "YES",
+   "bucket": "20\u00b0C",
+   "price": 0.9400000000000001,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0030000000000000022,
+   "profit_if_win": 0.06082978723404253,
+   "reason": "favourite 20\u00b0C mid 0.84, local 15:30",
+   "audit": {
+    "code": "3e34d622c4ad",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-01T06:30:40.872098+00:00",
+    "book": {
+     "asks": [
+      [
+       0.94,
+       5.0
+      ],
+      [
+       0.95,
+       18.65
+      ],
+      [
+       0.96,
+       27.2
+      ],
+      [
+       0.97,
+       30.0
+      ],
+      [
+       0.98,
+       35.0
+      ]
+     ],
+     "bids": [
+      [
+       0.92,
+       5.08
+      ],
+      [
+       0.91,
+       112.72
+      ],
+      [
+       0.9,
+       35.04
+      ],
+      [
+       0.88,
+       23.36
+      ],
+      [
+       0.13,
+       5.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793514640724",
+     "hash": "28868f08e266b5b96385e391ad739ff3d954faf2"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-01T06:30:40.872144+00:00"
   }
  ]
 }
