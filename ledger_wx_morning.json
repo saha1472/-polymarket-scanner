@@ -1,5 +1,5 @@
 {
- "cash": 47.83527653763336,
+ "cash": 45.83527653763336,
  "bets": [
   {
    "strategy": "MORNING",
@@ -2787,6 +2787,96 @@
    },
    "status": "open",
    "opened": "2026-11-02T00:01:15.496644+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "55207077434333341326938099598805899591759673824410969926960094665494319830360",
+   "condition": "0x570326e53fcdb52821eab44ad061f874fa0b6d5136ce17aaa319bc57f81a059a",
+   "event": "lowest-temperature-in-beijing-on-november-2-2026",
+   "title": "Will the lowest temperature in Beijing be 0\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "0\u00b0C",
+   "price": 0.86,
+   "shares": 1.1627906976744187,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.16279069767441867,
+   "reason": "favourite 0\u00b0C mid 0.92, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-02T02:15:43.279511+00:00",
+   "expires": "2026-11-02T04:00:00+00:00",
+   "audit": {
+    "code": "bbda59e3ffb4",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T02:15:43.279526+00:00",
+    "quote": {
+     "yes_bid": 0.85,
+     "yes_ask": 0.99
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "68725564702918080857516170948212874602915282820321173881948519429753012654497",
+   "condition": "0xddd6d8941890387f45df118ac49935d8dde44454e0dffb04c9d473cc94cc24b6",
+   "event": "lowest-temperature-in-qingdao-on-november-2-2026",
+   "title": "Will the lowest temperature in Qingdao be 7\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "7\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 7\u00b0C mid 0.94, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-02T02:15:43.493285+00:00",
+   "expires": "2026-11-02T04:00:00+00:00",
+   "audit": {
+    "code": "bbda59e3ffb4",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T02:15:43.493310+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
   }
  ]
 }
