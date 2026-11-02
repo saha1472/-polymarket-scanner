@@ -1,5 +1,5 @@
 {
- "cash": 44.35670087348082,
+ "cash": 43.35335087348082,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -4642,7 +4642,7 @@
    "profit_if_win": 0.07526881720430101,
    "reason": "favourite 18\u00b0C mid 0.95, local 15:45",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-02T02:45:31.953546+00:00",
    "expires": "2026-11-02T06:00:00+00:00",
    "audit": {
@@ -4669,6 +4669,140 @@
     "quote": {
      "yes_bid": 0.922,
      "yes_ask": 0.974
+    }
+   }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "89334790961467153630877386798288319705101261620384819629739757284539212511802",
+   "condition": "0x61486d37db74b3905d9a5da534644792310f0801343c99c068a4ccbc4563b55d",
+   "event": "highest-temperature-in-seoul-on-november-2-2026",
+   "title": "Will the highest temperature in Seoul (Incheon) be 15\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "15\u00b0C",
+   "price": 0.9329999999999999,
+   "shares": 1.0718113612004287,
+   "stake": 1.0,
+   "fee": 0.0033499999999999975,
+   "profit_if_win": 0.06846136120042876,
+   "reason": "favourite 15\u00b0C mid 0.91, local 15:01",
+   "audit": {
+    "code": "e820707027b4",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T06:01:19.232588+00:00",
+    "book": {
+     "asks": [
+      [
+       0.933,
+       1.63
+      ],
+      [
+       0.934,
+       300.0
+      ],
+      [
+       0.953,
+       20.0
+      ],
+      [
+       0.954,
+       300.0
+      ],
+      [
+       0.989,
+       166.0
+      ]
+     ],
+     "bids": [
+      [
+       0.889,
+       2.54
+      ],
+      [
+       0.888,
+       13.0
+      ],
+      [
+       0.83,
+       20.0
+      ],
+      [
+       0.74,
+       6.8
+      ],
+      [
+       0.701,
+       5.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.001",
+     "timestamp": "1793599250001",
+     "hash": "2a9f31fc428f9278690ac6c0128de66dff278dde"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-02T06:01:19.232642+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "97722916953570950666729098762881735319408087194737886980861464563449138730206",
+   "condition": "0x67662937e671db11776ec0466d0a4afddc23e6087157505de982fea2728f7dd7",
+   "event": "highest-temperature-in-busan-on-november-2-2026",
+   "title": "Will the highest temperature in Busan be 19\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "19\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 19\u00b0C mid 0.91, local 15:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-02T06:01:19.383452+00:00",
+   "expires": "2026-11-02T10:00:00+00:00",
+   "audit": {
+    "code": "e820707027b4",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T06:01:19.383463+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 0.94
     }
    }
   }
