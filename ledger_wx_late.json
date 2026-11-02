@@ -1,5 +1,5 @@
 {
- "cash": 32.23605090422704,
+ "cash": 31.23355090422704,
  "bets": [
   {
    "strategy": "LATE",
@@ -456,6 +456,94 @@
    "opened": "2026-10-30T05:30:39.542609+00:00",
    "pnl": -1.003,
    "closed": "2026-10-30T07:30:43.642449+00:00"
+  },
+  {
+   "strategy": "LATE",
+   "asset": "90574985043436522765827700437675813896455309974002240735789122235295033235823",
+   "condition": "0xf433f604f87d65e7afd59aaac2dd34d96789594080525d6253b832653df19ed8",
+   "event": "highest-temperature-in-chicago-on-november-2-2026",
+   "title": "Will the highest temperature in Chicago be between 64-65\u00b0F on November 2?",
+   "outcome": "NO",
+   "bucket": "64-65\u00b0F",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "high so far 60\u00b0F at local 17:01",
+   "audit": {
+    "code": "2f83845ae178",
+    "scan": "WX-LATE",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "gap": 2,
+     "price": [
+      0.85,
+      0.97
+     ],
+     "high_from": 17,
+     "low_from": 21,
+     "kinds": [
+      "highest"
+     ],
+     "per_event": 2,
+     "max_obs_age_h": 3
+    },
+    "time": "2026-11-02T23:01:14.787602+00:00",
+    "book": {
+     "asks": [
+      [
+       0.95,
+       19.54
+      ],
+      [
+       0.96,
+       56.0
+      ],
+      [
+       0.97,
+       6.0
+      ],
+      [
+       0.98,
+       41.2
+      ],
+      [
+       0.99,
+       36.52
+      ]
+     ],
+     "bids": [
+      [
+       0.86,
+       6.51
+      ],
+      [
+       0.82,
+       13.25
+      ],
+      [
+       0.81,
+       33.25
+      ],
+      [
+       0.73,
+       10.0
+      ],
+      [
+       0.59,
+       5.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793660474715",
+     "hash": "5b37a54455b23527982ac06e3c6edae460753c54"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-02T23:01:14.787674+00:00"
   }
  ]
 }
