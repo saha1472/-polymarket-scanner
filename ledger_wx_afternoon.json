@@ -1,5 +1,5 @@
 {
- "cash": 42.34040087348082,
+ "cash": 41.338000873480816,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -5163,6 +5163,95 @@
    },
    "status": "open",
    "opened": "2026-11-02T07:30:48.462310+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "83164119890646331031401374178925224118650149771674153032193005525536359152017",
+   "condition": "0x42452fa9f5e834423d8c6dccc66701330d7a0978e20dc2d5f558c1d17e1dfecb",
+   "event": "highest-temperature-in-moscow-on-november-2-2026",
+   "title": "Will the highest temperature in Moscow be 3\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "3\u00b0C",
+   "price": 0.952,
+   "shares": 1.050420168067227,
+   "stake": 1.0,
+   "fee": 0.0024000000000000024,
+   "profit_if_win": 0.048020168067226934,
+   "reason": "favourite 3\u00b0C mid 0.93, local 15:01",
+   "audit": {
+    "code": "ff8d4ff1a6b3",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T12:01:28.262837+00:00",
+    "book": {
+     "asks": [
+      [
+       0.952,
+       10.0
+      ],
+      [
+       0.953,
+       20.0
+      ],
+      [
+       0.96,
+       8.65
+      ],
+      [
+       0.967,
+       9.03
+      ],
+      [
+       0.968,
+       9.04
+      ]
+     ],
+     "bids": [
+      [
+       0.911,
+       10.0
+      ],
+      [
+       0.91,
+       5.0
+      ],
+      [
+       0.891,
+       5.0
+      ],
+      [
+       0.89,
+       10.0
+      ],
+      [
+       0.815,
+       0.01
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.001",
+     "timestamp": "1793620887210",
+     "hash": "87aba80f3d465a41efd5ae196a7f8d7b025496d9"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-02T12:01:28.262893+00:00"
   }
  ]
 }
