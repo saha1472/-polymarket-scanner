@@ -1,5 +1,5 @@
 {
- "cash": 44.220337237117185,
+ "cash": 43.220337237117185,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -4620,6 +4620,51 @@
     "quote": {
      "yes_bid": 0.903,
      "yes_ask": 0.989
+    }
+   }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "75612712105594184227719577113631457834567456082388524436511639097899596017520",
+   "condition": "0xb5e9d4a84c563c4d437b6a3359662d8f4dccb5c0bf73c4d11299c67957ad8279",
+   "event": "highest-temperature-in-wellington-on-november-2-2026",
+   "title": "Will the highest temperature in Wellington be 18\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "18\u00b0C",
+   "price": 0.93,
+   "shares": 1.075268817204301,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.07526881720430101,
+   "reason": "favourite 18\u00b0C mid 0.95, local 15:45",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-02T02:45:31.953546+00:00",
+   "expires": "2026-11-02T06:00:00+00:00",
+   "audit": {
+    "code": "d371029021ac",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T02:45:31.953597+00:00",
+    "quote": {
+     "yes_bid": 0.922,
+     "yes_ask": 0.974
     }
    }
   }
