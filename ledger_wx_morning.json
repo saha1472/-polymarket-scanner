@@ -1,5 +1,5 @@
 {
- "cash": 42.82727653763336,
+ "cash": 40.82727653763336,
  "bets": [
   {
    "strategy": "MORNING",
@@ -3216,6 +3216,96 @@
     "time": "2026-11-02T07:15:38.254536+00:00",
     "quote": {
      "yes_bid": 0.71,
+     "yes_ask": 0.99
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "25020538692834639996834051815649106142632681815540524292060700088752391597047",
+   "condition": "0xa45056a4de7b5771a9f88b1740d8eeaddb5a1fac8262b929c6163deb16f93bef",
+   "event": "lowest-temperature-in-ankara-on-november-2-2026",
+   "title": "Will the lowest temperature in Ankara be 8\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "8\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 8\u00b0C mid 0.94, local 10:30",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-02T07:30:47.658167+00:00",
+   "expires": "2026-11-02T09:00:00+00:00",
+   "audit": {
+    "code": "06d8d58c6c2b",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T07:30:47.660447+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "75112900712280105169451297349447426496763508708205635688892895412853566751046",
+   "condition": "0x6ea6e8f6e0be3d2d764ee4f6083dcfa5e704397fbc7e9c340b8b2bf5dbef0ab5",
+   "event": "lowest-temperature-in-jeddah-on-november-2-2026",
+   "title": "Will the lowest temperature in Jeddah be 27\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "27\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 27\u00b0C mid 0.93, local 10:30",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-02T07:30:47.962607+00:00",
+   "expires": "2026-11-02T09:00:00+00:00",
+   "audit": {
+    "code": "06d8d58c6c2b",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T07:30:47.962620+00:00",
+    "quote": {
+     "yes_bid": 0.87,
      "yes_ask": 0.99
     }
    }

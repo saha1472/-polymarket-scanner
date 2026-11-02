@@ -1,5 +1,5 @@
 {
- "cash": 38.34990087348082,
+ "cash": 37.34040087348082,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -5074,6 +5074,95 @@
      "yes_ask": 0.981
     }
    }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "78014988991166262311705442241466867360837174338766977496916789358793453918503",
+   "condition": "0x421cb1bf9c8904febb0dfcd62af29f11ce969231e1a18cfbd98c2e40ace14c59",
+   "event": "highest-temperature-in-chongqing-on-november-2-2026",
+   "title": "Will the highest temperature in Chongqing be 17\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "17\u00b0C",
+   "price": 0.81,
+   "shares": 1.2345679012345678,
+   "stake": 1.0,
+   "fee": 0.009499999999999998,
+   "profit_if_win": 0.22506790123456782,
+   "reason": "favourite 17\u00b0C mid 0.78, local 15:30",
+   "audit": {
+    "code": "06d8d58c6c2b",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T07:30:48.462250+00:00",
+    "book": {
+     "asks": [
+      [
+       0.81,
+       8.28
+      ],
+      [
+       0.9,
+       20.0
+      ],
+      [
+       0.91,
+       29.99
+      ],
+      [
+       0.92,
+       10.0
+      ],
+      [
+       0.94,
+       20.0
+      ]
+     ],
+     "bids": [
+      [
+       0.74,
+       6.0
+      ],
+      [
+       0.73,
+       9.74
+      ],
+      [
+       0.71,
+       13.29
+      ],
+      [
+       0.61,
+       5.0
+      ],
+      [
+       0.6,
+       37.21
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793604569936",
+     "hash": "583d2839c73c9f1e94e44793d7c2c16111d6fbf1"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-02T07:30:48.462310+00:00"
   }
  ]
 }
