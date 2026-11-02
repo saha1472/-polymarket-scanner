@@ -1,5 +1,5 @@
 {
- "cash": 40.695493991984556,
+ "cash": 39.695493991984556,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -5566,6 +5566,51 @@
    },
    "status": "open",
    "opened": "2026-11-02T18:31:16.415740+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "8549594784771835087109582294432296859172038562907972696025822416327680963553",
+   "condition": "0x58323ad9b4b940e022c1a6fa43acc7965335345dc233d252d84ff3b110461502",
+   "event": "highest-temperature-in-toronto-on-november-2-2026",
+   "title": "Will the highest temperature in Toronto be 18\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "18\u00b0C",
+   "price": 0.9,
+   "shares": 1.1111111111111112,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.11111111111111116,
+   "reason": "favourite 18\u00b0C mid 0.94, local 15:45",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-02T20:45:34.437696+00:00",
+   "expires": "2026-11-03T00:00:00+00:00",
+   "audit": {
+    "code": "a6a190278cab",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T20:45:34.437708+00:00",
+    "quote": {
+     "yes_bid": 0.887,
+     "yes_ask": 0.984
+    }
+   }
   }
  ]
 }
