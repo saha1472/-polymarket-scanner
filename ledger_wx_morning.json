@@ -1,5 +1,5 @@
 {
- "cash": 43.82277653763336,
+ "cash": 42.82277653763336,
  "bets": [
   {
    "strategy": "MORNING",
@@ -3506,6 +3506,51 @@
     "quote": {
      "yes_bid": 0.74,
      "yes_ask": 0.97
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "1065984387329178922927157013890863554450714007470866432994188617926744995649",
+   "condition": "0xd81c673d55ad1420d1fe824179d037de3813ad734665c08a39b1c5fe54c0e89b",
+   "event": "lowest-temperature-in-toronto-on-november-2-2026",
+   "title": "Will the lowest temperature in Toronto be 9\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "9\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 9\u00b0C mid 0.94, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-02T15:15:59.592540+00:00",
+   "expires": "2026-11-02T17:00:00+00:00",
+   "audit": {
+    "code": "40caced914c3",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T15:15:59.594645+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
     }
    }
   }
