@@ -1,5 +1,5 @@
 {
- "cash": 43.35335087348082,
+ "cash": 40.34990087348082,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -4803,6 +4803,185 @@
     "quote": {
      "yes_bid": 0.87,
      "yes_ask": 0.94
+    }
+   }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "13794217486500169821975748946899063739370846080994292808440405691062976654641",
+   "condition": "0x2e5b7f75a7f7bfacc65b15ec6660c513f087e4eb0b2538d36d33a6fa28da08db",
+   "event": "highest-temperature-in-shenzhen-on-november-2-2026",
+   "title": "Will the highest temperature in Shenzhen be 31\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "31\u00b0C",
+   "price": 0.91,
+   "shares": 1.0989010989010988,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.09890109890109877,
+   "reason": "favourite 31\u00b0C mid 0.92, local 15:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-02T07:01:15.495241+00:00",
+   "expires": "2026-11-02T11:00:00+00:00",
+   "audit": {
+    "code": "4ab8bfbf6299",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T07:01:15.495256+00:00",
+    "quote": {
+     "yes_bid": 0.9,
+     "yes_ask": 0.94
+    }
+   }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "83927934134503546648488666660596015726276735683140302912648406003052734836300",
+   "condition": "0xabddcfe9c4943813f3f9f7812c8eb1b66f71f790d0c5acd8fd267dc0cea3908e",
+   "event": "highest-temperature-in-guangzhou-on-november-2-2026",
+   "title": "Will the highest temperature in Guangzhou be 31\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "31\u00b0C",
+   "price": 0.9309999999999999,
+   "shares": 1.0741138560687433,
+   "stake": 1.0,
+   "fee": 0.003449999999999998,
+   "profit_if_win": 0.07066385606874333,
+   "reason": "favourite 31\u00b0C mid 0.78, local 15:01",
+   "audit": {
+    "code": "4ab8bfbf6299",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T07:01:15.645671+00:00",
+    "book": {
+     "asks": [
+      [
+       0.931,
+       14.2
+      ],
+      [
+       0.965,
+       20.0
+      ],
+      [
+       0.966,
+       59.0
+      ],
+      [
+       0.967,
+       20.0
+      ],
+      [
+       0.97,
+       30.0
+      ]
+     ],
+     "bids": [
+      [
+       0.92,
+       10.11
+      ],
+      [
+       0.835,
+       21.48
+      ],
+      [
+       0.834,
+       22.53
+      ],
+      [
+       0.7,
+       10.0
+      ],
+      [
+       0.5,
+       10.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.001",
+     "timestamp": "1793602873665",
+     "hash": "c2b5cb80c3713431f6326d30f3d3aa5623929b4d"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-02T07:01:15.645725+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "96354421895835955195667779406743247410384270233647483315742194926902953506644",
+   "condition": "0xb1eec3f66967a496a25c0bb52fffc6d1b86fff74982154c71dbc2ca1b0564401",
+   "event": "highest-temperature-in-qingdao-on-november-2-2026",
+   "title": "Will the highest temperature in Qingdao be 19\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "19\u00b0C",
+   "price": 0.94,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.06382978723404253,
+   "reason": "favourite 19\u00b0C mid 0.95, local 15:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-02T07:01:15.795864+00:00",
+   "expires": "2026-11-02T11:00:00+00:00",
+   "audit": {
+    "code": "4ab8bfbf6299",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T07:01:15.795885+00:00",
+    "quote": {
+     "yes_bid": 0.93,
+     "yes_ask": 0.97
     }
    }
   }

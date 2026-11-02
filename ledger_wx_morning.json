@@ -1,5 +1,5 @@
 {
- "cash": 44.83327653763336,
+ "cash": 43.82727653763336,
  "bets": [
   {
    "strategy": "MORNING",
@@ -3011,7 +3011,7 @@
    "profit_if_win": 0.13636363636363646,
    "reason": "favourite 22\u00b0C mid 0.93, local 10:15",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-02T05:15:41.772326+00:00",
    "expires": "2026-11-02T07:00:00+00:00",
    "audit": {
@@ -3040,6 +3040,140 @@
      "yes_ask": 0.99
     }
    }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "91969549423502357205298830149873030094578514909355477343751891489162783429096",
+   "condition": "0x9fc27a7b69b96a453dca34322704ed7cfaa495589f520d19e163ac95a25390c7",
+   "event": "lowest-temperature-in-paris-on-november-2-2026",
+   "title": "Will the lowest temperature in Paris be 8\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "8\u00b0C",
+   "price": 0.84,
+   "shares": 1.1904761904761905,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.19047619047619047,
+   "reason": "favourite 8\u00b0C mid 0.91, local 08:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-02T07:01:14.296617+00:00",
+   "expires": "2026-11-02T11:00:00+00:00",
+   "audit": {
+    "code": "4ab8bfbf6299",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T07:01:14.296633+00:00",
+    "quote": {
+     "yes_bid": 0.833,
+     "yes_ask": 0.993
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "106184408525991843697803855318509800435254961167469199018514890772909989708865",
+   "condition": "0x1c7c2eecfe6f6a719f0a51d5cb74c8f468a4331754aec0f215871b3f0868572f",
+   "event": "lowest-temperature-in-warsaw-on-november-2-2026",
+   "title": "Will the lowest temperature in Warsaw be 6\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "6\u00b0C",
+   "price": 0.8799999999999999,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.006,
+   "profit_if_win": 0.13036363636363646,
+   "reason": "favourite 6\u00b0C mid 0.72, local 08:01",
+   "audit": {
+    "code": "4ab8bfbf6299",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T07:01:14.664994+00:00",
+    "book": {
+     "asks": [
+      [
+       0.88,
+       22.0
+      ],
+      [
+       0.9,
+       200.0
+      ],
+      [
+       0.96,
+       20.0
+      ],
+      [
+       0.98,
+       5.0
+      ],
+      [
+       0.99,
+       20.0
+      ]
+     ],
+     "bids": [
+      [
+       0.65,
+       20.0
+      ],
+      [
+       0.07,
+       5.0
+      ],
+      [
+       0.04,
+       39.98
+      ],
+      [
+       0.02,
+       5.0
+      ],
+      [
+       0.01,
+       10.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793602872451",
+     "hash": "dc9ab594c1b4fd5c905bde202f9c42bc50b2366c"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-02T07:01:14.665041+00:00"
   }
  ]
 }
