@@ -1,5 +1,5 @@
 {
- "cash": 42.705993991984556,
+ "cash": 41.705993991984556,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -5432,6 +5432,51 @@
    },
    "status": "open",
    "opened": "2026-11-02T15:31:26.012905+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "36931136514308490983660127859980760168102315864437864891475265699080286267069",
+   "condition": "0xedc326076140c8674551cd660ee26521e81f99c94a10dd9bf449a08beb44e74b",
+   "event": "highest-temperature-in-sao-paulo-on-november-2-2026",
+   "title": "Will the highest temperature in Sao Paulo be 24\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "24\u00b0C",
+   "price": 0.94,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.06382978723404253,
+   "reason": "favourite 24\u00b0C mid 0.95, local 15:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-02T18:01:14.465631+00:00",
+   "expires": "2026-11-02T22:00:00+00:00",
+   "audit": {
+    "code": "9429b79f41c8",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T18:01:14.465645+00:00",
+    "quote": {
+     "yes_bid": 0.93,
+     "yes_ask": 0.97
+    }
+   }
   }
  ]
 }
