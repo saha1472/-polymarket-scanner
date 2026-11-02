@@ -1,5 +1,5 @@
 {
- "cash": 43.82727653763336,
+ "cash": 42.82727653763336,
  "bets": [
   {
    "strategy": "MORNING",
@@ -3174,6 +3174,51 @@
    },
    "status": "open",
    "opened": "2026-11-02T07:01:14.665041+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "19134246335757319828557443831654417930921440611448304104210265888745738285609",
+   "condition": "0x0935d274a92370ca5e1a6a3ad206b093f828faabacb17eee535c22c6d045587d",
+   "event": "lowest-temperature-in-milan-on-november-2-2026",
+   "title": "Will the lowest temperature in Milan be 1\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "1\u00b0C",
+   "price": 0.72,
+   "shares": 1.3888888888888888,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.38888888888888884,
+   "reason": "favourite 1\u00b0C mid 0.85, local 08:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-02T07:15:38.254519+00:00",
+   "expires": "2026-11-02T11:00:00+00:00",
+   "audit": {
+    "code": "c384acb854b7",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T07:15:38.254536+00:00",
+    "quote": {
+     "yes_bid": 0.71,
+     "yes_ask": 0.99
+    }
+   }
   }
  ]
 }
