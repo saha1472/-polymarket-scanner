@@ -1,5 +1,5 @@
 {
- "cash": 40.74591416005178,
+ "cash": 40.74291416005178,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -5450,7 +5450,7 @@
    "profit_if_win": 0.06382978723404253,
    "reason": "favourite 24\u00b0C mid 0.95, local 15:01",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-02T18:01:14.465631+00:00",
    "expires": "2026-11-02T22:00:00+00:00",
    "audit": {
@@ -5613,6 +5613,95 @@
      "yes_ask": 0.984
     }
    }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "93279161596048987918712948721206572616441662372518772914441673209116204720171",
+   "condition": "0xa81417cbc5e89bc392d275d526aab70734190cb4989294fa53ec90c1f41ac0e1",
+   "event": "highest-temperature-in-mexico-city-on-november-2-2026",
+   "title": "Will the highest temperature in Mexico City be 25\u00b0C on November 2?",
+   "outcome": "YES",
+   "bucket": "25\u00b0C",
+   "price": 0.9400000000000001,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0030000000000000022,
+   "profit_if_win": 0.06082978723404253,
+   "reason": "favourite 25\u00b0C mid 0.85, local 16:01",
+   "audit": {
+    "code": "aa87d3e562c4",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-02T22:01:24.389902+00:00",
+    "book": {
+     "asks": [
+      [
+       0.94,
+       36.23
+      ],
+      [
+       0.95,
+       57.31
+      ],
+      [
+       0.96,
+       10.0
+      ],
+      [
+       0.97,
+       10.0
+      ],
+      [
+       0.98,
+       65.37
+      ]
+     ],
+     "bids": [
+      [
+       0.93,
+       5.37
+      ],
+      [
+       0.13,
+       12.36
+      ],
+      [
+       0.12,
+       5.0
+      ],
+      [
+       0.05,
+       41.84
+      ],
+      [
+       0.04,
+       100.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793656879332",
+     "hash": "18f518742d20677ce47f1aafbb68dd1dfe1fedd1"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-02T22:01:24.389939+00:00"
   }
  ]
 }
