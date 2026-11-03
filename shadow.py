@@ -117,7 +117,8 @@ class Book:
                 expires = min(expires, datetime.fromisoformat(ends.replace("Z", "+00:00")))
             except (ValueError, TypeError):
                 pass
-        extra = {"limit": limit_price, "expires": expires.isoformat()}
+        extra = dict(kw.pop("extra", None) or {}, limit=limit_price,
+                     expires=expires.isoformat())
         if best_ask is not None and best_ask <= limit_price:
             shares = dollars / best_ask
             extra["fill"] = {"time": now_iso(), "seen_ask": best_ask, "how": "crossed at once"}
