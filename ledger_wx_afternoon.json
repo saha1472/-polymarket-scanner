@@ -1,5 +1,5 @@
 {
- "cash": 37.55979048308964,
+ "cash": 36.55979048308964,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -6998,6 +6998,51 @@
     "quote": {
      "yes_bid": 0.92,
      "yes_ask": 0.95
+    }
+   }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "36702151973300592818509228315062970284081217472111582042811502944895751648994",
+   "condition": "0xb5087b92e4660ea0987b26bad8e9b39b43752fb2616d13b77177c808b6fa3509",
+   "event": "highest-temperature-in-panama-city-on-november-3-2026",
+   "title": "Will the highest temperature in Panama City be 31\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "31\u00b0C",
+   "price": 0.91,
+   "shares": 1.0989010989010988,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.09890109890109877,
+   "reason": "favourite 31\u00b0C mid 0.95, local 15:46",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-03T20:46:37.833516+00:00",
+   "expires": "2026-11-04T00:00:00+00:00",
+   "audit": {
+    "code": "097df22456e6",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T20:46:37.833528+00:00",
+    "quote": {
+     "yes_bid": 0.9,
+     "yes_ask": 0.997
     }
    }
   }
