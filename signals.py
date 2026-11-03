@@ -1,4 +1,5 @@
 import json
+import math
 import os
 import sys
 import time
@@ -7,6 +8,7 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 
+import shadow
 import simcore
 
 DATA_API = "https://data-api.polymarket.com"
@@ -78,7 +80,7 @@ DAILY_LOSS_LIMIT = 3.00    # stop opening bets after losing this much in 24h
 SESSION = requests.Session()
 
 
-def get(url, params=None):
+def get(url, params=None, raw=False):
     for attempt in range(3):
         try:
             resp = SESSION.get(url, params=params, timeout=20)
@@ -94,10 +96,61 @@ def get(url, params=None):
             return None
         time.sleep(0.15)
         data = resp.json()
-        if isinstance(data, dict) and "data" in data:
+        if not raw and isinstance(data, dict) and "data" in data:
             data = data["data"]
         return data
     return None
+
+
+# ---------- Data API v2 (v1 was retired on 2026-11-03 and answers 410) ----------
+# v2 wraps rows in {"data": [...], "pagination": {"next_cursor": ...}}, pages
+# with a cursor (no offset) and uses snake_case. Rows are mapped back to the
+# v1 names the rest of this file was written for.
+
+POSITION_FIELDS = {"token_id": "asset", "condition_id": "conditionId",
+                   "current_size": "size", "avg_price": "avgPrice",
+                   "current_price": "curPrice", "end_date": "endDate",
+                   "event_slug": "eventSlug", "current_value": "currentValue",
+                   "total_cost_usdc": "initialValue", "realized_pnl": "realizedPnl",
+                   "total_size": "totalBought", "last_event_at": "timestamp"}
+
+
+def v1_position(row):
+    out = dict(row)
+    for new, old in POSITION_FIELDS.items():
+        if new in row:
+            out[old] = row[new]
+    return out
+
+
+def v1_leader(row):
+    return {"proxyWallet": row.get("user_id"), "userName": row.get("user_name"),
+            "pnl": row.get("pnl"), "vol": row.get("volume")}
+
+
+def data_v2(path, params, max_pages=10, stop=None):
+    """All rows of a v2 Data API list, following the cursor. Returns None if
+    the API failed (so callers can tell "no data" from "API down").
+    `stop(row)` ends paging early once it returns True for a row."""
+    rows, cursor = [], None
+    for _ in range(max_pages):
+        q = dict(params, **({"cursor": cursor} if cursor else {}))
+        page = get(f"{DATA_API}/v2/{path}", q, raw=True)
+        if not isinstance(page, dict) or not isinstance(page.get("data"), list):
+            return None if not rows else rows
+        for r in page["data"]:
+            if stop and stop(r):
+                return rows
+            rows.append(r)
+        cursor = (page.get("pagination") or {}).get("next_cursor")
+        if not cursor:
+            break
+    return rows
+
+
+def positions(wallet, max_pages=6, **params):
+    rows = data_v2("positions", dict(params, user=wallet, limit=500), max_pages)
+    return None if rows is None else [v1_position(r) for r in rows]
 
 
 def pmap(fn, items, workers=8):
@@ -180,7 +233,8 @@ def top_traders():
                   "limit": LEADERBOARD_SIZE}
         if CAT:
             params["category"] = SCAN
-        for row in get(f"{DATA_API}/v1/leaderboard", params) or []:
+        rows = data_v2("leaderboard", params, max_pages=1) or []
+        for row in map(v1_leader, rows):
             wallet = row.get("proxyWallet")
             if not wallet:
                 continue
@@ -198,35 +252,24 @@ def trader_history(wallet):
     stays in /positions as 'redeemable'."""
     cutoff = datetime.now(timezone.utc) - timedelta(days=HISTORY_DAYS)
     out = []
-    for offset in range(0, 500, 50):
-        rows = get(f"{DATA_API}/closed-positions",
-                   {"user": wallet, "limit": 50, "offset": offset,
-                    "sortBy": "TIMESTAMP", "sortDirection": "DESC"})
-        if rows is None:
-            return None
-        for r in rows:
-            if num(r.get("timestamp")) < cutoff.timestamp():
-                break
-            cost = num(r.get("totalBought")) * num(r.get("avgPrice"))
-            out.append((r.get("eventSlug"), num(r.get("realizedPnl")), cost))
-        else:
-            if len(rows) == 50:
-                continue
-        break
-    for offset in range(0, 3000, 500):
-        rows = get(f"{DATA_API}/positions",
-                   {"user": wallet, "limit": 500, "offset": offset,
-                    "sizeThreshold": 0, "redeemable": "true"})
-        if rows is None:
-            return None
-        for p in rows:
-            if str(p.get("endDate", ""))[:10] < cutoff.date().isoformat():
-                continue
-            cost = num(p.get("initialValue"))
-            out.append((p.get("eventSlug"),
-                        num(p.get("currentValue")) - cost, cost))
-        if len(rows) < 500:
-            break
+    # closed positions, newest first (v2: status=CLOSED, sort_by=TIMESTAMP)
+    closed = data_v2("positions", {"user": wallet, "status": "CLOSED", "limit": 100,
+                                   "sort_by": "TIMESTAMP", "sort_direction": "DESC"},
+                     max_pages=5, stop=lambda r: num(r.get("last_event_at")) < cutoff.timestamp())
+    if closed is None:
+        return None
+    for r in map(v1_position, closed):
+        cost = num(r.get("totalBought")) * num(r.get("avgPrice"))
+        out.append((r.get("eventSlug"), num(r.get("realizedPnl")), cost))
+    # resolved but never redeemed (most losers end up here)
+    rows = positions(wallet, status="REDEEMABLE")
+    if rows is None:
+        return None
+    for p in rows:
+        if str(p.get("endDate", ""))[:10] < cutoff.date().isoformat():
+            continue
+        cost = num(p.get("initialValue"))
+        out.append((p.get("eventSlug"), num(p.get("currentValue")) - cost, cost))
     return [x for x in out if x[2] > 0]
 
 
@@ -278,9 +321,7 @@ def good_traders():
 def find_candidates(good):
     by_asset, assets_by_condition = {}, {}
     wallets = list(good)
-    all_rows = pmap(lambda w: get(f"{DATA_API}/positions",
-                                  {"user": w, "sizeThreshold": 1,
-                                   "limit": 500}) or [], wallets)
+    all_rows = pmap(lambda w: positions(w, max_pages=2, status="OPEN") or [], wallets)
     if CAT:
         warm_tags(p.get("eventSlug") for rows in all_rows for p in rows
                   if not p.get("redeemable")
@@ -347,9 +388,11 @@ def size_bet(s):
         return None
     ask, ask_size = asks[0]
 
+    s["ask_seen"] = ask                 # for the shadow limit-bid variant
     if not MIN_PRICE <= ask <= MAX_PRICE:
         return None
     if ask - s["avg_entry"] > MAX_CHASE:
+        s["reject"] = "chase"           # recorded as a shadow "would-have" bet
         return None
 
     min_shares = num(book.get("min_order_size"),
@@ -438,7 +481,17 @@ def settle(ledger):
     return msgs
 
 
-def open_paper_bets(ledger, signals):
+def shadow_skip(book, s, reason):
+    """Record a signal the bot didn't bet, with the exact sizing it would have used."""
+    if book is None:
+        return
+    book.add(SCAN, "skipped", reason, asset=s["asset"], condition=s["condition"],
+             title=s["title"], event=s.get("event"), outcome=s["outcome"],
+             price=s["price"], shares=s["shares"], stake=s["stake"], fee=s["fee"],
+             extra={"traders": s["traders"]})
+
+
+def open_paper_bets(ledger, signals, book=None):
     msgs = []
     open_bets = [b for b in ledger["bets"] if b["status"] == "open"]
     held = {b["asset"] for b in open_bets}
@@ -463,21 +516,30 @@ def open_paper_bets(ledger, signals):
         msgs.append(f"⏸️ Paused new bets: ${lost_24h:+.2f} in the last 24h "
                     f"(limit -${DAILY_LOSS_LIMIT:.2f})" if paused else
                     "▶️ Resumed new bets (24h loss back under the limit)")
-    if paused:
+    if paused or shadow.is_paused(ledger):
+        why = "auto_paused" if shadow.is_paused(ledger) else "daily_loss_limit"
+        for s in signals:
+            if s["asset"] not in held and s["condition"] not in held_markets:
+                shadow_skip(book, s, why)
         return msgs
 
     for s in signals:
-        if len(held) >= MAX_OPEN_BETS:
-            break
         if s["asset"] in held or s["condition"] in held_markets:
             continue  # never hold both sides (or two bets) of one market
+        if len(held) >= MAX_OPEN_BETS:
+            shadow_skip(book, s, "max_open")
+            continue
         if s.get("event") in stopped_events:
+            shadow_skip(book, s, "stopped_event")
             continue  # stopped out of this event before: no re-entry
         if s.get("event") and per_event.get(s["event"], 0) >= MAX_BETS_PER_EVENT:
+            shadow_skip(book, s, "per_event")
             continue  # already have a bet on this match/event
         if max(per_trader.get(t, 0) for t in s["traders"]) >= MAX_OPEN_PER_TRADER:
+            shadow_skip(book, s, "per_trader")
             continue  # strict cap: ANY supporting trader already drives enough open bets
         if ledger["cash"] < s["stake"] + s["fee"]:
+            shadow_skip(book, s, "cash")
             continue  # try cheaper signals further down the list
         ledger["cash"] -= s["stake"] + s["fee"]
         ledger["bets"].append({
@@ -526,8 +588,7 @@ def check_exits(ledger):
         if bet.get("shadow_exit"):
             continue  # already shadow-sold
         watch = [(w, h) for w, h in bet["holders"].items() if not h.get("exited")]
-        found = pmap(lambda wh: get(f"{DATA_API}/positions",
-                                    {"user": wh[0], "market": bet["condition"]}),
+        found = pmap(lambda wh: positions(wh[0], max_pages=1, condition=bet["condition"]),
                      watch)
         for (wallet, h), rows in zip(watch, found):
             if rows is None:
@@ -640,14 +701,51 @@ if __name__ == "__main__":
     exit_msgs += check_stops(ledger)
     msgs = settle(ledger) + exit_msgs
 
+    book = shadow.Book(shadow.shadow_file(SCAN))
+    shadow_settled = book.settle(get)
+    msg = shadow.switch_update(ledger, book.bets, SCAN)
+    if msg:
+        msgs.append(msg)
+
     good = good_traders()
     candidates = find_candidates(good)
     print(f"{len(candidates)} candidate(s) before order book checks.")
     signals = [s for s in pmap(size_bet, candidates) if s]
     print(f"{len(signals)} signal(s) after sizing and fee checks.")
 
-    msgs += open_paper_bets(ledger, signals)
+    # shadow evidence (never touches the ledger):
+    #  - limit bids at the traders' own entry price, filled later if the price comes back
+    #  - signals rejected only because the price had run too far past their entry
+    for c in candidates:
+        if c.get("ask_seen") is None:
+            continue
+        ends = ((datetime.now(timezone.utc) + timedelta(hours=c["hours"])).isoformat()
+                if c.get("hours") else None)
+        limit = math.floor(c["avg_entry"] * 100 + 1e-9) / 100
+        if MIN_PRICE <= limit <= MAX_PRICE:
+            book.add_limit(SCAN, asset=c["asset"], condition=c["condition"], title=c["title"],
+                           limit_price=limit, best_ask=c["ask_seen"], fee_rate=FEE_RATE,
+                           ends=ends, event=c.get("event"), outcome=c["outcome"],
+                           extra={"traders": c["traders"], "avg_entry": c["avg_entry"]})
+        if c.get("reject") == "chase" and MIN_PRICE <= c["ask_seen"] <= MAX_PRICE:
+            book.add_taker(SCAN, "chase", asset=c["asset"], condition=c["condition"],
+                           title=c["title"], price=c["ask_seen"], fee_rate=FEE_RATE,
+                           event=c.get("event"), outcome=c["outcome"],
+                           extra={"traders": c["traders"], "avg_entry": c["avg_entry"]})
+    # resting shadow limits: anything selling at or below our bid right now?
+    rest = {b["asset"] for b in book.resting()}
+    seen = {c["asset"]: c["ask_seen"] for c in candidates
+            if c.get("ask_seen") is not None and c["asset"] in rest}
+    missing = rest - set(seen)
+    if missing:
+        seen.update({t: simcore.best_ask(bk) for t, bk in simcore.fetch_books(missing).items()})
+    filled = book.check_limits({t: a for t, a in seen.items() if a is not None})
+
+    msgs += open_paper_bets(ledger, signals, book)
     save_ledger(ledger)
+    book.save()
+    print(f"Shadow: +{book.added} new record(s), {filled} limit fill(s), "
+          f"{shadow_settled} settled, {len(book.resting())} limit bid(s) resting")
     if len(TAGS) > 30000:
         TAGS.clear()   # keep the cache from growing forever
     tmp = f"{TAGS_FILE}.{SCAN}.tmp"
