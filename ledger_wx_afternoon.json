@@ -1,5 +1,5 @@
 {
- "cash": 35.33055618357273,
+ "cash": 33.32005618357273,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -6383,7 +6383,7 @@
    "profit_if_win": 0.16279069767441867,
    "reason": "favourite 36\u00b0C mid 0.92, local 15:30",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-03T10:30:54.108236+00:00",
    "expires": "2026-11-03T14:00:00+00:00",
    "audit": {
@@ -6720,6 +6720,229 @@
      "yes_ask": 0.96
     }
    }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "82109932632243503722251524193298276882603561745411248544547709074003585624459",
+   "condition": "0x0eb43fc70488ddf24f79e3b7c50fec6637690c195b32d3475f5ce60ef114f42b",
+   "event": "highest-temperature-in-paris-on-november-3-2026",
+   "title": "Will the highest temperature in Paris be 10\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "10\u00b0C",
+   "price": 0.93,
+   "shares": 1.075268817204301,
+   "stake": 1.0,
+   "fee": 0.003499999999999998,
+   "profit_if_win": 0.071768817204301,
+   "reason": "favourite 10\u00b0C mid 0.79, local 15:02",
+   "audit": {
+    "code": "751cf0b039ba",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T14:02:04.813942+00:00",
+    "book": {
+     "asks": [
+      [
+       0.93,
+       60.42
+      ],
+      [
+       0.94,
+       36.66
+      ],
+      [
+       0.95,
+       20.0
+      ],
+      [
+       0.96,
+       65.0
+      ],
+      [
+       0.97,
+       123.33
+      ]
+     ],
+     "bids": [
+      [
+       0.42,
+       20.0
+      ],
+      [
+       0.35,
+       5.0
+      ],
+      [
+       0.23,
+       20.0
+      ],
+      [
+       0.22,
+       5.0
+      ],
+      [
+       0.19,
+       55.86
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793714524661",
+     "hash": "431ceb701557240a2bc270915af42b8142b553c1"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-03T14:02:04.814000+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "37440269656422593678848310150930049657586355618664340405213188732643024067407",
+   "condition": "0x014226f25affe95ed5012fa5982b1c5d6f6594decbc731dd2f54c7bd35e67619",
+   "event": "highest-temperature-in-milan-on-november-3-2026",
+   "title": "Will the highest temperature in Milan be 14\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "14\u00b0C",
+   "price": 0.92,
+   "shares": 1.0869565217391304,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.08695652173913038,
+   "reason": "favourite 14\u00b0C mid 0.95, local 15:02",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-03T14:02:04.951687+00:00",
+   "expires": "2026-11-03T18:00:00+00:00",
+   "audit": {
+    "code": "751cf0b039ba",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T14:02:04.951700+00:00",
+    "quote": {
+     "yes_bid": 0.91,
+     "yes_ask": 0.98
+    }
+   }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "69762053188049425306239666249458825598221860774358576664308964085962617825897",
+   "condition": "0x599892a75da186ca8b63a8dc0d1455fd72e7721aa8a790a4fb2046307979669a",
+   "event": "highest-temperature-in-madrid-on-november-3-2026",
+   "title": "Will the highest temperature in Madrid be 15\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "15\u00b0C",
+   "price": 0.86,
+   "shares": 1.1627906976744187,
+   "stake": 1.0,
+   "fee": 0.007000000000000001,
+   "profit_if_win": 0.15579069767441867,
+   "reason": "favourite 15\u00b0C mid 0.74, local 15:02",
+   "audit": {
+    "code": "751cf0b039ba",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T14:02:05.085646+00:00",
+    "book": {
+     "asks": [
+      [
+       0.86,
+       38.93
+      ],
+      [
+       0.9,
+       30.0
+      ],
+      [
+       0.93,
+       14.28
+      ],
+      [
+       0.94,
+       16.66
+      ],
+      [
+       0.95,
+       20.0
+      ]
+     ],
+     "bids": [
+      [
+       0.72,
+       5.07
+      ],
+      [
+       0.7,
+       20.0
+      ],
+      [
+       0.59,
+       35.8
+      ],
+      [
+       0.58,
+       100.0
+      ],
+      [
+       0.55,
+       100.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793714523984",
+     "hash": "c35aba2a97fb2e3d4fdf8e77acd79f6b1c7ef016"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-03T14:02:05.085701+00:00"
   }
  ]
 }
