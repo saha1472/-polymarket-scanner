@@ -1,5 +1,5 @@
 {
- "cash": 36.55979048308964,
+ "cash": 35.55479048308964,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -7045,6 +7045,95 @@
      "yes_ask": 0.997
     }
    }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "47971546458147015286115735368716332524358484886492019374595571536175865023404",
+   "condition": "0xeae425c5ac36a11d82463c067b2f2b28a16e7d59b19fc5c5c762f0d7983133be",
+   "event": "highest-temperature-in-mexico-city-on-november-3-2026",
+   "title": "Will the highest temperature in Mexico City be 26\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "26\u00b0C",
+   "price": 0.8999999999999999,
+   "shares": 1.1111111111111112,
+   "stake": 1.0,
+   "fee": 0.004999999999999999,
+   "profit_if_win": 0.10611111111111116,
+   "reason": "favourite 26\u00b0C mid 0.78, local 15:02",
+   "audit": {
+    "code": "f767356dd218",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T21:02:10.970144+00:00",
+    "book": {
+     "asks": [
+      [
+       0.9,
+       10.0
+      ],
+      [
+       0.91,
+       10.28
+      ],
+      [
+       0.93,
+       30.37
+      ],
+      [
+       0.94,
+       50.22
+      ],
+      [
+       0.95,
+       20.0
+      ]
+     ],
+     "bids": [
+      [
+       0.81,
+       5.01
+      ],
+      [
+       0.79,
+       6.17
+      ],
+      [
+       0.78,
+       5.08
+      ],
+      [
+       0.77,
+       5.16
+      ],
+      [
+       0.09,
+       5.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793739699238",
+     "hash": "2613a848e7708a26388ec8af371103d79867dc28"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-03T21:02:10.970185+00:00"
   }
  ]
 }
