@@ -61,7 +61,8 @@ def line(path, since):
                  f"P&L ${pnl:+.2f} (ROI {roi}) | 24h {len(day)} settled ${day_pnl:+.2f} | "
                  f"open {open_n}" + (f" (+{resting} resting bids)" if resting else "")
                  + f" | cash ${led.get('cash', 0):.2f}"
-                 + (" | ⏸️ paused" if led.get("paused") else ""))
+                 + (" | ⏸️ paused" if led.get("paused") else "")
+                 + (" | 🤖 auto-paused" if (led.get("auto") or {}).get("paused") else ""))
 
 
 def main():
