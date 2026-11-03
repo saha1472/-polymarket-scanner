@@ -1,5 +1,5 @@
 {
- "cash": 39.34300618357274,
+ "cash": 37.334506183572735,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -6412,6 +6412,180 @@
      "yes_ask": 0.995
     }
    }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "69133351411111376832424706640799529834278358380817610111893471236310667505326",
+   "condition": "0x6f345e314332b823bdd52df2f28f58b45a2d202ac3300f955a90866adc6bd9a3",
+   "event": "highest-temperature-in-moscow-on-november-3-2026",
+   "title": "Will the highest temperature in Moscow be 2\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "2\u00b0C",
+   "price": 0.8700000000000001,
+   "shares": 1.1494252873563218,
+   "stake": 1.0,
+   "fee": 0.0065,
+   "profit_if_win": 0.14292528735632176,
+   "reason": "favourite 2\u00b0C mid 0.81, local 15:01",
+   "audit": {
+    "code": "3858045d6b81",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T12:01:23.116513+00:00",
+    "book": {
+     "asks": [
+      [
+       0.87,
+       5.0
+      ],
+      [
+       0.94,
+       20.0
+      ],
+      [
+       0.95,
+       22.45
+      ],
+      [
+       0.96,
+       10.0
+      ],
+      [
+       0.97,
+       10.0
+      ]
+     ],
+     "bids": [
+      [
+       0.7,
+       10.0
+      ],
+      [
+       0.69,
+       5.0
+      ],
+      [
+       0.59,
+       10.0
+      ],
+      [
+       0.3,
+       10.0
+      ],
+      [
+       0.12,
+       99.98
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793707282942",
+     "hash": "62187f74badf42ebba62f921396207d52242a806"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-03T12:01:23.116560+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "18437674306130978716901023929075741150945503876338520591526102940903615761863",
+   "condition": "0x3d5bd27bb1af13251f02292ae202e52b6ac92f6d409c3225cd89c44759de0241",
+   "event": "highest-temperature-in-istanbul-on-november-3-2026",
+   "title": "Will the highest temperature in Istanbul be 17\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "17\u00b0C",
+   "price": 0.96,
+   "shares": 1.0416666666666667,
+   "stake": 1.0,
+   "fee": 0.002000000000000002,
+   "profit_if_win": 0.03966666666666674,
+   "reason": "favourite 17\u00b0C mid 0.81, local 15:01",
+   "audit": {
+    "code": "3858045d6b81",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T12:01:23.215717+00:00",
+    "book": {
+     "asks": [
+      [
+       0.96,
+       29.47
+      ],
+      [
+       0.97,
+       30.0
+      ],
+      [
+       0.98,
+       110.0
+      ],
+      [
+       0.99,
+       37.05
+      ]
+     ],
+     "bids": [
+      [
+       0.87,
+       29.78
+      ],
+      [
+       0.86,
+       220.72
+      ],
+      [
+       0.85,
+       7.14
+      ],
+      [
+       0.84,
+       7.14
+      ],
+      [
+       0.15,
+       20.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793707209737",
+     "hash": "11e3b11fdb2cda3c4ac236e6e25ade4d679d1538"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-03T12:01:23.215755+00:00"
   }
  ]
 }
