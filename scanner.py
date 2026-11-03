@@ -5,36 +5,34 @@ import requests
 
 import simcore
 
-GAMMA_URL = "https://gamma-api.polymarket.com/events"
+GAMMA_URL = "https://gamma-api.polymarket.com/events/keyset"
+MAX_PAGES = 300  # 100 events a page
 MIN_EDGE = 0.01  # ignore anything under 1 cent of profit per set
 
 
 def fetch_events():
-    """Page through all active, open events, stopping cleanly on errors."""
-    offset, limit = 0, 100
-    while True:
+    """Page through all open events, stopping cleanly on errors.
+    Gamma's plain /events stops at offset ~2000 (it answers 422 beyond that),
+    so this uses the keyset endpoint and its cursor."""
+    cursor = None
+    for page in range(MAX_PAGES):
+        params = {"closed": "false", "limit": 100}
+        if cursor:
+            params["after_cursor"] = cursor
         try:
-            resp = requests.get(
-                GAMMA_URL,
-                params={"active": "true", "closed": "false",
-                        "limit": limit, "offset": offset},
-                timeout=20,
-            )
+            resp = requests.get(GAMMA_URL, params=params, timeout=20)
         except requests.RequestException as err:
-            print(f"Network error at offset {offset}: {err}")
+            print(f"Network error on page {page}: {err}")
             break
-
         if resp.status_code != 200:
-            print(f"API returned {resp.status_code} at offset {offset}: "
-                  f"{resp.text[:200]}")
+            print(f"API returned {resp.status_code} on page {page}: {resp.text[:200]}")
             break
-
-        batch = resp.json()
-        if not batch:
+        body = resp.json()
+        yield from body.get("events") or []
+        cursor = body.get("next_cursor")
+        if not cursor:
             break
-        yield from batch
-        offset += limit
-        time.sleep(0.2)
+        time.sleep(0.1)
 
 
 def to_float(value):
@@ -49,6 +47,9 @@ def scan():
     for event in fetch_events():
         if not event.get("negRisk"):
             continue
+        if event.get("negRiskAugmented"):
+            continue  # open-ended ("who will X fight next"): the listed outcomes
+                      # aren't the full set, so buying them all is not a sure $1
 
         markets = [m for m in event.get("markets", [])
                    if m.get("active") and not m.get("closed")]
