@@ -210,6 +210,46 @@ class SignalsShadow(InTempDir):
         self.assertEqual(len(b.bets), 2)
 
 
+class CandidateShadows(InTempDir):
+    """Regression (3 Nov, two failed runs): add_limit crashed with "got multiple
+    values for keyword argument 'extra'" as soon as a real candidate existed."""
+
+    def _cand(self, n, avg_entry, ask, reject=None):
+        c = {"asset": f"A{n}", "condition": f"c{n}", "title": "t", "event": f"e{n}",
+             "outcome": "Yes", "traders": ["X"], "avg_entry": avg_entry, "hours": 5,
+             "ask_seen": ask}
+        if reject:
+            c["reject"] = reject
+        return c
+
+    def test_limit_and_chase_records_from_real_candidates(self):
+        b = shadow.Book("s.json")
+        cands = [self._cand(1, 0.60, 0.65),                    # rests at 0.60
+                 self._cand(2, 0.60, 0.59),                    # crosses at once
+                 self._cand(3, 0.50, 0.75, reject="chase"),    # chased: limit + taker
+                 {"asset": "A4", "ask_seen": None}]            # no book: ignored
+        filled = signals.record_shadow_candidates(b, cands, fetch=lambda t: {})
+        got = sorted((x["asset"], x["kind"], x["status"]) for x in b.bets)
+        self.assertEqual(got, [("A1", "limit", "resting"), ("A2", "limit", "open"),
+                               ("A3", "limit", "resting"), ("A3", "skipped", "open")])
+        self.assertEqual(filled, 0)
+        lim = next(x for x in b.bets if x["asset"] == "A1")
+        self.assertEqual((lim["limit"], lim["avg_entry"], lim["traders"]), (0.60, 0.60, ["X"]))
+
+    def test_resting_limit_fills_from_a_later_run(self):
+        b = shadow.Book("s.json")
+        signals.record_shadow_candidates(b, [self._cand(1, 0.60, 0.65)], fetch=lambda t: {})
+        book = {"A1": {"asks": [{"price": "0.60", "size": "50"}], "bids": []}}
+        self.assertEqual(signals.record_shadow_candidates(b, [], fetch=lambda t: book), 1)
+        self.assertEqual(b.bets[0]["status"], "open")
+
+    def test_add_limit_keeps_caller_extra(self):
+        b = shadow.Book("s.json")
+        r = b.add_limit("S", asset="A", limit_price=0.5, best_ask=0.6, fee_rate=0.05,
+                        extra={"note": "x"}, **KW)
+        self.assertEqual((r["note"], r["limit"]), ("x", 0.5))
+
+
 class WeatherShadow(InTempDir):
     def test_expired_resting_bid_becomes_unfilled_record(self):
         led = {"cash": 49.0, "bets": [{"strategy": "MORNING", "status": "resting", "asset": "A",
