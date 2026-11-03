@@ -1,5 +1,5 @@
 {
-  "cash": 52.08475720171158,
+  "cash": 50.061257201711584,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -1598,6 +1598,218 @@
       "opened": "2026-11-02T21:45:38.208330+00:00",
       "ends": "2026-11-03T00:00:00.353882+00:00",
       "stops": {}
+    },
+    {
+      "asset": "36881162511633760364630887297901794664481695187724646778285671204456228028381",
+      "condition": "0x3c4d754f6385e34a83962d241a22cf855fcc20271b19bd8a370094ea5d98c85a",
+      "title": "Will the highest temperature in Manila be 32\u00b0C on November 4?",
+      "outcome": "No",
+      "event": "highest-temperature-in-manila-on-november-4-2026",
+      "price": 0.8,
+      "shares": 1.25,
+      "stake": 1.0,
+      "fee": 0.009999999999999998,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Poligarch"
+      ],
+      "holders": {
+        "0xb40e89677d59665d5188541ad860450a6e2a7cc9": {
+          "name": "Poligarch",
+          "size": 118.1528,
+          "entry": 0.7029,
+          "win_rate": 0.6834381551362684,
+          "roi": 0.4293705778586129,
+          "n": 1431
+        }
+      },
+      "audit": {
+        "code": "d6a76c54b303",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-03T15:01:34.487938+00:00",
+        "book": {
+          "asks": [
+            [
+              0.8,
+              205.0
+            ],
+            [
+              0.81,
+              40.0
+            ],
+            [
+              0.82,
+              5.0
+            ],
+            [
+              0.83,
+              8.39
+            ],
+            [
+              0.84,
+              19.42
+            ]
+          ],
+          "bids": [
+            [
+              0.77,
+              212.0
+            ],
+            [
+              0.76,
+              40.0
+            ],
+            [
+              0.74,
+              28.39
+            ],
+            [
+              0.73,
+              172.54
+            ],
+            [
+              0.72,
+              105.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793718079204",
+          "hash": "7424562f21ebf0116ab5861a3e0d7cdf1771ce52"
+        }
+      },
+      "opened": "2026-11-03T15:01:34.487987+00:00",
+      "ends": "2026-11-04T00:00:00.282999+00:00"
+    },
+    {
+      "asset": "8276838950012205762532604640014124364109819446688538030343415648426285769052",
+      "condition": "0x35ca2df6315c970c5c4fe74007884f42bf532f9b11b4cfcc7a07dcd35e27ced3",
+      "title": "Will the highest temperature in Jeddah be 34\u00b0C on November 4?",
+      "outcome": "No",
+      "event": "highest-temperature-in-jeddah-on-november-4-2026",
+      "price": 0.73,
+      "shares": 1.36986301369863,
+      "stake": 1.0,
+      "fee": 0.0135,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Poligarch"
+      ],
+      "holders": {
+        "0xb40e89677d59665d5188541ad860450a6e2a7cc9": {
+          "name": "Poligarch",
+          "size": 90.0,
+          "entry": 0.71,
+          "win_rate": 0.6834381551362684,
+          "roi": 0.4293705778586129,
+          "n": 1431
+        }
+      },
+      "audit": {
+        "code": "d6a76c54b303",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-03T15:01:34.488020+00:00",
+        "book": {
+          "asks": [
+            [
+              0.73,
+              40.0
+            ],
+            [
+              0.74,
+              232.55
+            ],
+            [
+              0.76,
+              8.19
+            ],
+            [
+              0.77,
+              8.23
+            ],
+            [
+              0.78,
+              5.0
+            ]
+          ],
+          "bids": [
+            [
+              0.7,
+              5.0
+            ],
+            [
+              0.69,
+              112.6
+            ],
+            [
+              0.68,
+              95.0
+            ],
+            [
+              0.67,
+              13.21
+            ],
+            [
+              0.66,
+              53.23
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793718093948",
+          "hash": "63c49cfea765fc7c88238c3b964f1e1a017899c8"
+        }
+      },
+      "opened": "2026-11-03T15:01:34.488067+00:00",
+      "ends": "2026-11-04T00:00:00.282989+00:00"
     }
   ]
 }
