@@ -273,3 +273,41 @@ def post_discord(url, text, http=None, sleep=time.sleep):
             print("Discord message NOT delivered after retries")
             return False
     return True
+
+
+# ---------- order books in bulk ----------
+
+BOOKS_URL = "https://clob.polymarket.com/books"
+
+
+def fetch_books(tokens, http=None, chunk=100):
+    """{token: book} for the tokens that have a live book (closed markets are
+    simply missing). One POST per `chunk` tokens."""
+    if http is None:
+        import requests as http
+    out = {}
+    tokens = sorted(set(t for t in tokens if t))
+    for i in range(0, len(tokens), chunk):
+        part = tokens[i:i + chunk]
+        try:
+            r = http.post(BOOKS_URL, json=[{"token_id": t} for t in part], timeout=20)
+            rows = r.json() if getattr(r, "status_code", 0) == 200 else []
+        except Exception as err:          # network or JSON problem: just skip this chunk
+            print(f"books request failed: {err}")
+            continue
+        for b in rows if isinstance(rows, list) else []:
+            if isinstance(b, dict) and b.get("asset_id") in part:
+                out[b["asset_id"]] = b
+    return out
+
+
+def best_ask(book):
+    asks = [num(a.get("price"), None) for a in (book or {}).get("asks", [])]
+    asks = [a for a in asks if a is not None and 0 < a < 1]
+    return min(asks) if asks else None
+
+
+def best_bid(book):
+    bids = [num(b.get("price"), None) for b in (book or {}).get("bids", [])]
+    bids = [b for b in bids if b is not None and 0 < b < 1]
+    return max(bids) if bids else None
