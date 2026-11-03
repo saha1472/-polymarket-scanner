@@ -1,5 +1,5 @@
 {
- "cash": 45.3162263963387,
+ "cash": 43.3042263963387,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -5708,6 +5708,184 @@
    },
    "status": "open",
    "opened": "2026-11-02T22:01:24.389939+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "43334399995889912350869089882308121955675902066066044827005079448783858079763",
+   "condition": "0x6bf2b1e83b44cc8812fc5f237c34349808c71a96324301be28c97c183d205717",
+   "event": "highest-temperature-in-seoul-on-november-3-2026",
+   "title": "Will the highest temperature in Seoul (Incheon) be 16\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "16\u00b0C",
+   "price": 0.86,
+   "shares": 1.1627906976744187,
+   "stake": 1.0,
+   "fee": 0.007000000000000001,
+   "profit_if_win": 0.15579069767441867,
+   "reason": "favourite 16\u00b0C mid 0.82, local 15:01",
+   "audit": {
+    "code": "251804a996d9",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T06:01:01.945704+00:00",
+    "book": {
+     "asks": [
+      [
+       0.86,
+       7.14
+      ],
+      [
+       0.87,
+       5.0
+      ],
+      [
+       0.88,
+       103.83
+      ],
+      [
+       0.89,
+       26.37
+      ],
+      [
+       0.9,
+       212.83
+      ]
+     ],
+     "bids": [
+      [
+       0.79,
+       9.89
+      ],
+      [
+       0.78,
+       10.0
+      ],
+      [
+       0.77,
+       5.13
+      ],
+      [
+       0.74,
+       30.0
+      ],
+      [
+       0.66,
+       63.34
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793685659410",
+     "hash": "8b53de4f9bbc9facdce2565aafd568c9cdd40633"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-03T06:01:01.945758+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "49284677708270256700780249933291195831984049620679821535129619685542302277394",
+   "condition": "0x693e14bce54f6a723604e85b6f42924dfaee13681ebec4a73994ec3bd8d68a22",
+   "event": "highest-temperature-in-tokyo-on-november-3-2026",
+   "title": "Will the highest temperature in Tokyo be 19\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "19\u00b0C",
+   "price": 0.8999999999999999,
+   "shares": 1.1111111111111112,
+   "stake": 1.0,
+   "fee": 0.004999999999999999,
+   "profit_if_win": 0.10611111111111116,
+   "reason": "favourite 19\u00b0C mid 0.89, local 15:01",
+   "audit": {
+    "code": "251804a996d9",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T06:01:02.035877+00:00",
+    "book": {
+     "asks": [
+      [
+       0.9,
+       53.68
+      ],
+      [
+       0.94,
+       5.18
+      ],
+      [
+       0.95,
+       63.0
+      ],
+      [
+       0.96,
+       90.0
+      ],
+      [
+       0.97,
+       40.0
+      ]
+     ],
+     "bids": [
+      [
+       0.87,
+       1.5
+      ],
+      [
+       0.85,
+       6.05
+      ],
+      [
+       0.84,
+       10.17
+      ],
+      [
+       0.76,
+       6.57
+      ],
+      [
+       0.62,
+       12.82
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793685661947",
+     "hash": "0e99816d53d03c150b6d68e2b20dbeb644484378"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-03T06:01:02.035937+00:00"
   }
  ]
 }
