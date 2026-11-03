@@ -1,5 +1,5 @@
 {
- "cash": 44.09160508627769,
+ "cash": 42.09160508627769,
  "bets": [
   {
    "strategy": "MORNING",
@@ -3827,6 +3827,96 @@
      "max_fill": 0.96
     },
     "time": "2026-11-03T02:15:41.482814+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "49746086302200908684975520444494239991775144189138008065627506534471961024587",
+   "condition": "0x29d66880f4b5efd5fb634a7131f5f4cd59f3a0bcf25baee68f7bd4ed53f29dfd",
+   "event": "lowest-temperature-in-beijing-on-november-3-2026",
+   "title": "Will the lowest temperature in Beijing be 2\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "2\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 2\u00b0C mid 0.94, local 10:31",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-03T02:31:09.024946+00:00",
+   "expires": "2026-11-03T04:00:00+00:00",
+   "audit": {
+    "code": "17df731d82ec",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T02:31:09.027006+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "4835163387138601848904110775588868963585764020442320735949322513363490913708",
+   "condition": "0xae62311ac2be5c7863d60095907c8b39ea4fba9bf824bfdab3552783a4823608",
+   "event": "lowest-temperature-in-qingdao-on-november-3-2026",
+   "title": "Will the lowest temperature in Qingdao be 7\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "7\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 7\u00b0C mid 0.94, local 10:31",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-03T02:31:09.384812+00:00",
+   "expires": "2026-11-03T04:00:00+00:00",
+   "audit": {
+    "code": "17df731d82ec",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T02:31:09.384832+00:00",
     "quote": {
      "yes_bid": 0.87,
      "yes_ask": 1.0
