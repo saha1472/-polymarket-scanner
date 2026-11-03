@@ -32,6 +32,7 @@ from zoneinfo import ZoneInfo
 
 import requests
 
+import shadow
 import simcore
 
 GAMMA_API = "https://gamma-api.polymarket.com"
@@ -98,6 +99,13 @@ FAV_MAX_FILL = 0.96          # take a real seller's offer only up to this price
 # time window ends.
 
 STRATEGIES = ("DEAD", "LATE", "SHIFT", "MORNING", "AFTERNOON")
+SHADOW_FILE = "shadow_wx.json"
+# The automatic strategy switch only judges bets opened on or after these
+# dates, so results from since-fixed problems don't count against a strategy.
+JUDGE_FROM = {
+    "LATE": "2026-10-31T08:45:00+00:00",       # METAR cut-off fixed (commit fa4cec1)
+    "AFTERNOON": "2026-10-30T08:00:00+00:00",  # F markets dropped
+}
 SESSION = requests.Session()
 
 
@@ -556,19 +564,44 @@ def settle(ledger):
     return msgs
 
 
-def open_bets(ledger, signals):
+def shadow_skip(book, strategy, e, b, side, reason, why, bet=None):
+    """Record a would-have bet, priced on the real book (fetched only once per
+    new record; a signal seen on every run is recorded once)."""
+    if book is None:
+        return
+    token = b["yes"] if side == "YES" else b["no"]
+    if (strategy, "skipped", token) in book.keys:
+        return
+    bet = bet or make_bet(strategy, e, b, side, reason)
+    if not bet:
+        return
+    book.add(strategy, "skipped", why, asset=bet["asset"], condition=bet["condition"],
+             title=bet["title"], event=bet["event"], outcome=side, price=bet["price"],
+             shares=bet["shares"], stake=bet["stake"], fee=bet["fee"],
+             extra={"bucket": b["label"], "signal": reason})
+
+
+def open_bets(ledger, signals, book=None):
     msgs = []
     open_ = [b for b in ledger["bets"] if b["status"] in ("open", "resting")]
     held_markets = {b["condition"] for b in open_}
+    paused = shadow.is_paused(ledger)
     for strategy, e, b, side, reason in signals:
-        if len(open_) >= MAX_OPEN_BETS or ledger["cash"] < BET_SIZE + 0.05:
-            break
         if b["condition"] in held_markets:
             continue
         if strategy in FAV_RULES and any(x["event"] == e["slug"] for x in ledger["bets"]):
             continue  # one favourite bet per event, ever
+        if paused:
+            shadow_skip(book, strategy, e, b, side, reason, "auto_paused")
+            continue
+        if len(open_) >= MAX_OPEN_BETS or ledger["cash"] < BET_SIZE + 0.05:
+            shadow_skip(book, strategy, e, b, side, reason,
+                        "max_open" if len(open_) >= MAX_OPEN_BETS else "cash")
+            continue
         bet = make_bet(strategy, e, b, side, reason)
         if strategy in FAV_RULES and (not bet or bet["price"] > FAV_MAX_FILL):
+            if bet:   # what buying at the (too expensive) ask would have done instead
+                shadow_skip(book, strategy, e, b, side, reason, "price_filter", bet)
             rest = resting_bid(strategy, e, b, reason)
             if rest:
                 ledger["cash"] -= rest["stake"]      # reserve the money
@@ -582,8 +615,10 @@ def open_bets(ledger, signals):
             continue
         if strategy == "DEAD" and (bet["price"] > DEAD_MAX_PRICE or
                                    bet["profit_if_win"] / bet["stake"] < DEAD_MIN_RETURN):
+            shadow_skip(book, strategy, e, b, side, reason, "price_filter", bet)
             continue
         if strategy == "LATE" and not LATE_MIN_PRICE - 0.02 <= bet["price"] <= LATE_MAX_PRICE:
+            shadow_skip(book, strategy, e, b, side, reason, "price_filter", bet)
             continue
         if strategy == "SHIFT" and not SHIFT_MIN_PRICE <= bet["price"] <= SHIFT_MAX_PRICE:
             continue
@@ -619,7 +654,7 @@ def resting_bid(strategy, e, b, reason):
                                    quote={"yes_bid": b["yes_bid"], "yes_ask": b["yes_ask"]})}
 
 
-def check_resting(ledger, asks, active):
+def check_resting(ledger, asks, active, book=None, how="snapshot proxy"):
     """asks: YES token -> current best ask (only where a seller exists).
     This is a FILL PROXY: a seller at or below our price on a later snapshot.
     It can't see queue position, sizes or fills between snapshots.
@@ -633,6 +668,11 @@ def check_resting(ledger, asks, active):
         if now >= bet["expires"]:
             bet["status"] = "cancelled"          # releases the reserved cash once
             ledger["cash"] += bet["stake"]
+            if book is not None:                 # would it have won if it had filled?
+                book.add(bet["strategy"], "unfilled", "expired", asset=bet["asset"],
+                         condition=bet["condition"], title=bet["title"], event=bet["event"],
+                         outcome=bet["outcome"], price=bet["price"], shares=bet["shares"],
+                         stake=bet["stake"], fee=0.0, extra={"bucket": bet.get("bucket")})
             continue
         ask = asks.get(bet["asset"])
         if ask is not None and ask <= bet["price"]:
@@ -640,7 +680,7 @@ def check_resting(ledger, asks, active):
             bet["opened"] = now
             bet["fill_evidence"] = {"time": now, "seen_ask": ask,
                                     "code": simcore.code_version(),
-                                    "note": "snapshot proxy: ask at/below our bid"}
+                                    "note": f"{how}: ask at/below our bid"}
             msgs.append(f"✅ Bid filled: YES {bet['bucket']} @ {bet['price']:.2f} | {bet['title']}")
         # a market missing from this run's scan (e.g. an API hiccup) is NOT
         # treated as closed; the expiry deadline cancels the bid instead
@@ -707,14 +747,20 @@ if __name__ == "__main__":
         "AFTERNOON": favourite_signals("AFTERNOON", events, fc),
     }
     out = []
+    book = shadow.Book(SHADOW_FILE)
+    shadow_settled = book.settle(get)
     for strat in STRATEGIES:
         led = load_ledger(ledger_file(strat))
-        msgs = check_resting(led, asks, active) + settle(led) + open_bets(led, signals[strat])
+        msgs = check_resting(led, asks, active, book) + settle(led)
+        switch = shadow.switch_update(led, book.bets, strat, judge_from=JUDGE_FROM.get(strat, ""))
+        msgs += ([switch] if switch else []) + open_bets(led, signals[strat], book)
         write_json(ledger_file(strat), led)
         print(f"{strat}: {len(signals[strat])} signal(s) | {summary(led)}")
         if msgs:
             out += [f"**[WX-{strat}]**"] + msgs + [summary(led)]
     write_json(STATE_FILE, state)
+    book.save()
+    print(f"Shadow: +{book.added} new record(s), {shadow_settled} settled")
     print("\n".join(out))
     if not notify(out):
         sys.exit("Discord delivery failed (ledgers were saved). Failing the run so it's visible.")
