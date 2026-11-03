@@ -491,6 +491,38 @@ def shadow_skip(book, s, reason):
              extra={"traders": s["traders"]})
 
 
+def record_shadow_candidates(book, candidates, fetch=None):
+    """Shadow evidence from this run's candidates (never touches the ledger):
+      - a limit bid at the traders' own entry price, filled later if the price comes back
+      - signals rejected only because the price had run too far past their entry
+    Then checks every resting shadow limit against the current asks.
+    Returns the number of shadow limits filled."""
+    for c in candidates:
+        if c.get("ask_seen") is None:
+            continue
+        ends = ((datetime.now(timezone.utc) + timedelta(hours=c["hours"])).isoformat()
+                if c.get("hours") else None)
+        limit = math.floor(c["avg_entry"] * 100 + 1e-9) / 100
+        info = {"traders": c["traders"], "avg_entry": c["avg_entry"]}
+        if MIN_PRICE <= limit <= MAX_PRICE:
+            book.add_limit(SCAN, asset=c["asset"], condition=c["condition"], title=c["title"],
+                           limit_price=limit, best_ask=c["ask_seen"], fee_rate=FEE_RATE,
+                           ends=ends, event=c.get("event"), outcome=c["outcome"], extra=info)
+        if c.get("reject") == "chase" and MIN_PRICE <= c["ask_seen"] <= MAX_PRICE:
+            book.add_taker(SCAN, "chase", asset=c["asset"], condition=c["condition"],
+                           title=c["title"], price=c["ask_seen"], fee_rate=FEE_RATE,
+                           event=c.get("event"), outcome=c["outcome"], extra=info)
+    # resting shadow limits: anything selling at or below our bid right now?
+    rest = {b["asset"] for b in book.resting()}
+    seen = {c["asset"]: c["ask_seen"] for c in candidates
+            if c.get("ask_seen") is not None and c["asset"] in rest}
+    missing = rest - set(seen)
+    if missing:
+        books = (fetch or simcore.fetch_books)(missing)
+        seen.update({t: simcore.best_ask(bk) for t, bk in books.items()})
+    return book.check_limits({t: a for t, a in seen.items() if a is not None})
+
+
 def open_paper_bets(ledger, signals, book=None):
     msgs = []
     open_bets = [b for b in ledger["bets"] if b["status"] == "open"]
@@ -713,33 +745,7 @@ if __name__ == "__main__":
     signals = [s for s in pmap(size_bet, candidates) if s]
     print(f"{len(signals)} signal(s) after sizing and fee checks.")
 
-    # shadow evidence (never touches the ledger):
-    #  - limit bids at the traders' own entry price, filled later if the price comes back
-    #  - signals rejected only because the price had run too far past their entry
-    for c in candidates:
-        if c.get("ask_seen") is None:
-            continue
-        ends = ((datetime.now(timezone.utc) + timedelta(hours=c["hours"])).isoformat()
-                if c.get("hours") else None)
-        limit = math.floor(c["avg_entry"] * 100 + 1e-9) / 100
-        if MIN_PRICE <= limit <= MAX_PRICE:
-            book.add_limit(SCAN, asset=c["asset"], condition=c["condition"], title=c["title"],
-                           limit_price=limit, best_ask=c["ask_seen"], fee_rate=FEE_RATE,
-                           ends=ends, event=c.get("event"), outcome=c["outcome"],
-                           extra={"traders": c["traders"], "avg_entry": c["avg_entry"]})
-        if c.get("reject") == "chase" and MIN_PRICE <= c["ask_seen"] <= MAX_PRICE:
-            book.add_taker(SCAN, "chase", asset=c["asset"], condition=c["condition"],
-                           title=c["title"], price=c["ask_seen"], fee_rate=FEE_RATE,
-                           event=c.get("event"), outcome=c["outcome"],
-                           extra={"traders": c["traders"], "avg_entry": c["avg_entry"]})
-    # resting shadow limits: anything selling at or below our bid right now?
-    rest = {b["asset"] for b in book.resting()}
-    seen = {c["asset"]: c["ask_seen"] for c in candidates
-            if c.get("ask_seen") is not None and c["asset"] in rest}
-    missing = rest - set(seen)
-    if missing:
-        seen.update({t: simcore.best_ask(bk) for t, bk in simcore.fetch_books(missing).items()})
-    filled = book.check_limits({t: a for t, a in seen.items() if a is not None})
+    filled = record_shadow_candidates(book, candidates)
 
     msgs += open_paper_bets(ledger, signals, book)
     save_ledger(ledger)
