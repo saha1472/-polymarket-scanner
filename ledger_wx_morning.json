@@ -1,5 +1,5 @@
 {
- "cash": 44.089605086277686,
+ "cash": 43.089605086277686,
  "bets": [
   {
    "strategy": "MORNING",
@@ -4179,6 +4179,51 @@
    },
    "status": "open",
    "opened": "2026-11-03T07:45:49.877374+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "105932360874300352453190150547757853992807903901609916731158777913316127204469",
+   "condition": "0xf20a65e98f382b49e2d94d4bac25eff44843f20138875544c4f1cc881ec18669",
+   "event": "lowest-temperature-in-tel-aviv-on-november-3-2026",
+   "title": "Will the lowest temperature in Tel Aviv be 18\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "18\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 18\u00b0C mid 0.94, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-03T08:15:34.552656+00:00",
+   "expires": "2026-11-03T10:00:00+00:00",
+   "audit": {
+    "code": "306fce854edf",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T08:15:34.554668+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
   }
  ]
 }
