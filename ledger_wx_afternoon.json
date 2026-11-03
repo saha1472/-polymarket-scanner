@@ -1,5 +1,5 @@
 {
- "cash": 36.33055618357273,
+ "cash": 35.33055618357273,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -6675,6 +6675,51 @@
    },
    "status": "open",
    "opened": "2026-11-03T12:30:56.584665+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "64859379223290615441537994569569067302458852975831186593957988210303586511991",
+   "condition": "0x014d4b5c025fbe3a04eb44edbb5a7220b8f7906d3c38b0ceff82e7033c5aef4c",
+   "event": "highest-temperature-in-cape-town-on-november-3-2026",
+   "title": "Will the highest temperature in Cape Town be 25\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "25\u00b0C",
+   "price": 0.89,
+   "shares": 1.1235955056179776,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.12359550561797761,
+   "reason": "favourite 25\u00b0C mid 0.92, local 15:16",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-03T13:16:11.041050+00:00",
+   "expires": "2026-11-03T17:00:00+00:00",
+   "audit": {
+    "code": "4e17581a5c7b",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T13:16:11.041063+00:00",
+    "quote": {
+     "yes_bid": 0.88,
+     "yes_ask": 0.96
+    }
+   }
   }
  ]
 }
