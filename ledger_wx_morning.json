@@ -1,5 +1,5 @@
 {
- "cash": 42.09160508627769,
+ "cash": 44.09160508627769,
  "bets": [
   {
    "strategy": "MORNING",
@@ -3713,7 +3713,7 @@
    "profit_if_win": 0.23456790123456783,
    "reason": "favourite 13\u00b0C mid 0.90, local 08:01",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-02T23:01:15.759206+00:00",
    "expires": "2026-11-03T03:00:00+00:00",
    "audit": {
@@ -3758,7 +3758,7 @@
    "profit_if_win": 0.16279069767441867,
    "reason": "favourite 6\u00b0C mid 0.93, local 09:46",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-03T00:46:02.810287+00:00",
    "expires": "2026-11-03T03:00:00+00:00",
    "audit": {
@@ -3803,7 +3803,7 @@
    "profit_if_win": 0.13636363636363646,
    "reason": "favourite 6\u00b0C mid 0.94, local 11:15",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-03T02:15:41.482789+00:00",
    "expires": "2026-11-03T03:00:00+00:00",
    "audit": {
@@ -3920,6 +3920,51 @@
     "quote": {
      "yes_bid": 0.87,
      "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "78663496957426139813959041055179002983752777928889631236911093118846717087467",
+   "condition": "0x578de402388bc622aa2cc61bbd54c6cd330157dbfb8303bb6f75aa3d07bdf16d",
+   "event": "lowest-temperature-in-guangzhou-on-november-3-2026",
+   "title": "Will the lowest temperature in Guangzhou be 23\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "23\u00b0C",
+   "price": 0.77,
+   "shares": 1.2987012987012987,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.2987012987012987,
+   "reason": "favourite 23\u00b0C mid 0.86, local 11:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-03T03:01:16.864504+00:00",
+   "expires": "2026-11-03T04:00:00+00:00",
+   "audit": {
+    "code": "1c0f1f50db06",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T03:01:16.864517+00:00",
+    "quote": {
+     "yes_bid": 0.76,
+     "yes_ask": 0.97
     }
    }
   }
