@@ -1,5 +1,5 @@
 {
- "cash": 42.3042263963387,
+ "cash": 38.2912263963387,
  "bets": [
   {
    "strategy": "AFTERNOON",
@@ -5931,6 +5931,306 @@
      "yes_ask": 0.977
     }
    }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "55526623591916565377429623386406648674070621992867621651335732475481003140706",
+   "condition": "0x5a8aa4e1f077d83aea5e95a5843b295871614a7108420b4bbab41c4c6bb07108",
+   "event": "highest-temperature-in-chongqing-on-november-3-2026",
+   "title": "Will the highest temperature in Chongqing be 17\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "17\u00b0C",
+   "price": 0.86,
+   "shares": 1.1627906976744187,
+   "stake": 1.0,
+   "fee": 0.007000000000000001,
+   "profit_if_win": 0.15579069767441867,
+   "reason": "favourite 17\u00b0C mid 0.72, local 15:00",
+   "audit": {
+    "code": "ed05e3dd58ea",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T07:00:56.785456+00:00",
+    "book": {
+     "asks": [
+      [
+       0.86,
+       59.99
+      ],
+      [
+       0.88,
+       20.0
+      ],
+      [
+       0.9,
+       69.89
+      ],
+      [
+       0.92,
+       10.0
+      ],
+      [
+       0.96,
+       10.0
+      ]
+     ],
+     "bids": [
+      [
+       0.5,
+       5.0
+      ],
+      [
+       0.49,
+       11.09
+      ],
+      [
+       0.15,
+       25.0
+      ],
+      [
+       0.14,
+       20.0
+      ],
+      [
+       0.09,
+       5.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793689255446",
+     "hash": "26805f0ab9ca87aa284ca22d436ba25cc9177127"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-03T07:00:56.785506+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "86002753676449472719802508929106909789621887119371221867260678239923027412687",
+   "condition": "0x4f5429db1fb6a4e88da3cb2e517db2b1bbc302ac7faf74244eafe6d961aa65cd",
+   "event": "highest-temperature-in-beijing-on-november-3-2026",
+   "title": "Will the highest temperature in Beijing be 19\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "19\u00b0C",
+   "price": 0.94,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.06382978723404253,
+   "reason": "favourite 19\u00b0C mid 0.95, local 15:00",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-03T07:00:56.934429+00:00",
+   "expires": "2026-11-03T11:00:00+00:00",
+   "audit": {
+    "code": "ed05e3dd58ea",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T07:00:56.934441+00:00",
+    "quote": {
+     "yes_bid": 0.931,
+     "yes_ask": 0.969
+    }
+   }
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "99783776380005591132644090411512166326412434436816725140481961117831729420005",
+   "condition": "0xd22d172e619715297dc0c5651d5a53d7fbde424c375a8e91326ee15c174bf7fd",
+   "event": "highest-temperature-in-shenzhen-on-november-3-2026",
+   "title": "Will the highest temperature in Shenzhen be 28\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "28\u00b0C",
+   "price": 0.92,
+   "shares": 1.0869565217391304,
+   "stake": 1.0,
+   "fee": 0.003999999999999998,
+   "profit_if_win": 0.08295652173913037,
+   "reason": "favourite 28\u00b0C mid 0.80, local 15:00",
+   "audit": {
+    "code": "ed05e3dd58ea",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T07:00:57.081860+00:00",
+    "book": {
+     "asks": [
+      [
+       0.92,
+       50.0
+      ],
+      [
+       0.948,
+       53.0
+      ],
+      [
+       0.949,
+       70.0
+      ],
+      [
+       0.95,
+       46.22
+      ],
+      [
+       0.96,
+       10.0
+      ]
+     ],
+     "bids": [
+      [
+       0.814,
+       6.04
+      ],
+      [
+       0.813,
+       5.0
+      ],
+      [
+       0.774,
+       5.0
+      ],
+      [
+       0.754,
+       5.0
+      ],
+      [
+       0.75,
+       5.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.001",
+     "timestamp": "1793689256999",
+     "hash": "dfd011b9882537bbddadff5b7aae070629c91664"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-03T07:00:57.081921+00:00"
+  },
+  {
+   "strategy": "AFTERNOON",
+   "asset": "36581254625477473304021640260884398125663034046832082834918345083350096435473",
+   "condition": "0x8a3561536462d9f110c38a8ca55401419c1a4b5f330ab1145291fcd8e2fa7cd3",
+   "event": "highest-temperature-in-qingdao-on-november-3-2026",
+   "title": "Will the highest temperature in Qingdao be 20\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "20\u00b0C",
+   "price": 0.96,
+   "shares": 1.0416666666666667,
+   "stake": 1.0,
+   "fee": 0.002000000000000002,
+   "profit_if_win": 0.03966666666666674,
+   "reason": "favourite 20\u00b0C mid 0.80, local 15:00",
+   "audit": {
+    "code": "ed05e3dd58ea",
+    "scan": "WX-AFTERNOON",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "highest",
+     "hours": [
+      15,
+      19
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T07:00:57.228443+00:00",
+    "book": {
+     "asks": [
+      [
+       0.96,
+       87.31
+      ],
+      [
+       0.97,
+       53.33
+      ]
+     ],
+     "bids": [
+      [
+       0.82,
+       6.66
+      ],
+      [
+       0.81,
+       10.52
+      ],
+      [
+       0.49,
+       25.49
+      ],
+      [
+       0.48,
+       10.26
+      ],
+      [
+       0.25,
+       20.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793689257029",
+     "hash": "e9cf4b938fa4a01324605b3629f52d02132e2b7d"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-03T07:00:57.228496+00:00"
   }
  ]
 }
