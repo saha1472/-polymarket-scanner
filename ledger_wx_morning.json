@@ -1,5 +1,5 @@
 {
- "cash": 45.03897350733032,
+ "cash": 45.09160508627769,
  "bets": [
   {
    "strategy": "MORNING",
@@ -3398,8 +3398,10 @@
      "hash": "9bffbc3f829ef94bdd0249c39f0501d853f7d4ae"
     }
    },
-   "status": "open",
-   "opened": "2026-11-02T08:01:01.079669+00:00"
+   "status": "won",
+   "opened": "2026-11-02T08:01:01.079669+00:00",
+   "pnl": 0.05013157894736836,
+   "closed": "2026-11-03T00:46:02.641130+00:00"
   },
   {
    "strategy": "MORNING",
@@ -3737,6 +3739,51 @@
     "time": "2026-11-02T23:01:15.759234+00:00",
     "quote": {
      "yes_bid": 0.8,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "37616882572486099319401455098752683184124939372070544889408354964950235430660",
+   "condition": "0xf6126a7e9c3ce2540ca928eb5d45bb7d570a0f42d3ed13789a609be06c949b30",
+   "event": "lowest-temperature-in-seoul-on-november-3-2026",
+   "title": "Will the lowest temperature in Seoul (Incheon) be 6\u00b0C on November 3?",
+   "outcome": "YES",
+   "bucket": "6\u00b0C",
+   "price": 0.86,
+   "shares": 1.1627906976744187,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.16279069767441867,
+   "reason": "favourite 6\u00b0C mid 0.93, local 09:46",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-03T00:46:02.810287+00:00",
+   "expires": "2026-11-03T03:00:00+00:00",
+   "audit": {
+    "code": "a7f47612d20b",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-03T00:46:02.812412+00:00",
+    "quote": {
+     "yes_bid": 0.85,
      "yes_ask": 1.0
     }
    }
