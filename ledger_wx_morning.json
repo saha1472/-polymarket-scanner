@@ -1,5 +1,5 @@
 {
- "cash": 45.23770723681532,
+ "cash": 44.23320723681532,
  "bets": [
   {
    "strategy": "MORNING",
@@ -5233,6 +5233,83 @@
    },
    "status": "open",
    "opened": "2026-11-04T11:02:23.398556+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "70675609759313833524743257883323944702398817931931617555334028737727054106371",
+   "condition": "0x98f3a0f93371ce988eed9cac51f74aabbf7a5c74d76672aaf165b3aa658ee3b7",
+   "event": "lowest-temperature-in-buenos-aires-on-november-4-2026",
+   "title": "Will the lowest temperature in Buenos Aires be 15\u00b0C on November 4?",
+   "outcome": "YES",
+   "bucket": "15\u00b0C",
+   "price": 0.9100000000000001,
+   "shares": 1.0989010989010988,
+   "stake": 1.0,
+   "fee": 0.004499999999999999,
+   "profit_if_win": 0.09440109890109877,
+   "reason": "favourite 15\u00b0C mid 0.71, local 09:31",
+   "audit": {
+    "code": "6a098f4776fd",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-04T12:31:48.191629+00:00",
+    "book": {
+     "asks": [
+      [
+       0.91,
+       5.0
+      ],
+      [
+       0.92,
+       20.0
+      ],
+      [
+       0.99,
+       20.0
+      ]
+     ],
+     "bids": [
+      [
+       0.5,
+       5.0
+      ],
+      [
+       0.03,
+       20.0
+      ],
+      [
+       0.02,
+       5.0
+      ],
+      [
+       0.01,
+       10.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793794857033",
+     "hash": "6a332b1984dcb7fde888d54c309c55cf3afa5da1"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-04T12:31:48.191666+00:00"
   }
  ]
 }
