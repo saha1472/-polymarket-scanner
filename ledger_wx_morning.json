@@ -1,5 +1,5 @@
 {
- "cash": 45.28583881576269,
+ "cash": 44.28583881576269,
  "bets": [
   {
    "strategy": "MORNING",
@@ -5400,6 +5400,51 @@
     "quote": {
      "yes_bid": 0.87,
      "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "44650167596980771837978073799627613750340114611693826603501705563716771432542",
+   "condition": "0x811b7c6a6ed20c70e4cdccf1dbebe5efa0fcd70aa89a0727cac1f53694442b76",
+   "event": "lowest-temperature-in-wellington-on-november-5-2026",
+   "title": "Will the lowest temperature in Wellington be 14\u00b0C on November 5?",
+   "outcome": "YES",
+   "bucket": "14\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 14\u00b0C mid 0.92, local 10:31",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-04T21:31:31.559825+00:00",
+   "expires": "2026-11-04T23:00:00+00:00",
+   "audit": {
+    "code": "d6505531a5dc",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-04T21:31:31.559842+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 0.97
     }
    }
   }
