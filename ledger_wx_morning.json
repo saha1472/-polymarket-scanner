@@ -1,5 +1,5 @@
 {
- "cash": 44.24370723681532,
+ "cash": 47.24370723681532,
  "bets": [
   {
    "strategy": "MORNING",
@@ -4503,7 +4503,7 @@
    "profit_if_win": 0.40845070422535223,
    "reason": "favourite 24\u00b0C mid 0.83, local 08:16",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-04T00:16:45.904793+00:00",
    "expires": "2026-11-04T04:00:00+00:00",
    "audit": {
@@ -4716,7 +4716,7 @@
    "profit_if_win": 0.13636363636363646,
    "reason": "favourite 12\u00b0C mid 0.94, local 10:08",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-04T02:08:52.555746+00:00",
    "expires": "2026-11-04T04:00:00+00:00",
    "audit": {
@@ -4762,7 +4762,7 @@
    "profit_if_win": 0.13636363636363646,
    "reason": "favourite 11\u00b0C mid 0.92, local 10:08",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-04T02:08:52.716191+00:00",
    "expires": "2026-11-04T04:00:00+00:00",
    "audit": {
