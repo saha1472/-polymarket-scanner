@@ -1,5 +1,5 @@
 {
- "cash": 45.246207236815316,
+ "cash": 42.24370723681532,
  "bets": [
   {
    "strategy": "MORNING",
@@ -4620,6 +4620,176 @@
     "quote": {
      "yes_bid": 0.87,
      "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "10080581079837370359013940742387985556735438657504768104795385111599515745960",
+   "condition": "0x76940b366567c73a15bddd7e954831abdc281ab2e0ea58e296814f7a17f6ff45",
+   "event": "lowest-temperature-in-beijing-on-november-4-2026",
+   "title": "Will the lowest temperature in Beijing be 4\u00b0C on November 4?",
+   "outcome": "YES",
+   "bucket": "4\u00b0C",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "favourite 4\u00b0C mid 0.77, local 10:08",
+   "audit": {
+    "code": "4cf678900c8e",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-04T02:08:52.398465+00:00",
+    "trigger_sha": "4c7239b41366",
+    "book": {
+     "asks": [
+      [
+       0.95,
+       5.0
+      ],
+      [
+       0.96,
+       40.0
+      ],
+      [
+       0.97,
+       30.0
+      ],
+      [
+       0.98,
+       80.0
+      ]
+     ],
+     "bids": [
+      [
+       0.59,
+       25.0
+      ],
+      [
+       0.02,
+       25.0
+      ],
+      [
+       0.01,
+       10.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793758107974",
+     "hash": "7aaaadc112a72780dc00e2a7a119ce10d12f3378"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-04T02:08:52.398528+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "14450415096936530357515337971940912073450466951628828781498188162473591912948",
+   "condition": "0xfaf96ef1f30966dce16fe939100d999906bf90817f3dfef75cd52889488e7bda",
+   "event": "lowest-temperature-in-chengdu-on-november-4-2026",
+   "title": "Will the lowest temperature in Chengdu be 12\u00b0C on November 4?",
+   "outcome": "YES",
+   "bucket": "12\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 12\u00b0C mid 0.94, local 10:08",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-04T02:08:52.555746+00:00",
+   "expires": "2026-11-04T04:00:00+00:00",
+   "audit": {
+    "code": "4cf678900c8e",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-04T02:08:52.555773+00:00",
+    "trigger_sha": "4c7239b41366",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "51694303892608769155523598591660446412912050033668423841586940371915267090875",
+   "condition": "0xb6a5e6e767c5812cc6fd5873c1d17158a4e1a7dca88075e64d7f7217e3e3cb5e",
+   "event": "lowest-temperature-in-qingdao-on-november-4-2026",
+   "title": "Will the lowest temperature in Qingdao be 11\u00b0C on November 4?",
+   "outcome": "YES",
+   "bucket": "11\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 11\u00b0C mid 0.92, local 10:08",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-04T02:08:52.716191+00:00",
+   "expires": "2026-11-04T04:00:00+00:00",
+   "audit": {
+    "code": "4cf678900c8e",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-04T02:08:52.716204+00:00",
+    "trigger_sha": "4c7239b41366",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 0.97
     }
    }
   }
