@@ -1,5 +1,5 @@
 {
- "cash": 44.240207236815316,
+ "cash": 44.23770723681532,
  "bets": [
   {
    "strategy": "MORNING",
@@ -5119,7 +5119,7 @@
    "profit_if_win": 0.13636363636363646,
    "reason": "favourite 0\u00b0C mid 0.94, local 10:16",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-04T09:16:20.186395+00:00",
    "expires": "2026-11-04T11:00:00+00:00",
    "audit": {
@@ -5148,6 +5148,91 @@
      "yes_ask": 1.0
     }
    }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "42990408909057500905239933019722941430000836218820580353462004480858355248527",
+   "condition": "0x43efd82d03ccc45d7b2f17edfa44a902b10ef9bd3cdc2dfc361324822256e3da",
+   "event": "lowest-temperature-in-sao-paulo-on-november-4-2026",
+   "title": "Will the lowest temperature in Sao Paulo be 19\u00b0C on November 4?",
+   "outcome": "YES",
+   "bucket": "19\u00b0C",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "favourite 19\u00b0C mid 0.90, local 08:02",
+   "audit": {
+    "code": "44d92eec546f",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-04T11:02:23.398515+00:00",
+    "book": {
+     "asks": [
+      [
+       0.95,
+       5.0
+      ],
+      [
+       0.96,
+       30.0
+      ],
+      [
+       0.98,
+       20.0
+      ],
+      [
+       0.99,
+       50.0
+      ]
+     ],
+     "bids": [
+      [
+       0.82,
+       120.0
+      ],
+      [
+       0.1,
+       5.0
+      ],
+      [
+       0.09,
+       555.0
+      ],
+      [
+       0.08,
+       6.0
+      ],
+      [
+       0.07,
+       6.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793790097327",
+     "hash": "6c3598dc1837201c351b8d79806983310beded42"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-04T11:02:23.398556+00:00"
   }
  ]
 }
