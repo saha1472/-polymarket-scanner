@@ -1,5 +1,5 @@
 {
- "cash": 44.504140310815465,
+ "cash": 42.50164031081547,
  "bets": [
   {
    "strategy": "MORNING",
@@ -5902,6 +5902,132 @@
      "yes_ask": 0.97
     }
    }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "100885368881031161730293497204800489124793906674801166844868533446312396053067",
+   "condition": "0x52bb1c4dc8ea64a62e344b947dcd4248b986ebecfaf3877df8d4be08ab364e90",
+   "event": "lowest-temperature-in-tel-aviv-on-november-5-2026",
+   "title": "Will the lowest temperature in Tel Aviv be 17\u00b0C on November 5?",
+   "outcome": "YES",
+   "bucket": "17\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 17\u00b0C mid 0.94, local 10:16",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-05T08:16:12.368099+00:00",
+   "expires": "2026-11-05T10:00:00+00:00",
+   "audit": {
+    "code": "381d44962858",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-05T08:16:12.370085+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "7587970538003927277208306910775132450135543840136504787957661974686070332273",
+   "condition": "0x8771e62c0794353df02f3dfa46237d936d3e0c5180a3f433d944f0b01d894938",
+   "event": "lowest-temperature-in-cape-town-on-november-5-2026",
+   "title": "Will the lowest temperature in Cape Town be 16\u00b0C on November 5?",
+   "outcome": "YES",
+   "bucket": "16\u00b0C",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "favourite 16\u00b0C mid 0.70, local 10:16",
+   "audit": {
+    "code": "381d44962858",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-05T08:16:12.468209+00:00",
+    "book": {
+     "asks": [
+      [
+       0.95,
+       5.0
+      ],
+      [
+       0.96,
+       20.0
+      ],
+      [
+       0.97,
+       30.0
+      ]
+     ],
+     "bids": [
+      [
+       0.46,
+       40.0
+      ],
+      [
+       0.1,
+       20.0
+      ],
+      [
+       0.09,
+       5.0
+      ],
+      [
+       0.03,
+       20.0
+      ],
+      [
+       0.02,
+       5.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793865967759",
+     "hash": "0ec84327c138eb5e89f7928a01c359c47e058f27"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-05T08:16:12.468267+00:00"
   }
  ]
 }
