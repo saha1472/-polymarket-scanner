@@ -1,5 +1,5 @@
 {
- "cash": 45.5855968325546,
+ "cash": 45.6844979314557,
  "bets": [
   {
    "strategy": "MORNING",
@@ -5676,8 +5676,10 @@
      "hash": "87db2d1ec106fed790b2dca076bd7153475cdb45"
     }
    },
-   "status": "open",
-   "opened": "2026-11-05T00:02:55.366133+00:00"
+   "status": "won",
+   "opened": "2026-11-05T00:02:55.366133+00:00",
+   "pnl": 0.09440109890109877,
+   "closed": "2026-11-05T16:31:45.924919+00:00"
   },
   {
    "strategy": "MORNING",
@@ -6240,6 +6242,51 @@
     "quote": {
      "yes_bid": 0.87,
      "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "14159268572467694674512748408334426593974287218710461862233014805973095577690",
+   "condition": "0x3d21b261dbcbd3acfc0bcc6baa719ab086484aec70e00d6cea9f381f0658fb90",
+   "event": "lowest-temperature-in-mexico-city-on-november-5-2026",
+   "title": "Will the lowest temperature in Mexico City be 11\u00b0C on November 5?",
+   "outcome": "YES",
+   "bucket": "11\u00b0C",
+   "price": 0.83,
+   "shares": 1.2048192771084338,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.20481927710843384,
+   "reason": "favourite 11\u00b0C mid 0.90, local 10:31",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-05T16:31:46.047948+00:00",
+   "expires": "2026-11-05T18:00:00+00:00",
+   "audit": {
+    "code": "441e162810de",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-05T16:31:46.047962+00:00",
+    "quote": {
+     "yes_bid": 0.82,
+     "yes_ask": 0.988
     }
    }
   }

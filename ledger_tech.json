@@ -1,5 +1,5 @@
 {
-  "cash": 51.5032603671434,
+  "cash": 49.4908603671434,
   "bets": [
     {
       "asset": "26922035314154497018737638829774069315488348073215105242613348160492279741517",
@@ -143,6 +143,218 @@
       "stops": {},
       "closed": "2026-11-02T08:15:33.657238+00:00",
       "pnl": 1.3577523809523808
+    },
+    {
+      "asset": "22579703064281016589062689453908584568445783921473110526952965633165065814369",
+      "condition": "0xa9a2d24f800351cfa03d73ad675d9669fc2dd59335c651e678c0afbfb540b0d8",
+      "title": "Next Astra Model (6.1+) released by November 5, 2026?",
+      "outcome": "No",
+      "event": "gpt-astra-6pt1-released-byptptpt",
+      "price": 0.81,
+      "shares": 1.2345679012345678,
+      "stake": 1.0,
+      "fee": 0.007599999999999998,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Haradwaith"
+      ],
+      "holders": {
+        "0x21ffd2b7a212a6f277ed3eca1a9f8efcbca90d71": {
+          "name": "Haradwaith",
+          "size": 508.25,
+          "entry": 0.88,
+          "win_rate": 0.6176470588235294,
+          "roi": 0.16691570865732105,
+          "n": 34
+        }
+      },
+      "audit": {
+        "code": "441e162810de",
+        "scan": "TECH",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.04,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-05T16:32:21.163666+00:00",
+        "book": {
+          "asks": [
+            [
+              0.81,
+              35.0
+            ],
+            [
+              0.82,
+              200.0
+            ],
+            [
+              0.84,
+              90.0
+            ],
+            [
+              0.88,
+              15.56
+            ],
+            [
+              0.89,
+              151.61
+            ]
+          ],
+          "bids": [
+            [
+              0.75,
+              6.65
+            ],
+            [
+              0.74,
+              5.13
+            ],
+            [
+              0.73,
+              40.0
+            ],
+            [
+              0.72,
+              60.0
+            ],
+            [
+              0.7,
+              6.28
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793896329256",
+          "hash": "c8e182c8751c6e371bb1c5d51dd42a261555598d"
+        }
+      },
+      "opened": "2026-11-05T16:32:21.163719+00:00",
+      "ends": "2026-11-06T00:00:00.303030+00:00"
+    },
+    {
+      "asset": "52114101452038957812399523132127704603602893967160944286745008208585845126127",
+      "condition": "0x74de218a23526918952e6a9fb344c278114ea8cfb21a1bebc1c2f6f646423921",
+      "title": "Will Airbnb say \"Holiday\" during earnings call?",
+      "outcome": "No",
+      "event": "what-will-airbnb-say-during-their-next-earnings-call-november-5",
+      "price": 0.88,
+      "shares": 1.1363636363636365,
+      "stake": 1.0,
+      "fee": 0.0048000000000000004,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Haradwaith"
+      ],
+      "holders": {
+        "0x21ffd2b7a212a6f277ed3eca1a9f8efcbca90d71": {
+          "name": "Haradwaith",
+          "size": 81.7722,
+          "entry": 0.82,
+          "win_rate": 0.6176470588235294,
+          "roi": 0.16691570865732105,
+          "n": 34
+        }
+      },
+      "audit": {
+        "code": "441e162810de",
+        "scan": "TECH",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.04,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-05T16:32:21.163752+00:00",
+        "book": {
+          "asks": [
+            [
+              0.88,
+              50.1
+            ],
+            [
+              0.89,
+              55.0
+            ],
+            [
+              0.94,
+              1129.0
+            ],
+            [
+              0.98,
+              26.0
+            ],
+            [
+              0.99,
+              93.56
+            ]
+          ],
+          "bids": [
+            [
+              0.82,
+              70.1
+            ],
+            [
+              0.81,
+              74.65
+            ],
+            [
+              0.8,
+              6.25
+            ],
+            [
+              0.11,
+              20.0
+            ],
+            [
+              0.1,
+              677.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793896121007",
+          "hash": "674dfa3c6a9da7b6e9b735ceecd309f237556ecd"
+        }
+      },
+      "opened": "2026-11-05T16:32:21.163774+00:00",
+      "ends": "2026-11-06T00:00:00.301107+00:00"
     }
   ]
 }
