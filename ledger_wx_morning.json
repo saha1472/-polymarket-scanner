@@ -1,5 +1,5 @@
 {
- "cash": 44.504140310815465,
+ "cash": 43.504140310815465,
  "bets": [
   {
    "strategy": "MORNING",
@@ -5809,6 +5809,51 @@
     "time": "2026-11-05T03:01:49.724117+00:00",
     "quote": {
      "yes_bid": 0.71,
+     "yes_ask": 0.99
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "43012810060450251937087342882827917901546611494765368076757509514224950874798",
+   "condition": "0x252e342d24a50515d7a6d2cd1c6d1b5670eb1b40f4ea6520239b0bb746ad2f5b",
+   "event": "lowest-temperature-in-jeddah-on-november-5-2026",
+   "title": "Will the lowest temperature in Jeddah be 27\u00b0C on November 5?",
+   "outcome": "YES",
+   "bucket": "27\u00b0C",
+   "price": 0.81,
+   "shares": 1.2345679012345678,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.23456790123456783,
+   "reason": "favourite 27\u00b0C mid 0.90, local 08:32",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-05T05:32:46.879335+00:00",
+   "expires": "2026-11-05T09:00:00+00:00",
+   "audit": {
+    "code": "46145a1c747e",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-05T05:32:46.879346+00:00",
+    "quote": {
+     "yes_bid": 0.8,
      "yes_ask": 0.99
     }
    }
