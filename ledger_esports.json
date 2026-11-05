@@ -1,5 +1,5 @@
 {
-  "cash": 47.0025421996765,
+  "cash": 45.9890421996765,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -2379,6 +2379,112 @@
       "opened": "2026-11-05T12:01:48.098794+00:00",
       "ends": "2026-11-07T00:00:00.315896+00:00",
       "stops": {}
+    },
+    {
+      "asset": "77542379835995521231221793809050251048315036728697763488160257886245548808183",
+      "condition": "0xdd7ae725c2ccc216a002dd9a60dbe8811d5d73e75ce7634b1cef46d2816c9e85",
+      "title": "Dota 2: Natus Vincere vs GamerLegion - Game 1 Winner",
+      "outcome": "Natus Vincere",
+      "event": "dota2-navi-gl-2026-11-05",
+      "price": 0.73,
+      "shares": 1.36986301369863,
+      "stake": 1.0,
+      "fee": 0.0135,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Sisyphus-"
+      ],
+      "holders": {
+        "0xf3ce7f04dde4f8c5aed19a20e5ecd8520e5ca57a": {
+          "name": "Sisyphus-",
+          "size": 36310.8782,
+          "entry": 0.7638,
+          "win_rate": 0.6,
+          "roi": 0.11544013459665743,
+          "n": 255
+        }
+      },
+      "audit": {
+        "code": "a9872922dfef",
+        "scan": "ESPORTS",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": 0.4,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-05T19:01:45.118114+00:00",
+        "book": {
+          "asks": [
+            [
+              0.73,
+              3605.15
+            ],
+            [
+              0.74,
+              31478.95
+            ],
+            [
+              0.75,
+              429.83
+            ],
+            [
+              0.76,
+              2958.04
+            ],
+            [
+              0.77,
+              60.0
+            ]
+          ],
+          "bids": [
+            [
+              0.72,
+              1202.91
+            ],
+            [
+              0.71,
+              1675.89
+            ],
+            [
+              0.7,
+              914.91
+            ],
+            [
+              0.69,
+              1479.73
+            ],
+            [
+              0.68,
+              531.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793905304726",
+          "hash": "fdd38fec50f0d37d1d18f2f7bbec76d57cc9cf5e"
+        }
+      },
+      "opened": "2026-11-05T19:01:45.118191+00:00",
+      "ends": "2026-11-06T00:00:00.386652+00:00"
     }
   ]
 }
