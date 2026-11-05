@@ -1,5 +1,5 @@
 {
-  "cash": 49.73327978987829,
+  "cash": 47.70777978987829,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -2357,6 +2357,218 @@
       "opened": "2026-11-04T22:46:28.453221+00:00",
       "ends": "2026-11-05T00:00:00.577237+00:00",
       "stops": {}
+    },
+    {
+      "asset": "11693229918785282572447922339886830764996831904833984233084508829597617907454",
+      "condition": "0x64f6b89e53fff6b68264d99860444425466f82fb5982c0165202015bfc551d3e",
+      "title": "Will the highest temperature in Hong Kong be 28\u00b0C on November 6?",
+      "outcome": "No",
+      "event": "highest-temperature-in-hong-kong-on-november-6-2026",
+      "price": 0.74,
+      "shares": 1.3513513513513513,
+      "stake": 1.0,
+      "fee": 0.013000000000000001,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "quqqq"
+      ],
+      "holders": {
+        "0x1b29fd072a61e82c870034e25bd81169ef70f288": {
+          "name": "quqqq",
+          "size": 1475.5602,
+          "entry": 0.6736,
+          "win_rate": 0.6326530612244898,
+          "roi": 0.16721826583800717,
+          "n": 147
+        }
+      },
+      "audit": {
+        "code": "8251eac366ac",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-05T08:02:22.602926+00:00",
+        "book": {
+          "asks": [
+            [
+              0.74,
+              5.0
+            ],
+            [
+              0.75,
+              25.0
+            ],
+            [
+              0.76,
+              45.0
+            ],
+            [
+              0.79,
+              5.0
+            ],
+            [
+              0.8,
+              27.5
+            ]
+          ],
+          "bids": [
+            [
+              0.72,
+              60.0
+            ],
+            [
+              0.7,
+              20.0
+            ],
+            [
+              0.69,
+              8.29
+            ],
+            [
+              0.68,
+              15.55
+            ],
+            [
+              0.67,
+              39.36
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793865735614",
+          "hash": "3f083fedfefc48d661e98c03f596854a4abb06fb"
+        }
+      },
+      "opened": "2026-11-05T08:02:22.602975+00:00",
+      "ends": "2026-11-06T00:00:00.356281+00:00"
+    },
+    {
+      "asset": "61478709995453221856667068603065771643061073487847742443363268610137815119699",
+      "condition": "0x6e11774c668240f9c1d12097bc4416d055dc284712092091695449d62c4bf4f3",
+      "title": "Will the highest temperature in Singapore be 32\u00b0C on November 6?",
+      "outcome": "No",
+      "event": "highest-temperature-in-singapore-on-november-6-2026",
+      "price": 0.75,
+      "shares": 1.3333333333333333,
+      "stake": 1.0,
+      "fee": 0.0125,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "quqqq"
+      ],
+      "holders": {
+        "0x1b29fd072a61e82c870034e25bd81169ef70f288": {
+          "name": "quqqq",
+          "size": 866.9828,
+          "entry": 0.692,
+          "win_rate": 0.6326530612244898,
+          "roi": 0.16721826583800717,
+          "n": 147
+        }
+      },
+      "audit": {
+        "code": "8251eac366ac",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-05T08:02:22.603006+00:00",
+        "book": {
+          "asks": [
+            [
+              0.75,
+              20.0
+            ],
+            [
+              0.76,
+              5.0
+            ],
+            [
+              0.77,
+              5.0
+            ],
+            [
+              0.78,
+              13.45
+            ],
+            [
+              0.79,
+              7.5
+            ]
+          ],
+          "bids": [
+            [
+              0.7,
+              5.0
+            ],
+            [
+              0.69,
+              36.25
+            ],
+            [
+              0.68,
+              39.0
+            ],
+            [
+              0.67,
+              64.29
+            ],
+            [
+              0.66,
+              8.38
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793865741266",
+          "hash": "d9bfa5fa0143249a136875a0032e5cd3834e0b98"
+        }
+      },
+      "opened": "2026-11-05T08:02:22.603041+00:00",
+      "ends": "2026-11-06T00:00:00.356319+00:00"
     }
   ]
 }
