@@ -1,5 +1,5 @@
 {
-  "cash": 49.0390421996765,
+  "cash": 48.0210421996765,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -2165,6 +2165,112 @@
           "pnl": -0.2997674418604651
         }
       }
+    },
+    {
+      "asset": "23809250287895916897526111795935500243116029250699038548107949878080368325112",
+      "condition": "0xe37fe303c9c5085b4dd9cfaa8fabe6cf2a6d8b55676ad2484faea28b97d2efd2",
+      "title": "Dota 2: potn9ki vs Zenith (BO3) - DreamLeague Division 2 Group A",
+      "outcome": "potn9ki",
+      "event": "dota2-p-zenith-2026-11-06",
+      "price": 0.64,
+      "shares": 1.5625,
+      "stake": 1.0,
+      "fee": 0.018,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "ColdBlooded"
+      ],
+      "holders": {
+        "0xbcc321b6336117432f4e9d2d28b20d8b6795ac9c": {
+          "name": "ColdBlooded",
+          "size": 127.97,
+          "entry": 0.6087,
+          "win_rate": 0.6741573033707865,
+          "roi": 0.1105865611067564,
+          "n": 178
+        }
+      },
+      "audit": {
+        "code": "0d27559b2156",
+        "scan": "ESPORTS",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": 0.4,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-05T11:16:24.622984+00:00",
+        "book": {
+          "asks": [
+            [
+              0.64,
+              13.88
+            ],
+            [
+              0.65,
+              125.0
+            ],
+            [
+              0.68,
+              86.0
+            ],
+            [
+              0.69,
+              19.79
+            ],
+            [
+              0.78,
+              215.0
+            ]
+          ],
+          "bids": [
+            [
+              0.62,
+              67.5
+            ],
+            [
+              0.61,
+              1599.14
+            ],
+            [
+              0.59,
+              106.9
+            ],
+            [
+              0.58,
+              219.03
+            ],
+            [
+              0.56,
+              100.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793877370182",
+          "hash": "b3b54fb15b0fa5e58db888ffc3d3680390242ddb"
+        }
+      },
+      "opened": "2026-11-05T11:16:24.623028+00:00",
+      "ends": "2026-11-06T00:00:00.348272+00:00"
     }
   ]
 }
