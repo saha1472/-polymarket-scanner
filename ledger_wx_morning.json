@@ -1,5 +1,5 @@
 {
- "cash": 44.35710763296699,
+ "cash": 43.35260763296699,
  "bets": [
   {
    "strategy": "MORNING",
@@ -5583,6 +5583,95 @@
      "yes_ask": 1.0
     }
    }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "94201254292270799741970629927358239883065590167287865814942402783028248823358",
+   "condition": "0x269c79889f06a3358758411db181d02c3b1c6c682ac59cd9ababb52dc9451d96",
+   "event": "lowest-temperature-in-beijing-on-november-5-2026",
+   "title": "Will the lowest temperature in Beijing be 2\u00b0C on November 5?",
+   "outcome": "YES",
+   "bucket": "2\u00b0C",
+   "price": 0.9100000000000001,
+   "shares": 1.0989010989010988,
+   "stake": 1.0,
+   "fee": 0.004499999999999999,
+   "profit_if_win": 0.09440109890109877,
+   "reason": "favourite 2\u00b0C mid 0.74, local 08:02",
+   "audit": {
+    "code": "68622965d68f",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-05T00:02:55.366076+00:00",
+    "book": {
+     "asks": [
+      [
+       0.91,
+       5.0
+      ],
+      [
+       0.92,
+       21.51
+      ],
+      [
+       0.93,
+       40.0
+      ],
+      [
+       0.95,
+       60.0
+      ],
+      [
+       0.96,
+       79.0
+      ]
+     ],
+     "bids": [
+      [
+       0.58,
+       5.0
+      ],
+      [
+       0.57,
+       5.0
+      ],
+      [
+       0.18,
+       27.0
+      ],
+      [
+       0.17,
+       20.0
+      ],
+      [
+       0.08,
+       5.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793836894596",
+     "hash": "87db2d1ec106fed790b2dca076bd7153475cdb45"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-05T00:02:55.366133+00:00"
   }
  ]
 }
