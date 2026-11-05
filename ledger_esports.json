@@ -1,5 +1,5 @@
 {
-  "cash": 45.9890421996765,
+  "cash": 44.9725421996765,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -2486,6 +2486,112 @@
       "opened": "2026-11-05T19:01:45.118191+00:00",
       "ends": "2026-11-06T00:00:00.386652+00:00",
       "stops": {}
+    },
+    {
+      "asset": "62636981216951236096006931332096387403455947866460707132438417043194461000717",
+      "condition": "0xf1125a00d192b4a5e7123f46c13ff50b357737b479fd8e674ef4921937e45e77",
+      "title": "Dota 2: Nemiga Gaming vs Inner Circle - Game 2 Winner",
+      "outcome": "Nemiga Gaming",
+      "event": "dota2-nemiga-ic-2026-11-05",
+      "price": 0.67,
+      "shares": 1.4925373134328357,
+      "stake": 1.0,
+      "fee": 0.016499999999999997,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Sisyphus-"
+      ],
+      "holders": {
+        "0xf3ce7f04dde4f8c5aed19a20e5ecd8520e5ca57a": {
+          "name": "Sisyphus-",
+          "size": 1800.21,
+          "entry": 0.5819,
+          "win_rate": 0.6,
+          "roi": 0.11544013459665743,
+          "n": 255
+        }
+      },
+      "audit": {
+        "code": "9c3b3fe14347",
+        "scan": "ESPORTS",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": 0.4,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-05T20:32:48.070623+00:00",
+        "book": {
+          "asks": [
+            [
+              0.67,
+              63.97
+            ],
+            [
+              0.69,
+              60.0
+            ],
+            [
+              0.7,
+              90.11
+            ],
+            [
+              0.71,
+              87.25
+            ],
+            [
+              0.72,
+              80.0
+            ]
+          ],
+          "bids": [
+            [
+              0.66,
+              120.15
+            ],
+            [
+              0.65,
+              155.0
+            ],
+            [
+              0.64,
+              200.0
+            ],
+            [
+              0.63,
+              119.99
+            ],
+            [
+              0.62,
+              135.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1793910767653",
+          "hash": "243e394b39fb5daca82ebe0eea044afbf81d727d"
+        }
+      },
+      "opened": "2026-11-05T20:32:48.070689+00:00",
+      "ends": "2026-11-06T00:00:00.351165+00:00"
     }
   ]
 }
