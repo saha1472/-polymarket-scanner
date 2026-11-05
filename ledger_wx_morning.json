@@ -1,5 +1,5 @@
 {
- "cash": 43.50164031081547,
+ "cash": 40.49864031081547,
  "bets": [
   {
    "strategy": "MORNING",
@@ -6028,6 +6028,173 @@
    },
    "status": "open",
    "opened": "2026-11-05T08:16:12.468267+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "38633972294126287070777935300224900538929604901462989898433583051896912962099",
+   "condition": "0x5ac2ebb67bf9d88e9d530b551344f0b676ddd8ed37e4b862467f27a6fa4f25ac",
+   "event": "lowest-temperature-in-milan-on-november-5-2026",
+   "title": "Will the lowest temperature in Milan be 5\u00b0C on November 5?",
+   "outcome": "YES",
+   "bucket": "5\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 5\u00b0C mid 0.94, local 10:16",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-05T09:16:29.092833+00:00",
+   "expires": "2026-11-05T11:00:00+00:00",
+   "audit": {
+    "code": "514d8382b191",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-05T09:16:29.094672+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "59601174625448315755948136316241621300139216849912459492732769253304592177466",
+   "condition": "0xce7a7dce5e8ccb3458424d9953ec29a1674b878580f47deef2bfbca14eb026cb",
+   "event": "lowest-temperature-in-madrid-on-november-5-2026",
+   "title": "Will the lowest temperature in Madrid be 3\u00b0C on November 5?",
+   "outcome": "YES",
+   "bucket": "3\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 3\u00b0C mid 0.93, local 10:16",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-05T09:16:29.246436+00:00",
+   "expires": "2026-11-05T11:00:00+00:00",
+   "audit": {
+    "code": "514d8382b191",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-05T09:16:29.246449+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 0.99
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "110929401145143061685881734137842114009413246790167829764067221366575941622413",
+   "condition": "0x14f6cce8b074c40336d6950b58581957489c054b053e6a63da080631c4c86a94",
+   "event": "lowest-temperature-in-amsterdam-on-november-5-2026",
+   "title": "Will the lowest temperature in Amsterdam be 4\u00b0C on November 5?",
+   "outcome": "YES",
+   "bucket": "4\u00b0C",
+   "price": 0.9400000000000001,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0030000000000000022,
+   "profit_if_win": 0.06082978723404253,
+   "reason": "favourite 4\u00b0C mid 0.74, local 10:16",
+   "audit": {
+    "code": "514d8382b191",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-05T09:16:29.399704+00:00",
+    "book": {
+     "asks": [
+      [
+       0.94,
+       5.0
+      ],
+      [
+       0.95,
+       140.0
+      ],
+      [
+       0.97,
+       70.0
+      ],
+      [
+       0.99,
+       60.0
+      ]
+     ],
+     "bids": [
+      [
+       0.58,
+       25.0
+      ],
+      [
+       0.02,
+       5.0
+      ],
+      [
+       0.01,
+       10.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793870176892",
+     "hash": "55c2d66534a33d75f06930f544ede4ecdbe36c03"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-05T09:16:29.399751+00:00"
   }
  ]
 }
