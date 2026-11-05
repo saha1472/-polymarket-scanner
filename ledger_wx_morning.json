@@ -5783,7 +5783,7 @@
    "profit_if_win": 0.38888888888888884,
    "reason": "favourite 20\u00b0C mid 0.85, local 08:01",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-05T03:01:49.724105+00:00",
    "expires": "2026-11-05T07:00:00+00:00",
    "audit": {
@@ -5855,6 +5855,51 @@
     "quote": {
      "yes_bid": 0.8,
      "yes_ask": 0.99
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "34921724329166670851929932413710729615998121221650156130216419889151973028849",
+   "condition": "0xae72ef28ab2f7293c7c9df9e4b10722baca1f7235dfbef9d4c34633204571385",
+   "event": "lowest-temperature-in-paris-on-november-5-2026",
+   "title": "Will the lowest temperature in Paris be 4\u00b0C on November 5?",
+   "outcome": "YES",
+   "bucket": "4\u00b0C",
+   "price": 0.9,
+   "shares": 1.1111111111111112,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.11111111111111116,
+   "reason": "favourite 4\u00b0C mid 0.93, local 08:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-05T07:01:37.821665+00:00",
+   "expires": "2026-11-05T11:00:00+00:00",
+   "audit": {
+    "code": "bdf0877be28a",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-05T07:01:37.821684+00:00",
+    "quote": {
+     "yes_bid": 0.89,
+     "yes_ask": 0.97
     }
    }
   }
