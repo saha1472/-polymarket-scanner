@@ -456,5 +456,148 @@ class ScannerPaging(unittest.TestCase):
             scanner.fetch_events = old
 
 
+class WidePool(InTempDir):
+    """Shadow-only test of a looser trader bar (17 Nov-style experiment)."""
+
+    def _score(self, win=0.6, roi=0.2, n=40, name="T"):
+        return {"name": name, "win_rate": win, "roi": roi, "n": n}
+
+    def test_bands_name_the_first_rule_missed(self):
+        W = signals.wide_band
+        self.assertIsNone(W(self._score()))                            # passes the strict bar
+        self.assertIsNone(W(self._score(roi=-0.05)))                   # not profitable
+        self.assertIsNone(W(self._score(roi=0.0)))
+        self.assertIsNone(W(self._score(roi=0.2, n=10)))               # too little history
+        self.assertEqual(W(self._score(roi=0.05)), "wide_low_roi")
+        self.assertEqual(W(self._score(win=0.4, roi=0.05)), "wide_low_roi")   # ROI named first
+        self.assertEqual(W(self._score(n=20)), "wide_few_bets")
+        self.assertEqual(W(self._score(win=0.45)), "wide_low_win")
+
+    def test_pool_holds_only_the_traders_the_strict_bar_leaves_out(self):
+        scores = {"strict": self._score(), "loss": self._score(roi=-0.1),
+                  "short": self._score(n=20), "low": self._score(roi=0.04)}
+        pool = signals.wide_pool(scores)
+        self.assertEqual({w: s["band"] for w, s in pool.items()},
+                         {"short": "wide_few_bets", "low": "wide_low_roi"})
+        self.assertNotIn("band", scores["short"])                      # input untouched
+        self.assertEqual(list(signals.good_traders(scores)), ["strict"])
+
+    def _cand(self, n, band="wide_low_roi", roi=0.05, event=None, cond=None):
+        h = {"w": {"name": "T", "size": 100, "entry": 0.6, "win_rate": 0.5, "roi": roi,
+                   "n": 20, "band": band}}
+        return {"asset": f"A{n}", "condition": cond or f"c{n}", "title": "t",
+                "event": event or f"e{n}", "outcome": "Yes", "traders": ["T"],
+                "holders": h, "avg_entry": 0.6, "price": 0.6, "hours": 5}
+
+    @staticmethod
+    def _size(c):
+        return dict(c, shares=1.6, stake=1.0, fee=0.01)
+
+    def _run(self, book, cands, strict=(), ledger=None, scores=None):
+        scores = scores or {"w": self._score(roi=0.05)}
+        return signals.record_wide_pool(book, scores, list(strict), ledger or {"bets": []},
+                                        find=lambda wide: list(cands), size=self._size)
+
+    def test_records_a_shadow_bet_with_the_band_and_scores(self):
+        b = shadow.Book("s.json")
+        self.assertEqual(self._run(b, [self._cand(1, band="wide_few_bets")]), 1)
+        r = b.bets[0]
+        self.assertEqual((r["kind"], r["reason"], r["status"], r["strategy"]),
+                         ("skipped", "wide_few_bets", "open", signals.SCAN))
+        self.assertEqual(r["wide"][0]["band"], "wide_few_bets")
+        self.assertEqual((r["price"], r["stake"]), (0.6, 1.0))
+
+    def test_only_what_the_looser_bar_adds(self):
+        b = shadow.Book("s.json")
+        strict = [{"asset": "A1", "condition": "c1"}]                  # strict pool has it
+        ledger = {"bets": [{"asset": "OTHER", "condition": "c2"}]}     # we hold that market
+        cands = [self._cand(1), self._cand(2), self._cand(3), self._cand(4, cond="c1")]
+        self.assertEqual(self._run(b, cands, strict, ledger), 1)
+        self.assertEqual([x["asset"] for x in b.bets], ["A3"])
+
+    def test_one_record_per_event_even_across_runs(self):
+        b = shadow.Book("s.json")
+        self.assertEqual(self._run(b, [self._cand(1, event="m"), self._cand(2, event="m")]), 1)
+        self.assertEqual(self._run(b, [self._cand(3, event="m"), self._cand(4)]), 1)
+        self.assertEqual(sorted(x["asset"] for x in b.bets), ["A1", "A4"])
+
+    def test_same_signal_every_run_is_one_record(self):
+        b = shadow.Book("s.json")
+        self._run(b, [self._cand(1)])
+        self.assertEqual(self._run(b, [self._cand(1)]), 0)
+        self.assertEqual(len(b.bets), 1)
+
+    def test_per_run_cap(self):
+        b = shadow.Book("s.json")
+        n = signals.WIDE_MAX_PER_RUN + 5
+        self.assertEqual(self._run(b, [self._cand(i) for i in range(n)]),
+                         signals.WIDE_MAX_PER_RUN)
+
+    def test_unsizable_signals_are_dropped(self):
+        b = shadow.Book("s.json")
+        out = signals.record_wide_pool(b, {"w": self._score(roi=0.05)}, [], {"bets": []},
+                                       find=lambda w: [self._cand(1)], size=lambda c: None)
+        self.assertEqual((out, b.bets), (0, []))
+
+    def test_a_failure_never_stops_the_bot(self):
+        b = shadow.Book("s.json")
+
+        def boom(wide):
+            raise RuntimeError("api down")
+        out = signals.record_wide_pool(b, {"w": self._score(roi=0.05)}, [], {"bets": []},
+                                       find=boom, size=self._size)
+        self.assertEqual((out, b.bets), (0, []))
+
+    def test_no_wide_traders_means_no_work(self):
+        b = shadow.Book("s.json")
+
+        def never(wide):
+            raise AssertionError("must not look")
+        self.assertEqual(signals.record_wide_pool(b, {"s": self._score()}, [], {"bets": []},
+                                                  find=never), 0)
+
+    def test_wide_records_do_not_touch_the_strategy_switch(self):
+        b = shadow.Book("s.json")
+        self._run(b, [self._cand(i) for i in range(3)])
+        led = {"bets": [], "cash": 50, "auto": {"paused": True, "since": iso(-60)}}
+        self.assertIsNone(shadow.switch_update(led, b.bets, signals.SCAN))
+
+    def test_holders_carry_the_band_only_for_wide_traders(self):
+        rows = [{"redeemable": False, "curPrice": 0.6, "size": 200, "endDate": iso(300),
+                 "eventSlug": "e", "asset": "A", "conditionId": "c", "title": "t",
+                 "outcome": "Yes", "avgPrice": 0.58}]
+        old = (signals.positions, signals.warm_tags, signals.in_scan)
+        signals.positions = lambda w, **kw: rows
+        signals.warm_tags = lambda slugs: None
+        signals.in_scan = lambda slug: True
+        try:
+            wide = signals.find_candidates({"w": dict(self._score(roi=0.05), band="wide_low_roi")})
+            strict = signals.find_candidates({"w": self._score()})
+        finally:
+            signals.positions, signals.warm_tags, signals.in_scan = old
+        self.assertEqual(wide[0]["holders"]["w"]["band"], "wide_low_roi")
+        self.assertNotIn("band", strict[0]["holders"]["w"])            # real ledger format unchanged
+
+    def test_report_shows_the_wide_pool_next_to_the_real_ledger(self):
+        import io
+        import contextlib
+        import shadow_report
+        b = shadow.Book("shadow_sports.json")
+        for i, (band, st, pnl) in enumerate([("wide_low_roi", "won", 0.5),
+                                              ("wide_low_roi", "lost", -1.0),
+                                              ("wide_low_win", "won", 0.4)]):
+            r = b.add("SPORTS", "skipped", band, asset=f"A{i}", price=0.6, shares=1.6,
+                      stake=1.0, fee=0.0, **KW)
+            r.update(status=st, pnl=pnl)
+        b.save()
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            shadow_report.main()
+        out = buf.getvalue()
+        self.assertIn("wide pool: ROI under 10%", out)
+        self.assertIn("wide pool: win rate under 58%", out)
+        self.assertIn("wide pool: all bands", out)
+
+
 if __name__ == "__main__":
     unittest.main()
