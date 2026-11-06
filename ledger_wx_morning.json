@@ -1,5 +1,5 @@
 {
- "cash": 40.797959297637114,
+ "cash": 47.797959297637114,
  "bets": [
   {
    "strategy": "MORNING",
@@ -6355,7 +6355,7 @@
    "profit_if_win": 0.08695652173913038,
    "reason": "favourite 15\u00b0C mid 0.95, local 08:01",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-06T00:01:53.281434+00:00",
    "expires": "2026-11-06T04:00:00+00:00",
    "audit": {
@@ -6400,7 +6400,7 @@
    "profit_if_win": 0.40845070422535223,
    "reason": "favourite -2\u00b0C mid 0.85, local 08:01",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-06T00:01:53.448504+00:00",
    "expires": "2026-11-06T04:00:00+00:00",
    "audit": {
@@ -6530,7 +6530,7 @@
    "profit_if_win": 0.09890109890109877,
    "reason": "favourite 6\u00b0C mid 0.95, local 08:01",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-06T00:01:53.758822+00:00",
    "expires": "2026-11-06T04:00:00+00:00",
    "audit": {
@@ -6575,7 +6575,7 @@
    "profit_if_win": 0.2987012987012987,
    "reason": "favourite 22\u00b0C mid 0.86, local 10:16",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-06T02:16:34.898478+00:00",
    "expires": "2026-11-06T04:00:00+00:00",
    "audit": {
@@ -6620,7 +6620,7 @@
    "profit_if_win": 0.13636363636363646,
    "reason": "favourite 14\u00b0C mid 0.94, local 10:16",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-06T02:16:35.087136+00:00",
    "expires": "2026-11-06T04:00:00+00:00",
    "audit": {
@@ -6665,7 +6665,7 @@
    "profit_if_win": 0.40845070422535223,
    "reason": "favourite 24\u00b0C mid 0.83, local 10:31",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-06T02:31:37.702804+00:00",
    "expires": "2026-11-06T04:00:00+00:00",
    "audit": {
@@ -6710,7 +6710,7 @@
    "profit_if_win": 0.13636363636363646,
    "reason": "favourite 15\u00b0C mid 0.93, local 11:46",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-06T03:47:02.871541+00:00",
    "expires": "2026-11-06T04:00:00+00:00",
    "audit": {
