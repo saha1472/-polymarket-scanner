@@ -294,7 +294,8 @@ def score_traders(traders):
     return scores
 
 
-def good_traders():
+def trader_scores():
+    """Every scored trader (cached for SCORE_REFRESH_HOURS), good or not."""
     cache = read_json(TRADERS_FILE, {})
     age = hours_until(cache.get("scored_at"))
     if age is not None and -age < SCORE_REFRESH_HOURS:
@@ -307,13 +308,89 @@ def good_traders():
         write_json(TRADERS_FILE, {
             "scored_at": datetime.now(timezone.utc).isoformat(),
             "scores": scores}, indent=1)
-    good = {w: s for w, s in scores.items()
-            if s["win_rate"] >= MIN_WIN_RATE and s["roi"] >= MIN_ROI
-            and s["n"] >= MIN_RESOLVED}
+    return scores
+
+
+def passes_bar(s):
+    return s["win_rate"] >= MIN_WIN_RATE and s["roi"] >= MIN_ROI and s["n"] >= MIN_RESOLVED
+
+
+def good_traders(scores=None):
+    scores = trader_scores() if scores is None else scores
+    good = {w: s for w, s in scores.items() if passes_bar(s)}
     print(f"{len(good)} of {len(scores)} scored traders pass: " + ", ".join(
         f"{s['name']} ({s['win_rate']:.0%}, ROI {s['roi']:+.0%}, n={s['n']})"
         for s in good.values()))
     return good
+
+
+# ---------- Wide pool: shadow-only test of a looser trader bar ----------
+
+WIDE_MIN_N = 15          # score_traders already drops anyone with fewer
+WIDE_MAX_PER_RUN = 20    # keep the shadow file from growing without bound
+
+
+def wide_band(s):
+    """Why a profitable trader misses the strict bar (None: passes it, or isn't
+    profitable, or too little history). The first rule they miss names the band."""
+    if passes_bar(s) or s["roi"] <= 0 or s["n"] < WIDE_MIN_N:
+        return None
+    if s["roi"] < MIN_ROI:
+        return "wide_low_roi"        # profitable, but under the ROI bar
+    if s["n"] < MIN_RESOLVED:
+        return "wide_few_bets"       # good numbers, but a short record
+    return "wide_low_win"            # ROI and record fine, win rate under the bar
+
+
+def wide_pool(scores):
+    """Profitable traders the strict bar leaves out, each tagged with its band."""
+    return {w: dict(s, band=b) for w, s in scores.items() if (b := wide_band(s))}
+
+
+def shadow_wide(book, wide, strict_candidates, ledger, find=None, size=None):
+    """Record what copying the wide pool would have done: shadow bets (kind
+    "skipped", reason = the band), never in the ledger. Signals the strict pool
+    already has, markets we hold, and events already recorded are left out, so the
+    wide record is only what the looser bar adds. Returns the number added."""
+    if not wide:
+        return 0
+    taken_assets = {c["asset"] for c in strict_candidates}
+    taken_markets = {c["condition"] for c in strict_candidates}
+    taken_markets |= {b["condition"] for b in ledger["bets"]}
+    cands = [c for c in (find or find_candidates)(wide)
+             if c["asset"] not in taken_assets and c["condition"] not in taken_markets]
+    sized = [s for s in pmap(size or size_bet, cands) if s]
+    seen_events = {b.get("event") for b in book.bets
+                   if b["kind"] == "skipped" and str(b["reason"]).startswith("wide_")
+                   and b.get("event")}
+    before = book.added
+    for s in sized:
+        if book.added - before >= WIDE_MAX_PER_RUN:
+            break
+        if s.get("event") and s["event"] in seen_events:
+            continue                      # one bet per match/event, like the real bot
+        best = max(s["holders"].values(), key=lambda h: h.get("roi") or 0)
+        scores = [{k: h.get(k) for k in ("name", "win_rate", "roi", "n", "band")}
+                  for h in s["holders"].values()]
+        rec = book.add(SCAN, "skipped", best.get("band") or "wide_low_roi",
+                       asset=s["asset"], condition=s["condition"], title=s["title"],
+                       event=s.get("event"), outcome=s["outcome"], price=s["price"],
+                       shares=s["shares"], stake=s["stake"], fee=s["fee"],
+                       extra={"traders": s["traders"], "wide": scores})
+        if rec and s.get("event"):
+            seen_events.add(s["event"])
+    return book.added - before
+
+
+def record_wide_pool(book, scores, strict_candidates, ledger, **kw):
+    """shadow_wide that can never stop the bot: this is evidence, not money."""
+    try:
+        return shadow_wide(book, wide_pool(scores), strict_candidates, ledger, **kw)
+    except Exception as err:               # noqa: BLE001
+        import traceback
+        traceback.print_exc()
+        print(f"WARNING: wide-pool shadow failed ({err!r}); real bets are unaffected.")
+        return 0
 
 
 # ---------- Step 2: find what they agree on ----------
@@ -358,7 +435,8 @@ def find_candidates(good):
                                     "entry": num(p.get("avgPrice")),
                                     # the trader's score when we copied them
                                     "win_rate": g.get("win_rate"), "roi": g.get("roi"),
-                                    "n": g.get("n")}
+                                    "n": g.get("n"),
+                                    **({"band": g["band"]} if "band" in g else {})}
             assets_by_condition.setdefault(cond, set()).add(asset)
 
     candidates = []
@@ -739,13 +817,17 @@ if __name__ == "__main__":
     if msg:
         msgs.append(msg)
 
-    good = good_traders()
+    scores = trader_scores()
+    good = good_traders(scores)
     candidates = find_candidates(good)
     print(f"{len(candidates)} candidate(s) before order book checks.")
     signals = [s for s in pmap(size_bet, candidates) if s]
     print(f"{len(signals)} signal(s) after sizing and fee checks.")
 
     filled = record_shadow_candidates(book, candidates)
+    wide_added = record_wide_pool(book, scores, candidates, ledger)
+    print(f"Wide pool (shadow only): {len(wide_pool(scores))} extra trader(s), "
+          f"{wide_added} new record(s).")
 
     msgs += open_paper_bets(ledger, signals, book)
     save_ledger(ledger)
