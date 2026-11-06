@@ -1,5 +1,5 @@
 {
- "cash": 45.79345929763711,
+ "cash": 44.79045929763711,
  "bets": [
   {
    "strategy": "MORNING",
@@ -6865,6 +6865,87 @@
    },
    "status": "open",
    "opened": "2026-11-06T06:01:44.140062+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "1769179665024127827964730789993723473462126254962878699935343859905760533466",
+   "condition": "0x9f0c6a0bb19599ec17962a3aece227c56be4591311c0a1dccdc7676387dd11b3",
+   "event": "lowest-temperature-in-amsterdam-on-november-6-2026",
+   "title": "Will the lowest temperature in Amsterdam be 2\u00b0C on November 6?",
+   "outcome": "YES",
+   "bucket": "2\u00b0C",
+   "price": 0.9400000000000001,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0030000000000000022,
+   "profit_if_win": 0.06082978723404253,
+   "reason": "favourite 2\u00b0C mid 0.70, local 08:01",
+   "audit": {
+    "code": "983bd8d312de",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-06T07:01:41.721738+00:00",
+    "book": {
+     "asks": [
+      [
+       0.94,
+       26.01
+      ],
+      [
+       0.96,
+       20.0
+      ],
+      [
+       0.97,
+       30.0
+      ]
+     ],
+     "bids": [
+      [
+       0.47,
+       38.99
+      ],
+      [
+       0.41,
+       20.0
+      ],
+      [
+       0.09,
+       5.0
+      ],
+      [
+       0.06,
+       20.0
+      ],
+      [
+       0.02,
+       5.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1793948469733",
+     "hash": "08a26822cb3b9b322c2885e5f489dcee854f496c"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-06T07:01:41.721777+00:00"
   }
  ]
 }
