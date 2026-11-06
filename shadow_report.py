@@ -6,6 +6,9 @@ the bet wasn't placed. Use it to answer questions like "do the per-trader
 caps help?", "would the unfilled weather bids have won?", "is bidding at
 the trader's entry better than buying at the ask?".
 
+The wide-pool lines test a looser trader bar (see signals.wide_band); they are
+shadow only, so a good result there is a reason to loosen the bar, not a profit.
+
 Usage: python shadow_report.py
 """
 import glob
@@ -15,6 +18,14 @@ import sys
 import shadow
 
 LEDGERS = {"ledger.json": "GENERAL"}
+
+# The wide-pool test: profitable traders the strict bar leaves out, copied in
+# shadow only. Compare each band with the real ledger (which copies the strict
+# pool, with its caps), and the "all bands" line for the whole pool.
+WIDE_LABELS = {"wide_low_roi": "wide pool: ROI under 10%",
+               "wide_few_bets": "wide pool: 15-29 bets only",
+               "wide_low_win": "wide pool: win rate under 58%"}
+WIDE_ALL = "wide pool: all bands"
 
 
 def strategy_of(path):
@@ -69,10 +80,15 @@ def main():
         for b in mine:
             key = (f"limit bid at traders' entry" if b["kind"] == "limit" else
                    "unfilled resting bids" if b["kind"] == "unfilled" else
-                   f"skipped: {b['reason']}")
+                   WIDE_LABELS.get(b["reason"], f"skipped: {b['reason']}"))
             groups.setdefault(key, []).append(b)
         for key in sorted(groups):
             r = line(key, shadow.summarize(groups[key]))
+            if r:
+                out.append(r)
+        wide = [b for key, g in groups.items() if key in WIDE_LABELS.values() for b in g]
+        if wide:
+            r = line(WIDE_ALL, shadow.summarize(wide))
             if r:
                 out.append(r)
         lim = groups.get("limit bid at traders' entry", [])
