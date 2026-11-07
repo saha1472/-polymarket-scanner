@@ -1,5 +1,5 @@
 {
- "cash": 40.93569018377225,
+ "cash": 38.93219018377225,
  "bets": [
   {
    "strategy": "MORNING",
@@ -7739,6 +7739,128 @@
      "yes_ask": 0.98
     }
    }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "14765815112963656198560809325488566618386792312470236668297443355215473845511",
+   "condition": "0xa9e0d85360b6bf065359b7f926ab95b3dfcce318d688c767d13b1986cb19b306",
+   "event": "lowest-temperature-in-london-on-november-7-2026",
+   "title": "Will the lowest temperature in London be 5\u00b0C on November 7?",
+   "outcome": "YES",
+   "bucket": "5\u00b0C",
+   "price": 0.76,
+   "shares": 1.3157894736842106,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.3157894736842106,
+   "reason": "favourite 5\u00b0C mid 0.87, local 08:31",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-07T08:31:48.097718+00:00",
+   "expires": "2026-11-07T12:00:00+00:00",
+   "audit": {
+    "code": "6f4cc090f7df",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-07T08:31:48.097732+00:00",
+    "quote": {
+     "yes_bid": 0.75,
+     "yes_ask": 0.99
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "115132817729906380535078726099392892676081314798865464427502462603952193075715",
+   "condition": "0xca1356d24b56975b9b22a9f8f55d030a1983dd44602f0d012643737f6e251a38",
+   "event": "lowest-temperature-in-ankara-on-november-7-2026",
+   "title": "Will the lowest temperature in Ankara be 1\u00b0C on November 7?",
+   "outcome": "YES",
+   "bucket": "1\u00b0C",
+   "price": 0.93,
+   "shares": 1.075268817204301,
+   "stake": 1.0,
+   "fee": 0.003499999999999998,
+   "profit_if_win": 0.071768817204301,
+   "reason": "favourite 1\u00b0C mid 0.72, local 11:31",
+   "audit": {
+    "code": "6f4cc090f7df",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-07T08:31:48.223618+00:00",
+    "book": {
+     "asks": [
+      [
+       0.93,
+       20.0
+      ],
+      [
+       0.94,
+       5.0
+      ],
+      [
+       0.97,
+       40.0
+      ],
+      [
+       0.99,
+       20.0
+      ]
+     ],
+     "bids": [
+      [
+       0.49,
+       30.0
+      ],
+      [
+       0.02,
+       5.0
+      ],
+      [
+       0.01,
+       10.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1794040286936",
+     "hash": "021cfbb2ed5cdfe61034d3bfdcd94734681271f7"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-07T08:31:48.223691+00:00"
   }
  ]
 }
