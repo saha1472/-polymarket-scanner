@@ -7710,7 +7710,7 @@
    "profit_if_win": 0.38888888888888884,
    "reason": "favourite 0\u00b0C mid 0.84, local 08:01",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-07T07:01:44.405795+00:00",
    "expires": "2026-11-07T11:00:00+00:00",
    "audit": {
@@ -7943,6 +7943,51 @@
    },
    "status": "open",
    "opened": "2026-11-07T09:12:29.109840+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "12483145731679064578524656164810292130657045697275325604190385266171926329306",
+   "condition": "0xf05405abfdff1f4f198358d1d8927e9aea62f9423c83c26166600b2972d9ed50",
+   "event": "lowest-temperature-in-sao-paulo-on-november-7-2026",
+   "title": "Will the lowest temperature in Sao Paulo be 20\u00b0C on November 7?",
+   "outcome": "YES",
+   "bucket": "20\u00b0C",
+   "price": 0.71,
+   "shares": 1.4084507042253522,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.40845070422535223,
+   "reason": "favourite 20\u00b0C mid 0.80, local 08:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-07T11:01:59.981547+00:00",
+   "expires": "2026-11-07T15:00:00+00:00",
+   "audit": {
+    "code": "4df38ce704a1",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-07T11:01:59.983228+00:00",
+    "quote": {
+     "yes_bid": 0.7,
+     "yes_ask": 0.9
+    }
+   }
   }
  ]
 }
