@@ -1,5 +1,5 @@
 {
- "cash": 50.187588694062796,
+ "cash": 49.186088694062796,
  "bets": [
   {
    "strategy": "DEAD",
@@ -95,6 +95,87 @@
    "opened": "2026-10-29T18:30:46.928755+00:00",
    "pnl": 0.019408163265306144,
    "closed": "2026-10-29T22:45:39.905295+00:00"
+  },
+  {
+   "strategy": "DEAD",
+   "asset": "66521461357808936191813604843690452926908061972039587250960146904726659116230",
+   "condition": "0x46d7dcdad4540e765d782268010c8f0455a15887928db167fdc9592621c452b1",
+   "event": "lowest-temperature-in-miami-on-november-7-2026",
+   "title": "Will the lowest temperature in Miami be between 74-75\u00b0F on November 7?",
+   "outcome": "NO",
+   "bucket": "74-75\u00b0F",
+   "price": 0.9699999999999999,
+   "shares": 1.0309278350515465,
+   "stake": 1.0,
+   "fee": 0.0015000000000000015,
+   "profit_if_win": 0.029427835051546503,
+   "reason": "observed lowe so far 72\u00b0F",
+   "audit": {
+    "code": "67fff4b65a2c",
+    "scan": "WX-DEAD",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "margin": 1,
+     "max_price": 0.985,
+     "min_return": 0.01,
+     "per_event": 3,
+     "max_obs_age_h": 3
+    },
+    "time": "2026-11-07T15:16:33.318832+00:00",
+    "book": {
+     "asks": [
+      [
+       0.97,
+       488.65
+      ],
+      [
+       0.98,
+       4.35
+      ],
+      [
+       0.988,
+       333.32
+      ],
+      [
+       0.99,
+       6.1
+      ],
+      [
+       0.991,
+       242.64
+      ]
+     ],
+     "bids": [
+      [
+       0.629,
+       5.0
+      ],
+      [
+       0.628,
+       119.96
+      ],
+      [
+       0.627,
+       14.35
+      ],
+      [
+       0.6,
+       400.0
+      ],
+      [
+       0.3,
+       15.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.001",
+     "timestamp": "1794064592109",
+     "hash": "82f7680103b776d407c8052520ecb0a884ff5a3d"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-07T15:16:33.318887+00:00"
   }
  ]
 }
