@@ -1,5 +1,5 @@
 {
- "cash": 40.99251997100629,
+ "cash": 39.99251997100629,
  "bets": [
   {
    "strategy": "MORNING",
@@ -8033,6 +8033,52 @@
     "quote": {
      "yes_bid": 0.8,
      "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "95878177239587189155123751869897111458944367206679519562923385441638919275692",
+   "condition": "0xf605904d27340bc6de0ae3d5e3bdc086cee51d1d686100d393abb949b1027165",
+   "event": "lowest-temperature-in-mexico-city-on-november-7-2026",
+   "title": "Will the lowest temperature in Mexico City be 9\u00b0C on November 7?",
+   "outcome": "YES",
+   "bucket": "9\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 9\u00b0C mid 0.93, local 10:04",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-07T16:04:34.216106+00:00",
+   "expires": "2026-11-07T18:00:00+00:00",
+   "audit": {
+    "code": "690dad1d28a8",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-07T16:04:34.216123+00:00",
+    "trigger_sha": "1765cfd734a5",
+    "quote": {
+     "yes_bid": 0.871,
+     "yes_ask": 0.998
     }
    }
   }
