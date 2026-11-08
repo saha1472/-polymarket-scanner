@@ -1,5 +1,5 @@
 {
- "cash": 44.46299870817178,
+ "cash": 43.46299870817178,
  "bets": [
   {
    "strategy": "MORNING",
@@ -8606,6 +8606,51 @@
    },
    "status": "open",
    "opened": "2026-11-08T07:01:51.195067+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "12736952105346546567967548088411694107717069175783309267615096303902530762163",
+   "condition": "0x2948fd97ae0b18da63c0923df529707a0103957af890ee1c4cca72cdaccf88e8",
+   "event": "lowest-temperature-in-cape-town-on-november-8-2026",
+   "title": "Will the lowest temperature in Cape Town be 10\u00b0C on November 8?",
+   "outcome": "YES",
+   "bucket": "10\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 10\u00b0C mid 0.94, local 10:17",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-08T08:17:08.206295+00:00",
+   "expires": "2026-11-08T10:00:00+00:00",
+   "audit": {
+    "code": "7539546e85c6",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-08T08:17:08.208263+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
   }
  ]
 }
