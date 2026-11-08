@@ -1,5 +1,5 @@
 {
- "cash": 44.46299870817178,
+ "cash": 43.46299870817178,
  "bets": [
   {
    "strategy": "MORNING",
@@ -8646,6 +8646,51 @@
      "max_fill": 0.96
     },
     "time": "2026-11-08T08:17:08.208263+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "35242155601370043039940719907219133158288518624429325307294153813077681637961",
+   "condition": "0xd64c8194f153d297d60350434f0e960a25024e8e8b4f3c594dd60f93f4f7e5f1",
+   "event": "lowest-temperature-in-madrid-on-november-8-2026",
+   "title": "Will the lowest temperature in Madrid be 5\u00b0C on November 8?",
+   "outcome": "YES",
+   "bucket": "5\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 5\u00b0C mid 0.94, local 10:16",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-08T09:16:25.705867+00:00",
+   "expires": "2026-11-08T11:00:00+00:00",
+   "audit": {
+    "code": "2f4af2dc1fed",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-08T09:16:25.707546+00:00",
     "quote": {
      "yes_bid": 0.87,
      "yes_ask": 1.0
