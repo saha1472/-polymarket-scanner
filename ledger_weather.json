@@ -1,5 +1,5 @@
 {
-  "cash": 48.27014952167905,
+  "cash": 47.263149521679054,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -2917,6 +2917,112 @@
         "bid": 0.56782,
         "pnl": -0.11719841269841284
       }
+    },
+    {
+      "asset": "84685602943142102683371780668687469121569129495648357705884682681927059917869",
+      "condition": "0x9132b467242eddefe9c6c7de3becf750062141717a4b85c88f844dc315f1d8be",
+      "title": "Will the highest temperature in Helsinki be 4\u00b0C on November 9?",
+      "outcome": "No",
+      "event": "highest-temperature-in-helsinki-on-november-9-2026",
+      "price": 0.86,
+      "shares": 1.1627906976744187,
+      "stake": 1.0,
+      "fee": 0.007000000000000001,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "AlexD87"
+      ],
+      "holders": {
+        "0x482943e8126e83a63695cebde33a9498ee7497eb": {
+          "name": "AlexD87",
+          "size": 123.6049,
+          "entry": 0.809,
+          "win_rate": 0.6451612903225806,
+          "roi": 0.12560969902987607,
+          "n": 341
+        }
+      },
+      "audit": {
+        "code": "2611aa775de3",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-08T14:01:53.522038+00:00",
+        "book": {
+          "asks": [
+            [
+              0.86,
+              15.0
+            ],
+            [
+              0.87,
+              132.75
+            ],
+            [
+              0.88,
+              25.0
+            ],
+            [
+              0.9,
+              32.37
+            ],
+            [
+              0.91,
+              210.12
+            ]
+          ],
+          "bids": [
+            [
+              0.83,
+              45.0
+            ],
+            [
+              0.82,
+              98.73
+            ],
+            [
+              0.81,
+              28.78
+            ],
+            [
+              0.8,
+              8.79
+            ],
+            [
+              0.78,
+              5.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1794146509714",
+          "hash": "6d7e7af32d131365f351d47e888ca9b56acf3853"
+        }
+      },
+      "opened": "2026-11-08T14:01:53.522109+00:00",
+      "ends": "2026-11-09T00:00:02.948051+00:00"
     }
   ],
   "paused": false
