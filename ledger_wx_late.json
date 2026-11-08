@@ -1,5 +1,5 @@
 {
- "cash": 32.32378352267545,
+ "cash": 31.317433522675447,
  "bets": [
   {
    "strategy": "LATE",
@@ -636,6 +636,94 @@
    "opened": "2026-11-04T22:01:59.266888+00:00",
    "pnl": 0.03760103950103956,
    "closed": "2026-11-05T06:16:52.512273+00:00"
+  },
+  {
+   "strategy": "LATE",
+   "asset": "60128462973220685014577875500876633777237300369278877965806716058356383529318",
+   "condition": "0x1ff41d2a1ae297848e59cf65d7dbaf8c6342312c47df1d2cc122ae43c4c57019",
+   "event": "highest-temperature-in-seattle-on-november-7-2026",
+   "title": "Will the highest temperature in Seattle be between 60-61\u00b0F on November 7?",
+   "outcome": "NO",
+   "bucket": "60-61\u00b0F",
+   "price": 0.8730000000000001,
+   "shares": 1.145475372279496,
+   "stake": 1.0,
+   "fee": 0.00635,
+   "profit_if_win": 0.13912537227949592,
+   "reason": "high so far 58\u00b0F at local 17:47",
+   "audit": {
+    "code": "725e0f29c2df",
+    "scan": "WX-LATE",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "gap": 2,
+     "price": [
+      0.85,
+      0.97
+     ],
+     "high_from": 17,
+     "low_from": 21,
+     "kinds": [
+      "highest"
+     ],
+     "per_event": 2,
+     "max_obs_age_h": 3
+    },
+    "time": "2026-11-08T01:47:10.785833+00:00",
+    "book": {
+     "asks": [
+      [
+       0.873,
+       15.74
+      ],
+      [
+       0.874,
+       5.0
+      ],
+      [
+       0.981,
+       51.2
+      ],
+      [
+       0.985,
+       9.27
+      ],
+      [
+       0.989,
+       100.0
+      ]
+     ],
+     "bids": [
+      [
+       0.311,
+       5.0
+      ],
+      [
+       0.31,
+       96.2
+      ],
+      [
+       0.3,
+       37.9
+      ],
+      [
+       0.1,
+       5.0
+      ],
+      [
+       0.089,
+       10.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.001",
+     "timestamp": "1794102430675",
+     "hash": "44c2b74a6dcf8250d3dd07f7bcd2ba9722ec9cad"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-08T01:47:10.785880+00:00"
   }
  ]
 }
