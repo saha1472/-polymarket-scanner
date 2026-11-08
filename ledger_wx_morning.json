@@ -1,5 +1,5 @@
 {
- "cash": 48.469498708171784,
+ "cash": 47.469498708171784,
  "bets": [
   {
    "strategy": "MORNING",
@@ -8091,6 +8091,51 @@
     "quote": {
      "yes_bid": 0.871,
      "yes_ask": 0.998
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "12229176856523688303811423316640525501819304849840070716736655705946816641898",
+   "condition": "0xf62e546df2645379fdee5f193c9a80f7c07d0f989bf9c0b74df396de2ac1cefe",
+   "event": "lowest-temperature-in-taipei-on-november-8-2026",
+   "title": "Will the lowest temperature in Taipei be 23\u00b0C on November 8?",
+   "outcome": "YES",
+   "bucket": "23\u00b0C",
+   "price": 0.73,
+   "shares": 1.36986301369863,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.36986301369863006,
+   "reason": "favourite 23\u00b0C mid 0.85, local 08:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-08T00:01:53.480015+00:00",
+   "expires": "2026-11-08T04:00:00+00:00",
+   "audit": {
+    "code": "243b933103c2",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-08T00:01:53.480029+00:00",
+    "quote": {
+     "yes_bid": 0.72,
+     "yes_ask": 0.98
     }
    }
   }
