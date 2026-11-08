@@ -1,5 +1,5 @@
 {
- "cash": 31.317433522675447,
+ "cash": 30.315933522675447,
  "bets": [
   {
    "strategy": "LATE",
@@ -724,6 +724,94 @@
    },
    "status": "open",
    "opened": "2026-11-08T01:47:10.785880+00:00"
+  },
+  {
+   "strategy": "LATE",
+   "asset": "61645623448655337502307476196296007329600122881873620273338022722572607137926",
+   "condition": "0x784494a1945bb015d7a4fe665531a1a3ea3fa1869ac0bea9c5c7a96fe8df1948",
+   "event": "highest-temperature-in-seattle-on-november-7-2026",
+   "title": "Will the highest temperature in Seattle be between 64-65\u00b0F on November 7?",
+   "outcome": "NO",
+   "bucket": "64-65\u00b0F",
+   "price": 0.9699999999999999,
+   "shares": 1.0309278350515465,
+   "stake": 1.0,
+   "fee": 0.0015000000000000015,
+   "profit_if_win": 0.029427835051546503,
+   "reason": "high so far 62\u00b0F at local 19:31",
+   "audit": {
+    "code": "412c217efd8d",
+    "scan": "WX-LATE",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "gap": 2,
+     "price": [
+      0.85,
+      0.97
+     ],
+     "high_from": 17,
+     "low_from": 21,
+     "kinds": [
+      "highest"
+     ],
+     "per_event": 2,
+     "max_obs_age_h": 3
+    },
+    "time": "2026-11-08T03:31:24.468255+00:00",
+    "book": {
+     "asks": [
+      [
+       0.97,
+       10.0
+      ],
+      [
+       0.982,
+       3.47
+      ],
+      [
+       0.992,
+       54.99
+      ],
+      [
+       0.993,
+       50.0
+      ],
+      [
+       0.994,
+       70.0
+      ]
+     ],
+     "bids": [
+      [
+       0.932,
+       5.0
+      ],
+      [
+       0.931,
+       31.62
+      ],
+      [
+       0.93,
+       20.09
+      ],
+      [
+       0.927,
+       10.67
+      ],
+      [
+       0.925,
+       30.1
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.001",
+     "timestamp": "1794108644399",
+     "hash": "0358072a30cefc84e2410a27296e6a6556c1b330"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-08T03:31:24.468330+00:00"
   }
  ]
 }
