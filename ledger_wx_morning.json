@@ -1,5 +1,5 @@
 {
- "cash": 45.466998708171786,
+ "cash": 44.466998708171786,
  "bets": [
   {
    "strategy": "MORNING",
@@ -8401,6 +8401,51 @@
     "quote": {
      "yes_bid": 0.7,
      "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "75581754496986417862398666888109727907010387196555473762440274773573682867979",
+   "condition": "0xabb3e1e77e652e2e57c5baedec14006e1e44cfa373f19bd00ba35bc40557d58a",
+   "event": "lowest-temperature-in-moscow-on-november-8-2026",
+   "title": "Will the lowest temperature in Moscow be 0\u00b0C on November 8?",
+   "outcome": "YES",
+   "bucket": "0\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 0\u00b0C mid 0.93, local 09:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-08T06:01:43.904020+00:00",
+   "expires": "2026-11-08T09:00:00+00:00",
+   "audit": {
+    "code": "9bd01a045713",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-08T06:01:43.904040+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 0.99
     }
    }
   }
