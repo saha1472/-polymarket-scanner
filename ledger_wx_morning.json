@@ -1,5 +1,5 @@
 {
- "cash": 47.54633204150511,
+ "cash": 46.54633204150511,
  "bets": [
   {
    "strategy": "MORNING",
@@ -8835,6 +8835,52 @@
     "time": "2026-11-09T01:16:40.300493+00:00",
     "quote": {
      "yes_bid": 0.7,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "20063158922978863526825061427125822427732761129360069013747219487705293224392",
+   "condition": "0xf782121df1101bf5c54be2ed336c826c1f035a81b284adc351f56872a138f0fb",
+   "event": "lowest-temperature-in-lucknow-on-november-9-2026",
+   "title": "Will the lowest temperature in Lucknow be 18\u00b0C on November 9?",
+   "outcome": "YES",
+   "bucket": "18\u00b0C",
+   "price": 0.87,
+   "shares": 1.1494252873563218,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.14942528735632177,
+   "reason": "favourite 18\u00b0C mid 0.93, local 10:17",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-09T04:47:29.095150+00:00",
+   "expires": "2026-11-09T06:30:00+00:00",
+   "audit": {
+    "code": "8444ce84c58d",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-09T04:47:29.097221+00:00",
+    "trigger_sha": "1d0960f95d07",
+    "quote": {
+     "yes_bid": 0.86,
      "yes_ask": 1.0
     }
    }
