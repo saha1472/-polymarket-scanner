@@ -1,5 +1,5 @@
 {
-  "cash": 50.8557919047416,
+  "cash": 49.8423919047416,
   "bets": [
     {
       "asset": "26922035314154497018737638829774069315488348073215105242613348160492279741517",
@@ -499,6 +499,112 @@
       "opened": "2026-11-08T16:23:45.509049+00:00",
       "ends": "2026-11-10T00:00:03.473974+00:00",
       "stops": {}
+    },
+    {
+      "asset": "106813235994331937515884431096242874331064416506871761900726491541411438265276",
+      "condition": "0xf21faf30a5b9668207940600f6e9733929a3e1dcd042034bbe9579eec0e89c47",
+      "title": "Will Gemini Carbon be released on November 10, 2026?",
+      "outcome": "Yes",
+      "event": "gemini-carbon-released-onptptpt-20261028",
+      "price": 0.665,
+      "shares": 1.5037593984962405,
+      "stake": 1.0,
+      "fee": 0.013399999999999999,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "ifyouloveme"
+      ],
+      "holders": {
+        "0x5a0d0c6eee71b96db16e5e271e0fa724be8dfa97": {
+          "name": "ifyouloveme",
+          "size": 376.2,
+          "entry": 0.622,
+          "win_rate": 0.6142857142857143,
+          "roi": 0.14217272178918802,
+          "n": 70
+        }
+      },
+      "audit": {
+        "code": "80a9e42c1f05",
+        "scan": "TECH",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.04,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-09T12:01:56.325450+00:00",
+        "book": {
+          "asks": [
+            [
+              0.665,
+              211.64
+            ],
+            [
+              0.67,
+              170.0
+            ],
+            [
+              0.674,
+              160.0
+            ],
+            [
+              0.679,
+              30.0
+            ],
+            [
+              0.68,
+              50.0
+            ]
+          ],
+          "bids": [
+            [
+              0.663,
+              105.0
+            ],
+            [
+              0.662,
+              93.9
+            ],
+            [
+              0.642,
+              150.0
+            ],
+            [
+              0.641,
+              20.0
+            ],
+            [
+              0.621,
+              40.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.001",
+          "timestamp": "1794225710823",
+          "hash": "6d9828e1665afb8ecd941778867ab3ea43bca1c1"
+        }
+      },
+      "opened": "2026-11-09T12:01:56.325528+00:00",
+      "ends": "2026-11-11T00:00:04.622364+00:00"
     }
   ]
 }
