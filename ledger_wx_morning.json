@@ -1,5 +1,5 @@
 {
- "cash": 47.54633204150511,
+ "cash": 46.54633204150511,
  "bets": [
   {
    "strategy": "MORNING",
@@ -8790,6 +8790,51 @@
     "trigger_sha": "8791da0802a1",
     "quote": {
      "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "13043295189666886037448378139088489295024920838880750521123107734773661124570",
+   "condition": "0xe9d5bbacdd27e857233311b70813067f95d16643ba83344cb2b9a0ef922519d7",
+   "event": "lowest-temperature-in-wuhan-on-november-9-2026",
+   "title": "Will the lowest temperature in Wuhan be 6\u00b0C on November 9?",
+   "outcome": "YES",
+   "bucket": "6\u00b0C",
+   "price": 0.71,
+   "shares": 1.4084507042253522,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.40845070422535223,
+   "reason": "favourite 6\u00b0C mid 0.85, local 09:16",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-09T01:16:40.298455+00:00",
+   "expires": "2026-11-09T04:00:00+00:00",
+   "audit": {
+    "code": "10954a5b8876",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-09T01:16:40.300493+00:00",
+    "quote": {
+     "yes_bid": 0.7,
      "yes_ask": 1.0
     }
    }
