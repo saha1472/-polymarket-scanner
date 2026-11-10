@@ -1,5 +1,5 @@
 {
- "cash": 42.53533204150511,
+ "cash": 41.53533204150511,
  "bets": [
   {
    "strategy": "MORNING",
@@ -10070,6 +10070,51 @@
     "quote": {
      "yes_bid": 0.86,
      "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "48415083443446514684873384623468149190044282074852633859725894272521059224766",
+   "condition": "0x5ae6705ab66c102f821a4a23d692bf7195964426c04c73cfac5ec60134fc2627",
+   "event": "lowest-temperature-in-london-on-november-10-2026",
+   "title": "Will the lowest temperature in London be 6\u00b0C on November 10?",
+   "outcome": "YES",
+   "bucket": "6\u00b0C",
+   "price": 0.86,
+   "shares": 1.1627906976744187,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.16279069767441867,
+   "reason": "favourite 6\u00b0C mid 0.92, local 10:16",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-10T10:16:46.069045+00:00",
+   "expires": "2026-11-10T12:00:00+00:00",
+   "audit": {
+    "code": "fa99f04b7385",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-10T10:16:46.069057+00:00",
+    "quote": {
+     "yes_bid": 0.85,
+     "yes_ask": 0.99
     }
    }
   }
