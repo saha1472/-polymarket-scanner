@@ -1,5 +1,5 @@
 {
- "cash": 45.54283204150511,
+ "cash": 42.54033204150511,
  "bets": [
   {
    "strategy": "MORNING",
@@ -9419,6 +9419,181 @@
    },
    "status": "open",
    "opened": "2026-11-10T01:16:18.096657+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "108111270843527604830357068528653405712271948596962875398391328571020260716027",
+   "condition": "0xad06697a609c3e1e8419c2b8e801e5c09fb69aacc1e84437c0587c8f10a9672a",
+   "event": "lowest-temperature-in-wuhan-on-november-10-2026",
+   "title": "Will the lowest temperature in Wuhan be 4\u00b0C on November 10?",
+   "outcome": "YES",
+   "bucket": "4\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 4\u00b0C mid 0.94, local 10:16",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-10T02:16:17.983936+00:00",
+   "expires": "2026-11-10T04:00:00+00:00",
+   "audit": {
+    "code": "46886a85f218",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-10T02:16:17.983963+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "108890797147375800123405245723513815799900519767705229112861461696243820675564",
+   "condition": "0xcee96c71189f862e91a1fc7fca9113e24e499237685c36c05c78f2be0b566cab",
+   "event": "lowest-temperature-in-shenzhen-on-november-10-2026",
+   "title": "Will the lowest temperature in Shenzhen be 16\u00b0C on November 10?",
+   "outcome": "YES",
+   "bucket": "16\u00b0C",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "favourite 16\u00b0C mid 0.74, local 10:16",
+   "audit": {
+    "code": "46886a85f218",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-10T02:16:18.336160+00:00",
+    "book": {
+     "asks": [
+      [
+       0.95,
+       20.0
+      ],
+      [
+       0.96,
+       207.16
+      ],
+      [
+       0.97,
+       150.0
+      ],
+      [
+       0.98,
+       60.0
+      ]
+     ],
+     "bids": [
+      [
+       0.1,
+       25.0
+      ],
+      [
+       0.09,
+       5.0
+      ],
+      [
+       0.06,
+       20.0
+      ],
+      [
+       0.02,
+       5.0
+      ],
+      [
+       0.01,
+       10.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1794276978046",
+     "hash": "3e825682811a710a08c81a4573e1488a4155b470"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-10T02:16:18.336204+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "109112700664511405848377010729974850712801679425381412817379966682868852017010",
+   "condition": "0xcf673eb4982da9a8ad388c01d30c0d55db00b5037fd7e3577afe246b768ec7c3",
+   "event": "lowest-temperature-in-qingdao-on-november-10-2026",
+   "title": "Will the lowest temperature in Qingdao be 0\u00b0C on November 10?",
+   "outcome": "YES",
+   "bucket": "0\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 0\u00b0C mid 0.94, local 10:16",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-10T02:16:18.683526+00:00",
+   "expires": "2026-11-10T04:00:00+00:00",
+   "audit": {
+    "code": "46886a85f218",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-10T02:16:18.683548+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
   }
  ]
 }
