@@ -1,5 +1,5 @@
 {
-  "cash": 51.0188624929769,
+  "cash": 50.0140624929769,
   "bets": [
     {
       "asset": "26922035314154497018737638829774069315488348073215105242613348160492279741517",
@@ -608,6 +608,113 @@
       "opened": "2026-11-09T12:01:56.325528+00:00",
       "ends": "2026-11-11T00:00:04.622364+00:00",
       "stops": {}
+    },
+    {
+      "asset": "21214796771612548721282917499949636036962948135791548626351321959951299341634",
+      "condition": "0x789a542554774d3ed026000b07dd9cb8fd19395f75cede50273eb7ab53105e98",
+      "title": "Next Alibaba Qwen Max (3.9+) released by November 11, 2026?",
+      "outcome": "No",
+      "event": "next-alibaba-qwen-max-3pt9-released-byptptpt",
+      "price": 0.88,
+      "shares": 1.1363636363636365,
+      "stake": 1.0,
+      "fee": 0.0048000000000000004,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "recallcp"
+      ],
+      "holders": {
+        "0x13b6891668f4bbea111235e2a83e7dfa381158c7": {
+          "name": "recallcp",
+          "size": 318.11,
+          "entry": 0.7891,
+          "win_rate": 0.95,
+          "roi": 0.1778536903755589,
+          "n": 40,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "e6d638b9691f",
+        "scan": "TECH",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.04,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-10T17:16:11.501438+00:00",
+        "book": {
+          "asks": [
+            [
+              0.88,
+              288.46
+            ],
+            [
+              0.89,
+              542.0
+            ],
+            [
+              0.9,
+              140.5
+            ],
+            [
+              0.91,
+              143.72
+            ],
+            [
+              0.97,
+              22.65
+            ]
+          ],
+          "bids": [
+            [
+              0.82,
+              320.9
+            ],
+            [
+              0.81,
+              69.0
+            ],
+            [
+              0.8,
+              26.4
+            ],
+            [
+              0.76,
+              7.0
+            ],
+            [
+              0.39,
+              22.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1794330940232",
+          "hash": "4472baae6240c9962d7dc5a76b5e4d788c706228"
+        }
+      },
+      "opened": "2026-11-10T17:16:11.501479+00:00",
+      "ends": "2026-11-12T00:00:03.751262+00:00"
     }
   ]
 }
