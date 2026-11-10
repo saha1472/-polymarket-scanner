@@ -77,6 +77,33 @@ MAX_BETS_PER_EVENT = 1     # one bet per match/event (game 1, game 2, handicap..
 MAX_OPEN_PER_TRADER = 2    # one trader's opinion can't drive more than this
 DAILY_LOSS_LIMIT = 3.00    # stop opening bets after losing this much in 24h
 
+# Named traders scored next to the leaderboard (found in the 10 Nov 2026 sweep,
+# see RESEARCH_2026-11-10_strategy_sweep.md). The leaderboard only shows the
+# top 50-100 by profit, which misses steady mid-size specialists. Watchlisted
+# traders face exactly the same bar as everyone else: no shortcut to real bets.
+WATCHLIST = {
+    "ESPORTS": {"0x3231d2d67053e5dc3715f6429124741e52866e75": "DotaBotReborn",
+                "0x8c0b024c17831a0dde038547b7e791ae6a0d7aa5": "THEHIGHLIFE"},
+    "WEATHER": {"0xf8dc8cd0fd55eccb5409ed99ed90a86bc7f0f31f": "dingdingdangdang"},
+}
+
+# New trader bar, SHADOW ONLY (it decides nothing yet). Instead of a win-rate
+# cutoff: the low end of the ROI range must be above zero, ROI must be at
+# least ALT_MIN_ROI, and ROI must be positive in both halves of the 30 days. Every score and copied bet carries
+# an "alt" flag so the two bars can be compared later.
+ALT_Z = 1.2816             # low end = 10th percentile (one-sided)
+ALT_MIN_HALF = 10          # each half needs at least this many bets
+ALT_MIN_ROI = 0.05         # 99%-win grinders at +1-2% have a tight range but
+                           # nothing left after a follower's fee and worse price
+
+# Cheap-bucket shadow test (weather only): copy qualifying or watchlisted
+# traders' buys priced under the normal band, as shadow records only.
+CHEAP_SCANS = {"WEATHER"}
+CHEAP_MIN_PRICE = 0.15
+CHEAP_MAX_PRICE = 0.395    # just under the normal band's 0.40
+CHEAP_MIN_USD = 5          # these traders bet $5-30, far under MIN_POSITION_USD
+CHEAP_MAX_PER_RUN = 20
+
 SESSION = requests.Session()
 
 
@@ -242,12 +269,28 @@ def top_traders():
             if vol > 0 and pnl / vol < MIN_PNL_TO_VOLUME:
                 continue
             wallets[wallet] = row.get("userName") or wallet[:10]
+    have = {w.lower() for w in wallets}
+    for wallet, name in WATCHLIST.get(SCAN, {}).items():
+        if wallet.lower() not in have:      # no market-maker filter: picked by hand
+            wallets[wallet] = name
     return wallets
 
 
-def trader_history(wallet):
+def end_ts(value):
+    """Unix time of an endDate string ('2026-11-10' or ISO), or None."""
+    try:
+        dt = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.timestamp()
+
+
+def trader_history(wallet, with_time=False):
     """Every bet this trader had resolved in the last HISTORY_DAYS, wins AND
-    losses, as (event slug, pnl, cost). Closed positions alone miss most
+    losses, as (event slug, pnl, cost), or (event slug, pnl, cost, time) with
+    with_time. Closed positions alone miss most
     losses: a losing bet resolves to $0 and is usually never redeemed, so it
     stays in /positions as 'redeemable'."""
     cutoff = datetime.now(timezone.utc) - timedelta(days=HISTORY_DAYS)
@@ -260,7 +303,8 @@ def trader_history(wallet):
         return None
     for r in map(v1_position, closed):
         cost = num(r.get("totalBought")) * num(r.get("avgPrice"))
-        out.append((r.get("eventSlug"), num(r.get("realizedPnl")), cost))
+        out.append((r.get("eventSlug"), num(r.get("realizedPnl")), cost,
+                    num(r.get("timestamp"), None)))
     # resolved but never redeemed (most losers end up here)
     rows = positions(wallet, status="REDEEMABLE")
     if rows is None:
@@ -269,16 +313,18 @@ def trader_history(wallet):
         if str(p.get("endDate", ""))[:10] < cutoff.date().isoformat():
             continue
         cost = num(p.get("initialValue"))
-        out.append((p.get("eventSlug"), num(p.get("currentValue")) - cost, cost))
-    return [x for x in out if x[2] > 0]
+        out.append((p.get("eventSlug"), num(p.get("currentValue")) - cost, cost,
+                    end_ts(p.get("endDate"))))
+    return [x if with_time else x[:3] for x in out if x[2] > 0]
 
 
 def score_traders(traders):
     """Win rate and ROI on recent resolved bets (in this scan's category)."""
     with ThreadPoolExecutor(6) as pool:
-        histories = dict(zip(traders, pool.map(trader_history, traders)))
+        histories = dict(zip(traders, pool.map(
+            lambda w: trader_history(w, with_time=True), traders)))
     if CAT:
-        warm_tags(s for h in histories.values() if h for s, _, _ in h)
+        warm_tags(x[0] for h in histories.values() if h for x in h)
     scores = {}
     for wallet, hist in histories.items():
         if not hist:
@@ -286,12 +332,35 @@ def score_traders(traders):
         bets = [x for x in hist if in_scan(x[0])]
         if len(bets) < 15:
             continue
-        wins = sum(1 for _, pnl, _ in bets if pnl > 0)
-        cost = sum(c for _, _, c in bets)
+        wins = sum(1 for x in bets if x[1] > 0)
+        cost = sum(x[2] for x in bets)
         scores[wallet] = {"name": traders[wallet], "n": len(bets),
                           "win_rate": wins / len(bets),
-                          "roi": sum(p for _, p, _ in bets) / cost}
+                          "roi": sum(x[1] for x in bets) / cost,
+                          **alt_bar(bets)}
     return scores
+
+
+def alt_bar(bets):
+    """The new (shadow-only) bar for a list of (slug, pnl, cost[, time]) bets.
+    roi_lo: low end of the ROI range (ratio estimate, 10th percentile).
+    roi_h1/roi_h2: ROI in the older and newer half of the bets by time."""
+    n = len(bets)
+    cost = sum(x[2] for x in bets)
+    if n < 2 or cost <= 0:
+        return {"roi_lo": None, "roi_h1": None, "roi_h2": None, "alt": False}
+    roi = sum(x[1] for x in bets) / cost
+    spread = sum((x[1] - roi * x[2]) ** 2 for x in bets) * n / (n - 1)
+    lo = roi - ALT_Z * math.sqrt(spread) / cost
+    timed = sorted((x for x in bets if len(x) > 3 and x[3] is not None), key=lambda x: x[3])
+    h1 = h2 = None
+    if len(timed) >= 2 * ALT_MIN_HALF:
+        half = len(timed) // 2
+        parts = [timed[:half], timed[half:]]
+        h1, h2 = (sum(x[1] for x in p) / sum(x[2] for x in p) for p in parts)
+    ok = (n >= MIN_RESOLVED and lo > 0 and roi >= ALT_MIN_ROI
+          and h1 is not None and h1 > 0 and h2 > 0)
+    return {"roi_lo": lo, "roi_h1": h1, "roi_h2": h2, "alt": ok}
 
 
 def trader_scores():
@@ -370,7 +439,7 @@ def shadow_wide(book, wide, strict_candidates, ledger, find=None, size=None):
         if s.get("event") and s["event"] in seen_events:
             continue                      # one bet per match/event, like the real bot
         best = max(s["holders"].values(), key=lambda h: h.get("roi") or 0)
-        scores = [{k: h.get(k) for k in ("name", "win_rate", "roi", "n", "band")}
+        scores = [{k: h.get(k) for k in ("name", "win_rate", "roi", "n", "band", "alt")}
                   for h in s["holders"].values()]
         rec = book.add(SCAN, "skipped", best.get("band") or "wide_low_roi",
                        asset=s["asset"], condition=s["condition"], title=s["title"],
@@ -393,9 +462,69 @@ def record_wide_pool(book, scores, strict_candidates, ledger, **kw):
         return 0
 
 
+def cheap_pool(scores):
+    """Traders whose cheap buys are shadow-copied: those passing the strict bar,
+    plus this scan's watchlist (whatever their score, if they have one)."""
+    watch = {w.lower() for w in WATCHLIST.get(SCAN, {})}
+    return {w: s for w, s in scores.items() if passes_bar(s) or w.lower() in watch}
+
+
+def shadow_cheap(book, scores, strict_candidates, ledger, find=None, size=None):
+    """Shadow-copy buys priced under the normal band (CHEAP_MIN_PRICE to
+    CHEAP_MAX_PRICE), from positions as small as CHEAP_MIN_USD. Records only
+    (reason "cheap_band"), one per event, never in the ledger."""
+    if SCAN not in CHEAP_SCANS:
+        return 0
+    pool = cheap_pool(scores)
+    if not pool:
+        return 0
+    taken_assets = {c["asset"] for c in strict_candidates}
+    taken_markets = {c["condition"] for c in strict_candidates}
+    taken_markets |= {b["condition"] for b in ledger["bets"]}
+    cands = [c for c in (find or find_candidates)(pool, min_price=CHEAP_MIN_PRICE,
+                                                  max_price=CHEAP_MAX_PRICE,
+                                                  min_usd=CHEAP_MIN_USD)
+             if c["asset"] not in taken_assets and c["condition"] not in taken_markets]
+    sizer = size or size_bet
+    sized = [s for s in pmap(lambda c: sizer(c, min_price=CHEAP_MIN_PRICE,
+                                             max_price=CHEAP_MAX_PRICE), cands) if s]
+    seen_events = {b.get("event") for b in book.bets
+                   if b["kind"] == "skipped" and b["reason"] == "cheap_band" and b.get("event")}
+    before = book.added
+    for s in sized:
+        if book.added - before >= CHEAP_MAX_PER_RUN:
+            break
+        if s.get("event") and s["event"] in seen_events:
+            continue
+        scores_ = [{k: h.get(k) for k in ("name", "win_rate", "roi", "n", "alt")}
+                   for h in s["holders"].values()]
+        rec = book.add(SCAN, "skipped", "cheap_band", asset=s["asset"],
+                       condition=s["condition"], title=s["title"], event=s.get("event"),
+                       outcome=s["outcome"], price=s["price"], shares=s["shares"],
+                       stake=s["stake"], fee=s["fee"],
+                       extra={"traders": s["traders"], "cheap": scores_})
+        if rec and s.get("event"):
+            seen_events.add(s["event"])
+    return book.added - before
+
+
+def record_cheap(book, scores, strict_candidates, ledger, **kw):
+    """shadow_cheap that can never stop the bot."""
+    try:
+        return shadow_cheap(book, scores, strict_candidates, ledger, **kw)
+    except Exception as err:               # noqa: BLE001
+        import traceback
+        traceback.print_exc()
+        print(f"WARNING: cheap-bucket shadow failed ({err!r}); real bets are unaffected.")
+        return 0
+
+
 # ---------- Step 2: find what they agree on ----------
 
-def find_candidates(good):
+def find_candidates(good, min_price=None, max_price=None, min_usd=None):
+    min_price = MIN_PRICE if min_price is None else min_price
+    max_price = MAX_PRICE if max_price is None else max_price
+    min_usd = MIN_POSITION_USD if min_usd is None else min_usd
     by_asset, assets_by_condition = {}, {}
     wallets = list(good)
     all_rows = pmap(lambda w: positions(w, max_pages=2, status="OPEN") or [], wallets)
@@ -409,7 +538,7 @@ def find_candidates(good):
             if p.get("redeemable"):
                 continue
             price = num(p.get("curPrice"))
-            if num(p.get("size")) * price < MIN_POSITION_USD:
+            if num(p.get("size")) * price < min_usd:
                 continue
             hrs = hours_until(p.get("endDate"))
             if HOURS_MAX is not None and (
@@ -436,7 +565,8 @@ def find_candidates(good):
                                     # the trader's score when we copied them
                                     "win_rate": g.get("win_rate"), "roi": g.get("roi"),
                                     "n": g.get("n"),
-                                    **({"band": g["band"]} if "band" in g else {})}
+                                    **({"band": g["band"]} if "band" in g else {}),
+                                    **({"alt": g["alt"]} if "alt" in g else {})}
             assets_by_condition.setdefault(cond, set()).add(asset)
 
     candidates = []
@@ -445,7 +575,7 @@ def find_candidates(good):
             continue  # good traders are on opposite sides
         if len(s["traders"]) < MIN_TRADERS_AGREE:
             continue
-        if not MIN_PRICE <= s["price"] <= MAX_PRICE:
+        if not min_price <= s["price"] <= max_price:
             continue
         s["avg_entry"] = sum(s["entries"]) / len(s["entries"])
         candidates.append(s)
@@ -454,9 +584,11 @@ def find_candidates(good):
 
 # ---------- Step 3: size each bet from the live order book ----------
 
-def size_bet(s):
+def size_bet(s, min_price=None, max_price=None):
     """Use the real best ask and the market's minimum order size to find
     the cheapest legal bet. Returns the updated signal, or None."""
+    min_price = MIN_PRICE if min_price is None else min_price
+    max_price = MAX_PRICE if max_price is None else max_price
     book = get(BOOK_URL, {"token_id": s["asset"]})
     if not book:
         return None
@@ -467,7 +599,7 @@ def size_bet(s):
     ask, ask_size = asks[0]
 
     s["ask_seen"] = ask                 # for the shadow limit-bid variant
-    if not MIN_PRICE <= ask <= MAX_PRICE:
+    if not min_price <= ask <= max_price:
         return None
     if ask - s["avg_entry"] > MAX_CHASE:
         s["reject"] = "chase"           # recorded as a shadow "would-have" bet
@@ -828,6 +960,13 @@ if __name__ == "__main__":
     wide_added = record_wide_pool(book, scores, candidates, ledger)
     print(f"Wide pool (shadow only): {len(wide_pool(scores))} extra trader(s), "
           f"{wide_added} new record(s).")
+    if SCAN in CHEAP_SCANS:
+        cheap_added = record_cheap(book, scores, candidates, ledger)
+        print(f"Cheap buckets (shadow only): {len(cheap_pool(scores))} trader(s), "
+              f"{cheap_added} new record(s).")
+    alt = [s["name"] for s in scores.values() if s.get("alt")]
+    print(f"New bar (shadow only): {len(alt)} of {len(scores)} pass"
+          + (f": {', '.join(alt)}" if alt else "."))
 
     msgs += open_paper_bets(ledger, signals, book)
     save_ledger(ledger)
