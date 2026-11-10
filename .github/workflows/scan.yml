@@ -76,6 +76,14 @@ jobs:
         continue-on-error: true
         run: python wx_ensemble.py
 
+      # SHADOW experiment (never trades): politics plays where 3+ tracked traders
+      # hold the same side. Runs after the scans have finished (it shares tags.json
+      # with them). Allowed to fail without failing the run.
+      - name: Politics consensus shadow
+        if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
+        continue-on-error: true
+        run: python shadow_politics.py
+
       # For the rest of this run's 15-minute slot, check resting bids (real and
       # shadow) and the rewards tracker's quotes about every 30 seconds.
       - name: Book watcher
