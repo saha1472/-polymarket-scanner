@@ -1,5 +1,5 @@
 {
-  "cash": 51.67064423152625,
+  "cash": 50.644144231526255,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -3475,6 +3475,113 @@
       "opened": "2026-11-10T21:31:47.030984+00:00",
       "ends": "2026-11-11T00:00:05.427974+00:00",
       "stops": {}
+    },
+    {
+      "asset": "35801867695212930039147402062303123113412187134134892967451209581598576789144",
+      "condition": "0x64bb2f7284a66eaa639a0b7f2cb546bb2b46910a2abd103a3b1f973488613907",
+      "title": "Will the highest temperature in Busan be 18\u00b0C on November 11?",
+      "outcome": "Yes",
+      "event": "highest-temperature-in-busan-on-november-11-2026",
+      "price": 0.47,
+      "shares": 2.127659574468085,
+      "stake": 1.0,
+      "fee": 0.0265,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "quqqq"
+      ],
+      "holders": {
+        "0x1b29fd072a61e82c870034e25bd81169ef70f288": {
+          "name": "quqqq",
+          "size": 644.76,
+          "entry": 0.4632,
+          "win_rate": 0.6325301204819277,
+          "roi": 0.13576284484309276,
+          "n": 166,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "88d8f0cb2393",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-10T23:01:58.614565+00:00",
+        "book": {
+          "asks": [
+            [
+              0.47,
+              12.59
+            ],
+            [
+              0.48,
+              17.78
+            ],
+            [
+              0.49,
+              10.0
+            ],
+            [
+              0.69,
+              38.82
+            ],
+            [
+              0.7,
+              10.0
+            ]
+          ],
+          "bids": [
+            [
+              0.36,
+              19.99
+            ],
+            [
+              0.34,
+              25.0
+            ],
+            [
+              0.32,
+              8.61
+            ],
+            [
+              0.31,
+              8.63
+            ],
+            [
+              0.29,
+              25.22
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1794351710988",
+          "hash": "f9cb1ae0b7b65de9e9742fd5bf71b47da259dc6b"
+        }
+      },
+      "opened": "2026-11-10T23:01:58.614622+00:00",
+      "ends": "2026-11-11T00:00:05.504867+00:00"
     }
   ],
   "paused": false
