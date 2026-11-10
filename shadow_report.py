@@ -26,6 +26,17 @@ WIDE_LABELS = {"wide_low_roi": "wide pool: ROI under 10%",
                "wide_few_bets": "wide pool: 15-29 bets only",
                "wide_low_win": "wide pool: win rate under 58%"}
 WIDE_ALL = "wide pool: all bands"
+CHEAP_LABEL = "cheap buckets 15-39c"
+# The new trader bar (shadow only, from 10 Nov): bets whose traders pass it,
+# real and shadow together, next to real bets whose traders don't.
+ALT_YES = "new bar: traders pass"
+ALT_NO = "new bar: real bets, traders fail"
+
+
+def alt_flags(bet):
+    """True/False flags of the traders behind a bet (empty for older bets)."""
+    hs = list((bet.get("holders") or {}).values()) + list(bet.get("wide") or [])
+    return [h["alt"] for h in hs if isinstance(h, dict) and isinstance(h.get("alt"), bool)]
 
 
 def strategy_of(path):
@@ -83,6 +94,7 @@ def main():
         for b in mine:
             key = (f"limit bid at traders' entry" if b["kind"] == "limit" else
                    "unfilled resting bids" if b["kind"] == "unfilled" else
+                   CHEAP_LABEL if b["reason"] == "cheap_band" else
                    WIDE_LABELS.get(b["reason"], f"skipped: {b['reason']}"))
             groups.setdefault(key, []).append(b)
         for key in sorted(groups):
@@ -92,6 +104,14 @@ def main():
         wide = [b for key, g in groups.items() if key in WIDE_LABELS.values() for b in g]
         if wide:
             r = line(WIDE_ALL, shadow.summarize(wide))
+            if r:
+                out.append(r)
+        real = (led or {}).get("bets", [])
+        wide_recs = [b for b in mine if b["reason"] in WIDE_LABELS]
+        yes = [b for b in real + wide_recs if any(alt_flags(b))]
+        no = [b for b in real if alt_flags(b) and not any(alt_flags(b))]
+        for label, bets in ((ALT_YES, yes), (ALT_NO, no)):
+            r = line(label, shadow.summarize(bets)) if bets else None
             if r:
                 out.append(r)
         lim = groups.get("limit bid at traders' entry", [])
