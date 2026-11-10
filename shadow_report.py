@@ -70,6 +70,9 @@ def main():
         auto = (led or {}).get("auto") or {}
         state = ("AUTO-PAUSED since " + auto.get("since", "?")[:16] + f" ({auto.get('why')})"
                  if auto.get("paused") else "active")
+        if any(b["strategy"] == strat and b["reason"] == "manual_pause" for b in books):
+            state = "PAUSED BY HAND (shadow only, no new paper bets)" + (
+                "" if state == "active" else f"; also {state}")
         out.append(f"\n{strat}: {state}")
         if led:
             r = line("real ledger", shadow.summarize(led["bets"]))
