@@ -106,6 +106,14 @@ JUDGE_FROM = {
     "LATE": "2026-10-31T08:45:00+00:00",       # METAR cut-off fixed (commit fa4cec1)
     "AFTERNOON": "2026-10-30T08:00:00+00:00",  # F markets dropped
 }
+# Strategies switched off BY HAND. They place no new paper bets but keep
+# recording shadow bets (reason "manual_pause"), so shadow_report.py shows what
+# they would have done. Bets already open still settle. This is separate from the
+# automatic pause, which comes back by itself; a manual pause stays until the
+# name is deleted from this list.
+MANUAL_PAUSE = {
+    "LATE": "2026-11-10: paper 10-18, -$17.51 (-62%), 90% range -78% to -46%",
+}
 SESSION = requests.Session()
 
 
@@ -591,6 +599,9 @@ def open_bets(ledger, signals, book=None):
             continue
         if strategy in FAV_RULES and any(x["event"] == e["slug"] for x in ledger["bets"]):
             continue  # one favourite bet per event, ever
+        if strategy in MANUAL_PAUSE:
+            shadow_skip(book, strategy, e, b, side, reason, "manual_pause")
+            continue
         if paused:
             shadow_skip(book, strategy, e, b, side, reason, "auto_paused")
             continue
@@ -755,7 +766,8 @@ if __name__ == "__main__":
         switch = shadow.switch_update(led, book.bets, strat, judge_from=JUDGE_FROM.get(strat, ""))
         msgs += ([switch] if switch else []) + open_bets(led, signals[strat], book)
         write_json(ledger_file(strat), led)
-        print(f"{strat}: {len(signals[strat])} signal(s) | {summary(led)}")
+        print(f"{strat}: {len(signals[strat])} signal(s) | {summary(led)}"
+              + (" | PAUSED BY HAND (shadow only)" if strat in MANUAL_PAUSE else ""))
         if msgs:
             out += [f"**[WX-{strat}]**"] + msgs + [summary(led)]
     write_json(STATE_FILE, state)
