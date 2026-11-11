@@ -162,6 +162,22 @@ class Scoring(InTempDir):
         self.assertEqual(wallets["OK"], "ok")
         self.assertEqual(wallets["0xc8b9a30184244d427169cf62485dde6041b2b836"], "SnowLover7")
 
+    def test_watchlist_has_mrworldwide_and_every_address_is_well_formed(self):
+        self.assertEqual(sp.WATCHLIST["0x98d04f9eb52d08ef9697f6eb8d7cfe8d46e5f14a"], "mrworldwide")
+        self.assertEqual(len(sp.WATCHLIST), 6)
+        for wallet in sp.WATCHLIST:
+            # 0x + 40 hex characters, lower case (a typo here would quietly track nobody)
+            self.assertRegex(wallet, r"^0x[0-9a-f]{40}$")
+
+    def test_watchlist_wallet_reaches_the_pool_even_if_not_on_the_leaderboard(self):
+        old = signals.data_v2
+        signals.data_v2 = lambda path, params, max_pages=10, stop=None: []
+        try:
+            wallets = sp.leaderboard_wallets()
+        finally:
+            signals.data_v2 = old
+        self.assertEqual(wallets["0x98d04f9eb52d08ef9697f6eb8d7cfe8d46e5f14a"], "mrworldwide")
+
 
 class FindPlays(InTempDir):
     def _find(self, rows_by_wallet, tracked=None):
