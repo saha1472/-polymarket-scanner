@@ -1,5 +1,5 @@
 {
- "cash": 43.69939910432345,
+ "cash": 42.69939910432345,
  "bets": [
   {
    "strategy": "MORNING",
@@ -11270,6 +11270,51 @@
      "max_fill": 0.96
     },
     "time": "2026-11-11T11:31:24.815046+00:00",
+    "quote": {
+     "yes_bid": 0.71,
+     "yes_ask": 0.99
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "39098776692590798026002818055792060653749548478124729322429541275677087341413",
+   "condition": "0xf301848d361b026ec6b68d7f4a54231b2e7e53d6564f05abe0c9091930f87fe5",
+   "event": "lowest-temperature-in-sao-paulo-on-november-11-2026",
+   "title": "Will the lowest temperature in Sao Paulo be 16\u00b0C on November 11?",
+   "outcome": "YES",
+   "bucket": "16\u00b0C",
+   "price": 0.72,
+   "shares": 1.3888888888888888,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.38888888888888884,
+   "reason": "favourite 16\u00b0C mid 0.85, local 08:47",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-11T11:47:07.980468+00:00",
+   "expires": "2026-11-11T15:00:00+00:00",
+   "audit": {
+    "code": "db5e63d05214",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-11T11:47:07.980483+00:00",
     "quote": {
      "yes_bid": 0.71,
      "yes_ask": 0.99
