@@ -1,5 +1,5 @@
 {
- "cash": 44.704899104323445,
+ "cash": 43.704899104323445,
  "bets": [
   {
    "strategy": "MORNING",
@@ -10888,6 +10888,51 @@
     "time": "2026-11-11T05:02:25.568306+00:00",
     "quote": {
      "yes_bid": 0.9,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "91935196381660019953805685294184520900388259594646624425388815747201761503412",
+   "condition": "0x4969cf3d2dccbf0a67fe2b18b46084768828fa96f53f468f17b27cfac1ffefa1",
+   "event": "lowest-temperature-in-karachi-on-november-11-2026",
+   "title": "Will the lowest temperature in Karachi be 19\u00b0C on November 11?",
+   "outcome": "YES",
+   "bucket": "19\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 19\u00b0C mid 0.94, local 10:15",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-11T05:16:03.833610+00:00",
+   "expires": "2026-11-11T07:00:00+00:00",
+   "audit": {
+    "code": "511395441db5",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-11T05:16:03.835360+00:00",
+    "quote": {
+     "yes_bid": 0.87,
      "yes_ask": 1.0
     }
    }
