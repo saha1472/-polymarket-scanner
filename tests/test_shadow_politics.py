@@ -162,6 +162,20 @@ class Scoring(InTempDir):
         self.assertEqual(wallets["OK"], "ok")
         self.assertEqual(wallets["0xc8b9a30184244d427169cf62485dde6041b2b836"], "SnowLover7")
 
+    def test_leaderboard_reads_200_deep_in_one_call_per_board(self):
+        # 11 Nov: the top 50 missed good traders further down (mrworldwide is rank 88)
+        seen = []
+        old = signals.data_v2
+        signals.data_v2 = lambda path, params, max_pages=10, stop=None: seen.append(
+            (params, max_pages)) or []
+        try:
+            sp.leaderboard_wallets()
+        finally:
+            signals.data_v2 = old
+        self.assertEqual(sp.LEADERBOARD_SIZE, 200)
+        self.assertEqual([p["timePeriod"] for p, _ in seen], ["MONTH", "ALL"])
+        self.assertEqual({(p["limit"], pages) for p, pages in seen}, {(200, 1)})
+
     def test_watchlist_has_mrworldwide_and_every_address_is_well_formed(self):
         self.assertEqual(sp.WATCHLIST["0x98d04f9eb52d08ef9697f6eb8d7cfe8d46e5f14a"], "mrworldwide")
         self.assertEqual(len(sp.WATCHLIST), 6)
