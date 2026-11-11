@@ -61,14 +61,17 @@ MAX_CONTROL_PER_RUN = 10
 SCORE_REFRESH_HOURS = 6
 TIME_BUDGET_S = 300                   # stop warming tags after this long, carry on next run
 
-# Politics traders from the site's list that our own check found worth watching
+# Politics traders from outside lists that our own check found worth watching
 # (3 Nov-heavy results, so shadow only). Tracked even if they miss the leaderboard.
+# mrworldwide (added 11 Nov, from predicting.top): 299 bets in 30 days, 77% win,
+# +21.8% ROI, still +15.6% outside the 3-5 Nov election days.
 WATCHLIST = {
     "0xc8b9a30184244d427169cf62485dde6041b2b836": "SnowLover7",
     "0x1c144e30f405a25f991cbd8baa15d40599090869": "bernardbulletin",
     "0x3dca854f147d9b9ecc56d37800f36b347ce23c13": "Ryxon21",
     "0x1ee9a5fc09665909c0cce297c581703bfbb9197f": "vinii",
     "0xf1f9a438f2697381b4ac8eb283d6f4dd772d1245": "tunatyler",
+    "0x98d04f9eb52d08ef9697f6eb8d7cfe8d46e5f14a": "mrworldwide",
 }
 
 
