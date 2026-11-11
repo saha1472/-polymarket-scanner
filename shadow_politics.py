@@ -46,7 +46,7 @@ TAG = "politics"                      # Gamma tag that marks a politics event
 TRADERS_FILE = "traders_politics.json"
 SHADOW_FILE = shadow.shadow_file(STRATEGY)      # shadow_politics.json
 
-LEADERBOARD_SIZE = 50
+LEADERBOARD_SIZE = 200
 MIN_BETS = 15                         # politics bets needed before a trader is tracked
 MIN_AGREE = 3
 HOURS_MIN = 1
