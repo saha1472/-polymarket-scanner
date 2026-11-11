@@ -1,5 +1,5 @@
 {
- "cash": 43.70239910432345,
+ "cash": 42.70239910432345,
  "bets": [
   {
    "strategy": "MORNING",
@@ -11104,6 +11104,51 @@
    },
    "status": "open",
    "opened": "2026-11-11T08:31:24.966542+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "45879835656896557865066907501306173453810648495816206061047579178907035676574",
+   "condition": "0x4103c8309d43e82d4e48b4f3bec6d002150716746de4b1e6748aa9589a9b3cac",
+   "event": "lowest-temperature-in-munich-on-november-11-2026",
+   "title": "Will the lowest temperature in Munich be 5\u00b0C on November 11?",
+   "outcome": "YES",
+   "bucket": "5\u00b0C",
+   "price": 0.77,
+   "shares": 1.2987012987012987,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.2987012987012987,
+   "reason": "favourite 5\u00b0C mid 0.86, local 10:17",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-11T09:17:30.938659+00:00",
+   "expires": "2026-11-11T11:00:00+00:00",
+   "audit": {
+    "code": "6b41a46a7adb",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-11T09:17:30.938670+00:00",
+    "quote": {
+     "yes_bid": 0.76,
+     "yes_ask": 0.97
+    }
+   }
   }
  ]
 }
