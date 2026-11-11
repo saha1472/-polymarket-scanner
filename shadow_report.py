@@ -27,6 +27,7 @@ WIDE_LABELS = {"wide_low_roi": "wide pool: ROI under 10%",
                "wide_low_win": "wide pool: win rate under 58%"}
 WIDE_ALL = "wide pool: all bands"
 CHEAP_LABEL = "cheap buckets 15-39c"
+DEEP_LABEL = "deep pool: ranks 51-200"
 # The new trader bar (shadow only, from 10 Nov): bets whose traders pass it,
 # real and shadow together, next to real bets whose traders don't.
 ALT_YES = "new bar: traders pass"
@@ -95,6 +96,7 @@ def main():
             key = (f"limit bid at traders' entry" if b["kind"] == "limit" else
                    "unfilled resting bids" if b["kind"] == "unfilled" else
                    CHEAP_LABEL if b["reason"] == "cheap_band" else
+                   DEEP_LABEL if b["reason"] == "deep_pool" else
                    WIDE_LABELS.get(b["reason"], f"skipped: {b['reason']}"))
             groups.setdefault(key, []).append(b)
         for key in sorted(groups):
