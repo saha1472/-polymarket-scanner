@@ -12,6 +12,7 @@ import simcore
 JST = timezone(timedelta(hours=9))
 SEND_AFTER_HOUR = 8
 STATE_FILE = "heartbeat.json"
+REWARDS_LOG = "rewards_log.jsonl"      # written by rewards_tracker.py
 
 NAMES = {
     "ledger.json": "General copy",
@@ -65,6 +66,72 @@ def line(path, since):
                  + (" | 🤖 auto-paused" if (led.get("auto") or {}).get("paused") else ""))
 
 
+def _f(value):
+    """A finite float, else 0 (a damaged line must not break the daily summary)."""
+    try:
+        v = float(value)
+    except (TypeError, ValueError):
+        return 0.0
+    return v if v == v and v not in (float("inf"), float("-inf")) else 0.0
+
+
+def _usd(x):
+    return f"-${-x:.2f}" if x < 0 else f"+${x:.2f}"
+
+
+def _totals(rows):
+    """Sum a list of rewards-log lines: reward low/high, fill P&L, hits, hours."""
+    t = {"lo": 0.0, "hi": 0.0, "fill": 0.0, "hits": 0, "hours": 0.0}
+    for r in rows:
+        acc = r.get("accrued") if isinstance(r.get("accrued"), list) else []
+        t["lo"] += _f(acc[0]) if len(acc) > 0 else 0.0
+        t["hi"] += _f(acc[1]) if len(acc) > 1 else 0.0
+        t["fill"] += _f(r.get("fill_pnl"))
+        t["hits"] += int(bool(r.get("bid_hit"))) + int(bool(r.get("ask_hit")))
+        t["hours"] += _f(r.get("hours"))
+    return t
+
+
+def rewards_line(since, path=None):
+    """One line on the hypothetical rewards tracker (it never places an order):
+    liquidity rewards it would have earned against what its quotes would have
+    lost when hit, for the last 24 hours and for the whole record. Rewards and
+    fills are both modelled, so it says estimate. Returns None when there is no
+    log yet, and never raises: this line is extra, the ledgers come first."""
+    try:
+        rows = []
+        with open(path or REWARDS_LOG) as fh:
+            for raw in fh:
+                try:
+                    r = json.loads(raw)
+                except ValueError:
+                    continue
+                if isinstance(r, dict) and isinstance(r.get("time"), str) and r.get("condition"):
+                    rows.append(r)
+        if not rows:
+            return None
+        day = [r for r in rows if r["time"] >= since]
+        every, last = _totals(rows), _totals(day)
+        markets = {r["condition"] for r in rows}
+        capital = 0.0
+        for m in markets:
+            capital += max(_f(r.get("capital")) for r in rows if r["condition"] == m)
+        days = every["hours"] / 24 / len(markets)
+        head = "💸 **Rewards tracker** (hypothetical, places no orders, estimate)"
+        if day:
+            today = (f"last 24h reward ${last['lo']:.2f}-${last['hi']:.2f}, fills "
+                     f"{_usd(last['fill'])} ({last['hits']} hits), net "
+                     f"{_usd(last['lo'] + last['fill'])} to {_usd(last['hi'] + last['fill'])}")
+        else:
+            today = "last 24h: no quotes logged"
+        whole = (f"whole record (~{days:.1f} days per market): net "
+                 f"{_usd(every['lo'] + every['fill'])} to {_usd(every['hi'] + every['fill'])} "
+                 f"on about ${capital:.0f} of capital")
+        return f"{head}: {today} | {whole}"
+    except Exception:                      # noqa: BLE001
+        return None
+
+
 def main():
     now = datetime.now(JST)
     state = read_json(STATE_FILE, {})
@@ -76,6 +143,9 @@ def main():
     total = sum(r[0] for r in rows if r[0] != float("-inf"))
     msg = [f"🫀 **Daily heartbeat {now:%a %d %b, %H:%M} JST** | all paper ledgers "
            f"${total:+.2f}"] + [r[1] for r in sorted(rows, key=lambda r: -r[0])]
+    extra = rewards_line(since)
+    if extra:
+        msg.append(extra)
     text = "\n".join(msg)
     print(text)
     url = os.environ.get("DISCORD_WEBHOOK_URL")
