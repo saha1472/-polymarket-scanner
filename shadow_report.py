@@ -30,6 +30,10 @@ CHEAP_LABEL = "cheap buckets 15-39c"
 DEEP_LABEL = "deep pool: ranks 51-200"
 # The new trader bar (shadow only, from 10 Nov): bets whose traders pass it,
 # real and shadow together, next to real bets whose traders don't.
+# What a higher per-event cap would have added. Every signal the real cap blocks is
+# recorded as "skipped: per_event"; keeping only the first one (or two) per event, in
+# the order they were found, is what a cap of 2 (or 3) would have taken.
+EVENT_CAPS = ((1, "if event cap were 2"), (2, "if event cap were 3"))
 ALT_YES = "new bar: traders pass"
 ALT_NO = "new bar: real bets, traders fail"
 
@@ -103,6 +107,15 @@ def main():
             r = line(key, shadow.summarize(groups[key]))
             if r:
                 out.append(r)
+        blocked = groups.get("skipped: per_event", [])
+        if blocked:
+            events = {}
+            for b in sorted(blocked, key=lambda r: r.get("created", "")):
+                events.setdefault(b.get("event") or b["asset"], []).append(b)
+            for keep, label in EVENT_CAPS:
+                r = line(label, shadow.summarize([b for v in events.values() for b in v[:keep]]))
+                if r:
+                    out.append(r)
         wide = [b for key, g in groups.items() if key in WIDE_LABELS.values() for b in g]
         if wide:
             r = line(WIDE_ALL, shadow.summarize(wide))
