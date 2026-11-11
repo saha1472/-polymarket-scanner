@@ -104,6 +104,22 @@ CHEAP_MAX_PRICE = 0.395    # just under the normal band's 0.40
 CHEAP_MIN_USD = 5          # these traders bet $5-30, far under MIN_POSITION_USD
 CHEAP_MAX_PER_RUN = 20
 
+# Deep-pool shadow test (sports, esports, weather): traders ranked below the
+# normal pool on the category board (LEADERBOARD_SIZE+1 to DEEP_BOARD_SIZE) who
+# clear the same bar, copied as shadow records only. Their scores live in their
+# own file and are refreshed a few wallets per run, so a scan's run time barely
+# moves. See RESEARCH_2026-11-11_leaderboard_depth.md.
+DEEP_SCANS = {"SPORTS", "ESPORTS", "WEATHER"}
+DEEP_FILE = f"traders_deep_{SCAN.lower()}.json"
+DEEP_BOARD_SIZE = 200
+DEEP_BOARD_HOURS = 24        # re-read the board this often
+DEEP_RESCORE_HOURS = 24      # re-score a wallet this often (ranks 51-200 move slowly)
+DEEP_MAX_SCORED_PER_RUN = 40
+DEEP_CHUNK = 10              # wallets scored per step, so the time budget is checked often
+DEEP_BUDGET_S = 150          # stop scoring for this run after this long
+DEEP_MAX_WIN_RATE = 0.90     # above this it is usually a hedger or bot, not a person to copy
+DEEP_MAX_PER_RUN = 20
+
 SESSION = requests.Session()
 
 
@@ -516,6 +532,144 @@ def record_cheap(book, scores, strict_candidates, ledger, **kw):
         import traceback
         traceback.print_exc()
         print(f"WARNING: cheap-bucket shadow failed ({err!r}); real bets are unaffected.")
+        return 0
+
+
+# ---------- Deep pool: shadow-only test of reading the leaderboard deeper ----------
+
+def deep_board():
+    """{wallet: name} of traders ranked just below the normal pool on this
+    category's month and all-time boards. Wallets already in the normal pool,
+    market makers and the hand-picked watchlist are left out."""
+    main, deep = set(), {}
+    for period in ("MONTH", "ALL"):
+        rows = data_v2("leaderboard", {"timePeriod": period, "orderBy": "PNL",
+                                       "limit": DEEP_BOARD_SIZE, "category": SCAN},
+                       max_pages=1) or []
+        for i, row in enumerate(map(v1_leader, rows)):
+            wallet = row.get("proxyWallet")
+            if not wallet:
+                continue
+            if i < LEADERBOARD_SIZE:
+                main.add(wallet.lower())
+                continue
+            pnl, vol = num(row.get("pnl")), num(row.get("vol"))
+            if vol > 0 and pnl / vol < MIN_PNL_TO_VOLUME:
+                continue
+            deep.setdefault(wallet, row.get("userName") or wallet[:10])
+    main |= {w.lower() for w in WATCHLIST.get(SCAN, {})}
+    return {w: n for w, n in deep.items() if w.lower() not in main}
+
+
+def deep_refresh(cache, now=None, score=None, board=None, clock=time.monotonic):
+    """Bring the deep-pool cache up to date: re-read the board once a day, then
+    score the wallets never scored or scored longest ago, a few per run.
+    cache = {"board_at", "board": {wallet: name}, "checked": {wallet: time},
+    "scores": {wallet: score}}. Returns (cache, number of wallets scored now)."""
+    now = now or datetime.now(timezone.utc)
+    age = hours_until(cache.get("board_at"))
+    if not cache.get("board") or age is None or -age >= DEEP_BOARD_HOURS:
+        fresh = (board or deep_board)()
+        if fresh:                       # a failed read keeps the old board
+            cache["board"], cache["board_at"] = fresh, now.isoformat()
+    board_now = cache.get("board") or {}
+    cache["checked"] = {w: t for w, t in (cache.get("checked") or {}).items() if w in board_now}
+    cache["scores"] = {w: s for w, s in (cache.get("scores") or {}).items() if w in board_now}
+
+    def hours_since(w):
+        h = hours_until(cache["checked"].get(w))
+        return None if h is None else -h
+
+    due = [w for w in board_now
+           if hours_since(w) is None or hours_since(w) >= DEEP_RESCORE_HOURS]
+    # never scored first, then the oldest
+    due.sort(key=lambda w: float("-inf") if hours_since(w) is None else -hours_since(w))
+    due = due[:DEEP_MAX_SCORED_PER_RUN]
+    done, start = 0, clock()
+    for i in range(0, len(due), DEEP_CHUNK):
+        if clock() - start > DEEP_BUDGET_S:
+            break
+        chunk = due[i:i + DEEP_CHUNK]
+        try:
+            got = (score or score_traders)({w: board_now[w] for w in chunk})
+        except Exception as err:               # noqa: BLE001
+            # one bad wallet must not hold up the rest: skip these until tomorrow
+            print(f"WARNING: could not score {len(chunk)} deep-pool wallets ({err!r}).")
+            got = None
+        stamp = datetime.now(timezone.utc).isoformat()
+        for w in chunk:
+            cache["checked"][w] = stamp           # also when too few bets: don't retry all day
+            if got is None:
+                continue                          # failed: keep any older score
+            if w in got:
+                cache["scores"][w] = got[w]
+            else:
+                cache["scores"].pop(w, None)
+        done += len(chunk)
+    return cache, done
+
+
+def deep_pool(scores):
+    """Deep-board traders who clear the normal bar, whose ROI range stays above
+    zero, and who don't win so often that the record is probably a hedger's."""
+    return {w: s for w, s in scores.items()
+            if passes_bar(s) and (s.get("roi_lo") or 0) > 0
+            and s["win_rate"] <= DEEP_MAX_WIN_RATE}
+
+
+def shadow_deep(book, pool, strict_candidates, ledger, find=None, size=None):
+    """Record what copying the deep pool would have done: shadow bets (kind
+    "skipped", reason "deep_pool"), one per event, never in the ledger. Signals
+    the normal pool already has and markets we hold are left out, so the record
+    is only what the deeper board adds. Returns the number added."""
+    if SCAN not in DEEP_SCANS or not pool:
+        return 0
+    taken_assets = {c["asset"] for c in strict_candidates}
+    taken_markets = {c["condition"] for c in strict_candidates}
+    taken_markets |= {b["condition"] for b in ledger["bets"]}
+    cands = [c for c in (find or find_candidates)(pool)
+             if c["asset"] not in taken_assets and c["condition"] not in taken_markets]
+    sized = [s for s in pmap(size or size_bet, cands) if s]
+    seen_events = {b.get("event") for b in book.bets
+                   if b["kind"] == "skipped" and b["reason"] == "deep_pool" and b.get("event")}
+    before = book.added
+    for s in sized:
+        if book.added - before >= DEEP_MAX_PER_RUN:
+            break
+        if s.get("event") and s["event"] in seen_events:
+            continue
+        held = [{k: h.get(k) for k in ("name", "win_rate", "roi", "n", "alt")}
+                for h in s["holders"].values()]
+        rec = book.add(SCAN, "skipped", "deep_pool", asset=s["asset"],
+                       condition=s["condition"], title=s["title"], event=s.get("event"),
+                       outcome=s["outcome"], price=s["price"], shares=s["shares"],
+                       stake=s["stake"], fee=s["fee"],
+                       extra={"traders": s["traders"], "deep": held})
+        if rec and s.get("event"):
+            seen_events.add(s["event"])
+    return book.added - before
+
+
+def record_deep_pool(book, strict_candidates, ledger, board=None, score=None,
+                     find=None, size=None):
+    """Refresh the deep pool and shadow-copy it, in a way that can never stop
+    the bot: this is evidence, not money. Returns the number of records added."""
+    if SCAN not in DEEP_SCANS:
+        return 0
+    try:
+        cache = read_json(DEEP_FILE, {})
+        if not isinstance(cache, dict):
+            cache = {}
+        cache, scored = deep_refresh(cache, board=board, score=score)
+        write_json(DEEP_FILE, cache, indent=1)
+        pool = deep_pool(cache["scores"])
+        print(f"Deep pool (shadow only): {len(cache.get('board') or {})} board wallets, "
+              f"{len(cache['scores'])} scored ({scored} this run), {len(pool)} pass the bar.")
+        return shadow_deep(book, pool, strict_candidates, ledger, find=find, size=size)
+    except Exception as err:               # noqa: BLE001
+        import traceback
+        traceback.print_exc()
+        print(f"WARNING: deep-pool shadow failed ({err!r}); real bets are unaffected.")
         return 0
 
 
@@ -964,6 +1118,9 @@ if __name__ == "__main__":
         cheap_added = record_cheap(book, scores, candidates, ledger)
         print(f"Cheap buckets (shadow only): {len(cheap_pool(scores))} trader(s), "
               f"{cheap_added} new record(s).")
+    if SCAN in DEEP_SCANS:
+        deep_added = record_deep_pool(book, candidates, ledger)
+        print(f"Deep pool: {deep_added} new record(s).")
     alt = [s["name"] for s in scores.values() if s.get("alt")]
     print(f"New bar (shadow only): {len(alt)} of {len(scores)} pass"
           + (f": {', '.join(alt)}" if alt else "."))
