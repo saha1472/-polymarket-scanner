@@ -1,5 +1,5 @@
 {
- "cash": 39.75572889155749,
+ "cash": 41.74522889155749,
  "bets": [
   {
    "strategy": "MORNING",
@@ -11883,7 +11883,7 @@
    "profit_if_win": 0.08695652173913038,
    "reason": "favourite 2\u00b0C mid 0.95, local 08:01",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-12T05:01:30.029012+00:00",
    "expires": "2026-11-12T09:00:00+00:00",
    "audit": {
@@ -12062,7 +12062,7 @@
    "profit_if_win": 0.4285714285714286,
    "reason": "favourite 16\u00b0C mid 0.84, local 10:16",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-12T07:16:33.202410+00:00",
    "expires": "2026-11-12T09:00:00+00:00",
    "audit": {
@@ -12107,7 +12107,7 @@
    "profit_if_win": 0.3157894736842106,
    "reason": "favourite 0\u00b0C mid 0.88, local 10:31",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-12T07:31:41.738418+00:00",
    "expires": "2026-11-12T09:00:00+00:00",
    "audit": {
@@ -12262,6 +12262,91 @@
      "yes_ask": 1.0
     }
    }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "19540751738811606280026510941889001757376161675605321924665909459759580125576",
+   "condition": "0xb3544ff60d81eedb407ad27d8b3c1ed5bcee779b75530c5b9a852ccbc30e4b10",
+   "event": "lowest-temperature-in-london-on-november-12-2026",
+   "title": "Will the lowest temperature in London be 4\u00b0C on November 12?",
+   "outcome": "YES",
+   "bucket": "4\u00b0C",
+   "price": 0.79,
+   "shares": 1.2658227848101264,
+   "stake": 1.0,
+   "fee": 0.010499999999999997,
+   "profit_if_win": 0.25532278481012644,
+   "reason": "favourite 4\u00b0C mid 0.76, local 09:02",
+   "audit": {
+    "code": "e58dc492e75c",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-12T09:02:20.720851+00:00",
+    "book": {
+     "asks": [
+      [
+       0.79,
+       40.0
+      ],
+      [
+       0.81,
+       20.0
+      ],
+      [
+       0.94,
+       20.0
+      ],
+      [
+       0.97,
+       5.0
+      ]
+     ],
+     "bids": [
+      [
+       0.65,
+       20.0
+      ],
+      [
+       0.09,
+       20.0
+      ],
+      [
+       0.07,
+       40.0
+      ],
+      [
+       0.06,
+       5.0
+      ],
+      [
+       0.03,
+       20.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1794474139509",
+     "hash": "e54575c2dda298f45ae3d67117598dc861095500"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-12T09:02:20.720893+00:00"
   }
  ]
 }
