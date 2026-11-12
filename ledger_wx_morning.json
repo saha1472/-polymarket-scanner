@@ -1,5 +1,5 @@
 {
- "cash": 43.76322889155749,
+ "cash": 43.75772889155749,
  "bets": [
   {
    "strategy": "MORNING",
@@ -11928,7 +11928,7 @@
    "profit_if_win": 0.13636363636363646,
    "reason": "favourite 21\u00b0C mid 0.94, local 10:16",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-12T05:16:37.130813+00:00",
    "expires": "2026-11-12T07:00:00+00:00",
    "audit": {
@@ -11957,6 +11957,95 @@
      "yes_ask": 1.0
     }
    }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "84399783525222101581735612851070142756358685792280458119443152314642412717900",
+   "condition": "0x419b8c04627b1f99761a1fe0c64ce7dd33647e6840c9b9d41cfd57099a10d6c2",
+   "event": "lowest-temperature-in-milan-on-november-12-2026",
+   "title": "Will the lowest temperature in Milan be 10\u00b0C on November 12?",
+   "outcome": "YES",
+   "bucket": "10\u00b0C",
+   "price": 0.8899999999999999,
+   "shares": 1.1235955056179776,
+   "stake": 1.0,
+   "fee": 0.0055,
+   "profit_if_win": 0.1180955056179776,
+   "reason": "favourite 10\u00b0C mid 0.73, local 08:01",
+   "audit": {
+    "code": "baa6bb94ecb1",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-12T07:01:28.568679+00:00",
+    "book": {
+     "asks": [
+      [
+       0.89,
+       5.0
+      ],
+      [
+       0.9,
+       20.0
+      ],
+      [
+       0.91,
+       10.0
+      ],
+      [
+       0.95,
+       20.0
+      ],
+      [
+       0.96,
+       20.0
+      ]
+     ],
+     "bids": [
+      [
+       0.6,
+       15.0
+      ],
+      [
+       0.09,
+       39.99
+      ],
+      [
+       0.08,
+       5.0
+      ],
+      [
+       0.03,
+       40.0
+      ],
+      [
+       0.02,
+       5.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1794466852268",
+     "hash": "e5e6dff3f6dd8db9e47f4d3c1b8e9edaa8fe2ac0"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-12T07:01:28.568719+00:00"
   }
  ]
 }
