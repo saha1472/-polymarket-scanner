@@ -1,5 +1,5 @@
 {
- "cash": 42.76322889155749,
+ "cash": 38.76322889155749,
  "bets": [
   {
    "strategy": "MORNING",
@@ -11593,6 +11593,186 @@
     "time": "2026-11-12T02:01:30.964673+00:00",
     "quote": {
      "yes_bid": 0.69,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "46790131393665850145705609282650252918910181147217432491290703056536107678988",
+   "condition": "0xc053f0032d598e21232d5d4141b29ffc169cbef74cfd6f9b9d5f840d8e3fa7eb",
+   "event": "lowest-temperature-in-taipei-on-november-12-2026",
+   "title": "Will the lowest temperature in Taipei be 20\u00b0C on November 12?",
+   "outcome": "YES",
+   "bucket": "20\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 20\u00b0C mid 0.94, local 10:16",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-12T02:16:13.321570+00:00",
+   "expires": "2026-11-12T04:00:00+00:00",
+   "audit": {
+    "code": "ca3df7b42cb1",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-12T02:16:13.321594+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "75690829312159898064128281923083697919870713845880669424775893312634096591739",
+   "condition": "0x19fed7ec50d9f7d8f2e3f5447cf0b3f5f4f00f2f2772997863313ca30c1a2138",
+   "event": "lowest-temperature-in-chengdu-on-november-12-2026",
+   "title": "Will the lowest temperature in Chengdu be 11\u00b0C on November 12?",
+   "outcome": "YES",
+   "bucket": "11\u00b0C",
+   "price": 0.85,
+   "shares": 1.1764705882352942,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.17647058823529416,
+   "reason": "favourite 11\u00b0C mid 0.91, local 10:16",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-12T02:16:13.447214+00:00",
+   "expires": "2026-11-12T04:00:00+00:00",
+   "audit": {
+    "code": "ca3df7b42cb1",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-12T02:16:13.447226+00:00",
+    "quote": {
+     "yes_bid": 0.84,
+     "yes_ask": 0.97
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "49980394572678510776260446009798763529636110710334536977716250659669131680950",
+   "condition": "0x95495348f63be039c497e3faafcc193f81aa9ca0082a99132f1381a63019910a",
+   "event": "lowest-temperature-in-shenzhen-on-november-12-2026",
+   "title": "Will the lowest temperature in Shenzhen be 20\u00b0C on November 12?",
+   "outcome": "YES",
+   "bucket": "20\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 20\u00b0C mid 0.94, local 10:16",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-12T02:16:13.581778+00:00",
+   "expires": "2026-11-12T04:00:00+00:00",
+   "audit": {
+    "code": "ca3df7b42cb1",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-12T02:16:13.581800+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "98213525170839409978380424291417690263165808453155182554559185095522857767430",
+   "condition": "0xa3309c458aa5ffd21f0d654cc947714d48fb802b181c0ff22136680442b185cc",
+   "event": "lowest-temperature-in-guangzhou-on-november-12-2026",
+   "title": "Will the lowest temperature in Guangzhou be 16\u00b0C on November 12?",
+   "outcome": "YES",
+   "bucket": "16\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 16\u00b0C mid 0.94, local 10:16",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-12T02:16:13.703533+00:00",
+   "expires": "2026-11-12T04:00:00+00:00",
+   "audit": {
+    "code": "ca3df7b42cb1",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-12T02:16:13.703558+00:00",
+    "quote": {
+     "yes_bid": 0.87,
      "yes_ask": 1.0
     }
    }
