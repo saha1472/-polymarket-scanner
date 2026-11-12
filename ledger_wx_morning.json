@@ -1,5 +1,5 @@
 {
- "cash": 44.76322889155749,
+ "cash": 43.76322889155749,
  "bets": [
   {
    "strategy": "MORNING",
@@ -11865,6 +11865,51 @@
     "quote": {
      "yes_bid": 0.87,
      "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "87204080843867479445518057535205650945773566512598100553517265674625462287073",
+   "condition": "0x77171756281fab18bf9e12a750512777f315a8e7b140e838816bb1421fb8436b",
+   "event": "lowest-temperature-in-ankara-on-november-12-2026",
+   "title": "Will the lowest temperature in Ankara be 2\u00b0C on November 12?",
+   "outcome": "YES",
+   "bucket": "2\u00b0C",
+   "price": 0.92,
+   "shares": 1.0869565217391304,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.08695652173913038,
+   "reason": "favourite 2\u00b0C mid 0.95, local 08:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-12T05:01:30.029012+00:00",
+   "expires": "2026-11-12T09:00:00+00:00",
+   "audit": {
+    "code": "a221000d8f1d",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-12T05:01:30.029028+00:00",
+    "quote": {
+     "yes_bid": 0.91,
+     "yes_ask": 0.99
     }
    }
   }
