@@ -1,5 +1,5 @@
 {
- "cash": 42.74522889155749,
+ "cash": 41.74522889155749,
  "bets": [
   {
    "strategy": "MORNING",
@@ -12347,6 +12347,51 @@
    },
    "status": "open",
    "opened": "2026-11-12T09:02:20.720893+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "60576329199741825065656367547324603654610178078031677352845250476795538277393",
+   "condition": "0x6f7ea0d1baa776c97605a82e7481c358c63e407f4ede30f698e5f268f748bd7e",
+   "event": "lowest-temperature-in-amsterdam-on-november-12-2026",
+   "title": "Will the lowest temperature in Amsterdam be 2\u00b0C on November 12?",
+   "outcome": "YES",
+   "bucket": "2\u00b0C",
+   "price": 0.9,
+   "shares": 1.1111111111111112,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.11111111111111116,
+   "reason": "favourite 2\u00b0C mid 0.94, local 11:16",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-12T10:16:30.656474+00:00",
+   "expires": "2026-11-12T11:00:00+00:00",
+   "audit": {
+    "code": "80f03420f2de",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-12T10:16:30.656487+00:00",
+    "quote": {
+     "yes_bid": 0.89,
+     "yes_ask": 0.99
+    }
+   }
   }
  ]
 }
