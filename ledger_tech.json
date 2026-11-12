@@ -1,5 +1,5 @@
 {
-  "cash": 51.51782189147314,
+  "cash": 50.50302189147314,
   "bets": [
     {
       "asset": "26922035314154497018737638829774069315488348073215105242613348160492279741517",
@@ -743,6 +743,113 @@
       },
       "closed": "2026-11-11T08:02:20.633014+00:00",
       "pnl": -1.0048
+    },
+    {
+      "asset": "94592567375755535402382514854858851873438883868449100686326493803085500123190",
+      "condition": "0x835acf3bffe67dcfb5e5f97aba52414739b6f5ff1970195b52d97bb374796155",
+      "title": "Jensen Huang announced resignation or removal by November 12, 2026?",
+      "outcome": "Yes",
+      "event": "jensen-huang-announced-resignation-or-removal-by-december-31",
+      "price": 0.63,
+      "shares": 1.5873015873015872,
+      "stake": 1.0,
+      "fee": 0.0148,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "rewardbots"
+      ],
+      "holders": {
+        "0x876bb030ddd424ef505ae02914024cf18c6a1703": {
+          "name": "rewardbots",
+          "size": 2612.2361,
+          "entry": 0.5993,
+          "win_rate": 0.5972222222222222,
+          "roi": 0.2837647415942606,
+          "n": 72,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "dc6299c1c99d",
+        "scan": "TECH",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.04,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-12T03:16:17.293480+00:00",
+        "book": {
+          "asks": [
+            [
+              0.63,
+              165.0
+            ],
+            [
+              0.64,
+              2210.3
+            ],
+            [
+              0.65,
+              1816.22
+            ],
+            [
+              0.66,
+              1232.32
+            ],
+            [
+              0.67,
+              15.66
+            ]
+          ],
+          "bids": [
+            [
+              0.62,
+              945.74
+            ],
+            [
+              0.61,
+              3596.61
+            ],
+            [
+              0.6,
+              1852.25
+            ],
+            [
+              0.59,
+              100.0
+            ],
+            [
+              0.58,
+              270.27
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1794453372591",
+          "hash": "2bb7c5602199d92aacc662d5ec203d13e2f35004"
+        }
+      },
+      "opened": "2026-11-12T03:16:17.293550+00:00",
+      "ends": "2026-11-13T00:00:03.864282+00:00"
     }
   ]
 }
