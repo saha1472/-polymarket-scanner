@@ -1,5 +1,5 @@
 {
- "cash": 42.74522889155749,
+ "cash": 41.74522889155749,
  "bets": [
   {
    "strategy": "MORNING",
@@ -12390,6 +12390,51 @@
     "quote": {
      "yes_bid": 0.89,
      "yes_ask": 0.99
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "94890107978715416649886523641746747332056440339251529179286102947229050355149",
+   "condition": "0xcbf026af21f8e8793d67b5e596a3df534da9c647b102cd8dc825b6ecbe8ec50d",
+   "event": "lowest-temperature-in-buenos-aires-on-november-12-2026",
+   "title": "Will the lowest temperature in Buenos Aires be 17\u00b0C on November 12?",
+   "outcome": "YES",
+   "bucket": "17\u00b0C",
+   "price": 0.76,
+   "shares": 1.3157894736842106,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.3157894736842106,
+   "reason": "favourite 17\u00b0C mid 0.88, local 09:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-12T12:01:49.572661+00:00",
+   "expires": "2026-11-12T15:00:00+00:00",
+   "audit": {
+    "code": "cf6e9e722ae6",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-12T12:01:49.574806+00:00",
+    "quote": {
+     "yes_bid": 0.75,
+     "yes_ask": 1.0
     }
    }
   }
