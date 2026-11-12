@@ -1,5 +1,5 @@
 {
- "cash": 45.76322889155749,
+ "cash": 44.76322889155749,
  "bets": [
   {
    "strategy": "MORNING",
@@ -11459,6 +11459,51 @@
     "quote": {
      "yes_bid": 0.77,
      "yes_ask": 0.97
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "66531405662410716653615889533167625524015517365222555473584117597970074940171",
+   "condition": "0xf1e588b21cf02ca82fa9840ea5f151f92c66e31fb4f0e589b193d1fdbab749aa",
+   "event": "lowest-temperature-in-busan-on-november-12-2026",
+   "title": "Will the lowest temperature in Busan be 6\u00b0C on November 12?",
+   "outcome": "YES",
+   "bucket": "6\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 6\u00b0C mid 0.94, local 10:17",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-12T01:17:41.172089+00:00",
+   "expires": "2026-11-12T03:00:00+00:00",
+   "audit": {
+    "code": "836aef20dd87",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-12T01:17:41.173967+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
     }
    }
   }
