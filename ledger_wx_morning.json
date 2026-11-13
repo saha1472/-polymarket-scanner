@@ -1,5 +1,5 @@
 {
- "cash": 42.16631384865226,
+ "cash": 42.16381384865226,
  "bets": [
   {
    "strategy": "MORNING",
@@ -12767,7 +12767,7 @@
    "profit_if_win": 0.13636363636363646,
    "reason": "favourite 6\u00b0C mid 0.94, local 10:16",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-13T07:16:08.394514+00:00",
    "expires": "2026-11-13T09:00:00+00:00",
    "audit": {
@@ -12886,6 +12886,87 @@
      "yes_ask": 1.0
     }
    }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "60414643487866975067549004453891466270590991949315319315930757079070342383799",
+   "condition": "0x41adc8f8dbdea7a023186232bb253adfc6d685189aefaf5b99a055febfe52f80",
+   "event": "lowest-temperature-in-milan-on-november-13-2026",
+   "title": "Will the lowest temperature in Milan be 9\u00b0C on November 13?",
+   "outcome": "YES",
+   "bucket": "9\u00b0C",
+   "price": 0.9500000000000001,
+   "shares": 1.0526315789473684,
+   "stake": 1.0,
+   "fee": 0.0025000000000000022,
+   "profit_if_win": 0.05013157894736836,
+   "reason": "favourite 9\u00b0C mid 0.73, local 10:08",
+   "audit": {
+    "code": "229a36b376f6",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-13T09:08:36.766001+00:00",
+    "book": {
+     "asks": [
+      [
+       0.95,
+       20.0
+      ],
+      [
+       0.96,
+       25.0
+      ],
+      [
+       0.97,
+       20.0
+      ],
+      [
+       0.99,
+       38.96
+      ]
+     ],
+     "bids": [
+      [
+       0.52,
+       28.0
+      ],
+      [
+       0.06,
+       5.0
+      ],
+      [
+       0.02,
+       5.0
+      ],
+      [
+       0.01,
+       10.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1794560902121",
+     "hash": "fe1c91250c8ad9afffc945c5e358c3f30793809b"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-13T09:08:36.766045+00:00"
   }
  ]
 }
