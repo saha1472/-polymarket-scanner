@@ -1,5 +1,5 @@
 {
-  "cash": 45.192780772294974,
+  "cash": 41.10822077229497,
   "bets": [
     {
       "asset": "27670129619626213108912772417909250054836917373961985276008181424732686448004",
@@ -1907,6 +1907,434 @@
       "stops": {},
       "closed": "2026-11-13T02:46:05.449315+00:00",
       "pnl": -1.0308
+    },
+    {
+      "asset": "11143940494934325672440075609242762636109250358581744849370641257387611925665",
+      "condition": "0x9487a2031fed314dbdf381cc9725b31a059f07b6c616eba33d83aca784b39358",
+      "title": "Will the price of Ethereum be above $1,900 on November 15?",
+      "outcome": "Yes",
+      "event": "ethereum-above-on-november-15-2026",
+      "price": 0.7,
+      "shares": 1.4285714285714286,
+      "stake": 1.0,
+      "fee": 0.021,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Tokor"
+      ],
+      "holders": {
+        "0xa19cbababc312f9df185e49d7004c249ed1ade6b": {
+          "name": "Tokor",
+          "size": 749.9988,
+          "entry": 0.6831,
+          "win_rate": 0.58,
+          "roi": 0.23841293682035314,
+          "n": 500,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "b85196052711",
+        "scan": "GENERAL",
+        "settings": {
+          "min_price": 0.55,
+          "max_price": 0.95,
+          "fee_rate": 0.07,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-13T23:02:34.424906+00:00",
+        "book": {
+          "asks": [
+            [
+              0.7,
+              4000.0
+            ],
+            [
+              0.702,
+              110.0
+            ],
+            [
+              0.703,
+              10.82
+            ],
+            [
+              0.721,
+              50.0
+            ],
+            [
+              0.724,
+              50.0
+            ]
+          ],
+          "bids": [
+            [
+              0.686,
+              20.0
+            ],
+            [
+              0.685,
+              10.0
+            ],
+            [
+              0.684,
+              1106.54
+            ],
+            [
+              0.683,
+              105.0
+            ],
+            [
+              0.682,
+              80.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.001",
+          "timestamp": "1794610948453",
+          "hash": "9131451bb0d8ea9e36c44b9f6cb87f912e567f46"
+        }
+      },
+      "opened": "2026-11-13T23:02:34.424985+00:00",
+      "ends": "2026-11-15T00:00:05.806566+00:00"
+    },
+    {
+      "asset": "62116416911921811175030182166067374099952955717877018626477327810306000351882",
+      "condition": "0x98debcbf455b6dd80007e56424be8d809db39588a587cfe2d99a2eee95e657b3",
+      "title": "Will the price of Ethereum be between $1,800 and $1,900 on November 14?",
+      "outcome": "No",
+      "event": "ethereum-price-on-november-14-2026",
+      "price": 0.772,
+      "shares": 1.2953367875647668,
+      "stake": 1.0,
+      "fee": 0.01596,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "Tokor"
+      ],
+      "holders": {
+        "0xa19cbababc312f9df185e49d7004c249ed1ade6b": {
+          "name": "Tokor",
+          "size": 645.0132,
+          "entry": 0.7464,
+          "win_rate": 0.58,
+          "roi": 0.23841293682035314,
+          "n": 500,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "b85196052711",
+        "scan": "GENERAL",
+        "settings": {
+          "min_price": 0.55,
+          "max_price": 0.95,
+          "fee_rate": 0.07,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-13T23:02:34.425018+00:00",
+        "book": {
+          "asks": [
+            [
+              0.772,
+              2800.0
+            ],
+            [
+              0.861,
+              30.0
+            ],
+            [
+              0.881,
+              7.24
+            ],
+            [
+              0.882,
+              20.0
+            ],
+            [
+              0.901,
+              20.0
+            ]
+          ],
+          "bids": [
+            [
+              0.722,
+              2800.0
+            ],
+            [
+              0.721,
+              260.0
+            ],
+            [
+              0.698,
+              20.0
+            ],
+            [
+              0.697,
+              10.0
+            ],
+            [
+              0.693,
+              50.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.001",
+          "timestamp": "1794610948249",
+          "hash": "446f23acd820dbfbe3f898dc102dc0555446cfee"
+        }
+      },
+      "opened": "2026-11-13T23:02:34.425081+00:00",
+      "ends": "2026-11-14T00:00:05.806652+00:00"
+    },
+    {
+      "asset": "42708293479875670635976882165011140678694088462372206829301227610446577545796",
+      "condition": "0xcf769dd23f966f0c95f6c99b1b33026ecc5c3ac633e577f5f6d1f7b3b8e98b30",
+      "title": "UFC 334: Cesar Almeida vs. Donte Johnson (Middleweight, Prelims)",
+      "outcome": "Donte Johnson",
+      "event": "ufc-ces2-don13-2026-11-14",
+      "price": 0.66,
+      "shares": 1.5151515151515151,
+      "stake": 1.0,
+      "fee": 0.0238,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "SineNooneEI"
+      ],
+      "holders": {
+        "0x38337de21ff0bb0a11a40761507d51e318d633d1": {
+          "name": "SineNooneEI",
+          "size": 29334.84,
+          "entry": 0.6128,
+          "win_rate": 0.5950413223140496,
+          "roi": 0.105440363564997,
+          "n": 121,
+          "alt": false
+        }
+      },
+      "audit": {
+        "code": "b85196052711",
+        "scan": "GENERAL",
+        "settings": {
+          "min_price": 0.55,
+          "max_price": 0.95,
+          "fee_rate": 0.07,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-13T23:02:34.425133+00:00",
+        "book": {
+          "asks": [
+            [
+              0.66,
+              11558.19
+            ],
+            [
+              0.67,
+              14353.83
+            ],
+            [
+              0.68,
+              2513.0
+            ],
+            [
+              0.69,
+              3690.32
+            ],
+            [
+              0.7,
+              700.0
+            ]
+          ],
+          "bids": [
+            [
+              0.65,
+              9858.06
+            ],
+            [
+              0.64,
+              7108.97
+            ],
+            [
+              0.63,
+              40528.5
+            ],
+            [
+              0.62,
+              8182.84
+            ],
+            [
+              0.61,
+              7888.61
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1794610942128",
+          "hash": "0b41a573858483fa968494a7bff6d006f3257fa2"
+        }
+      },
+      "opened": "2026-11-13T23:02:34.425171+00:00",
+      "ends": "2026-11-15T00:00:05.806538+00:00"
+    },
+    {
+      "asset": "60144427561771718596559085738390105386430561652586463294352741497340414283705",
+      "condition": "0x8aeb6f6dfdd8eff41107e7fc1c4ce446c053360031375c24b2ad62d1ebb1c9a2",
+      "title": "O/U 2.5 Rounds",
+      "outcome": "Over",
+      "event": "ufc-ste2-cha29-2026-11-14",
+      "price": 0.66,
+      "shares": 1.5151515151515151,
+      "stake": 1.0,
+      "fee": 0.0238,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "SineNooneEI"
+      ],
+      "holders": {
+        "0x38337de21ff0bb0a11a40761507d51e318d633d1": {
+          "name": "SineNooneEI",
+          "size": 5261.4864,
+          "entry": 0.6299,
+          "win_rate": 0.5950413223140496,
+          "roi": 0.105440363564997,
+          "n": 121,
+          "alt": false
+        }
+      },
+      "audit": {
+        "code": "b85196052711",
+        "scan": "GENERAL",
+        "settings": {
+          "min_price": 0.55,
+          "max_price": 0.95,
+          "fee_rate": 0.07,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-13T23:02:34.425186+00:00",
+        "book": {
+          "asks": [
+            [
+              0.66,
+              1497.05
+            ],
+            [
+              0.67,
+              3839.39
+            ],
+            [
+              0.68,
+              3978.12
+            ],
+            [
+              0.69,
+              7841.0
+            ],
+            [
+              0.7,
+              4100.0
+            ]
+          ],
+          "bids": [
+            [
+              0.64,
+              10.0
+            ],
+            [
+              0.63,
+              3261.97
+            ],
+            [
+              0.62,
+              2000.0
+            ],
+            [
+              0.61,
+              4121.31
+            ],
+            [
+              0.6,
+              2005.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1794610554118",
+          "hash": "3ebfa87416eb1d51a170abfe6e365322c6e8071b"
+        }
+      },
+      "opened": "2026-11-13T23:02:34.425223+00:00",
+      "ends": "2026-11-15T00:00:05.806584+00:00"
     }
   ]
 }
