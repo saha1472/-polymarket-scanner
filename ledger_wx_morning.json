@@ -1,5 +1,5 @@
 {
- "cash": 45.176313848652256,
+ "cash": 44.176313848652256,
  "bets": [
   {
    "strategy": "MORNING",
@@ -12578,6 +12578,51 @@
     "quote": {
      "yes_bid": 0.87,
      "yes_ask": 0.99
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "66191198547912547692427092786212337673639681361729159804418753804112236727541",
+   "condition": "0x3be087f576bbfe9f0c189af8184a1849aca98f7c577ece7acb25cd0ef0586e3f",
+   "event": "lowest-temperature-in-chengdu-on-november-13-2026",
+   "title": "Will the lowest temperature in Chengdu be 12\u00b0C on November 13?",
+   "outcome": "YES",
+   "bucket": "12\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 12\u00b0C mid 0.94, local 11:49",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-13T03:49:24.160207+00:00",
+   "expires": "2026-11-13T04:00:00+00:00",
+   "audit": {
+    "code": "dd924aa51a14",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-13T03:49:24.162061+00:00",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 1.0
     }
    }
   }
