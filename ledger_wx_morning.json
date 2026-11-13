@@ -12857,7 +12857,7 @@
    "profit_if_win": 0.17647058823529416,
    "reason": "favourite 14\u00b0C mid 0.92, local 10:16",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-13T08:16:44.105863+00:00",
    "expires": "2026-11-13T10:00:00+00:00",
    "audit": {
@@ -12967,6 +12967,51 @@
    },
    "status": "open",
    "opened": "2026-11-13T09:08:36.766045+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "13600596021109802695402536241837241050444014998124030515787496170542540167699",
+   "condition": "0xc5e48bba219b087474b8aca736242b5b881b2f8451faece155859864c071425e",
+   "event": "lowest-temperature-in-madrid-on-november-13-2026",
+   "title": "Will the lowest temperature in Madrid be 12\u00b0C on November 13?",
+   "outcome": "YES",
+   "bucket": "12\u00b0C",
+   "price": 0.76,
+   "shares": 1.3157894736842106,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.3157894736842106,
+   "reason": "favourite 12\u00b0C mid 0.88, local 11:01",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-13T10:01:47.669310+00:00",
+   "expires": "2026-11-13T11:00:00+00:00",
+   "audit": {
+    "code": "c0b4d7223fab",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-13T10:01:47.671077+00:00",
+    "quote": {
+     "yes_bid": 0.75,
+     "yes_ask": 1.0
+    }
+   }
   }
  ]
 }
