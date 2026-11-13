@@ -1,5 +1,5 @@
 {
- "cash": 42.91049106384213,
+ "cash": 41.91049106384213,
  "bets": [
   {
    "strategy": "MORNING",
@@ -12530,6 +12530,52 @@
     "quote": {
      "yes_bid": 0.92,
      "yes_ask": 0.98
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "3392053889124224184040323258908055475613710635239246243059280123632206008993",
+   "condition": "0x446b96d974d8cf8a27409be289ebb86c0afeda79aa95cf2c9293101525beae99",
+   "event": "lowest-temperature-in-shanghai-on-november-13-2026",
+   "title": "Will the lowest temperature in Shanghai be 15\u00b0C on November 13?",
+   "outcome": "YES",
+   "bucket": "15\u00b0C",
+   "price": 0.88,
+   "shares": 1.1363636363636365,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.13636363636363646,
+   "reason": "favourite 15\u00b0C mid 0.93, local 08:09",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-13T00:09:12.692009+00:00",
+   "expires": "2026-11-13T04:00:00+00:00",
+   "audit": {
+    "code": "5915c5947c3c",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-13T00:09:12.692022+00:00",
+    "trigger_sha": "c69ac9c0e171",
+    "quote": {
+     "yes_bid": 0.87,
+     "yes_ask": 0.99
     }
    }
   }
