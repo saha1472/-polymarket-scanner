@@ -1,5 +1,5 @@
 {
- "cash": 43.91049106384213,
+ "cash": 42.91049106384213,
  "bets": [
   {
    "strategy": "MORNING",
@@ -12483,6 +12483,52 @@
     "time": "2026-11-12T23:02:32.335972+00:00",
     "quote": {
      "yes_bid": 0.88,
+     "yes_ask": 0.98
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "12333261333626921483166108336752567944136436235664482095275603890895746920346",
+   "condition": "0xe977c038e2c4c75fcedeefea1b5ee6cc7da8df9fe1ffd45d9d0ba86792a867d4",
+   "event": "lowest-temperature-in-tokyo-on-november-13-2026",
+   "title": "Will the lowest temperature in Tokyo be 11\u00b0C on November 13?",
+   "outcome": "YES",
+   "bucket": "11\u00b0C",
+   "price": 0.93,
+   "shares": 1.075268817204301,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.07526881720430101,
+   "reason": "favourite 11\u00b0C mid 0.95, local 08:57",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-12T23:57:04.197047+00:00",
+   "expires": "2026-11-13T03:00:00+00:00",
+   "audit": {
+    "code": "c69ac9c0e171",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-12T23:57:04.197067+00:00",
+    "trigger_sha": "24b8b38dbd48",
+    "quote": {
+     "yes_bid": 0.92,
      "yes_ask": 0.98
     }
    }
