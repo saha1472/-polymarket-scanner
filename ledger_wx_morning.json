@@ -1,5 +1,5 @@
 {
- "cash": 46.46644542759963,
+ "cash": 45.46644542759963,
  "bets": [
   {
    "strategy": "MORNING",
@@ -13059,6 +13059,51 @@
     "quote": {
      "yes_bid": 0.87,
      "yes_ask": 0.98
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "65523089675913341253793349673615875951406399201518801809365346325367121202096",
+   "condition": "0xb37451d312c83b1970baf7b8122f6f72ae631eb635361887249f3cc1ad6ee5e9",
+   "event": "lowest-temperature-in-beijing-on-november-14-2026",
+   "title": "Will the lowest temperature in Beijing be 1\u00b0C on November 14?",
+   "outcome": "YES",
+   "bucket": "1\u00b0C",
+   "price": 0.71,
+   "shares": 1.4084507042253522,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.40845070422535223,
+   "reason": "favourite 1\u00b0C mid 0.83, local 08:31",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-14T00:31:32.718000+00:00",
+   "expires": "2026-11-14T04:00:00+00:00",
+   "audit": {
+    "code": "dd9b196898f7",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-14T00:31:32.718012+00:00",
+    "quote": {
+     "yes_bid": 0.7,
+     "yes_ask": 0.97
     }
    }
   }
