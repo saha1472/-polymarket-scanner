@@ -1,5 +1,5 @@
 {
- "cash": 42.456445427599625,
+ "cash": 42.453445427599625,
  "bets": [
   {
    "strategy": "MORNING",
@@ -13338,7 +13338,7 @@
    "profit_if_win": 0.3157894736842106,
    "reason": "favourite 23\u00b0C mid 0.88, local 10:17",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-14T05:17:44.545271+00:00",
    "expires": "2026-11-14T07:00:00+00:00",
    "audit": {
@@ -13456,6 +13456,91 @@
    },
    "status": "open",
    "opened": "2026-11-14T06:47:38.451472+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "10402590957904049328758424148457279885296481516102044007930554007586677777173",
+   "condition": "0x182fe6652766f1aec7ae3396e9cdc2b49487b7eab75f1c5ad0b4f7e401cb0136",
+   "event": "lowest-temperature-in-ankara-on-november-14-2026",
+   "title": "Will the lowest temperature in Ankara be 10\u00b0C on November 14?",
+   "outcome": "YES",
+   "bucket": "10\u00b0C",
+   "price": 0.9400000000000001,
+   "shares": 1.0638297872340425,
+   "stake": 1.0,
+   "fee": 0.0030000000000000022,
+   "profit_if_win": 0.06082978723404253,
+   "reason": "favourite 10\u00b0C mid 0.71, local 10:01",
+   "audit": {
+    "code": "a1c6a9871b25",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-14T07:01:38.374099+00:00",
+    "book": {
+     "asks": [
+      [
+       0.94,
+       20.0
+      ],
+      [
+       0.95,
+       20.0
+      ],
+      [
+       0.98,
+       25.0
+      ],
+      [
+       0.99,
+       37.98
+      ]
+     ],
+     "bids": [
+      [
+       0.67,
+       22.0
+      ],
+      [
+       0.14,
+       20.0
+      ],
+      [
+       0.07,
+       5.0
+      ],
+      [
+       0.03,
+       40.0
+      ],
+      [
+       0.02,
+       5.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1794639687951",
+     "hash": "54db98f6a66fe91f0ef7795bcadbf99753a23420"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-14T07:01:38.374136+00:00"
   }
  ]
 }
