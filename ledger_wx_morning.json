@@ -1,5 +1,5 @@
 {
- "cash": 43.46444542759963,
+ "cash": 42.456445427599625,
  "bets": [
   {
    "strategy": "MORNING",
@@ -13367,6 +13367,95 @@
      "yes_ask": 1.0
     }
    }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "53809748183906574248840522047000536858527785107673900344358745382671658860873",
+   "condition": "0x3ccc621ff6982093b897183e56b368e3516011a5316ac962e2deddda7307fdf3",
+   "event": "lowest-temperature-in-moscow-on-november-14-2026",
+   "title": "Will the lowest temperature in Moscow be 2\u00b0C on November 14?",
+   "outcome": "YES",
+   "bucket": "2\u00b0C",
+   "price": 0.84,
+   "shares": 1.1904761904761905,
+   "stake": 1.0,
+   "fee": 0.008000000000000002,
+   "profit_if_win": 0.18247619047619046,
+   "reason": "favourite 2\u00b0C mid 0.77, local 09:47",
+   "audit": {
+    "code": "74095a349b12",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-14T06:47:38.451426+00:00",
+    "book": {
+     "asks": [
+      [
+       0.84,
+       31.85
+      ],
+      [
+       0.85,
+       20.0
+      ],
+      [
+       0.95,
+       20.0
+      ],
+      [
+       0.96,
+       20.0
+      ],
+      [
+       0.97,
+       5.0
+      ]
+     ],
+     "bids": [
+      [
+       0.65,
+       5.0
+      ],
+      [
+       0.15,
+       20.0
+      ],
+      [
+       0.14,
+       21.42
+      ],
+      [
+       0.07,
+       5.0
+      ],
+      [
+       0.03,
+       20.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1794638857488",
+     "hash": "6f40358f71725963dab73485db33667ffe2d387d"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-14T06:47:38.451472+00:00"
   }
  ]
 }
