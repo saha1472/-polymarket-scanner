@@ -1,5 +1,5 @@
 {
- "cash": 39.67058828474248,
+ "cash": 37.667088284742476,
  "bets": [
   {
    "strategy": "MORNING",
@@ -14122,7 +14122,7 @@
    "profit_if_win": 0.13636363636363646,
    "reason": "favourite 22\u00b0C mid 0.94, local 10:19",
    "order": "maker",
-   "status": "resting",
+   "status": "cancelled",
    "placed": "2026-11-15T05:19:22.954320+00:00",
    "expires": "2026-11-15T07:00:00+00:00",
    "audit": {
@@ -14194,6 +14194,173 @@
     "quote": {
      "yes_bid": 0.8,
      "yes_ask": 1.0
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "10588675853174888708469296621029595681295403871279637439192490852915837860702",
+   "condition": "0x3971150035461152424ca11f3379915ad963a28abeeed0254b16ec42a9683123",
+   "event": "lowest-temperature-in-ankara-on-november-15-2026",
+   "title": "Will the lowest temperature in Ankara be 8\u00b0C on November 15?",
+   "outcome": "YES",
+   "bucket": "8\u00b0C",
+   "price": 0.93,
+   "shares": 1.075268817204301,
+   "stake": 1.0,
+   "fee": 0.003499999999999998,
+   "profit_if_win": 0.071768817204301,
+   "reason": "favourite 8\u00b0C mid 0.72, local 10:08",
+   "audit": {
+    "code": "de50086b3a46",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-15T07:08:52.855477+00:00",
+    "book": {
+     "asks": [
+      [
+       0.93,
+       5.0
+      ],
+      [
+       0.94,
+       20.0
+      ],
+      [
+       0.96,
+       40.0
+      ]
+     ],
+     "bids": [
+      [
+       0.54,
+       5.0
+      ],
+      [
+       0.53,
+       20.0
+      ],
+      [
+       0.51,
+       9.8
+      ],
+      [
+       0.08,
+       5.0
+      ]
+     ],
+     "min_order_size": "5",
+     "tick_size": "0.01",
+     "timestamp": "1794726518056",
+     "hash": "848bb9a1f9eafeec638333a7de3286818754edbb"
+    }
+   },
+   "status": "open",
+   "opened": "2026-11-15T07:08:52.855520+00:00"
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "79451078538025870357818703512132865145063182496361398803272725524166817444465",
+   "condition": "0x62cee27e96dc26e0fc71c49cd4f05c779b9fe64b1786dc5c362b252dd1113164",
+   "event": "lowest-temperature-in-madrid-on-november-15-2026",
+   "title": "Will the lowest temperature in Madrid be 9\u00b0C on November 15?",
+   "outcome": "YES",
+   "bucket": "9\u00b0C",
+   "price": 0.85,
+   "shares": 1.1764705882352942,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.17647058823529416,
+   "reason": "favourite 9\u00b0C mid 0.92, local 08:08",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-15T07:08:53.014921+00:00",
+   "expires": "2026-11-15T11:00:00+00:00",
+   "audit": {
+    "code": "de50086b3a46",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-15T07:08:53.014936+00:00",
+    "quote": {
+     "yes_bid": 0.84,
+     "yes_ask": 0.99
+    }
+   }
+  },
+  {
+   "strategy": "MORNING",
+   "asset": "72414804277475668486508538768485019871263562622044899135665377446075239362356",
+   "condition": "0xb6ea92acf4739689dd1d06096207e808d3c83119ddfe4e46456736058f8fd2d9",
+   "event": "lowest-temperature-in-amsterdam-on-november-15-2026",
+   "title": "Will the lowest temperature in Amsterdam be 1\u00b0C on November 15?",
+   "outcome": "YES",
+   "bucket": "1\u00b0C",
+   "price": 0.81,
+   "shares": 1.2345679012345678,
+   "stake": 1.0,
+   "fee": 0.0,
+   "profit_if_win": 0.23456790123456783,
+   "reason": "favourite 1\u00b0C mid 0.89, local 08:08",
+   "order": "maker",
+   "status": "resting",
+   "placed": "2026-11-15T07:08:53.158743+00:00",
+   "expires": "2026-11-15T11:00:00+00:00",
+   "audit": {
+    "code": "de50086b3a46",
+    "scan": "WX-MORNING",
+    "settings": {
+     "bet_size": 1.0,
+     "fee_rate": 0.05,
+     "kind": "lowest",
+     "hours": [
+      8,
+      12
+     ],
+     "units": [
+      "C"
+     ],
+     "price": [
+      0.7,
+      0.95
+     ],
+     "max_fill": 0.96
+    },
+    "time": "2026-11-15T07:08:53.158758+00:00",
+    "quote": {
+     "yes_bid": 0.8,
+     "yes_ask": 0.98
     }
    }
   }
