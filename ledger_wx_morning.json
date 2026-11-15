@@ -14279,8 +14279,10 @@
      "hash": "848bb9a1f9eafeec638333a7de3286818754edbb"
     }
    },
-   "status": "open",
-   "opened": "2026-11-15T07:08:52.855520+00:00"
+   "status": "lost",
+   "opened": "2026-11-15T07:08:52.855520+00:00",
+   "pnl": -1.0035,
+   "closed": "2026-11-15T21:49:53.347681+00:00"
   },
   {
    "strategy": "MORNING",
@@ -14552,5 +14554,11 @@
     }
    }
   }
- ]
+ ],
+ "auto": {
+  "paused": true,
+  "since": "2026-11-15T21:49:53.347704+00:00",
+  "why": "last 66 settled bets: ROI -7.6% per bet (\u00b14.6%)",
+  "history": []
+ }
 }
