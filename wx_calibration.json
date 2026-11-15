@@ -1,0 +1,64 @@
+{
+ "version": 1,
+ "fitted_on": "2026-11-15",
+ "code": "406f043a644f",
+ "events": 545,
+ "groups": {
+  "highest@10": {
+   "ok": false,
+   "reasons": [
+    "not enough settled days yet"
+   ],
+   "rows": 2981,
+   "streak": 0,
+   "base_streak": 0,
+   "trusted": false,
+   "evaluated_on": "2026-11-15",
+   "weights": [
+    0.0,
+    0.0,
+    1.0
+   ]
+  },
+  "highest@15": {
+   "ok": false,
+   "reasons": [
+    "not enough settled days yet"
+   ],
+   "rows": 3168,
+   "streak": 0,
+   "base_streak": 0,
+   "trusted": false,
+   "evaluated_on": "2026-11-15",
+   "weights": [
+    0.0,
+    0.0,
+    1.0
+   ]
+  },
+  "lowest@8": {
+   "ok": false,
+   "reasons": [
+    "not enough settled days yet"
+   ],
+   "rows": 2827,
+   "streak": 0,
+   "base_streak": 0,
+   "trusted": false,
+   "evaluated_on": "2026-11-15",
+   "weights": [
+    0.0,
+    0.0,
+    1.0
+   ]
+  }
+ },
+ "backlog": true,
+ "settings": {
+  "test_days": 5,
+  "margin": 0.01,
+  "edge": 0.08,
+  "streak_required": 3,
+  "tight_spread": 0.1
+ }
+}
