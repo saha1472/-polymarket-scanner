@@ -1,56 +1,118 @@
 {
  "version": 1,
  "fitted_on": "2026-11-15",
- "code": "406f043a644f",
- "events": 545,
+ "code": "976ac4c75120",
+ "events": 1090,
  "groups": {
   "highest@10": {
+   "rows": 6127,
+   "train_rows": 4026,
+   "train_days": 8,
+   "test_two_sided_rows": 1148,
+   "test_events": 191,
+   "test_days": 5,
+   "ll_market": 0.26146563660324335,
+   "ll_model": 0.4610177299496349,
+   "ll_blend": 0.265368266117713,
+   "bets": {
+    "n": 0,
+    "events": 0,
+    "pnl": 0.0,
+    "roi": 0.0,
+    "se": 0.0
+   },
    "ok": false,
    "reasons": [
-    "not enough settled days yet"
+    "blend does not beat the market by 0.01 on real two-sided books",
+    "only 0 events with a qualifying buy (need 30)"
    ],
-   "rows": 2981,
-   "streak": 0,
-   "base_streak": 0,
-   "trusted": false,
-   "evaluated_on": "2026-11-15",
    "weights": [
     0.0,
     0.0,
     1.0
-   ]
+   ],
+   "weights_train": [
+    0.105,
+    -0.0356,
+    1.2317
+   ],
+   "streak": 0,
+   "base_streak": 0,
+   "trusted": false,
+   "evaluated_on": "2026-11-15"
   },
   "highest@15": {
+   "rows": 6314,
+   "train_rows": 4213,
+   "train_days": 8,
+   "test_two_sided_rows": 480,
+   "test_events": 184,
+   "test_days": 5,
+   "ll_market": 0.08689640655132197,
+   "ll_model": 0.1743899061487122,
+   "ll_blend": 0.08618013344428545,
+   "bets": {
+    "n": 8,
+    "events": 8,
+    "pnl": 1.0014,
+    "roi": 0.1252,
+    "se": 0.1554
+   },
    "ok": false,
    "reasons": [
-    "not enough settled days yet"
+    "blend does not beat the market by 0.01 on real two-sided books",
+    "only 8 events with a qualifying buy (need 30)"
    ],
-   "rows": 3168,
-   "streak": 0,
-   "base_streak": 0,
-   "trusted": false,
-   "evaluated_on": "2026-11-15",
    "weights": [
     0.0,
     0.0,
     1.0
-   ]
+   ],
+   "weights_train": [
+    0.073,
+    0.1526,
+    1.1608
+   ],
+   "streak": 0,
+   "base_streak": 0,
+   "trusted": false,
+   "evaluated_on": "2026-11-15"
   },
   "lowest@8": {
+   "rows": 5676,
+   "train_rows": 3663,
+   "train_days": 8,
+   "test_two_sided_rows": 273,
+   "test_events": 132,
+   "test_days": 5,
+   "ll_market": 0.0357151123899331,
+   "ll_model": 0.030211041744570018,
+   "ll_blend": 0.01661970356132483,
+   "bets": {
+    "n": 1,
+    "events": 1,
+    "pnl": 0.4546,
+    "roi": 0.4546,
+    "se": 0.0
+   },
    "ok": false,
    "reasons": [
-    "not enough settled days yet"
+    "only 1 events with a qualifying buy (need 30)"
    ],
-   "rows": 2827,
-   "streak": 0,
-   "base_streak": 0,
-   "trusted": false,
-   "evaluated_on": "2026-11-15",
    "weights": [
     0.0,
     0.0,
     1.0
-   ]
+   ],
+   "weights_train": [
+    0.4601,
+    0.5953,
+    0.813
+   ],
+   "streak": 0,
+   "base_streak": 0,
+   "trusted": false,
+   "evaluated_on": "2026-11-15"
   }
  },
  "backlog": true,
