@@ -1,5 +1,5 @@
 {
-  "cash": 48.61421188296617,
+  "cash": 47.58921188296617,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -4331,6 +4331,113 @@
       "pnl": -0.8271705882352941,
       "closed": "2026-11-13T21:02:50.603420+00:00",
       "hold_pnl": -1.0075
+    },
+    {
+      "asset": "62126082835787959014261118547119081895418215399141990888194991352593883035263",
+      "condition": "0xa230de4f6de05866e23317627c8d374ae67119ce0b03b24b2ea65ef8448663dd",
+      "title": "Dota 2: HULIGANI vs CyberHero - Game 1 Winner",
+      "outcome": "HULIGANI",
+      "event": "dota2-huliga-ch1-2026-11-15",
+      "price": 0.5,
+      "shares": 2.0,
+      "stake": 1.0,
+      "fee": 0.025,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "DotaBotReborn"
+      ],
+      "holders": {
+        "0x3231d2d67053e5dc3715f6429124741e52866e75": {
+          "name": "DotaBotReborn",
+          "size": 1867.1741,
+          "entry": 0.5045,
+          "win_rate": 0.6319702602230484,
+          "roi": 0.2674550563275094,
+          "n": 269,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "fbe10fb3de56",
+        "scan": "ESPORTS",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": 0.4,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-15T18:16:12.163912+00:00",
+        "book": {
+          "asks": [
+            [
+              0.5,
+              19.29
+            ],
+            [
+              0.51,
+              65.0
+            ],
+            [
+              0.52,
+              80.0
+            ],
+            [
+              0.53,
+              897.47
+            ],
+            [
+              0.54,
+              141.0
+            ]
+          ],
+          "bids": [
+            [
+              0.49,
+              128.92
+            ],
+            [
+              0.48,
+              129.79
+            ],
+            [
+              0.47,
+              229.13
+            ],
+            [
+              0.46,
+              457.74
+            ],
+            [
+              0.45,
+              267.23
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1794766566052",
+          "hash": "af44287e4cdd5aaecaf984e2a2659d41e846aa12"
+        }
+      },
+      "opened": "2026-11-15T18:16:12.164007+00:00",
+      "ends": "2026-11-16T00:00:05.599259+00:00"
     }
   ]
 }
