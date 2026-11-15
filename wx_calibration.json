@@ -1,102 +1,29 @@
 {
  "version": 1,
  "fitted_on": "2026-11-15",
- "code": "976ac4c75120",
- "events": 1090,
+ "code": "2ef9295e7cb9",
+ "events": 1251,
  "groups": {
   "highest@10": {
-   "rows": 6127,
-   "train_rows": 4026,
-   "train_days": 8,
-   "test_two_sided_rows": 1148,
-   "test_events": 191,
+   "rows": 7172,
+   "train_rows": 4554,
+   "train_days": 9,
+   "test_two_sided_rows": 1434,
+   "test_events": 238,
    "test_days": 5,
-   "ll_market": 0.26146563660324335,
-   "ll_model": 0.4610177299496349,
-   "ll_blend": 0.265368266117713,
-   "bets": {
-    "n": 0,
-    "events": 0,
-    "pnl": 0.0,
-    "roi": 0.0,
-    "se": 0.0
-   },
-   "ok": false,
-   "reasons": [
-    "blend does not beat the market by 0.01 on real two-sided books",
-    "only 0 events with a qualifying buy (need 30)"
-   ],
-   "weights": [
-    0.0,
-    0.0,
-    1.0
-   ],
-   "weights_train": [
-    0.105,
-    -0.0356,
-    1.2317
-   ],
-   "streak": 0,
-   "base_streak": 0,
-   "trusted": false,
-   "evaluated_on": "2026-11-15"
-  },
-  "highest@15": {
-   "rows": 6314,
-   "train_rows": 4213,
-   "train_days": 8,
-   "test_two_sided_rows": 480,
-   "test_events": 184,
-   "test_days": 5,
-   "ll_market": 0.08689640655132197,
-   "ll_model": 0.1743899061487122,
-   "ll_blend": 0.08618013344428545,
-   "bets": {
-    "n": 8,
-    "events": 8,
-    "pnl": 1.0014,
-    "roi": 0.1252,
-    "se": 0.1554
-   },
-   "ok": false,
-   "reasons": [
-    "blend does not beat the market by 0.01 on real two-sided books",
-    "only 8 events with a qualifying buy (need 30)"
-   ],
-   "weights": [
-    0.0,
-    0.0,
-    1.0
-   ],
-   "weights_train": [
-    0.073,
-    0.1526,
-    1.1608
-   ],
-   "streak": 0,
-   "base_streak": 0,
-   "trusted": false,
-   "evaluated_on": "2026-11-15"
-  },
-  "lowest@8": {
-   "rows": 5676,
-   "train_rows": 3663,
-   "train_days": 8,
-   "test_two_sided_rows": 273,
-   "test_events": 132,
-   "test_days": 5,
-   "ll_market": 0.0357151123899331,
-   "ll_model": 0.030211041744570018,
-   "ll_blend": 0.01661970356132483,
+   "ll_market": 0.28082248090102874,
+   "ll_model": 0.46996893386030775,
+   "ll_blend": 0.285766643763324,
    "bets": {
     "n": 1,
     "events": 1,
-    "pnl": 0.4546,
-    "roi": 0.4546,
+    "pnl": 0.4136,
+    "roi": 0.4136,
     "se": 0.0
    },
    "ok": false,
    "reasons": [
+    "blend does not beat the market by 0.01 on real two-sided books",
     "only 1 events with a qualifying buy (need 30)"
    ],
    "weights": [
@@ -105,9 +32,83 @@
     1.0
    ],
    "weights_train": [
-    0.4601,
-    0.5953,
-    0.813
+    0.0944,
+    -0.041,
+    1.2285
+   ],
+   "streak": 0,
+   "base_streak": 0,
+   "trusted": false,
+   "evaluated_on": "2026-11-15"
+  },
+  "highest@15": {
+   "rows": 7359,
+   "train_rows": 4741,
+   "train_days": 9,
+   "test_two_sided_rows": 620,
+   "test_events": 231,
+   "test_days": 5,
+   "ll_market": 0.09357538519324218,
+   "ll_model": 0.17184736796280312,
+   "ll_blend": 0.09280104383085071,
+   "bets": {
+    "n": 2,
+    "events": 2,
+    "pnl": -0.7108,
+    "roi": -0.3554,
+    "se": 0.4661
+   },
+   "ok": false,
+   "reasons": [
+    "blend does not beat the market by 0.01 on real two-sided books",
+    "only 2 events with a qualifying buy (need 30)"
+   ],
+   "weights": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "weights_train": [
+    0.0602,
+    0.1109,
+    1.198
+   ],
+   "streak": 0,
+   "base_streak": 0,
+   "trusted": false,
+   "evaluated_on": "2026-11-15"
+  },
+  "lowest@8": {
+   "rows": 6402,
+   "train_rows": 4147,
+   "train_days": 9,
+   "test_two_sided_rows": 302,
+   "test_events": 143,
+   "test_days": 5,
+   "ll_market": 0.030057015219233266,
+   "ll_model": 0.039770586013564396,
+   "ll_blend": 0.02218071109162386,
+   "bets": {
+    "n": 2,
+    "events": 2,
+    "pnl": 0.6371,
+    "roi": 0.3185,
+    "se": 0.0962
+   },
+   "ok": false,
+   "reasons": [
+    "blend does not beat the market by 0.01 on real two-sided books",
+    "only 2 events with a qualifying buy (need 30)"
+   ],
+   "weights": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "weights_train": [
+    0.4827,
+    0.595,
+    0.8092
    ],
    "streak": 0,
    "base_streak": 0,
@@ -115,7 +116,7 @@
    "evaluated_on": "2026-11-15"
   }
  },
- "backlog": true,
+ "backlog": false,
  "settings": {
   "test_days": 5,
   "margin": 0.01,

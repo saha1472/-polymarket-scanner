@@ -1,5 +1,5 @@
 {
-  "cash": 48.01205188296617,
+  "cash": 46.99855188296617,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -4538,6 +4538,113 @@
       "pnl": -0.60216,
       "closed": "2026-11-15T18:31:21.061677+00:00",
       "hold_pnl": -1.025
+    },
+    {
+      "asset": "73953171935927941754435804553900613998423246402001081587140332093547614748142",
+      "condition": "0xadbd57cbe4690c78f2a3f80c759824db2f579e3ade32647972f050b8131cee44",
+      "title": "Dota 2: LGD Gaming vs Team Spirit - Game 1 Winner",
+      "outcome": "Team Spirit",
+      "event": "dota2-lgd-ts8-2026-11-15",
+      "price": 0.73,
+      "shares": 1.36986301369863,
+      "stake": 1.0,
+      "fee": 0.0135,
+      "order": "market",
+      "status": "open",
+      "traders": [
+        "DotaBotReborn"
+      ],
+      "holders": {
+        "0x3231d2d67053e5dc3715f6429124741e52866e75": {
+          "name": "DotaBotReborn",
+          "size": 7397.934,
+          "entry": 0.681,
+          "win_rate": 0.6319702602230484,
+          "roi": 0.2674550563275094,
+          "n": 269,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "2ef9295e7cb9",
+        "scan": "ESPORTS",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": 0.4,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-15T20:46:35.473810+00:00",
+        "book": {
+          "asks": [
+            [
+              0.73,
+              289.8
+            ],
+            [
+              0.74,
+              1776.57
+            ],
+            [
+              0.75,
+              482.94
+            ],
+            [
+              0.76,
+              5342.79
+            ],
+            [
+              0.77,
+              412.0
+            ]
+          ],
+          "bids": [
+            [
+              0.72,
+              5198.88
+            ],
+            [
+              0.71,
+              3679.9
+            ],
+            [
+              0.7,
+              3233.18
+            ],
+            [
+              0.69,
+              2229.27
+            ],
+            [
+              0.68,
+              637.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1794775590729",
+          "hash": "7d526aca06eee8700ea6f3903adf4ab8bb037d95"
+        }
+      },
+      "opened": "2026-11-15T20:46:35.473910+00:00",
+      "ends": "2026-11-16T00:00:04.806025+00:00"
     }
   ]
 }
