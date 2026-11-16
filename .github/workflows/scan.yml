@@ -53,7 +53,7 @@ jobs:
       - name: Smart-money signals (general + categories) + weather desk
         if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
         run: |
-          for scan in GENERAL SPORTS ESPORTS TECH WEATHER; do
+          for scan in GENERAL SPORTS ESPORTS TECH WEATHER GEOPOLITICS; do
             arg=$scan; [ "$scan" = GENERAL ] && arg=""
             python signals.py $arg > "log_$scan.txt" 2>&1 &
             echo "$! $scan" >> pids.txt
@@ -64,7 +64,7 @@ jobs:
           while read pid scan; do
             if ! wait "$pid"; then echo "::error::$scan scan failed"; fail=1; fi
           done < pids.txt
-          for scan in GENERAL SPORTS ESPORTS TECH WEATHER WXDESK; do
+          for scan in GENERAL SPORTS ESPORTS TECH WEATHER GEOPOLITICS WXDESK; do
             echo "::group::$scan"; cat "log_$scan.txt"; echo "::endgroup::"
           done
           exit $fail
