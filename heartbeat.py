@@ -20,6 +20,7 @@ NAMES = {
     "ledger_esports.json": "Esports copy",
     "ledger_tech.json": "Tech copy",
     "ledger_weather.json": "Weather copy",
+    "ledger_geopolitics.json": "Geopolitics copy (fee-free markets only)",
     "ledger_wx_dead.json": "WX dead buckets",
     "ledger_wx_late.json": "WX late (risky)",
     "ledger_wx_shift.json": "WX forecast shift",
