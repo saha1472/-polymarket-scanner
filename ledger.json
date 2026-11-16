@@ -1,5 +1,5 @@
 {
-  "cash": 41.786891773163966,
+  "cash": 40.77289177316396,
   "bets": [
     {
       "asset": "27670129619626213108912772417909250054836917373961985276008181424732686448004",
@@ -2936,6 +2936,115 @@
       "stops": {},
       "closed": "2026-11-16T05:16:19.667665+00:00",
       "pnl": 0.11589550561797761
+    },
+    {
+      "asset": "15415216306158883045267049089601114915705844324715426242154877888080178578007",
+      "condition": "0x545f6262ce77b16318d0d89639bf6207db71c19528f859970a279366f0bf3c0f",
+      "title": "Will Bitcoin reach $67,000 on November 16?",
+      "outcome": "No",
+      "event": "what-price-will-bitcoin-hit-on-november-16-2026",
+      "price": 0.8,
+      "shares": 1.25,
+      "stake": 1.0,
+      "fee": 0.013999999999999999,
+      "order": "market",
+      "fee_rate": 0.07,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "Tokor"
+      ],
+      "holders": {
+        "0xa19cbababc312f9df185e49d7004c249ed1ade6b": {
+          "name": "Tokor",
+          "size": 4518.8947,
+          "entry": 0.8114,
+          "win_rate": 0.582,
+          "roi": 0.31095068149634986,
+          "n": 500,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "4f03cef48cab",
+        "scan": "GENERAL",
+        "settings": {
+          "min_price": 0.55,
+          "max_price": 0.95,
+          "fee_rate": 0.07,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-16T07:02:34.318615+00:00",
+        "book": {
+          "asks": [
+            [
+              0.8,
+              162.0
+            ],
+            [
+              0.81,
+              294.99
+            ],
+            [
+              0.82,
+              5385.0
+            ],
+            [
+              0.83,
+              50.0
+            ],
+            [
+              0.84,
+              50.0
+            ]
+          ],
+          "bids": [
+            [
+              0.79,
+              638.0
+            ],
+            [
+              0.78,
+              5686.0
+            ],
+            [
+              0.77,
+              106.24
+            ],
+            [
+              0.76,
+              720.0
+            ],
+            [
+              0.75,
+              2801.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1794812547537",
+          "hash": "967037d99057b24e38e8a7952ab76bb9079a7c99"
+        }
+      },
+      "opened": "2026-11-16T07:02:34.318668+00:00",
+      "ends": "2026-11-17T00:00:06.513450+00:00"
     }
   ]
 }
