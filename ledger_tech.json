@@ -1,5 +1,5 @@
 {
-  "cash": 52.23454876613105,
+  "cash": 51.22894876613105,
   "bets": [
     {
       "asset": "26922035314154497018737638829774069315488348073215105242613348160492279741517",
@@ -981,6 +981,115 @@
       "stops": {},
       "closed": "2026-11-14T00:58:35.090227+00:00",
       "pnl": 0.14422528735632176
+    },
+    {
+      "asset": "12184345390140772513332883679626608175715846723917987793045546957490562215909",
+      "condition": "0x467ef775ebe832ade5a37b54bfa571a2d2a4eae879cf8e91afebc3b3417d63b2",
+      "title": "NVIDIA (NVDA) Q3 adjusted gross margin 73% to 75%?",
+      "outcome": "Yes",
+      "event": "nvidia-nvda-q3-adjusted-gross-margin-non-gaap-20261008120136000",
+      "price": 0.86,
+      "shares": 1.1627906976744187,
+      "stake": 1.0,
+      "fee": 0.005600000000000002,
+      "order": "market",
+      "fee_rate": 0.04,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "KimchiCapital"
+      ],
+      "holders": {
+        "0x9578af80708f271f705e27867dcf6ec653acf066": {
+          "name": "KimchiCapital",
+          "size": 800.0,
+          "entry": 0.85,
+          "win_rate": 0.7636363636363637,
+          "roi": 0.1691628312524384,
+          "n": 110,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "312e7a655e74",
+        "scan": "TECH",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.04,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-16T12:02:59.221407+00:00",
+        "book": {
+          "asks": [
+            [
+              0.86,
+              1391.96
+            ],
+            [
+              0.87,
+              2299.19
+            ],
+            [
+              0.88,
+              2675.86
+            ],
+            [
+              0.89,
+              575.44
+            ],
+            [
+              0.9,
+              835.0
+            ]
+          ],
+          "bids": [
+            [
+              0.85,
+              1118.07
+            ],
+            [
+              0.84,
+              2580.28
+            ],
+            [
+              0.83,
+              1777.71
+            ],
+            [
+              0.82,
+              10.59
+            ],
+            [
+              0.73,
+              300.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1794830544932",
+          "hash": "c3d7074d9cf522fdfe360cb361fd31b4638aef05"
+        }
+      },
+      "opened": "2026-11-16T12:02:59.221451+00:00",
+      "ends": "2026-11-18T00:00:05.738265+00:00"
     }
   ]
 }
