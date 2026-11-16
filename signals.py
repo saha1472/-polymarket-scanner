@@ -8,6 +8,7 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 
+import fees
 import shadow
 import simcore
 
@@ -27,6 +28,12 @@ CATEGORIES = {
                 "stop": 0.40},
     "TECH":    {"tag": "tech",    "fee": 0.04, "min_price": 0.40, "max_price": 0.90},
     "WEATHER": {"tag": "weather", "fee": 0.05, "min_price": 0.40, "max_price": 0.90},
+    # Fee-free test. The leaderboard has NO geopolitics category (asking for it returns nothing),
+    # so traders come from the POLITICS board ("board"); the markets copied are the ones tagged
+    # geopolitics, and only those whose own fee schedule says they charge no fee ("fee_free_only").
+    # "fee" is only the fallback used when a market's schedule cannot be read (then it is skipped).
+    "GEOPOLITICS": {"tag": "geopolitics", "board": "POLITICS", "fee": 0.04, "min_price": 0.40,
+                    "max_price": 0.90, "fee_free_only": True},
 }
 SCAN = (sys.argv[1] if len(sys.argv) > 1 else "GENERAL").upper()
 if SCAN != "GENERAL" and SCAN not in CATEGORIES:
@@ -236,8 +243,32 @@ def write_json(path, data, indent=None):
     simcore.write_json_atomic(path, data, indent)
 
 
-def sell_fill(book, shares):
-    return simcore.sell_fill(book, shares, FEE_RATE)
+def sell_fill(book, shares, fee_rate=None):
+    return simcore.sell_fill(book, shares, FEE_RATE if fee_rate is None else fee_rate)
+
+
+def bet_fee_rate(bet):
+    """The fee rate this bet was opened under (its own market's), else the scan's constant."""
+    rate = num(bet.get("fee_rate"), None) if isinstance(bet, dict) else None
+    return FEE_RATE if rate is None or rate < 0 else rate
+
+
+FEE_CACHE = {}
+
+
+def market_fee_rate(s):
+    """(rate, source) for a candidate: its market's own taker fee from Gamma's feeSchedule
+    ("market"), else the scan's constant ("scan"). A failed lookup is not cached."""
+    cid = s.get("condition")
+    if not cid:
+        return FEE_RATE, "scan"
+    if cid not in FEE_CACHE:
+        rows = get(f"{GAMMA_API}/markets", {"condition_ids": cid})
+        if rows is None:
+            return FEE_RATE, "scan"
+        FEE_CACHE[cid] = fees.market_fee(rows[0]) if isinstance(rows, list) and rows else None
+    info = FEE_CACHE[cid]
+    return (info["rate"], "market") if info else (FEE_RATE, "scan")
 
 
 # ---------- Category tags (which markets belong to which category) ----------
@@ -275,7 +306,7 @@ def top_traders():
         params = {"timePeriod": period, "orderBy": "PNL",
                   "limit": LEADERBOARD_SIZE}
         if CAT:
-            params["category"] = SCAN
+            params["category"] = CAT.get("board", SCAN)
         rows = data_v2("leaderboard", params, max_pages=1) or []
         for row in map(v1_leader, rows):
             wallet = row.get("proxyWallet")
@@ -772,12 +803,16 @@ def size_bet(s, min_price=None, max_price=None):
     if stake > MAX_BET or ask_size < shares:
         return None
 
-    fee = shares * FEE_RATE * ask * (1 - ask)
+    rate, fee_src = market_fee_rate(s)
+    if CAT and CAT.get("fee_free_only") and not (fee_src == "market" and rate == 0.0):
+        s["reject"] = "fee"             # this scan only copies markets that charge no fee
+        return None
+    fee = fees.fee_amount(shares, ask, rate)
     profit = shares - stake - fee
     if profit / stake < MIN_RETURN_IF_WIN:
         return None
 
-    s.update(price=ask, order=order, shares=shares, stake=stake, fee=fee,
+    s.update(price=ask, order=order, shares=shares, stake=stake, fee=fee, fee_rate=rate, fee_src=fee_src,
              profit_if_win=profit, breakeven=(stake + fee) / shares, book=book)
     return s
 
@@ -944,6 +979,7 @@ def open_paper_bets(ledger, signals, book=None):
             "event": s.get("event"),
             "price": s["price"], "shares": s["shares"],
             "stake": s["stake"], "fee": s["fee"], "order": s["order"],
+            "fee_rate": s.get("fee_rate", FEE_RATE), "fee_src": s.get("fee_src", "scan"),
             "status": "open", "traders": s["traders"],
             "holders": s["holders"],
             "audit": simcore.audit(SCAN, settings_snapshot(), s.get("book")),
@@ -1009,7 +1045,7 @@ def check_exits(ledger):
         # shadow exit = exiting the ORIGINAL position (as if no stop had sold any)
         full = bet.get("orig_shares", bet["shares"])
         book = get(BOOK_URL, {"token_id": bet["asset"]})
-        sold, cash, avg = sell_fill(book, full)
+        sold, cash, avg = sell_fill(book, full, bet_fee_rate(bet))
         if sold < full - 1e-9 or avg <= 0:
             continue  # the book can't absorb the whole position yet; retry next run
         bid = avg
@@ -1043,7 +1079,7 @@ def check_stops(ledger):
         if bid <= 0:
             continue  # empty book: nothing to sell into
         full = bet.get("orig_shares", bet["shares"])
-        sold_all, cash_all, avg_all = sell_fill(book, full)
+        sold_all, cash_all, avg_all = sell_fill(book, full, bet_fee_rate(bet))
         for lvl in todo:
             if bid > bet["price"] * (1 - lvl):
                 continue
@@ -1057,7 +1093,7 @@ def check_stops(ledger):
                         f"| {bet['title']}")
         if REAL_STOP and bid <= bet["price"] * (1 - REAL_STOP):
             # sell only what the book can actually take; keep the rest open
-            sold, cash, avg = sell_fill(book, bet["shares"])
+            sold, cash, avg = sell_fill(book, bet["shares"], bet_fee_rate(bet))
             if sold <= 1e-9:
                 continue
             bet.setdefault("orig_shares", bet["shares"])
