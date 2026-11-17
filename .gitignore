@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Written during a run, never saved to the repo
+tags.json
+*.tmp
+*.bad
+pids.txt
+log_*.txt
+rewards_estimate.txt
+clv_cache.json
+
+# Secrets and local settings
+.env
