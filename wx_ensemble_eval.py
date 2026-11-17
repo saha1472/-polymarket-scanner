@@ -11,7 +11,6 @@ For every logged snapshot whose market has settled:
 
 Usage: python wx_ensemble_eval.py [wx_shadow.jsonl]
 """
-import json
 import math
 import sys
 from datetime import datetime, timedelta, timezone
@@ -25,18 +24,11 @@ EPS = 0.01
 
 
 def load(path):
-    try:
-        with open(path) as fh:
-            lines = fh.read().splitlines()
-    except OSError:
+    """Snapshots from the log: the file itself plus its monthly files
+    (wx_shadow_2026-11.jsonl ...). None if there is no log at all."""
+    if not simcore.log_files(path):
         return None
-    out = []
-    for line in lines:
-        try:
-            out.append(json.loads(line))
-        except ValueError:
-            continue
-    return out
+    return simcore.read_log(path)
 
 
 def market_probs(buckets):

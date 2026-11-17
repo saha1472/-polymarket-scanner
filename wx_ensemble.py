@@ -20,7 +20,6 @@ what the evaluation is for. Thresholds below (8c edge, 0.85 cap) are Argon's
 suggestions, recorded only as a hypothesis to test.
 """
 import json
-import os
 import sys
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
@@ -179,22 +178,10 @@ def fetch_ensembles(stations, coords):
     return out
 
 
-def append_lines(path, records):
-    old = ""
-    if os.path.exists(path):
-        with open(path) as fh:
-            old = fh.read()
-    new = "".join(json.dumps(r, allow_nan=False) + "\n" for r in records)
-    tmp = f"{path}.{os.getpid()}.tmp"
-    with open(tmp, "w") as fh:
-        fh.write(old + new)
-    os.replace(tmp, path)
-
-
 def main():
     state = wx.read_json(STATE_FILE, {})
     tzs, coords = state.get("tz", {}), state.get("coords", {})
-    lines = open(LOG_FILE).read().splitlines() if os.path.exists(LOG_FILE) else []
+    lines = simcore.read_log_lines(LOG_FILE)   # every monthly file
     events = wx.load_events()
     due = due_checkpoints(events, tzs, logged_keys(lines), None)
     if not due:
@@ -225,7 +212,7 @@ def main():
         recs.append(record(e, cp, local, observed,
                            wx.obs_age_hours(e["station"], obs), per_model))
     if recs:
-        append_lines(LOG_FILE, recs)
+        simcore.append_log(LOG_FILE, recs)      # this month's file
     hypo = sum(b["hypo_buy"] for r in recs for b in r["buckets"])
     print(f"Ensemble shadow: logged {len(recs)} snapshot(s), {missing} without data, "
           f"{hypo} hypothetical buy(s) at edge >= {HYPO_EDGE}")

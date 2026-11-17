@@ -1,4 +1,3 @@
-import json
 import math
 import os
 import sys
@@ -35,9 +34,16 @@ CATEGORIES = {
     "GEOPOLITICS": {"tag": "geopolitics", "board": "POLITICS", "fee": 0.04, "min_price": 0.40,
                     "max_price": 0.90, "fee_free_only": True},
 }
-SCAN = (sys.argv[1] if len(sys.argv) > 1 else "GENERAL").upper()
+# The SIGNALS_SCAN environment variable wins over the command line (handy for
+# tools and tests that import this file).
+SCAN = (os.environ.get("SIGNALS_SCAN")
+        or (sys.argv[1] if len(sys.argv) > 1 else "GENERAL")).upper()
 if SCAN != "GENERAL" and SCAN not in CATEGORIES:
-    sys.exit(f"Unknown scan {SCAN}. Use one of: {', '.join(CATEGORIES)}")
+    if __name__ == "__main__":
+        sys.exit(f"Unknown scan {SCAN}. Use one of: {', '.join(CATEGORIES)}")
+    # Imported, not run: argv belongs to whoever imported us (a test runner's
+    # "discover", another script's own options), so it says nothing about the scan.
+    SCAN = "GENERAL"
 CAT = CATEGORIES.get(SCAN)
 LEDGER_FILE = "ledger.json" if SCAN == "GENERAL" else f"ledger_{SCAN.lower()}.json"
 TRADERS_FILE = f"traders_{SCAN.lower()}.json"   # cached trader scores
@@ -83,6 +89,15 @@ REAL_STOP = CAT.get("stop") if CAT else None
 MAX_BETS_PER_EVENT = 1     # one bet per match/event (game 1, game 2, handicap... are one bet)
 MAX_OPEN_PER_TRADER = 2    # one trader's opinion can't drive more than this
 DAILY_LOSS_LIMIT = 3.00    # stop opening bets after losing this much in 24h
+
+# Scans switched off BY HAND (same idea as MANUAL_PAUSE in weather.py). A paused
+# scan places no new paper bets but still scores traders, settles what is open
+# and records every signal as a shadow bet (reason "manual_pause"), so
+# shadow_report.py shows what it would have done. Delete the line to switch the
+# scan back on.
+MANUAL_PAUSE = {
+    "SPORTS": "2026-11-17: paper 31 settled, -$7.18 (-23% per bet), negative under every setting tried",
+}
 
 # Named traders scored next to the leaderboard (found in the 10 Nov 2026 sweep,
 # see RESEARCH_2026-11-10_strategy_sweep.md). The leaderboard only shows the
@@ -145,7 +160,11 @@ def get(url, params=None, raw=False):
             print(f"{url} returned {resp.status_code}: {resp.text[:200]}")
             return None
         time.sleep(0.15)
-        data = resp.json()
+        data = simcore.response_json(resp)
+        if data is None:                 # 200 but not JSON (cut-off reply, error page)
+            print(f"{url} answered 200 with a body that is not JSON; retrying")
+            time.sleep(1 + attempt)
+            continue
         if not raw and isinstance(data, dict) and "data" in data:
             data = data["data"]
         return data
@@ -203,20 +222,9 @@ def positions(wallet, max_pages=6, **params):
     return None if rows is None else [v1_position(r) for r in rows]
 
 
-def pmap(fn, items, workers=8):
-    """Run fn over items in parallel threads (the APIs are slow, not busy)."""
-    items = list(items)
-    if not items:
-        return []
-    with ThreadPoolExecutor(workers) as pool:
-        return list(pool.map(fn, items))
-
-
-def num(value, default=0.0):
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return default
+pmap = simcore.pmap            # shared helpers live in simcore.py
+num = simcore.num
+read_json = simcore.read_json
 
 
 def hours_until(end):
@@ -229,14 +237,6 @@ def hours_until(end):
     if dt.tzinfo is None:
         dt = dt.replace(tzinfo=timezone.utc)
     return (dt - datetime.now(timezone.utc)).total_seconds() / 3600
-
-
-def read_json(path, default):
-    try:
-        with open(path) as fh:
-            return json.load(fh)
-    except (OSError, ValueError):
-        return default
 
 
 def write_json(path, data, indent=None):
@@ -947,8 +947,9 @@ def open_paper_bets(ledger, signals, book=None):
         msgs.append(f"⏸️ Paused new bets: ${lost_24h:+.2f} in the last 24h "
                     f"(limit -${DAILY_LOSS_LIMIT:.2f})" if paused else
                     "▶️ Resumed new bets (24h loss back under the limit)")
-    if paused or shadow.is_paused(ledger):
-        why = "auto_paused" if shadow.is_paused(ledger) else "daily_loss_limit"
+    if SCAN in MANUAL_PAUSE or paused or shadow.is_paused(ledger):
+        why = ("manual_pause" if SCAN in MANUAL_PAUSE else
+               "auto_paused" if shadow.is_paused(ledger) else "daily_loss_limit")
         for s in signals:
             if s["asset"] not in held and s["condition"] not in held_markets:
                 shadow_skip(book, s, why)
@@ -1119,15 +1120,30 @@ def check_stops(ledger):
 
 def notify(lines):
     """True if delivered (or nothing to send / no webhook configured)."""
-    url = os.environ.get("DISCORD_WEBHOOK_URL")
-    if not url or not lines:
-        return True
-    return simcore.post_discord(url, "\n".join(lines))
+    return simcore.notify(lines)
 
 
-if __name__ == "__main__":
+def save_tags():
+    """Write the tag cache. The scans run side by side and each one loaded the
+    file at its start, so merge with what is on disk now: otherwise the last
+    scan to finish throws away the lookups the others just made."""
+    if len(TAGS) > 30000:
+        merged = {}                  # keep the cache from growing forever
+        TAGS.clear()
+    else:
+        on_disk = read_json(TAGS_FILE, {})
+        merged = {**(on_disk if isinstance(on_disk, dict) else {}), **TAGS}
+    tmp = f"{TAGS_FILE}.{SCAN}.tmp"
+    write_json(tmp, merged)
+    os.replace(tmp, TAGS_FILE)       # atomic: safe if scans run side by side
+
+
+def main():
+    """One full scan: settle, score traders, find signals, bet on paper, save, notify."""
     print(f"=== {SCAN} scan | ledger {LEDGER_FILE} | price {MIN_PRICE}-{MAX_PRICE} "
           f"| fee rate {FEE_RATE} ===")
+    if SCAN in MANUAL_PAUSE:
+        print(f"PAUSED BY HAND (shadow only): {MANUAL_PAUSE[SCAN]}")
     ledger = load_ledger()
     exit_msgs = check_exits(ledger)  # before settling, so bogus shadows get cleaned
     exit_msgs += check_stops(ledger)
@@ -1166,11 +1182,7 @@ if __name__ == "__main__":
     book.save()
     print(f"Shadow: +{book.added} new record(s), {filled} limit fill(s), "
           f"{shadow_settled} settled, {len(book.resting())} limit bid(s) resting")
-    if len(TAGS) > 30000:
-        TAGS.clear()   # keep the cache from growing forever
-    tmp = f"{TAGS_FILE}.{SCAN}.tmp"
-    write_json(tmp, TAGS)
-    os.replace(tmp, TAGS_FILE)   # atomic: safe if scans run side by side
+    save_tags()
 
     if msgs:
         done = [b for b in ledger["bets"] if b["status"] != "open"]
@@ -1213,3 +1225,8 @@ if __name__ == "__main__":
     print("\n".join(msgs))
     if not notify(msgs):
         sys.exit("Discord delivery failed (ledger was saved). Failing the run so it's visible.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -30,7 +30,6 @@ Usage: python wx_calibrate.py [--force]
 """
 import json
 import math
-import os
 import sys
 import time
 import urllib.parse
@@ -421,17 +420,8 @@ def read_json(path, default):
 
 
 def load_records(path):
-    out = []
-    try:
-        with open(path) as fh:
-            for line in fh:
-                try:
-                    out.append(json.loads(line))
-                except ValueError:
-                    continue
-    except OSError:
-        pass
-    return out
+    """Every snapshot in the shadow log (the original file plus the monthly ones)."""
+    return simcore.read_log(path)
 
 
 def main(get=http_get_json, today=None, force=False):

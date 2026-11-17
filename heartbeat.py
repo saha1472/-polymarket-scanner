@@ -2,7 +2,6 @@
 every paper ledger's record and P&L, so a quiet Discord never leaves you
 guessing whether the bot is alive."""
 import glob
-import json
 import os
 import sys
 from datetime import datetime, timedelta, timezone
@@ -29,12 +28,7 @@ NAMES = {
 }
 
 
-def read_json(path, default):
-    try:
-        with open(path) as fh:
-            return json.load(fh)
-    except (OSError, ValueError):
-        return default
+read_json = simcore.read_json
 
 
 def line(path, since):
@@ -100,15 +94,8 @@ def rewards_line(since, path=None):
     fills are both modelled, so it says estimate. Returns None when there is no
     log yet, and never raises: this line is extra, the ledgers come first."""
     try:
-        rows = []
-        with open(path or REWARDS_LOG) as fh:
-            for raw in fh:
-                try:
-                    r = json.loads(raw)
-                except ValueError:
-                    continue
-                if isinstance(r, dict) and isinstance(r.get("time"), str) and r.get("condition"):
-                    rows.append(r)
+        rows = [r for r in simcore.read_log(path or REWARDS_LOG)     # every monthly file
+                if isinstance(r, dict) and isinstance(r.get("time"), str) and r.get("condition")]
         if not rows:
             return None
         day = [r for r in rows if r["time"] >= since]

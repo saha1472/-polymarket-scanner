@@ -9,6 +9,7 @@ _argv = sys.argv
 sys.argv = ["signals.py", "SPORTS"]            # signals.py reads its scan from argv
 import signals                                  # noqa: E402
 sys.argv = _argv
+signals.MANUAL_PAUSE = {}    # these tests check the betting rules, not today's hand-pause list
 import fees                                     # noqa: E402
 import heartbeat                                # noqa: E402
 

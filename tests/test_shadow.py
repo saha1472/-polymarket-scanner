@@ -17,6 +17,7 @@ _argv = sys.argv
 sys.argv = ["signals.py", "SPORTS"]
 import signals                                 # noqa: E402
 sys.argv = _argv
+signals.MANUAL_PAUSE = {}    # these tests check the betting rules, not today's hand-pause list
 import rewards_tracker                         # noqa: E402
 import scanner                                 # noqa: E402
 import shadow                                  # noqa: E402

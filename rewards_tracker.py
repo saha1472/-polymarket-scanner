@@ -26,7 +26,6 @@ a fill even if others were ahead of us in the queue.
 """
 import argparse
 import json
-import os
 import sys
 from datetime import datetime, timedelta, timezone
 
@@ -179,11 +178,7 @@ def main(fetch=simcore.fetch_books, session=None):
     state["watch"] = {t: {} for t in new_quotes}      # the watcher fills these in
     simcore.write_json_atomic(STATE_FILE, state, indent=1)
     if lines:
-        old = open(LOG_FILE).read() if os.path.exists(LOG_FILE) else ""
-        tmp = f"{LOG_FILE}.{os.getpid()}.tmp"
-        with open(tmp, "w") as fh:
-            fh.write(old + "".join(json.dumps(r, allow_nan=False) + "\n" for r in lines))
-        os.replace(tmp, LOG_FILE)
+        simcore.append_log(LOG_FILE, lines)       # this month's file
     hits = sum(r["bid_hit"] + r["ask_hit"] for r in lines)
     print(f"Rewards tracker: {len(lines)} quote(s) scored ({hits} hit), "
           f"{len(new_quotes)} new quote(s) placed")
@@ -194,13 +189,6 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--report", action="store_true")
     if ap.parse_args().report:
-        lines = []
-        if os.path.exists(LOG_FILE):
-            for ln in open(LOG_FILE):
-                try:
-                    lines.append(json.loads(ln))
-                except ValueError:
-                    pass
-        print(report(lines))
+        print(report(simcore.read_log(LOG_FILE)))   # every monthly file
         sys.exit(0)
     sys.exit(main())

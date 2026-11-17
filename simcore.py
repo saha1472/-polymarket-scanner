@@ -9,9 +9,14 @@ primary source. Gamma is only a fallback, and only when it explicitly says
 A closed market without that status is NOT treated as final, however close
 its prices are to 1 - it simply waits.
 """
+import glob
 import json
 import math
 import os
+import subprocess
+import time
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timezone
 
 V2_TOKENS = "https://data-api.polymarket.com/v2/tokens"
 GAMMA_MARKETS = "https://gamma-api.polymarket.com/markets"
@@ -24,6 +29,33 @@ def num(value, default=0.0):
         return float(value)
     except (TypeError, ValueError):
         return default
+
+
+def read_json(path, default):
+    """The parsed file, or `default` if it is missing or not valid JSON."""
+    try:
+        with open(path) as fh:
+            return json.load(fh)
+    except (OSError, ValueError):
+        return default
+
+
+def pmap(fn, items, workers=8):
+    """Run fn over items in parallel threads (the APIs are slow, not busy)."""
+    items = list(items)
+    if not items:
+        return []
+    with ThreadPoolExecutor(workers) as pool:
+        return list(pool.map(fn, items))
+
+
+def response_json(resp):
+    """The JSON body of an HTTP response, or None if it is not JSON (a proxy
+    error page, a cut-off reply). Callers already treat None as "API failed"."""
+    try:
+        return resp.json()
+    except ValueError:
+        return None
 
 
 def finite(x):
@@ -164,9 +196,6 @@ def outcome_label(payout):
 
 # ---------- audit trail (what we knew when a bet was made) ----------
 
-import subprocess                      # noqa: E402
-from datetime import datetime, timezone  # noqa: E402
-
 _CODE_VERSION = None
 
 
@@ -222,8 +251,6 @@ def audit(scan, settings, book=None, quote=None):
 
 
 # ---------- Discord delivery (checked) ----------
-
-import time  # noqa: E402
 
 DISCORD_CHUNK = 1900          # Discord rejects messages over 2000 characters
 DISCORD_ATTEMPTS = 4
@@ -311,3 +338,74 @@ def best_bid(book):
     bids = [num(b.get("price"), None) for b in (book or {}).get("bids", [])]
     bids = [b for b in bids if b is not None and 0 < b < 1]
     return max(bids) if bids else None
+
+
+def notify(lines, url=None):
+    """Post `lines` to Discord. True if delivered, or if there was nothing to
+    send or no webhook is configured."""
+    url = os.environ.get("DISCORD_WEBHOOK_URL") if url is None else url
+    if not url or not lines:
+        return True
+    return post_discord(url, "\n".join(lines))
+
+
+# ---------- append-only logs, one file per month ----------
+# A log such as wx_shadow.jsonl grows by about 0.5 MB a day. GitHub warns on
+# files over 50 MB and refuses files over 100 MB, so new lines go to a file per
+# calendar month (wx_shadow_2026-11.jsonl). The original un-dated file is kept
+# and still read, it just never grows again.
+
+def month_log(base, now=None):
+    """'wx_shadow.jsonl' -> 'wx_shadow_2026-11.jsonl' for the current UTC month."""
+    now = now or datetime.now(timezone.utc)
+    stem, ext = os.path.splitext(base)
+    return f"{stem}_{now:%Y-%m}{ext}"
+
+
+def log_files(base):
+    """Every file of this log that exists, oldest first: the original un-dated
+    file, then the monthly ones in date order."""
+    stem, ext = os.path.splitext(base)
+    monthly = sorted(glob.glob(f"{stem}_[0-9][0-9][0-9][0-9]-[0-9][0-9]{ext}"))
+    return ([base] if os.path.exists(base) else []) + monthly
+
+
+def read_log_lines(base):
+    """All raw lines of the log (every file, oldest first), without newlines."""
+    lines = []
+    for path in log_files(base):
+        try:
+            with open(path) as fh:
+                lines.extend(fh.read().splitlines())
+        except OSError as err:
+            print(f"WARNING: could not read {path}: {err}")
+    return lines
+
+
+def read_log(base):
+    """All records of the log as parsed JSON; damaged lines are skipped."""
+    out = []
+    for line in read_log_lines(base):
+        try:
+            out.append(json.loads(line))
+        except ValueError:
+            continue
+    return out
+
+
+def append_log(base, records, now=None):
+    """Add records to this month's file. The file is rewritten whole and swapped
+    in, so a crash mid-write can never leave half a line behind."""
+    path = month_log(base, now)
+    old = ""
+    if os.path.exists(path):
+        with open(path) as fh:
+            old = fh.read()
+    if old and not old.endswith("\n"):
+        old += "\n"
+    new = "".join(json.dumps(r, allow_nan=False) + "\n" for r in records)
+    tmp = f"{path}.{os.getpid()}.tmp"
+    with open(tmp, "w") as fh:
+        fh.write(old + new)
+    os.replace(tmp, path)
+    return path

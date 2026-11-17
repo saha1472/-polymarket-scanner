@@ -22,11 +22,9 @@ station named in each market's rules (METAR, rounded to whole degrees).
 """
 import json
 import math
-import os
 import re
 import sys
 import time
-from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
@@ -54,6 +52,11 @@ DEAD_MARGIN = 1
 DEAD_MAX_PRICE = 0.985       # pay at most this for NO (need ~1.5%+ to be worth it)
 DEAD_MIN_RETURN = 0.01       # after fees
 DEAD_PER_EVENT = 3
+# The day's low/high must be backed by this many routine readings. With 2, the
+# second-lowest (or second-highest) reading is used, so one faulty or later-
+# corrected report cannot "rule out" a bucket by itself. One DEAD loss costs
+# about 30 wins (Miami low, 7 Nov 2026: one 72F reading, market settled 74-75F).
+DEAD_CONFIRM = 2
 
 # DEAD and LATE trust today's airport readings. If a station has gone quiet
 # (outage, holiday, strike), skip it: the reading so far may be incomplete and
@@ -133,31 +136,18 @@ def get(url, params=None, timeout=25):
         if r.status_code != 200:
             print(f"{url} returned {r.status_code}: {r.text[:150]}")
             return None
-        return r.json()
+        data = simcore.response_json(r)
+        if data is None:                 # 200 but not JSON (cut-off reply, error page)
+            print(f"{url} answered 200 with a body that is not JSON; retrying")
+            time.sleep(1 + attempt)
+            continue
+        return data
     return None
 
 
-def pmap(fn, items, workers=8):
-    items = list(items)
-    if not items:
-        return []
-    with ThreadPoolExecutor(workers) as pool:
-        return list(pool.map(fn, items))
-
-
-def num(v, default=0.0):
-    try:
-        return float(v)
-    except (TypeError, ValueError):
-        return default
-
-
-def read_json(path, default):
-    try:
-        with open(path) as fh:
-            return json.load(fh)
-    except (OSError, ValueError):
-        return default
+pmap = simcore.pmap            # shared helpers live in simcore.py
+num = simcore.num
+read_json = simcore.read_json
 
 
 def write_json(path, data):
@@ -347,7 +337,7 @@ def strategy_settings(strategy):
     if strategy == "DEAD":
         return dict(common, margin=DEAD_MARGIN, max_price=DEAD_MAX_PRICE,
                     min_return=DEAD_MIN_RETURN, per_event=DEAD_PER_EVENT,
-                    max_obs_age_h=MAX_OBS_AGE_H)
+                    confirm=DEAD_CONFIRM, max_obs_age_h=MAX_OBS_AGE_H)
     if strategy == "LATE":
         return dict(common, gap=LATE_GAP, price=[LATE_MIN_PRICE, LATE_MAX_PRICE],
                     high_from=LATE_HIGH_FROM, low_from=LATE_LOW_FROM,
@@ -400,20 +390,22 @@ def station_fresh(station, obs, now=None):
     return age is not None and age <= MAX_OBS_AGE_H
 
 
-def observed_extreme(event, obs, tz):
+def observed_extreme(event, obs, tz, confirm=1):
     """Highest/lowest reading so far on the event's local date (market unit).
     None unless the readings cover the day from its start: a partial day
-    (missing night readings) would give a wrong low or high."""
+    (missing night readings) would give a wrong low or high.
+    `confirm`: how many readings must back the extreme. With 2 the result is
+    the second-most-extreme reading (None if the day has fewer readings)."""
     vals, first = [], None
     for ts, temp in obs.get(event["station"], []):
         t = datetime.fromtimestamp(ts, timezone.utc).astimezone(ZoneInfo(tz))
         if t.date() == event["date"]:
             vals.append(temp)
             first = t if first is None or t < first else first
-    if not vals or first.hour >= DAY_START_SLACK_H:
+    if len(vals) < max(confirm, 1) or first.hour >= DAY_START_SLACK_H:
         return None
-    ext = max(vals) if event["kind"] == "highest" else min(vals)
-    return to_unit(ext, event["unit"])
+    ranked = sorted(vals, reverse=event["kind"] == "highest")   # most extreme first
+    return to_unit(ranked[max(confirm, 1) - 1], event["unit"])
 
 
 def dead_signals(events, obs, fc):
@@ -423,9 +415,9 @@ def dead_signals(events, obs, fc):
         now = local_now(tz) if tz else None
         if not now or now.date() != e["date"]:
             continue  # only today's markets, in the station's own time zone
-        ext = observed_extreme(e, obs, tz)
+        ext = observed_extreme(e, obs, tz, confirm=DEAD_CONFIRM)
         if ext is None or not station_fresh(e["station"], obs):
-            continue      # no reading today, or the station has gone quiet
+            continue      # too few readings today, or the station has gone quiet
         picks = []
         for b in e["buckets"]:
             if e["kind"] == "highest":
@@ -439,7 +431,8 @@ def dead_signals(events, obs, fc):
                 picks.append((no_ask, b))
         for _, b in sorted(picks, key=lambda x: x[0])[:DEAD_PER_EVENT]:
             out.append(("DEAD", e, b, "NO",
-                        f"observed {e['kind'][:4]} so far {ext}°{e['unit']}"))
+                        f"observed {'high' if e['kind'] == 'highest' else 'low'} so far "
+                        f"{ext}°{e['unit']} ({DEAD_CONFIRM} readings)"))
     return out
 
 
@@ -455,9 +448,9 @@ def late_signals(events, obs, fc):
         start = LATE_HIGH_FROM if e["kind"] == "highest" else LATE_LOW_FROM
         if now.hour < start:
             continue
-        ext = observed_extreme(e, obs, tz)
+        ext = observed_extreme(e, obs, tz, confirm=DEAD_CONFIRM)
         if ext is None or not station_fresh(e["station"], obs):
-            continue      # no reading today, or the station has gone quiet
+            continue      # too few readings today, or the station has gone quiet
         picks = []
         for b in e["buckets"]:
             if e["kind"] == "highest":   # buckets ABOVE today's high so far
@@ -471,7 +464,7 @@ def late_signals(events, obs, fc):
                 picks.append((no_ask, b))
         for _, b in sorted(picks, key=lambda x: x[0])[:LATE_PER_EVENT]:
             out.append(("LATE", e, b, "NO",
-                        f"{e['kind'][:4]} so far {ext}°{e['unit']} at local {now:%H:%M}"))
+                        f"{'high' if e['kind'] == 'highest' else 'low'} so far {ext}°{e['unit']} at local {now:%H:%M}"))
     return out
 
 
@@ -714,10 +707,7 @@ def summary(ledger):
 
 def notify(lines):
     """True if delivered (or nothing to send / no webhook configured)."""
-    url = os.environ.get("DISCORD_WEBHOOK_URL")
-    if not url or not lines:
-        return True
-    return simcore.post_discord(url, "\n".join(lines))
+    return simcore.notify(lines)
 
 
 if __name__ == "__main__":
