@@ -80,10 +80,20 @@ class RewardsLine(InTempDir):
         text = heartbeat.rewards_line(self.since())
         self.assertIn("net -$5.00 to -$4.00", text)
 
-    def test_capital_is_the_largest_quote_per_market_added_up(self):
-        write_log([log_line("a", 1, capital=19.8), log_line("a", 2, capital=20.0),
-                   log_line("b", 3, capital=10.0)])
-        self.assertIn("on about $30 of capital", heartbeat.rewards_line(self.since()))
+    def test_capital_is_what_is_out_at_one_time_not_every_market_ever_quoted(self):
+        t1, t2 = ago(1), ago(2)
+        run1 = [dict(log_line("a", 1, capital=20.0), time=t1), dict(log_line("b", 1, capital=10.0), time=t1)]
+        run2 = [dict(log_line("c", 2, capital=12.0), time=t2), dict(log_line("d", 2, capital=6.0), time=t2)]
+        write_log(run1 + run2)                     # 4 markets, but only 2 quoted at a time
+        text = heartbeat.rewards_line(self.since())
+        self.assertIn("on about $24 of capital at a time (peak $30)", text)     # runs of $30 and $18
+        self.assertNotIn("$48", text)                                           # the old, added-up figure
+
+    def test_capital_in_use_handles_one_run_bad_numbers_and_nothing(self):
+        self.assertEqual(heartbeat.capital_in_use([]), (0.0, 0.0))
+        self.assertEqual(heartbeat.capital_in_use([{"time": "t", "capital": 15}]), (15.0, 15.0))
+        rows = [{"time": "t1", "capital": "inf"}, {"time": "t1", "capital": 5}, {"time": "t2"}]
+        self.assertEqual(heartbeat.capital_in_use(rows), (2.5, 5.0))
 
     def test_days_per_market_from_hours_tracked(self):
         rows = [log_line("a", 1, hours=12), log_line("b", 2, hours=12)]    # 12h each, 2 markets
