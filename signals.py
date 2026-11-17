@@ -8,8 +8,10 @@ from datetime import datetime, timedelta, timezone
 import requests
 
 import fees
+import flow
 import shadow
 import simcore
+import trader_watch
 
 DATA_API = "https://data-api.polymarket.com"
 GAMMA_API = "https://gamma-api.polymarket.com"
@@ -141,6 +143,18 @@ DEEP_CHUNK = 10              # wallets scored per step, so the time budget is ch
 DEEP_BUDGET_S = 150          # stop scoring for this run after this long
 DEEP_MAX_WIN_RATE = 0.90     # above this it is usually a hedger or bot, not a person to copy
 DEEP_MAX_PER_RUN = 20
+
+# Per-trader pause, judged on our own copies of each trader (see trader_watch.py).
+# False = SHADOW ONLY: flagged traders are marked on bets and reported, and are
+# still copied. True = a signal is skipped (and shadow-recorded) when every
+# trader behind it is flagged.
+TRADER_PAUSE_LIVE = False
+
+# Money-flow tag (shadow only, see flow.py): every sized signal of these scans
+# gets a record of how lopsided the recent betting on its market is. It is stored
+# with the bet or the shadow record and changes no decision.
+FLOW_SCANS = {"ESPORTS"}
+FLOW_MAX_PER_RUN = 15
 
 SESSION = requests.Session()
 
@@ -817,6 +831,29 @@ def size_bet(s, min_price=None, max_price=None):
     return s
 
 
+# ---------- Money-flow tag (shadow only) ----------
+
+def flow_rows(condition, stop):
+    """Recent taker buys on one market (newest first), or None if the API failed."""
+    return data_v2("trades", flow.trade_params(condition), max_pages=flow.MAX_PAGES, stop=stop)
+
+
+def tag_flow(sized, fetch=None):
+    """Attach s["flow"] to this run's sized signals. Never raises and never drops
+    a signal: this is evidence gathering, the bets must not depend on it."""
+    tagged = 0
+    for s in sized[:FLOW_MAX_PER_RUN]:
+        try:
+            rec = flow.tag(s, fetch or flow_rows)
+        except Exception as err:                    # noqa: BLE001
+            print(f"flow tag failed for {s.get('title')}: {err}")
+            rec = None
+        if rec:
+            s["flow"] = rec
+            tagged += 1
+    return tagged
+
+
 # ---------- Step 4: paper trading ledger ----------
 
 def settings_snapshot():
@@ -887,7 +924,8 @@ def shadow_skip(book, s, reason):
     book.add(SCAN, "skipped", reason, asset=s["asset"], condition=s["condition"],
              title=s["title"], event=s.get("event"), outcome=s["outcome"],
              price=s["price"], shares=s["shares"], stake=s["stake"], fee=s["fee"],
-             extra={"traders": s["traders"]})
+             extra={"traders": s["traders"],
+                    **({"flow": s["flow"]} if s.get("flow") else {})})
 
 
 def record_shadow_candidates(book, candidates, fetch=None):
@@ -955,9 +993,13 @@ def open_paper_bets(ledger, signals, book=None):
                 shadow_skip(book, s, why)
         return msgs
 
+    watched = trader_watch.flagged(ledger)
     for s in signals:
         if s["asset"] in held or s["condition"] in held_markets:
             continue  # never hold both sides (or two bets) of one market
+        if TRADER_PAUSE_LIVE and trader_watch.blocked(s, watched):
+            shadow_skip(book, s, "trader_paused")
+            continue  # every trader behind it has lost us money: shadow only
         if len(held) >= MAX_OPEN_BETS:
             shadow_skip(book, s, "max_open")
             continue
@@ -983,6 +1025,8 @@ def open_paper_bets(ledger, signals, book=None):
             "fee_rate": s.get("fee_rate", FEE_RATE), "fee_src": s.get("fee_src", "scan"),
             "status": "open", "traders": s["traders"],
             "holders": s["holders"],
+            **({"flow": s["flow"]} if s.get("flow") else {}),
+            **({"watch": trader_watch.hits(s, watched)} if trader_watch.hits(s, watched) else {}),
             "audit": simcore.audit(SCAN, settings_snapshot(), s.get("book")),
             "opened": datetime.now(timezone.utc).isoformat(),
             "ends": ((datetime.now(timezone.utc) + timedelta(hours=s["hours"])).isoformat()
@@ -1154,6 +1198,11 @@ def main():
     msg = shadow.switch_update(ledger, book.bets, SCAN)
     if msg:
         msgs.append(msg)
+    msgs += trader_watch.update(ledger, book.bets, live=TRADER_PAUSE_LIVE)
+    watched = trader_watch.flagged(ledger)
+    if watched:
+        print(f"Traders flagged on our own results ({'LIVE' if TRADER_PAUSE_LIVE else 'shadow only'}): "
+              + ", ".join(sorted(watched)))
 
     scores = trader_scores()
     good = good_traders(scores)
@@ -1161,6 +1210,10 @@ def main():
     print(f"{len(candidates)} candidate(s) before order book checks.")
     signals = [s for s in pmap(size_bet, candidates) if s]
     print(f"{len(signals)} signal(s) after sizing and fee checks.")
+    if SCAN in FLOW_SCANS:
+        n_flow = tag_flow(signals)
+        flagged = sum(1 for s in signals if (s.get("flow") or {}).get("flags"))
+        print(f"Money flow (shadow only): {n_flow} signal(s) tagged, {flagged} flagged.")
 
     filled = record_shadow_candidates(book, candidates)
     wide_added = record_wide_pool(book, scores, candidates, ledger)
