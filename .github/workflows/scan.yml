@@ -30,7 +30,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-      - run: pip install requests
+      - run: pip install -r requirements.txt
 
       # Event -> category lookups. Kept in the Actions cache, not the repo.
       - uses: actions/cache@v4
@@ -110,12 +110,19 @@ jobs:
         if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
         run: python heartbeat.py
 
+      # READ-ONLY: every paper strategy's return per bet, its likely range and whether
+      # anything is proven yet. Shown on this run's summary page. Never trades or saves.
+      - name: Scorecard
+        if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
+        continue-on-error: true
+        run: python scorecard.py --markdown >> "$GITHUB_STEP_SUMMARY"
+
       - name: Save ledgers
         if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add ledger*.json traders_*.json $(ls wx_state.json heartbeat.json wx_shadow.jsonl wx_calibration.json wx_winners.json shadow_*.json rewards_state.json rewards_log.jsonl 2>/dev/null)
+          git add ledger*.json traders_*.json $(ls wx_state.json heartbeat.json wx_shadow*.jsonl wx_calibration.json wx_winners.json shadow_*.json rewards_state.json rewards_log*.jsonl 2>/dev/null)
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Update paper ledgers"
           # A push can fail because files changed on GitHub during the run, or
@@ -128,7 +135,7 @@ jobs:
               sleep $((attempt * 15)); continue
             fi
             base=$(git merge-base HEAD "origin/$GITHUB_REF_NAME")
-            if git diff --name-only "$base" "origin/$GITHUB_REF_NAME" | grep -qE '^((ledger.*|traders_.*|wx_state|wx_calibration|wx_winners|heartbeat|shadow_.*|rewards_state)\.json|(wx_shadow|rewards_log)\.jsonl)$'; then
+            if git diff --name-only "$base" "origin/$GITHUB_REF_NAME" | grep -qE '^((ledger.*|traders_.*|wx_state|wx_calibration|wx_winners|heartbeat|shadow_.*|rewards_state)\.json|(wx_shadow|rewards_log)(_[0-9]{4}-[0-9]{2})?\.jsonl)$'; then
               echo "::error::State files changed on GitHub during this run. This run's ledgers were NOT saved (copy kept as a run artifact)."
               exit 1
             fi
@@ -151,10 +158,10 @@ jobs:
             wx_calibration.json
             wx_winners.json
             heartbeat.json
-            wx_shadow.jsonl
+            wx_shadow*.jsonl
             shadow_*.json
             rewards_state.json
-            rewards_log.jsonl
+            rewards_log*.jsonl
           if-no-files-found: ignore
 
       - name: Warn on Discord if anything failed
