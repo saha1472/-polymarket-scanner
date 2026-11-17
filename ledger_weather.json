@@ -1,5 +1,5 @@
 {
-  "cash": 54.11038048934294,
+  "cash": 54.26885107757823,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -5067,7 +5067,7 @@
       "order": "market",
       "fee_rate": 0.05,
       "fee_src": "market",
-      "status": "open",
+      "status": "won",
       "traders": [
         "quqqq"
       ],
@@ -5162,7 +5162,9 @@
       },
       "opened": "2026-11-16T08:02:38.711703+00:00",
       "ends": "2026-11-17T00:00:07.504913+00:00",
-      "stops": {}
+      "stops": {},
+      "closed": "2026-11-17T15:32:06.424054+00:00",
+      "pnl": 0.16897058823529415
     },
     {
       "asset": "10735308676845499608954785539438032012000711619156212933688839511955694724996",
@@ -5383,6 +5385,115 @@
       "opened": "2026-11-17T11:16:33.276362+00:00",
       "ends": "2026-11-18T00:00:06.327166+00:00",
       "stops": {}
+    },
+    {
+      "asset": "41490353160233587659023534138766323826030164375454951617653695486809155988510",
+      "condition": "0x398e0ef8d24b4eb708e0843ae7015f6f4ce427ddd8b163bc1d2a1a4b129f60fc",
+      "title": "Will the highest temperature in Paris be 15\u00b0C on November 18?",
+      "outcome": "Yes",
+      "event": "highest-temperature-in-paris-on-november-18-2026",
+      "price": 0.64,
+      "shares": 1.5625,
+      "stake": 1.0,
+      "fee": 0.018,
+      "order": "market",
+      "fee_rate": 0.05,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "quqqq"
+      ],
+      "holders": {
+        "0x1b29fd072a61e82c870034e25bd81169ef70f288": {
+          "name": "quqqq",
+          "size": 1019.98,
+          "entry": 0.6232,
+          "win_rate": 0.6031746031746031,
+          "roi": 0.13372317857822996,
+          "n": 189,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "2b2cd5ee1b76",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-17T15:32:41.612492+00:00",
+        "book": {
+          "asks": [
+            [
+              0.64,
+              14.12
+            ],
+            [
+              0.65,
+              83.0
+            ],
+            [
+              0.66,
+              462.69
+            ],
+            [
+              0.67,
+              87216.0
+            ],
+            [
+              0.68,
+              61.71
+            ]
+          ],
+          "bids": [
+            [
+              0.63,
+              83.0
+            ],
+            [
+              0.62,
+              20.0
+            ],
+            [
+              0.61,
+              177.7
+            ],
+            [
+              0.59,
+              31.16
+            ],
+            [
+              0.58,
+              14.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1794929552806",
+          "hash": "973f416fe63eaae1a3a00d4256c56deb994cb0a1"
+        }
+      },
+      "opened": "2026-11-17T15:32:41.612552+00:00",
+      "ends": "2026-11-18T00:00:08.333462+00:00"
     }
   ],
   "paused": false
