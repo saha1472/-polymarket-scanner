@@ -24,6 +24,8 @@ Nothing here is proven to make money. Most ideas tested so far lose or are withi
 | `signals.py` | Copy-trading paper bot. `python signals.py SPORTS` runs one scan; no argument runs the general scan |
 | `weather.py` | Weather desk strategies (DEAD, LATE, MORNING, AFTERNOON, SHIFT) |
 | `fees.py` | Each market's own taker fee |
+| `trader_watch.py` | Per-trader pause judged on our own copies of each trader. Shadow only until `TRADER_PAUSE_LIVE` in `signals.py` is set to True |
+| `flow.py` | Shadow-only money-flow tag on esports signals: how one-sided the recent betting is, whether one wallet dominates, how fast the price moved |
 | `shadow.py`, `shadow_politics.py` | Shadow records and the automatic pause/resume switch |
 | `wx_ensemble.py`, `wx_ensemble_eval.py`, `wx_calibrate.py` | Forecast-model shadow log, its scorer, and the daily model-versus-market check |
 | `rewards_estimate.py`, `rewards_tracker.py`, `watch_books.py` | Liquidity-reward estimate, paper market-making record, 30-second book watcher |
@@ -36,6 +38,8 @@ Nothing here is proven to make money. Most ideas tested so far lose or are withi
 |---|---|
 | `python scorecard.py` | Is any strategy proven yet, and how many more bets would it take? |
 | `python shadow_report.py` | What would the skipped and paused signals have made? |
+| `python trader_watch.py` | What has copying each trader actually made for us, and who is flagged? |
+| `python flow.py` | Do esports bets flagged for lopsided money do worse than the rest? |
 | `python copy_quality.py` | Which copied traders made money for us, and does chasing their price hurt? |
 | `python clv_report.py` | Did the price move our way after we bought? |
 | `python verify_settlements.py` | Do the ledgers agree with Polymarket's official results? |
