@@ -87,6 +87,19 @@ def _totals(rows):
     return t
 
 
+def capital_in_use(rows):
+    """(average, peak) dollars tied up in quotes at one time. Every line a run
+    writes carries the same timestamp, one line per market, so the capital of
+    one run is the sum over its lines. (Adding up every market ever quoted
+    instead, as this used to, counts money that was never out at the same time.)"""
+    per_run = {}
+    for r in rows:
+        per_run[r["time"]] = per_run.get(r["time"], 0.0) + _f(r.get("capital"))
+    if not per_run:
+        return 0.0, 0.0
+    return sum(per_run.values()) / len(per_run), max(per_run.values())
+
+
 def rewards_line(since, path=None):
     """One line on the hypothetical rewards tracker (it never places an order):
     liquidity rewards it would have earned against what its quotes would have
@@ -101,11 +114,9 @@ def rewards_line(since, path=None):
         day = [r for r in rows if r["time"] >= since]
         every, last = _totals(rows), _totals(day)
         markets = {r["condition"] for r in rows}
-        capital = 0.0
-        for m in markets:
-            capital += max(_f(r.get("capital")) for r in rows if r["condition"] == m)
+        avg_capital, peak_capital = capital_in_use(rows)
         days = every["hours"] / 24 / len(markets)
-        head = "💸 **Rewards tracker** (hypothetical, places no orders, estimate)"
+        head = "💸 **Rewards tracker** (hypothetical, places no orders, estimate: treat as an upper bound)"
         if day:
             today = (f"last 24h reward ${last['lo']:.2f}-${last['hi']:.2f}, fills "
                      f"{_usd(last['fill'])} ({last['hits']} hits), net "
@@ -114,7 +125,7 @@ def rewards_line(since, path=None):
             today = "last 24h: no quotes logged"
         whole = (f"whole record (~{days:.1f} days per market): net "
                  f"{_usd(every['lo'] + every['fill'])} to {_usd(every['hi'] + every['fill'])} "
-                 f"on about ${capital:.0f} of capital")
+                 f"on about ${avg_capital:.0f} of capital at a time (peak ${peak_capital:.0f})")
         return f"{head}: {today} | {whole}"
     except Exception:                      # noqa: BLE001
         return None
