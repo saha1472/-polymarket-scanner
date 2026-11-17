@@ -1,5 +1,5 @@
 {
-  "cash": 48.28135641713262,
+  "cash": 47.26985641713262,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -4973,6 +4973,130 @@
       "stops": {},
       "closed": "2026-11-16T23:01:35.707290+00:00",
       "pnl": 0.3748888888888888
+    },
+    {
+      "asset": "37178017046473902235351057378531630765079896561677822029300579325887711468029",
+      "condition": "0x7b29b7e0fe759f83cd0e7194fef37c37c849bae6ff2b972dfcb6c90a06e7577b",
+      "title": "Dota 2: LGD Gaming vs PARIVISION - Game 2 Winner",
+      "outcome": "PARIVISION",
+      "event": "dota2-lgd-pari-2026-11-17",
+      "price": 0.77,
+      "shares": 1.2987012987012987,
+      "stake": 1.0,
+      "fee": 0.011500000000000002,
+      "order": "market",
+      "fee_rate": 0.05,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "DotaBotReborn"
+      ],
+      "holders": {
+        "0x3231d2d67053e5dc3715f6429124741e52866e75": {
+          "name": "DotaBotReborn",
+          "size": 2083.1506,
+          "entry": 0.7299,
+          "win_rate": 0.6374501992031872,
+          "roi": 0.2721715765144505,
+          "n": 251,
+          "alt": true
+        }
+      },
+      "flow": {
+        "usd": 48034.36,
+        "trades": 178,
+        "wallets": 138,
+        "ours_share": 0.8953,
+        "side_share": 0.8953,
+        "ours_is_bigger": true,
+        "top_wallet_share": 0.229,
+        "top_wallet_usd": 11000.0,
+        "price_move": 0.0144,
+        "window_h": 6,
+        "reached_back_h": 2.89,
+        "truncated": false,
+        "flags": []
+      },
+      "audit": {
+        "code": "d73b291a329c",
+        "scan": "ESPORTS",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": 0.4,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-17T20:17:55.026760+00:00",
+        "book": {
+          "asks": [
+            [
+              0.77,
+              853.09
+            ],
+            [
+              0.78,
+              6699.25
+            ],
+            [
+              0.79,
+              7222.88
+            ],
+            [
+              0.8,
+              2778.5
+            ],
+            [
+              0.81,
+              7134.17
+            ]
+          ],
+          "bids": [
+            [
+              0.76,
+              832.39
+            ],
+            [
+              0.75,
+              5428.65
+            ],
+            [
+              0.74,
+              4006.13
+            ],
+            [
+              0.73,
+              5478.44
+            ],
+            [
+              0.72,
+              9405.26
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1794946669690",
+          "hash": "a590607a2405634cef979756d057d73b35fe346a"
+        }
+      },
+      "opened": "2026-11-17T20:17:55.026824+00:00",
+      "ends": "2026-11-18T00:00:05.418329+00:00"
     }
   ]
 }
