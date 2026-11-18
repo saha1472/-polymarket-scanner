@@ -3176,7 +3176,7 @@
       "order": "market",
       "fee_rate": 0.07,
       "fee_src": "market",
-      "status": "open",
+      "status": "lost",
       "traders": [
         "Tokor"
       ],
@@ -3277,7 +3277,9 @@
           "bid": 0.44062347999999996,
           "pnl": -0.351442396946565
         }
-      }
+      },
+      "closed": "2026-11-18T17:16:19.015147+00:00",
+      "pnl": -1.02415
     }
   ],
   "auto": {
@@ -3285,5 +3287,13 @@
     "since": "2026-11-17T17:17:33.806297+00:00",
     "why": "last 52 settled bets: ROI -15.0% per bet (\u00b18.9%)",
     "history": []
+  },
+  "trader_watch": {
+    "Tokor": {
+      "paused": true,
+      "since": "2026-11-18T17:16:30.216699+00:00",
+      "why": "our last 17 copies: -24% per bet (\u00b114%)",
+      "history": []
+    }
   }
 }
