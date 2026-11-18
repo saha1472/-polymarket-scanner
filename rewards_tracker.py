@@ -23,6 +23,14 @@ Still optimistic in places: queue position is ignored for rewards (we assume
 we're always in the book), and a hit is only marked to market over one run,
 not held to resolution. Pessimistic in one: any touch of our price counts as
 a fill even if others were ahead of us in the queue.
+
+A run in which a quote was hit earns less reward: we were probably out of the
+book for part of it, so the low estimate is 0 and the high estimate is halved.
+A quote whose market has no usable book is kept for up to REFRESH_HOURS and
+scored when the book returns; one that never returns is logged as "unmarked"
+so it is visible in the report instead of vanishing. A market that has just
+left the list is scored one last time; if its book is missing then, its quote
+is logged as unmarked at once (it cannot be kept: the market is no longer listed).
 """
 import argparse
 import json
@@ -68,11 +76,40 @@ def fills(quote, min_ask, max_bid, mid_now):
     return bid_hit, ask_hit, pnl
 
 
-def accrual(quote, hours):
-    """Reward credited for holding `quote` for `hours` (low, high)."""
+HIT_REWARD_FACTOR = (0.0, 0.5)     # (low, high) share of the reward kept on a run where the quote was hit
+
+
+def accrual(quote, hours, hit=False):
+    """Reward credited for holding `quote` for `hours` (low, high). A quote that was filled
+    during the run was not resting in the book the whole time, so it earns less."""
     if hours <= 0 or hours > MAX_GAP_HOURS:
         return 0.0, 0.0
-    return quote["usd_day"][0] * hours / 24, quote["usd_day"][1] * hours / 24
+    lo_f, hi_f = HIT_REWARD_FACTOR if hit else (1.0, 1.0)
+    return quote["usd_day"][0] * hours / 24 * lo_f, quote["usd_day"][1] * hours / 24 * hi_f
+
+
+def elapsed_days(lines):
+    """Calendar days the log spans (first quote placed to last scoring), or None when the lines
+    carry no usable times."""
+    starts, ends = [], []
+    for r in lines:
+        try:
+            end = datetime.fromisoformat(str(r["time"]))
+            start = end - timedelta(hours=float(r.get("hours") or 0))
+            if r.get("placed"):                       # an unmarked line remembers when its quote was placed
+                placed = datetime.fromisoformat(str(r["placed"]))
+                placed = placed if placed.tzinfo else placed.replace(tzinfo=timezone.utc)
+        except (KeyError, ValueError, TypeError):
+            return None                               # one line without a usable time: the span is unknown
+        if end.tzinfo is None:
+            end = end.replace(tzinfo=timezone.utc)
+        if start.tzinfo is None:
+            start = start.replace(tzinfo=timezone.utc)
+        ends.append(end)
+        starts.append(min(start, placed) if r.get("placed") else start)
+    if not ends:
+        return None
+    return max((max(ends) - min(starts)).total_seconds() / 86400, 0.0)
 
 
 def summarize(lines):
@@ -80,7 +117,7 @@ def summarize(lines):
     for r in lines:
         m = per.setdefault(r["condition"], {"question": r.get("question", "?"), "hours": 0.0,
                                             "lo": 0.0, "hi": 0.0, "hits": 0, "fill_pnl": 0.0,
-                                            "capital": 0.0, "runs": 0})
+                                            "capital": 0.0, "runs": 0, "unmarked": 0})
         m["hours"] += r.get("hours", 0.0)
         m["lo"] += r.get("accrued", [0, 0])[0]
         m["hi"] += r.get("accrued", [0, 0])[1]
@@ -88,6 +125,7 @@ def summarize(lines):
         m["fill_pnl"] += r.get("fill_pnl", 0.0)
         m["capital"] = max(m["capital"], r.get("capital", 0.0))
         m["runs"] += 1
+        m["unmarked"] += int(bool(r.get("unmarked")))
     return per
 
 
@@ -97,21 +135,32 @@ def report(lines):
         return "No tracked quotes yet."
     out = [f"{'hours':>6} {'reward low-high':>17} {'hits':>5} {'fill P&L':>9} "
            f"{'net low-high':>17} {'cap':>5}  market"]
-    t = {"hours": 0, "lo": 0, "hi": 0, "hits": 0, "fill_pnl": 0, "capital": 0}
+    t = {"hours": 0, "lo": 0, "hi": 0, "hits": 0, "fill_pnl": 0, "capital": 0, "unmarked": 0}
     for m in sorted(per.values(), key=lambda m: -(m["hi"] + m["fill_pnl"])):
         out.append(f"{m['hours']:6.1f} {m['lo']:7.2f}-{m['hi']:<8.2f} {m['hits']:5} "
                    f"{m['fill_pnl']:+9.2f} {m['lo'] + m['fill_pnl']:+7.2f}-"
                    f"{m['hi'] + m['fill_pnl']:<+8.2f} {m['capital']:5.1f}  {m['question'][:50]}")
         for k in t:
             t[k] += m[k]
-    days = t["hours"] / 24 / max(len(per), 1)
-    out.append(f"\nTotal over ~{days:.1f} day(s) per market: reward ${t['lo']:.2f}-${t['hi']:.2f}, "
+    per_market_days = t["hours"] / 24 / max(len(per), 1)
+    out.append(f"\nTotal over ~{per_market_days:.1f} day(s) per market (average time each market was tracked): "
+               f"reward ${t['lo']:.2f}-${t['hi']:.2f}, "
                f"hits {t['hits']}, fill P&L ${t['fill_pnl']:+.2f}, "
                f"net ${t['lo'] + t['fill_pnl']:+.2f} to ${t['hi'] + t['fill_pnl']:+.2f} "
-               f"on about ${t['capital']:.0f} of capital")
-    if days > 0:
-        out.append(f"Per day: net ${(t['lo'] + t['fill_pnl']) / days:+.2f} to "
-                   f"${(t['hi'] + t['fill_pnl']) / days:+.2f}")
+               f"on about ${t['capital']:.0f} of capital (summed over all {len(per)} market(s))")
+    calendar = elapsed_days(lines)
+    if calendar:
+        # the markets change over time, so dividing the total by the average tracking time of ONE market
+        # would overstate the daily figure by about the number of markets that rotated through
+        out.append(f"Per calendar day (the log spans {calendar:.1f} day(s)): net "
+                   f"${(t['lo'] + t['fill_pnl']) / calendar:+.2f} to ${(t['hi'] + t['fill_pnl']) / calendar:+.2f}")
+    elif per_market_days > 0:
+        out.append(f"Per market-day (these lines carry no times, so the calendar span is unknown): net "
+                   f"${(t['lo'] + t['fill_pnl']) / per_market_days:+.2f} to "
+                   f"${(t['hi'] + t['fill_pnl']) / per_market_days:+.2f}")
+    if t["unmarked"]:
+        out.append(f"{t['unmarked']} quote(s) could not be scored (their market had no usable book for too long); "
+                   f"any fills on them are not in the numbers above")
     return "\n".join(out)
 
 
@@ -133,6 +182,7 @@ def choose_markets(session):
 def main(fetch=simcore.fetch_books, session=None):
     state = read_json(STATE_FILE, {})
     now = now_utc()
+    previous = state.get("markets") or []
     chosen_at = state.get("chosen_at")
     if not state.get("markets") or not chosen_at or \
             now - datetime.fromisoformat(chosen_at) > timedelta(hours=REFRESH_HOURS):
@@ -148,13 +198,27 @@ def main(fetch=simcore.fetch_books, session=None):
         print("Rewards tracker: no markets (couldn't read the reward list).")
         return 0
     quotes, watch = state.get("quotes") or {}, state.get("watch") or {}
-    books = fetch(m["yes"] for m in markets)
-    lines, new_quotes = [], {}
-    for m in markets:
+    current = {m["yes"] for m in markets}
+    # a market that just left the list may still hold a quote: score it one last time, place no new one
+    retired = [m for m in previous if m["yes"] not in current and m["yes"] in quotes]
+    retired_tokens = {m["yes"] for m in retired}
+    books = fetch(m["yes"] for m in markets + retired)
+    lines, new_quotes, new_watch, unmarked = [], {}, {}, 0
+    for m in markets + retired:
         book = books.get(m["yes"])
         est = rx.evaluate(book, m["rate"], m["v"], m["min_size"]) if book else None
         mid = est["mid"] if est else None
         q = quotes.get(m["yes"])
+        if q and mid is None:
+            age_h = (now - datetime.fromisoformat(q["time"])).total_seconds() / 3600
+            if age_h <= REFRESH_HOURS and m["yes"] not in retired_tokens:
+                new_quotes[m["yes"]] = q                      # no usable book this run: keep the quote, score it later
+                new_watch[m["yes"]] = watch.get(m["yes"], {})
+            else:
+                unmarked += 1
+                lines.append({"time": now.isoformat(), "condition": m["condition"], "question": m["question"],
+                              "hours": 0.0, "accrued": [0.0, 0.0], "unmarked": True, "placed": q["time"], "bid_hit": False,
+                              "ask_hit": False, "fill_pnl": 0.0, "capital": q.get("capital", 0.0)})
         if q and mid is not None:
             hours = (now - datetime.fromisoformat(q["time"])).total_seconds() / 3600
             w = watch.get(m["yes"], {})
@@ -164,24 +228,26 @@ def main(fetch=simcore.fetch_books, session=None):
                                           max(highs) if highs else None, mid)
             lines.append({"time": now.isoformat(), "condition": m["condition"],
                           "question": m["question"], "hours": round(hours, 4),
-                          "accrued": [round(x, 6) for x in accrual(q, hours)],
+                          "accrued": [round(x, 6) for x in accrual(q, hours, bid_hit or ask_hit)],
                           "quote": {k: q[k] for k in ("bid", "ask", "size")},
                           "mid_then": q["mid"], "mid_now": mid, "bid_hit": bid_hit,
                           "ask_hit": ask_hit, "fill_pnl": round(pnl, 6),
                           "capital": q["capital"], "watch_looks": w.get("looks", 0)})
-        if est and rx.MID_RANGE[0] <= mid <= rx.MID_RANGE[1]:
+        if est and m["yes"] not in retired_tokens and rx.MID_RANGE[0] <= mid <= rx.MID_RANGE[1]:
             j = est["placements"]["join"]
             new_quotes[m["yes"]] = {"time": now.isoformat(), "bid": j["bid"], "ask": j["ask"],
                                     "size": j.get("size", est["size"]), "mid": mid,
                                     "usd_day": list(j["usd_day"]), "capital": j["capital"]}
+            new_watch[m["yes"]] = {}                      # the watcher fills this in
     state["quotes"] = new_quotes
-    state["watch"] = {t: {} for t in new_quotes}      # the watcher fills these in
+    state["watch"] = new_watch
     simcore.write_json_atomic(STATE_FILE, state, indent=1)
     if lines:
         simcore.append_log(LOG_FILE, lines)       # this month's file
     hits = sum(r["bid_hit"] + r["ask_hit"] for r in lines)
-    print(f"Rewards tracker: {len(lines)} quote(s) scored ({hits} hit), "
-          f"{len(new_quotes)} new quote(s) placed")
+    print(f"Rewards tracker: {len(lines) - unmarked} quote(s) scored ({hits} hit), "
+          f"{len(new_quotes)} quote(s) now open"
+          + (f", {unmarked} could not be scored" if unmarked else ""))
     return 0
 
 
