@@ -95,13 +95,37 @@ class ClvMath(unittest.TestCase):
         self.assertEqual(clv.price_at([], T0), None)
 
     def test_markouts_use_the_payout_once_the_market_is_over(self):
-        m = clv.markouts(bet(price=0.60, status="won"), self.HIST)
+        ends = iso(T0 + 10 * 3600)                              # the market ended with the history (+10h)
+        m = clv.markouts(bet(price=0.60, status="won", ends=ends), self.HIST)
         self.assertAlmostEqual(m[1], 0.62 - 0.60)               # an hour later
         self.assertAlmostEqual(m[6], 0.70 - 0.60)               # six hours later (still open)
-        self.assertAlmostEqual(m[24], 1.0 - 0.60)               # history ends at +10h: the result counts
+        self.assertAlmostEqual(m[24], 1.0 - 0.60)               # the market was over by +24h: the result counts
         self.assertAlmostEqual(m["res"], 1.0 - 0.60)
-        lost = clv.markouts(bet(price=0.60, status="lost", pnl=-1.0), self.HIST)
+        lost = clv.markouts(bet(price=0.60, status="lost", pnl=-1.0, ends=ends), self.HIST)
         self.assertAlmostEqual(lost[24], 0.0 - 0.60)
+
+    def test_the_payout_never_stands_in_for_a_horizon_before_the_market_ended(self):
+        # a short history (it stops at +10h) must not leak the result into a horizon where the market was still open
+        late = iso(T0 + 30 * 3600)                              # this market only ends at +30h
+        m = clv.markouts(bet(price=0.60, status="won", ends=late), self.HIST)
+        self.assertAlmostEqual(m[6], 0.70 - 0.60)
+        self.assertIsNone(m[24])                                 # unknown, NOT the +40c payout
+        self.assertAlmostEqual(m["res"], 1.0 - 0.60)             # the final result itself is still known
+        # no end time on the bet: no stand-in at all
+        m = clv.markouts(bet(price=0.60, status="won"), self.HIST)
+        self.assertIsNone(m[24])
+        self.assertAlmostEqual(m[6], 0.70 - 0.60)
+        # the same market with an end time before the horizon does use it
+        m = clv.markouts(bet(price=0.60, status="won", ends=iso(T0 + 12 * 3600)), self.HIST)
+        self.assertAlmostEqual(m[24], 1.0 - 0.60)
+        # a price recorded exactly AT the horizon (the last point of the history) is a known price, not an unknown
+        short = [[T0 - 100, 0.50], [T0 + 3600, 0.50]]
+        m = clv.markouts(bet(price=0.60, status="won", ends=iso(T0 + 30 * 3600)), short)
+        self.assertAlmostEqual(m[1], 0.50 - 0.60)
+        self.assertIsNone(m[6])
+        # a price recorded at the horizon beats the payout, even for a market that was due to end earlier
+        m = clv.markouts(bet(price=0.60, status="won", ends=iso(T0 + 2 * 3600)), self.HIST)
+        self.assertAlmostEqual(m[6], 0.70 - 0.60)                # the recorded price at +6h, not the 1.00 payout
 
     def test_a_stale_point_from_before_the_entry_is_never_used(self):
         # the last point at or before entry+1h is from BEFORE the bet: that price was never traded against
