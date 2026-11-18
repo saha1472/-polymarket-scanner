@@ -106,8 +106,10 @@ def entry_mid(bet):
 
 def markouts(bet, history):
     """{1: m1, 6: m6, 24: m24, "res": m, "spread": paid over mid, "mid6": +6h from the mid} per
-    share, None where it cannot be known. Beyond the last price on record the market is over: the
-    final payout is used when the bet has one. Only points after the entry are used."""
+    share, None where it cannot be known. The final payout stands in for the price at a horizon only
+    when the bet's own end time (`ends`) is at or before that horizon, so a short or late price
+    history can never leak the result into an earlier horizon. A bet with no end time gets no
+    payout stand-in. Only points after the entry are used."""
     entry_t, p0 = parse_iso(bet.get("opened")), num(bet.get("price"))
     out = {h: None for h in HORIZONS_H}
     out.update({"res": None, "spread": None, "mid6": None})
@@ -115,10 +117,16 @@ def markouts(bet, history):
         return out
     payout = PAYOUT.get(bet.get("status"))
     last_t = history[-1][0]
+    ends_t = parse_iso(bet.get("ends")) if bet.get("ends") else None
     later_by = {}
     for h in HORIZONS_H:
         t = entry_t + h * 3600
-        later = payout if t >= last_t else price_after(history, entry_t, t)   # resolved before the horizon
+        if payout is not None and ends_t is not None and t >= ends_t and t >= last_t:
+            later = payout                                                   # the market was already over at this horizon
+        elif t <= last_t:
+            later = price_after(history, entry_t, t)                         # a recorded price after the entry
+        else:
+            later = None                                                     # beyond the recorded prices: unknown
         later_by[h] = later
         out[h] = None if later is None else later - p0
     if payout is not None:
@@ -194,7 +202,7 @@ def render(report):
             "",
             "Limits of this measurement: Polymarket's price history is hourly last-trade prices, so a later",
             "price can be up to an hour stale; a bet bought by taking the ask starts about half a spread behind;",
-            "and once a market has ended the final payout stands in for the price. Treat it as a direction,",
+            "and once a bet's market has ended the final payout stands in for the price. Treat it as a direction,",
             "not a precise number."]
     return "\n".join(out)
 
