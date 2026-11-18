@@ -1,19 +1,19 @@
 {
  "version": 1,
- "fitted_on": "2026-11-17",
- "code": "a1065af38938",
- "events": 1405,
+ "fitted_on": "2026-11-18",
+ "code": "4dcd0c71a066",
+ "events": 1482,
  "groups": {
   "highest@10": {
-   "rows": 8228,
-   "train_rows": 5599,
-   "train_days": 11,
-   "test_two_sided_rows": 1401,
-   "test_events": 239,
+   "rows": 8756,
+   "train_rows": 6116,
+   "train_days": 12,
+   "test_two_sided_rows": 1359,
+   "test_events": 240,
    "test_days": 5,
-   "ll_market": 0.29350575080288294,
-   "ll_model": 0.48109725155988436,
-   "ll_blend": 0.29744486137830456,
+   "ll_market": 0.2958919406669344,
+   "ll_model": 0.48492949557003184,
+   "ll_blend": 0.298044665737605,
    "bets": {
     "n": 0,
     "events": 0,
@@ -32,25 +32,25 @@
     1.0
    ],
    "weights_train": [
-    0.0797,
-    -0.0439,
-    1.2128
+    0.0652,
+    -0.038,
+    1.183
    ],
    "streak": 0,
    "base_streak": 0,
    "trusted": false,
-   "evaluated_on": "2026-11-17"
+   "evaluated_on": "2026-11-18"
   },
   "highest@15": {
-   "rows": 8415,
-   "train_rows": 5786,
-   "train_days": 11,
-   "test_two_sided_rows": 599,
-   "test_events": 235,
+   "rows": 8943,
+   "train_rows": 6303,
+   "train_days": 12,
+   "test_two_sided_rows": 597,
+   "test_events": 237,
    "test_days": 5,
-   "ll_market": 0.08710174829344655,
-   "ll_model": 0.17221120650334515,
-   "ll_blend": 0.0814977162166653,
+   "ll_market": 0.07318650425605037,
+   "ll_model": 0.12720981903805892,
+   "ll_blend": 0.06393391113267005,
    "bets": {
     "n": 2,
     "events": 2,
@@ -69,36 +69,35 @@
     1.0
    ],
    "weights_train": [
-    0.0645,
-    0.1197,
-    1.1965
+    0.0568,
+    0.0917,
+    1.2218
    ],
    "streak": 0,
    "base_streak": 0,
    "trusted": false,
-   "evaluated_on": "2026-11-17"
+   "evaluated_on": "2026-11-18"
   },
   "lowest@8": {
-   "rows": 7040,
-   "train_rows": 5115,
-   "train_days": 11,
-   "test_two_sided_rows": 258,
-   "test_events": 125,
+   "rows": 7359,
+   "train_rows": 5599,
+   "train_days": 12,
+   "test_two_sided_rows": 232,
+   "test_events": 108,
    "test_days": 5,
-   "ll_market": 0.03513533278915123,
-   "ll_model": 0.04522547988167602,
-   "ll_blend": 0.026925237400475338,
+   "ll_market": 0.04178620013277125,
+   "ll_model": 0.05066714407009109,
+   "ll_blend": 0.030111267913381135,
    "bets": {
-    "n": 2,
-    "events": 2,
-    "pnl": -0.828,
-    "roi": -0.414,
-    "se": 0.4218
+    "n": 4,
+    "events": 4,
+    "pnl": -1.4112,
+    "roi": -0.3528,
+    "se": 0.3334
    },
    "ok": false,
    "reasons": [
-    "blend does not beat the market by 0.01 on real two-sided books",
-    "only 2 events with a qualifying buy (need 30)"
+    "only 4 events with a qualifying buy (need 30)"
    ],
    "weights": [
     0.0,
@@ -106,14 +105,14 @@
     1.0
    ],
    "weights_train": [
-    0.5414,
-    0.5974,
-    0.8426
+    0.5465,
+    0.5933,
+    0.847
    ],
    "streak": 0,
    "base_streak": 0,
    "trusted": false,
-   "evaluated_on": "2026-11-17"
+   "evaluated_on": "2026-11-18"
   }
  },
  "backlog": false,
