@@ -421,6 +421,107 @@ class RewardsTracker(unittest.TestCase):
         self.assertIn("fill P&L $-2.00", txt)
 
 
+class RewardsTrackerRuns(InTempDir):
+    """Whole runs of rewards_tracker.main with a fake order book, in a scratch folder."""
+    MA = {"yes": "tokA", "condition": "cA", "question": "Market A?", "rate": 100.0, "v": 3.0, "min_size": 5.0}
+    MB = {"yes": "tokB", "condition": "cB", "question": "Market B?", "rate": 100.0, "v": 3.0, "min_size": 5.0}
+    CALM = {"bids": [{"price": "0.48", "size": "100"}, {"price": "0.47", "size": "100"}],
+            "asks": [{"price": "0.52", "size": "100"}, {"price": "0.53", "size": "100"}],
+            "tick_size": "0.01", "min_order_size": "5"}
+    SELLER = {"bids": [{"price": "0.44", "size": "100"}], "asks": [{"price": "0.47", "size": "100"}],
+              "tick_size": "0.01", "min_order_size": "5"}          # someone sells at 0.47: our 0.48 bid is hit
+
+    def quote(self, minutes_ago=15, **kw):
+        q = {"time": iso(-minutes_ago), "bid": 0.48, "ask": 0.52, "size": 20.0, "mid": 0.50,
+             "usd_day": [1.0, 2.0], "capital": 19.0}
+        q.update(kw)
+        return q
+
+    def seed(self, markets, quotes, watch=None, chosen_minutes_ago=60):
+        simcore.write_json_atomic(rewards_tracker.STATE_FILE, {
+            "markets": markets, "chosen_at": iso(-chosen_minutes_ago), "quotes": quotes, "watch": watch or {}})
+
+    def go(self, books, session=None):
+        import contextlib
+        import io
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            rewards_tracker.main(fetch=lambda tokens: {t: books[t] for t in tokens if t in books}, session=session)
+        with open(rewards_tracker.STATE_FILE) as fh:
+            state = json.load(fh)
+        return state, simcore.read_log(rewards_tracker.LOG_FILE), buf.getvalue()
+
+    def test_a_run_in_which_the_quote_was_hit_earns_less_reward(self):
+        q = {"bid": 0.48, "ask": 0.52, "size": 20, "usd_day": [1.0, 2.0]}
+        self.assertEqual(rewards_tracker.accrual(q, 1.0), (1.0 / 24, 2.0 / 24))
+        self.assertEqual(rewards_tracker.accrual(q, 1.0, hit=True), (0.0, 2.0 / 24 * 0.5))
+        self.seed([self.MA], {"tokA": self.quote(minutes_ago=15)})
+        _, lines, _ = self.go({"tokA": self.SELLER})
+        self.assertTrue(lines[0]["bid_hit"])
+        self.assertEqual(lines[0]["accrued"][0], 0.0)
+        self.assertAlmostEqual(lines[0]["accrued"][1], 2.0 * 0.25 / 24 * 0.5, places=5)
+        self.seed([self.MA], {"tokA": self.quote(minutes_ago=15)})
+        _, lines, _ = self.go({"tokA": self.CALM})                       # not hit: the full reward
+        self.assertFalse(lines[-1]["bid_hit"])       # the log's last line (the first run is above it)
+        self.assertAlmostEqual(lines[-1]["accrued"][1], 2.0 * 0.25 / 24, places=5)
+
+    def test_per_day_is_taken_over_the_calendar_not_over_one_markets_days(self):
+        # four markets, each tracked for one day in turn (a rotating list): 4 days of log, $1 net per market
+        start = datetime(2026, 11, 1, tzinfo=timezone.utc)
+        lines = [{"time": (start + timedelta(days=i + 1)).isoformat(), "condition": f"c{i}", "question": f"q{i}",
+                  "hours": 24.0, "accrued": [1.0, 1.0], "bid_hit": False, "ask_hit": False,
+                  "fill_pnl": 0.0, "capital": 10.0} for i in range(4)]
+        self.assertAlmostEqual(rewards_tracker.elapsed_days(lines), 4.0)
+        txt = rewards_tracker.report(lines)
+        self.assertIn("the log spans 4.0 day(s)): net $+1.00 to $+1.00", txt)         # $4 over 4 days, not $4 per 1 day
+        self.assertNotIn("$+4.00 to $+4.00", txt.split("Per calendar day")[1])
+        self.assertIsNone(rewards_tracker.elapsed_days([{"condition": "c"}]))         # no times: no calendar figure
+        # ONE line without a time makes the span unknown (it must not be computed from the others alone)
+        mixed = [{"condition": "c", "hours": 24.0}, dict(lines[0], hours=1.0)]
+        self.assertIsNone(rewards_tracker.elapsed_days(mixed))
+        # an unmarked quote counts from when it was placed, not from the day it was given up on
+        unmarked = [{"time": "2026-11-02T00:00:00+00:00", "hours": 0.0, "placed": "2026-11-01T00:00:00+00:00"},
+                    {"time": "2026-11-03T00:00:00+00:00", "hours": 1.0}]
+        self.assertAlmostEqual(rewards_tracker.elapsed_days(unmarked), 2.0)
+        self.assertAlmostEqual(rewards_tracker.elapsed_days([{k: v for k, v in unmarked[0].items() if k != "placed"}, unmarked[1]]),
+                               1.0 + 0.0, places=1)
+        self.assertIn("Per market-day", rewards_tracker.report([{"condition": "c", "question": "q", "hours": 24.0,
+                                                                   "accrued": [1, 1], "capital": 1.0}]))
+
+    def test_a_quote_whose_book_is_missing_is_kept_and_scored_when_the_book_returns(self):
+        self.seed([self.MA], {"tokA": self.quote(minutes_ago=90)}, watch={"tokA": {"min_ask": 0.47, "looks": 3}})
+        state, lines, _ = self.go({})                                       # the book is not available this run
+        self.assertEqual(lines, [])                                          # nothing to score yet ...
+        self.assertIn("tokA", state["quotes"])                               # ... but the quote is not thrown away
+        self.assertEqual(state["watch"]["tokA"], {"min_ask": 0.47, "looks": 3})
+        state, lines, _ = self.go({"tokA": self.CALM})                      # back: the watcher's low price is still counted
+        self.assertEqual(len(lines), 1)
+        self.assertTrue(lines[0]["bid_hit"])
+        self.assertEqual(lines[0]["accrued"], [0.0, 0.0])                    # a gap that long earns no reward
+
+    def test_a_quote_that_never_gets_a_book_back_is_logged_as_unmarked(self):
+        self.seed([self.MA], {"tokA": self.quote(minutes_ago=30 * 60)})      # 30 hours old
+        state, lines, out = self.go({})
+        self.assertEqual(state["quotes"], {})
+        self.assertEqual([l.get("unmarked") for l in lines], [True])
+        self.assertIn("placed", lines[0])                                    # it remembers when the quote was placed
+        self.assertIn("1 could not be scored", out)
+        txt = rewards_tracker.report(lines)
+        self.assertIn("1 quote(s) could not be scored", txt)
+
+    def test_a_market_that_left_the_list_is_scored_one_last_time(self):
+        self.seed([self.MA], {"tokA": self.quote(minutes_ago=15)}, chosen_minutes_ago=30 * 60)   # list is due a refresh
+        old = rewards_tracker.choose_markets
+        rewards_tracker.choose_markets = lambda session: [self.MB]
+        try:
+            state, lines, _ = self.go({"tokA": self.SELLER, "tokB": self.CALM}, session=object())
+        finally:
+            rewards_tracker.choose_markets = old
+        self.assertEqual([l["condition"] for l in lines], ["cA"])            # the old market's quote was scored (a hit)
+        self.assertTrue(lines[0]["bid_hit"])
+        self.assertEqual(sorted(state["quotes"]), ["tokB"])                  # ... and only the new market gets a quote
+
+
 class ScannerPaging(unittest.TestCase):
     def test_keyset_cursor_and_open_ended_events_skipped(self):
         pages = [{"events": [{"id": 1}], "next_cursor": "x"}, {"events": [{"id": 2}]}]
