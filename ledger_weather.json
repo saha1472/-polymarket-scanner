@@ -1,5 +1,5 @@
 {
-  "cash": 54.502042088814186,
+  "cash": 53.48654208881418,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -5730,6 +5730,116 @@
       "opened": "2026-11-18T08:32:08.879659+00:00",
       "ends": "2026-11-19T00:00:06.089254+00:00",
       "stops": {}
+    },
+    {
+      "asset": "104101269484775604494639560648634052112393993786659826130554719607980896644932",
+      "condition": "0x36f9c7cddd9c92b4cbd110c6200e7e728dfaf42650dbd0be479e8f4f7a748fce",
+      "title": "Will the highest temperature in Moscow be 6\u00b0C on November 20?",
+      "outcome": "Yes",
+      "event": "highest-temperature-in-moscow-on-november-20-2026",
+      "price": 0.69,
+      "shares": 1.4492753623188408,
+      "stake": 1.0,
+      "fee": 0.015500000000000005,
+      "order": "market",
+      "fee_rate": 0.05,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "quqqq"
+      ],
+      "holders": {
+        "0x1b29fd072a61e82c870034e25bd81169ef70f288": {
+          "name": "quqqq",
+          "size": 310.4891,
+          "entry": 0.628,
+          "win_rate": 0.6256410256410256,
+          "roi": 0.16315497567261364,
+          "n": 195,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "23e2f92b0cba",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-19T08:07:05.859230+00:00",
+        "trigger_sha": "b049c464ce69",
+        "book": {
+          "asks": [
+            [
+              0.69,
+              25.0
+            ],
+            [
+              0.71,
+              5.0
+            ],
+            [
+              0.72,
+              6024.34
+            ],
+            [
+              0.73,
+              76.17
+            ],
+            [
+              0.74,
+              13.69
+            ]
+          ],
+          "bids": [
+            [
+              0.63,
+              5.0
+            ],
+            [
+              0.62,
+              36.12
+            ],
+            [
+              0.6,
+              5.0
+            ],
+            [
+              0.59,
+              8.06
+            ],
+            [
+              0.58,
+              8.06
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1795075611951",
+          "hash": "7895eac28fd26884f8932c1c9288bc7d65d4a1d0"
+        }
+      },
+      "opened": "2026-11-19T08:07:05.859291+00:00",
+      "ends": "2026-11-20T00:00:06.331905+00:00"
     }
   ],
   "paused": false
