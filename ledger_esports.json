@@ -1,5 +1,5 @@
 {
-  "cash": 48.56855771583392,
+  "cash": 47.560557715833916,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -5102,6 +5102,130 @@
       "stops": {},
       "closed": "2026-11-17T21:31:23.828776+00:00",
       "pnl": 0.2872012987012987
+    },
+    {
+      "asset": "28023494771292662623332449047315885619466473606429807105090316141472422673757",
+      "condition": "0xb77eca8a229fa755fc9024663272fdbaf58392935e488d292bbb84c9487eebab",
+      "title": "Dota 2: Team Spirit vs Xtreme Gaming (BO3) - BLAST Slam Group B",
+      "outcome": "Team Spirit",
+      "event": "dota2-ts8-xtreme-2026-11-21",
+      "price": 0.84,
+      "shares": 1.1904761904761905,
+      "stake": 1.0,
+      "fee": 0.008000000000000002,
+      "order": "market",
+      "fee_rate": 0.05,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "Zywoo123"
+      ],
+      "holders": {
+        "0xc44f432b014f36679e13615f95996eac32bbd49f": {
+          "name": "Zywoo123",
+          "size": 5500.0,
+          "entry": 0.8299,
+          "win_rate": 0.5932203389830508,
+          "roi": 0.4767072880424097,
+          "n": 59,
+          "alt": true
+        }
+      },
+      "flow": {
+        "usd": 302448.88,
+        "trades": 1171,
+        "wallets": 479,
+        "ours_share": 0.8006,
+        "side_share": 0.8006,
+        "ours_is_bigger": true,
+        "top_wallet_share": 0.1028,
+        "top_wallet_usd": 31079.57,
+        "price_move": 0.028,
+        "window_h": 6,
+        "reached_back_h": 5.86,
+        "truncated": false,
+        "flags": []
+      },
+      "audit": {
+        "code": "84514a816d4a",
+        "scan": "ESPORTS",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": 0.4,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-21T21:16:12.094341+00:00",
+        "book": {
+          "asks": [
+            [
+              0.84,
+              3.87
+            ],
+            [
+              0.845,
+              50.0
+            ],
+            [
+              0.85,
+              20.0
+            ],
+            [
+              0.851,
+              20.0
+            ],
+            [
+              0.852,
+              39.0
+            ]
+          ],
+          "bids": [
+            [
+              0.833,
+              20.0
+            ],
+            [
+              0.832,
+              20.0
+            ],
+            [
+              0.831,
+              10.84
+            ],
+            [
+              0.83,
+              2830.37
+            ],
+            [
+              0.827,
+              10.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.001",
+          "timestamp": "1795295767889",
+          "hash": "72eb69cfdca829c641f5a9596ac433e50ef92f13"
+        }
+      },
+      "opened": "2026-11-21T21:16:12.094440+00:00",
+      "ends": "2026-11-22T00:00:04.275269+00:00"
     }
   ]
 }
