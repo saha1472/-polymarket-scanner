@@ -1,5 +1,5 @@
 {
-  "cash": 54.578642108717446,
+  "cash": 53.57534210871744,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -6312,6 +6312,115 @@
       "opened": "2026-11-20T21:31:47.570338+00:00",
       "ends": "2026-11-21T00:00:07.428051+00:00",
       "stops": {}
+    },
+    {
+      "asset": "35994475255309711252438833930334261860596548947186043255680041855156726817634",
+      "condition": "0xbfbdaadf152c44c0ad787c526b566ceb172dd4b61016dfc9570ff4c6c8f6b22f",
+      "title": "Will the highest temperature in Warsaw be 4\u00b0C on November 22?",
+      "outcome": "Yes",
+      "event": "highest-temperature-in-warsaw-on-november-22-2026",
+      "price": 0.67,
+      "shares": 1.4925373134328357,
+      "stake": 1.0,
+      "fee": 0.0032999999999999995,
+      "order": "market",
+      "fee_rate": 0.01,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "AlexD87"
+      ],
+      "holders": {
+        "0x482943e8126e83a63695cebde33a9498ee7497eb": {
+          "name": "AlexD87",
+          "size": 144.2552,
+          "entry": 0.6932,
+          "win_rate": 0.6059479553903345,
+          "roi": 0.17187368367001804,
+          "n": 269,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "e8244f515d9b",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-21T12:46:37.419218+00:00",
+        "book": {
+          "asks": [
+            [
+              0.67,
+              10.0
+            ],
+            [
+              0.68,
+              20.0
+            ],
+            [
+              0.69,
+              5.0
+            ],
+            [
+              0.71,
+              22.74
+            ],
+            [
+              0.72,
+              9.0
+            ]
+          ],
+          "bids": [
+            [
+              0.6,
+              5.0
+            ],
+            [
+              0.58,
+              5.0
+            ],
+            [
+              0.57,
+              10.0
+            ],
+            [
+              0.56,
+              26.0
+            ],
+            [
+              0.55,
+              22.72
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1795265189818",
+          "hash": "af5ff2fb559f46db33c83294bafe6433f00de809"
+        }
+      },
+      "opened": "2026-11-21T12:46:37.419290+00:00",
+      "ends": "2026-11-22T00:00:06.798304+00:00"
     }
   ],
   "paused": false
