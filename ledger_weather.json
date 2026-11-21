@@ -1,5 +1,5 @@
 {
-  "cash": 53.57534210871744,
+  "cash": 53.76711435752127,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -6216,7 +6216,7 @@
       "order": "market",
       "fee_rate": 0.05,
       "fee_src": "market",
-      "status": "open",
+      "status": "won",
       "traders": [
         "quqqq"
       ],
@@ -6311,7 +6311,9 @@
       },
       "opened": "2026-11-20T21:31:47.570338+00:00",
       "ends": "2026-11-21T00:00:07.428051+00:00",
-      "stops": {}
+      "stops": {},
+      "closed": "2026-11-21T21:31:16.738000+00:00",
+      "pnl": 0.18797224880382776
     },
     {
       "asset": "35994475255309711252438833930334261860596548947186043255680041855156726817634",
@@ -6429,6 +6431,115 @@
         "bid": 0.587581,
         "pnl": -0.126313432835821
       }
+    },
+    {
+      "asset": "92279224130917701403978038413470224436102707628786371044775010502834854346068",
+      "condition": "0xa7565c3911d6d851ff5f6ac557ba271017ca6dc644c87c827940548a3df866c5",
+      "title": "Will the highest temperature in Ankara be 11\u00b0C on November 22?",
+      "outcome": "Yes",
+      "event": "highest-temperature-in-ankara-on-november-22-2026",
+      "price": 0.56,
+      "shares": 1.7857142857142856,
+      "stake": 1.0,
+      "fee": 0.004399999999999999,
+      "order": "market",
+      "fee_rate": 0.01,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "quqqq"
+      ],
+      "holders": {
+        "0x1b29fd072a61e82c870034e25bd81169ef70f288": {
+          "name": "quqqq",
+          "size": 615.7339,
+          "entry": 0.4693,
+          "win_rate": 0.6116504854368932,
+          "roi": 0.17006755771378787,
+          "n": 206,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "0adca5afc522",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-21T21:31:40.951388+00:00",
+        "book": {
+          "asks": [
+            [
+              0.56,
+              10.0
+            ],
+            [
+              0.57,
+              164.97
+            ],
+            [
+              0.58,
+              882.0
+            ],
+            [
+              0.59,
+              5.02
+            ],
+            [
+              0.6,
+              77.9
+            ]
+          ],
+          "bids": [
+            [
+              0.51,
+              114.2
+            ],
+            [
+              0.5,
+              86.63
+            ],
+            [
+              0.49,
+              9.88
+            ],
+            [
+              0.42,
+              20.0
+            ],
+            [
+              0.4,
+              20.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1795296694037",
+          "hash": "e102b302d8e44d4db24f6ecb86ae17aba38b098e"
+        }
+      },
+      "opened": "2026-11-21T21:31:40.951443+00:00",
+      "ends": "2026-11-22T00:00:06.949241+00:00"
     }
   ],
   "paused": false
