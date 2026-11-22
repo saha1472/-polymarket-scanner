@@ -1,5 +1,5 @@
 {
-  "cash": 48.14091485869106,
+  "cash": 47.11441485869106,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -5327,6 +5327,132 @@
       "pnl": -0.4276428571428571,
       "closed": "2026-11-21T22:11:10.410067+00:00",
       "hold_pnl": -1.008
+    },
+    {
+      "asset": "40689252491769900082627145176575594824567742544356247046427744885613402986293",
+      "condition": "0x647f5529e9909c1904790768000502d36c2f275ab29173f618644306b5b536ec",
+      "title": "Dota 2: 1win vs Aurora - Game 1 Winner",
+      "outcome": "Aurora",
+      "event": "dota2-1win-aur1-2026-11-22",
+      "price": 0.47,
+      "shares": 2.127659574468085,
+      "stake": 1.0,
+      "fee": 0.0265,
+      "order": "market",
+      "fee_rate": 0.05,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "DotaBotReborn"
+      ],
+      "holders": {
+        "0x3231d2d67053e5dc3715f6429124741e52866e75": {
+          "name": "DotaBotReborn",
+          "size": 6127.7993,
+          "entry": 0.488,
+          "win_rate": 0.6377358490566037,
+          "roi": 0.24562063436559498,
+          "n": 265,
+          "alt": true
+        }
+      },
+      "flow": {
+        "usd": 165823.91,
+        "trades": 276,
+        "wallets": 217,
+        "ours_share": 0.3767,
+        "side_share": 0.6233,
+        "ours_is_bigger": false,
+        "top_wallet_share": 0.3136,
+        "top_wallet_usd": 52000.0,
+        "price_move": -0.11,
+        "window_h": 6,
+        "reached_back_h": 5.71,
+        "truncated": false,
+        "flags": [
+          "fast_move"
+        ]
+      },
+      "audit": {
+        "code": "8d693a4c3e9d",
+        "scan": "ESPORTS",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": 0.4,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-22T18:16:09.943317+00:00",
+        "book": {
+          "asks": [
+            [
+              0.47,
+              22728.17
+            ],
+            [
+              0.48,
+              16317.9
+            ],
+            [
+              0.49,
+              1675.0
+            ],
+            [
+              0.5,
+              19750.0
+            ],
+            [
+              0.51,
+              2485.0
+            ]
+          ],
+          "bids": [
+            [
+              0.46,
+              60198.12
+            ],
+            [
+              0.45,
+              3142.93
+            ],
+            [
+              0.44,
+              5160.69
+            ],
+            [
+              0.43,
+              616.0
+            ],
+            [
+              0.42,
+              3236.17
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1795371365009",
+          "hash": "c7b4e42feb75798974213e02fec8e3c375c43a95"
+        }
+      },
+      "opened": "2026-11-22T18:16:09.943403+00:00",
+      "ends": "2026-11-23T00:00:04.179296+00:00"
     }
   ]
 }
