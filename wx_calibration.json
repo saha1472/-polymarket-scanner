@@ -1,19 +1,19 @@
 {
  "version": 1,
- "fitted_on": "2026-11-22",
- "code": "355a937dc00c",
- "events": 1790,
+ "fitted_on": "2026-11-23",
+ "code": "913dee63d18e",
+ "events": 1867,
  "groups": {
   "highest@10": {
-   "rows": 10868,
-   "train_rows": 8228,
-   "train_days": 16,
-   "test_two_sided_rows": 1300,
+   "rows": 11396,
+   "train_rows": 8756,
+   "train_days": 17,
+   "test_two_sided_rows": 1312,
    "test_events": 240,
    "test_days": 5,
-   "ll_market": 0.2832591928509604,
-   "ll_model": 0.5252157862441094,
-   "ll_blend": 0.2831546001600713,
+   "ll_market": 0.2702341260601861,
+   "ll_model": 0.5042596142198148,
+   "ll_blend": 0.2697973586922994,
    "bets": {
     "n": 0,
     "events": 0,
@@ -32,25 +32,25 @@
     1.0
    ],
    "weights_train": [
-    0.0729,
-    -0.0196,
-    1.1542
+    0.0814,
+    -0.0141,
+    1.1531
    ],
    "streak": 0,
    "base_streak": 0,
    "trusted": false,
-   "evaluated_on": "2026-11-22"
+   "evaluated_on": "2026-11-23"
   },
   "highest@15": {
-   "rows": 11055,
-   "train_rows": 8415,
-   "train_days": 16,
-   "test_two_sided_rows": 560,
-   "test_events": 230,
+   "rows": 11583,
+   "train_rows": 8943,
+   "train_days": 17,
+   "test_two_sided_rows": 542,
+   "test_events": 225,
    "test_days": 5,
-   "ll_market": 0.046963663866239985,
-   "ll_model": 0.08592644208561212,
-   "ll_blend": 0.03362386658557105,
+   "ll_market": 0.07045235116741612,
+   "ll_model": 0.14910850335265285,
+   "ll_blend": 0.06519771865743054,
    "bets": {
     "n": 0,
     "events": 0,
@@ -60,6 +60,7 @@
    },
    "ok": false,
    "reasons": [
+    "blend does not beat the market by 0.01 on real two-sided books",
     "only 0 events with a qualifying buy (need 30)"
    ],
    "weights": [
@@ -68,35 +69,35 @@
     1.0
    ],
    "weights_train": [
-    0.0646,
-    0.0996,
-    1.2244
+    0.0678,
+    0.0965,
+    1.2394
    ],
    "streak": 0,
    "base_streak": 0,
    "trusted": false,
-   "evaluated_on": "2026-11-22"
+   "evaluated_on": "2026-11-23"
   },
   "lowest@8": {
-   "rows": 8635,
-   "train_rows": 7040,
-   "train_days": 16,
-   "test_two_sided_rows": 178,
-   "test_events": 73,
+   "rows": 8954,
+   "train_rows": 7359,
+   "train_days": 17,
+   "test_two_sided_rows": 171,
+   "test_events": 66,
    "test_days": 5,
-   "ll_market": 0.09504396220521252,
-   "ll_model": 0.056666710146416284,
-   "ll_blend": 0.03630218008307428,
+   "ll_market": 0.10420938680687944,
+   "ll_model": 0.06631349569780026,
+   "ll_blend": 0.038018679981371026,
    "bets": {
-    "n": 5,
-    "events": 5,
-    "pnl": -1.8565,
-    "roi": -0.3713,
-    "se": 0.3573
+    "n": 4,
+    "events": 4,
+    "pnl": 2.6867,
+    "roi": 0.6717,
+    "se": 1.0166
    },
    "ok": false,
    "reasons": [
-    "only 5 events with a qualifying buy (need 30)"
+    "only 4 events with a qualifying buy (need 30)"
    ],
    "weights": [
     0.0,
@@ -104,14 +105,14 @@
     1.0
    ],
    "weights_train": [
-    0.5736,
-    0.5808,
-    0.8645
+    0.5937,
+    0.5735,
+    0.8849
    ],
    "streak": 0,
    "base_streak": 0,
    "trusted": false,
-   "evaluated_on": "2026-11-22"
+   "evaluated_on": "2026-11-23"
   }
  },
  "backlog": false,
