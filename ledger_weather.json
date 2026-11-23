@@ -1,5 +1,5 @@
 {
-  "cash": 53.203031281940135,
+  "cash": 52.19893128194013,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -6907,6 +6907,115 @@
       "opened": "2026-11-22T21:46:40.694635+00:00",
       "ends": "2026-11-23T00:00:06.154288+00:00",
       "stops": {}
+    },
+    {
+      "asset": "95595783023325085308944582120824084582391056539448938267716625094328718264580",
+      "condition": "0xb1bb171746c89e084d35ca774b70fd7930599b9ce1c9b880e379569c6e4048f4",
+      "title": "Will the highest temperature in Hong Kong be 22\u00b0C on November 24?",
+      "outcome": "No",
+      "event": "highest-temperature-in-hong-kong-on-november-24-2026",
+      "price": 0.59,
+      "shares": 1.6949152542372883,
+      "stake": 1.0,
+      "fee": 0.004100000000000001,
+      "order": "market",
+      "fee_rate": 0.01,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "Leclerc04"
+      ],
+      "holders": {
+        "0x38cf9743eb70188664d388d84d4aa4c6f40fd885": {
+          "name": "Leclerc04",
+          "size": 308.5938,
+          "entry": 0.729,
+          "win_rate": 0.5844155844155844,
+          "roi": 0.29663445485611656,
+          "n": 154,
+          "alt": false
+        }
+      },
+      "audit": {
+        "code": "ca54a66f3ffd",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-23T05:47:10.820507+00:00",
+        "book": {
+          "asks": [
+            [
+              0.59,
+              122.0
+            ],
+            [
+              0.6,
+              58.9
+            ],
+            [
+              0.61,
+              78.93
+            ],
+            [
+              0.63,
+              25.38
+            ],
+            [
+              0.72,
+              20.0
+            ]
+          ],
+          "bids": [
+            [
+              0.57,
+              21.76
+            ],
+            [
+              0.56,
+              89.39
+            ],
+            [
+              0.55,
+              25.04
+            ],
+            [
+              0.54,
+              92.38
+            ],
+            [
+              0.53,
+              59.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1795412799317",
+          "hash": "722b5609d533352b86787d1536173658b59451a8"
+        }
+      },
+      "opened": "2026-11-23T05:47:10.820591+00:00",
+      "ends": "2026-11-24T00:00:05.101939+00:00"
     }
   ],
   "paused": false
