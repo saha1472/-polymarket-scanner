@@ -5,7 +5,6 @@ Run:  python -m unittest discover -s tests -v
 """
 import io
 import contextlib
-import json
 import os
 import sys
 import tempfile

@@ -1,5 +1,4 @@
 """Offline tests for wx_calibrate.py (no network, no files outside a temp dir)."""
-import math
 import os
 import random
 import sys
@@ -8,7 +7,6 @@ import unittest
 from datetime import date, datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import simcore  # noqa: E402
 import wx_calibrate as wc  # noqa: E402
 
 
