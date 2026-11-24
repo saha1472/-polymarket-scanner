@@ -1,0 +1,26 @@
+name: Tests
+
+# Runs the self-tests on every pull request, so "merge when green" is something GitHub can check.
+# Read-only: no secrets, no writes, nothing is traded or saved. The scheduled bot (scan.yml) is untouched.
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -v
