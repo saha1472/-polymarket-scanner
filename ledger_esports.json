@@ -5572,7 +5572,7 @@
       "order": "market",
       "fee_rate": 0.05,
       "fee_src": "market",
-      "status": "open",
+      "status": "lost",
       "traders": [
         "ChonkVision"
       ],
@@ -5685,7 +5685,9 @@
       },
       "opened": "2026-11-23T07:16:06.404231+00:00",
       "ends": "2026-11-24T00:00:04.659939+00:00",
-      "stops": {}
+      "stops": {},
+      "closed": "2026-11-24T06:16:10.725949+00:00",
+      "pnl": -1.028
     }
   ]
 }
