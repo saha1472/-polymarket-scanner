@@ -634,6 +634,9 @@ def open_bets(ledger, signals, book=None):
             continue
         if strategy in FAV_RULES and bet["price"] > FAV_MAX_FILL:
             continue  # the real fill is too expensive for the edge
+        if ledger["cash"] < bet["stake"] + bet["fee"]:
+            shadow_skip(book, strategy, e, b, side, reason, "cash", bet)
+            continue  # the early cash check only allows a fixed 5 cents for the fee; check the real cost
         bet.update(status="open", opened=now_utc().isoformat())
         ledger["cash"] -= bet["stake"] + bet["fee"]
         ledger["bets"].append(bet)
