@@ -416,7 +416,8 @@ class Scorecard(unittest.TestCase):
         row = scorecard.score("x", settled([1.0, -1.0] * 20), 2.8)
         self.assertEqual(row["verdict"], "no evidence either way")
         self.assertEqual(row["n"], 40)
-        self.assertIsNone(row["need"])                                      # mean is exactly zero
+        # the bets-to-detect figure no longer depends on the mean seen (it targets a true +3%): ((2.8 + 0.8416) * 1.0127 / 0.03)^2
+        self.assertTrue(15000 < row["need"] < 15300, row["need"])
 
     def test_a_small_edge_is_promising_but_needs_more_bets(self):
         row = scorecard.score("x", settled([0.25] * 70 + [-1.0] * 30), 2.8)   # -12.5% per bet
@@ -435,12 +436,12 @@ class Scorecard(unittest.TestCase):
         row = scorecard.score("x", settled([0.2] * 30), 2.8)
         self.assertIn("nothing to judge", row["verdict"])
 
-    def test_only_strategies_with_enough_bets_raise_the_bar(self):
+    def test_every_strategy_raises_the_bar_not_only_those_with_enough_bets(self):
         rows, z, judged = scorecard.build({"big": settled([1.0, -1.0] * 20),
                                            "tiny": settled([1.0, -1.0]),
                                            "empty": {"cash": 50, "bets": []}})
-        self.assertEqual(judged, 1)
-        self.assertAlmostEqual(z, 1.96, places=2)
+        self.assertEqual(judged, 1)                                         # only one has 20+ settled bets ...
+        self.assertAlmostEqual(z, scorecard.z_needed(3), places=9)          # ... but any of the three could have been the lucky one
         self.assertEqual(rows[0]["name"], "big")                            # judged rows first
 
     def test_open_and_damaged_bets_are_left_out(self):
