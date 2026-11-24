@@ -943,11 +943,11 @@ def record_shadow_candidates(book, candidates, fetch=None):
         info = {"traders": c["traders"], "avg_entry": c["avg_entry"]}
         if MIN_PRICE <= limit <= MAX_PRICE:
             book.add_limit(SCAN, asset=c["asset"], condition=c["condition"], title=c["title"],
-                           limit_price=limit, best_ask=c["ask_seen"], fee_rate=FEE_RATE,
+                           limit_price=limit, best_ask=c["ask_seen"], fee_rate=market_fee_rate(c)[0],
                            ends=ends, event=c.get("event"), outcome=c["outcome"], extra=info)
         if c.get("reject") == "chase" and MIN_PRICE <= c["ask_seen"] <= MAX_PRICE:
             book.add_taker(SCAN, "chase", asset=c["asset"], condition=c["condition"],
-                           title=c["title"], price=c["ask_seen"], fee_rate=FEE_RATE,
+                           title=c["title"], price=c["ask_seen"], fee_rate=market_fee_rate(c)[0],
                            event=c.get("event"), outcome=c["outcome"], extra=info)
     # resting shadow limits: anything selling at or below our bid right now?
     rest = {b["asset"] for b in book.resting()}

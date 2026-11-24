@@ -30,6 +30,7 @@ from zoneinfo import ZoneInfo
 
 import requests
 
+import fees
 import shadow
 import simcore
 
@@ -42,7 +43,7 @@ STATE_FILE = "wx_state.json"
 # ---------- Settings ----------
 START_BANKROLL = 50.00
 BET_SIZE = 1.00
-FEE_RATE = 0.05              # weather taker fee rate
+FEE_RATE = 0.05              # taker fee rate used ONLY when a market does not report its own (live temperature markets say 0.01)
 MAX_OPEN_BETS = 60
 
 # DEAD: how far below the observed high (or above the observed low) a bucket
@@ -223,6 +224,7 @@ def load_events():
                 "condition": mk.get("conditionId"), "yes": ids[0], "no": ids[1],
                 "yes_ask": num(mk.get("bestAsk"), None), "yes_bid": num(mk.get("bestBid"), None),
                 "question": mk.get("question", e["title"]),
+                "fee": (fees.market_fee(mk) or {}).get("rate"),     # this market's own taker rate, None if it does not say
             })
         if buckets:
             out.append({"kind": m.group(1).lower(), "city": m.group(2), "date": day,
@@ -311,9 +313,11 @@ def forecasts(stations, coords):
 
 # ---------- order book ----------
 
-def fill(token, dollars):
+def fill(token, dollars, fee_rate=None):
     """Walk the asks like a real market order. Returns (avg price, shares,
-    fee, book) for spending `dollars`, or None if the book can't fill it."""
+    fee, book) for spending `dollars`, or None if the book can't fill it.
+    `fee_rate` is the market's own taker rate; the desk's constant is the fallback."""
+    rate = FEE_RATE if fee_rate is None else fee_rate
     book = get(BOOK_URL, {"token_id": token})
     if not book:
         return None
@@ -324,7 +328,7 @@ def fill(token, dollars):
             continue
         take = min(size, left / price)
         shares += take
-        fee += take * FEE_RATE * price * (1 - price)
+        fee += take * rate * price * (1 - price)
         left -= take * price
         if left <= 1e-9:
             return dollars / shares, shares, fee, book
@@ -356,7 +360,8 @@ def strategy_settings(strategy):
 
 def make_bet(strategy, event, bucket, side, reason):
     token = bucket["yes"] if side == "YES" else bucket["no"]
-    got = fill(token, BET_SIZE)
+    own = bucket.get("fee")
+    got = fill(token, BET_SIZE, own)
     if not got:
         return None
     ask, shares, fee, book = got
@@ -364,6 +369,7 @@ def make_bet(strategy, event, bucket, side, reason):
             "event": event["slug"], "title": bucket["question"], "outcome": side,
             "bucket": bucket["label"], "price": ask, "shares": shares,
             "stake": BET_SIZE, "fee": fee, "profit_if_win": shares - BET_SIZE - fee,
+            "fee_rate": FEE_RATE if own is None else own, "fee_src": "desk" if own is None else "market",
             "reason": reason,
             "audit": simcore.audit(f"WX-{strategy}", strategy_settings(strategy), book)}
 
