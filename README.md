@@ -8,7 +8,7 @@ Nothing here is proven to make money. Most ideas tested so far lose or are withi
 
 `.github/workflows/scan.yml`, in this order:
 
-1. **Self-tests.** If any test fails, nothing below trades, notifies or saves.
+1. **Self-tests.** If any test fails, nothing below trades or saves (a Discord warning is posted, and a failed run keeps its ledgers as a run artifact when saving was the step that failed).
 2. **Arbitrage scanner** (`scanner.py`).
 3. **Copy-trading scans** (`signals.py`: general, sports, esports, tech, weather, geopolitics) and the **weather desk** (`weather.py`), side by side, each with its own ledger.
 4. **Shadow experiments** that only record what would have happened: the forecast-model log (`wx_ensemble.py`), its daily calibration check (`wx_calibrate.py`) and the politics consensus test (`shadow_politics.py`).
@@ -28,11 +28,12 @@ Nothing here is proven to make money. Most ideas tested so far lose or are withi
 | `flow.py` | Shadow-only money-flow tag on esports signals: how one-sided the recent betting is, whether one wallet dominates, how fast the price moved |
 | `shadow.py`, `shadow_politics.py` | Shadow records and the automatic pause/resume switch |
 | `wx_ensemble.py`, `wx_ensemble_eval.py`, `wx_calibrate.py` | Forecast-model shadow log, its scorer, and the daily model-versus-market check |
-| `rewards_estimate.py`, `rewards_tracker.py`, `watch_books.py` | Liquidity-reward estimate, paper market-making record, 30-second book watcher |
-| `heartbeat.py`, `scanner.py` | Daily summary, arbitrage scanner |
+| `rewards_tracker.py`, `watch_books.py` | Paper market-making record and the 30-second book watcher (both in the 15-minute run) |
+| `rewards_estimate.py` | Liquidity-reward estimate. Not in the 15-minute run: start it by hand from the Actions tab (`rewards.yml`, "Rewards estimate") |
+| `heartbeat.py`, `scanner.py`, `scorecard.py` | Daily summary, arbitrage scanner, and the per-strategy scorecard shown on each run's summary page |
 | `tests/` | Self-tests, run before every scan |
 
-### Reports you can run by hand (all read-only)
+### Reports you can run by hand (all read-only, except that `clv_report.py --cache FILE` writes its cache file)
 
 | Command | Question it answers |
 |---|---|
