@@ -10,7 +10,8 @@ For every ledger with enough settled bets it shows, starting from $50:
     return: as observed, zero, and +3%.
 
 Past returns scale with the stake here; real fills at larger sizes, the 5-share minimum order and the
-book depth are not modelled. The replay settles each bet before the next one opens (cash is credited at
+book depth are not modelled in the first two sections; the last section does model them for the bets that
+stored an order book. The replay settles each bet before the next one opens (cash is credited at
 once); the rule's edge estimate only counts bets that had settled before a bet opened when the ledger records
 when (`closed`), otherwise it counts every earlier bet. The "true return" scenarios shift every resampled
 return by the same amount until the pooled average, after the -100% floor, equals the stated figure. Run:  python sizing_report.py [--start 50] [--paths 2000] [--bets 300] [--seed 1]
@@ -26,6 +27,7 @@ import simcore
 import sizing
 
 FLAT_STAKES = (1.0, 2.5, 5.0)
+MIN_BOOKS = 10         # fewer settled bets with a stored order book than this: no what-if table
 MIN_DAYS = 5           # fewer days of history than this cannot be resampled in a way that means anything
 SCENARIOS = (("as observed", None), ("true return 0%", 0.0), ("true return +3%", 0.03))
 
@@ -84,6 +86,78 @@ def rule(bank, i, hist):
     if not simcore.finite(p):
         return 0.0
     return sizing.stake(bank, p, bet_fee_rate(b), lb)[0]
+
+
+def usable_level(price, size):
+    return simcore.finite(price) and simcore.finite(size) and 0 < price < 1 and size > 0
+
+
+def levels(asks):
+    """The usable (price, size) levels of a stored ask list, best first. Numbers stored as text are accepted;
+    anything else is dropped."""
+    out = []
+    for lv in asks if isinstance(asks, list) else []:
+        try:
+            price, size = float(lv[0]), float(lv[1])
+        except (TypeError, ValueError, IndexError, KeyError):
+            continue
+        if usable_level(price, size):
+            out.append((price, size))
+    return sorted(out)
+
+
+def walk_asks(asks, dollars, fee_rate):
+    """Spend `dollars` (fee on top) on stored asks [[price, size], ...] best first.
+    Returns (shares, spent, fee), or None if the stored levels cannot absorb it."""
+    left, shares, spent, fee = dollars, 0.0, 0.0, 0.0
+    tol = 1e-9 * dollars
+    for price, size in levels(asks):
+        if left <= tol:
+            break
+        take = min(size, left / price)
+        shares += take
+        spent += take * price
+        fee += take * fee_rate * price * (1 - price)
+        left -= take * price
+    return (shares, spent, fee) if left <= tol and shares > 0 else None
+
+
+def has_book(bet):
+    """A plain win or loss that stored the order book it saw (a recorded empty book counts: it fills nothing)."""
+    audit = bet.get("audit")
+    book = audit.get("book") if isinstance(audit, dict) else None
+    return isinstance(book, dict) and isinstance(book.get("asks"), list) and bet.get("status") in ("won", "lost")
+
+
+def whatif(bet, dollars):
+    """What this settled bet would have returned had it spent `dollars` into the order book it saw.
+    Returns {"cost", "pnl", "slip"} (slip = average price paid minus the best ask), or None when there is no
+    stored book, the bet did not simply win or lose, or the stored levels cannot absorb the order."""
+    if not has_book(bet):
+        return None
+    asks = bet["audit"]["book"]["asks"]
+    got = walk_asks(asks, dollars, bet_fee_rate(bet))
+    if got is None:
+        return None
+    shares, spent, fee = got
+    best = levels(asks)[0][0]
+    return {"cost": spent + fee, "pnl": (shares if bet["status"] == "won" else 0.0) - spent - fee, "slip": max(spent / shares - best, 0.0)}
+
+
+def whatif_rows(ledger, sizes=FLAT_STAKES):
+    """Per size: bets with a stored book, how many it could fill, how many fill at every size, and the pooled return
+    per dollar and average slippage (dollars) over those bets that fill at every size, so sizes compare like with like."""
+    bets = [b for _, _, b in history(ledger) if has_book(b)]
+    fills = {d: [whatif(b, d) for b in bets] for d in sizes}
+    same = [i for i in range(len(bets)) if all(fills[d][i] for d in sizes)]
+    rows = []
+    for d in sizes:
+        got = [fills[d][i] for i in same]
+        cost = sum(w["cost"] for w in got)
+        rows.append({"size": d, "books": len(bets), "filled": sum(1 for w in fills[d] if w), "same": len(same),
+                     "roi": sum(w["pnl"] for w in got) / cost if cost else None,
+                     "slip": sum(w["slip"] for w in got) / len(got) if got else None})
+    return rows
 
 
 def day_blocks(hist):
@@ -183,6 +257,23 @@ def render(ledgers, start=50.0, paths=2000, n_bets=300, seed=1):
     if not shown:
         lines.append(f"No ledger has {scorecard.MIN_BETS}+ settled bets yet.")
         lines.append("")
+    lines.append("Estimated fills of bigger orders, from the top 5 asks each won or lost bet stored (spend before fees).")
+    lines.append("'filled' = the stored levels could absorb the whole order; 'all sizes' = filled at every size shown.")
+    lines.append("Return per dollar (after fees) and slip (cents per share above the best ask) cover the 'all sizes' bets only:")
+    lines.append(f"  {'ledger':16}{'spend':>7}{'books':>7}{'filled':>8}{'all sizes':>11}{'return per $':>14}{'slip (cents)':>14}")
+    shown_w = 0
+    for name, led in ledgers.items():
+        rows = whatif_rows(led)
+        if rows[0]["books"] < MIN_BOOKS:
+            continue
+        shown_w += 1
+        for r in rows:
+            roi = "n/a" if r["roi"] is None else f"{r['roi']:+.1%}"
+            slip = "n/a" if r["slip"] is None else f"{100 * r['slip']:.2f}"
+            lines.append(f"  {name if r is rows[0] else '':16}{'$' + format(r['size'], 'g'):>7}{r['books']:>7}{r['filled']:>8}{r['same']:>11}{roi:>14}{slip:>14}")
+    if not shown_w:
+        lines.append(f"  No ledger has {MIN_BOOKS}+ settled bets with a stored order book yet.")
+    lines.append("")
     lines.append("What the rule would stake (spendable bankroll after the reserve; price 0.70, fee 1%):")
     lines.append(f"  {'bankroll':>9}{'believed edge':>15}{'quarter Kelly':>15}{'half Kelly':>12}{'smallest order':>16}")
     for bank in (48.0, 30.0, 200.0):
