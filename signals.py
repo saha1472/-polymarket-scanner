@@ -211,16 +211,18 @@ def v1_leader(row):
             "pnl": row.get("pnl"), "vol": row.get("volume")}
 
 
-def data_v2(path, params, max_pages=10, stop=None):
+def data_v2(path, params, max_pages=10, stop=None, complete=False):
     """All rows of a v2 Data API list, following the cursor. Returns None if
     the API failed (so callers can tell "no data" from "API down").
-    `stop(row)` ends paging early once it returns True for a row."""
+    `stop(row)` ends paging early once it returns True for a row.
+    `complete=True`: a page that fails after the first one also gives None, not
+    the rows read so far (for callers that must not mistake half a list for all of it)."""
     rows, cursor = [], None
     for _ in range(max_pages):
         q = dict(params, **({"cursor": cursor} if cursor else {}))
         page = get(f"{DATA_API}/v2/{path}", q, raw=True)
         if not isinstance(page, dict) or not isinstance(page.get("data"), list):
-            return None if not rows else rows
+            return None if complete or not rows else rows
         for r in page["data"]:
             if stop and stop(r):
                 return rows
@@ -231,8 +233,8 @@ def data_v2(path, params, max_pages=10, stop=None):
     return rows
 
 
-def positions(wallet, max_pages=6, **params):
-    rows = data_v2("positions", dict(params, user=wallet, limit=500), max_pages)
+def positions(wallet, max_pages=6, complete=False, **params):
+    rows = data_v2("positions", dict(params, user=wallet, limit=500), max_pages, complete=complete)
     return None if rows is None else [v1_position(r) for r in rows]
 
 
@@ -359,15 +361,16 @@ def trader_history(wallet, with_time=False):
     # closed positions, newest first (v2: status=CLOSED, sort_by=TIMESTAMP)
     closed = data_v2("positions", {"user": wallet, "status": "CLOSED", "limit": 100,
                                    "sort_by": "TIMESTAMP", "sort_direction": "DESC"},
-                     max_pages=5, stop=lambda r: num(r.get("last_event_at")) < cutoff.timestamp())
+                     max_pages=5, stop=lambda r: num(r.get("last_event_at")) < cutoff.timestamp(),
+                     complete=True)
     if closed is None:
-        return None
+        return None                      # also when a later page failed: a half-read history is not scored
     for r in map(v1_position, closed):
         cost = num(r.get("totalBought")) * num(r.get("avgPrice"))
         out.append((r.get("eventSlug"), num(r.get("realizedPnl")), cost,
                     num(r.get("timestamp"), None)))
     # resolved but never redeemed (most losers end up here)
-    rows = positions(wallet, status="REDEEMABLE")
+    rows = positions(wallet, status="REDEEMABLE", complete=True)
     if rows is None:
         return None
     for p in rows:
