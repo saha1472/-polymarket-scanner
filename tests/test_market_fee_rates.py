@@ -30,7 +30,7 @@ class WeatherFill(unittest.TestCase):
         weather.get = self.old
 
     def test_the_markets_own_rate_is_charged(self):
-        avg, shares, fee, _ = weather.fill("T", 2.0, 0.01)
+        avg, shares, fee, _, _ = weather.fill("T", 2.0, 0.01)
         self.assertAlmostEqual(fee, fee_by_hand(0.01), places=12)
         self.assertAlmostEqual(shares, 2.0 / 0.70, places=12)
 

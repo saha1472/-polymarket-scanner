@@ -18,7 +18,7 @@ BUCKET = {"label": "5\u00b0C", "yes": "Y", "no": "N", "condition": "c", "questio
 
 def fake_bet(fee):
     return {"strategy": "DEAD", "asset": "N", "condition": "c", "event": "ev", "title": "q", "outcome": "NO", "bucket": "5\u00b0C",
-            "price": 0.95, "shares": 1.05, "stake": 1.0, "fee": fee, "profit_if_win": 0.05, "order": "market", "audit": {}}
+            "price": 0.95, "worst_price": 0.95, "shares": 1.05, "stake": 1.0, "fee": fee, "profit_if_win": 0.05, "order": "market", "audit": {}}
 
 
 class CashGuard(unittest.TestCase):
