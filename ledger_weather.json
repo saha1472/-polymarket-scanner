@@ -7737,5 +7737,8 @@
       "stops": {}
     }
   ],
-  "paused": false
+  "paused": false,
+  "auto": {
+    "reviewed": 70
+  }
 }
