@@ -960,7 +960,12 @@ def record_shadow_candidates(book, candidates, fetch=None):
     return book.check_limits({t: a for t, a in seen.items() if a is not None})
 
 
-def open_paper_bets(ledger, signals, book=None):
+def open_paper_bets(ledger, signals, book=None, refresh=None):
+    """Book the signals that pass every cap. `refresh` (the sizer) re-prices each one
+    on a fresh order book just before it is booked: signals are sized early in the
+    run and the slow shadow steps (up to minutes) come before booking, so the sized
+    price can be out of date. A signal whose fresh book no longer fits is not booked
+    (and not recorded); the next scan looks at it again."""
     msgs = []
     open_bets = [b for b in ledger["bets"] if b["status"] == "open"]
     held = {b["asset"] for b in open_bets}
@@ -1012,6 +1017,15 @@ def open_paper_bets(ledger, signals, book=None):
         if max(per_trader.get(t, 0) for t in s["traders"]) >= MAX_OPEN_PER_TRADER:
             shadow_skip(book, s, "per_trader")
             continue  # strict cap: ANY supporting trader already drives enough open bets
+        if refresh:
+            fresh = refresh(dict(s))     # a copy: a failed re-check must not touch the signal
+            if not fresh:
+                print(f"Not booked, the fresh order book no longer fits: {s['title']} "
+                      f"(sized at {s['price']:.3f})")
+                continue
+            if fresh["price"] != s["price"]:
+                print(f"Re-priced on the fresh book: {s['title']} {s['price']:.3f} -> {fresh['price']:.3f}")
+            s = fresh
         if ledger["cash"] < s["stake"] + s["fee"]:
             shadow_skip(book, s, "cash")
             continue  # try cheaper signals further down the list
@@ -1230,7 +1244,7 @@ def main():
     print(f"New bar (shadow only): {len(alt)} of {len(scores)} pass"
           + (f": {', '.join(alt)}" if alt else "."))
 
-    msgs += open_paper_bets(ledger, signals, book)
+    msgs += open_paper_bets(ledger, signals, book, refresh=size_bet)
     save_ledger(ledger)
     book.save()
     print(f"Shadow: +{book.added} new record(s), {filled} limit fill(s), "
