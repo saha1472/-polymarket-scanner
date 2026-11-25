@@ -174,10 +174,18 @@ class Book:
 SETTLED = ("won", "lost", "split", "stopped")
 
 
+def is_result(b):
+    """False for an "unfilled" record: a resting bid that expired without a fill, kept only to see
+    how it would have ended. Such a record is not a bet that happened, and what it would have
+    earned is not what the bid earns: the bids that never fill are the ones where the price
+    ran away from them. No statistic, gate or switch may count it."""
+    return b.get("kind") != "unfilled"
+
+
 def roi_stats(bets):
     """(n, mean ROI per bet, standard error) over settled bets."""
     rois = [b["pnl"] / (b["stake"] + b["fee"]) for b in bets
-            if b.get("status") in SETTLED and simcore.finite(b.get("pnl"))
+            if is_result(b) and b.get("status") in SETTLED and simcore.finite(b.get("pnl"))
             and (b.get("stake", 0) + b.get("fee", 0)) > 0]
     n = len(rois)
     if n == 0:
@@ -190,6 +198,7 @@ def roi_stats(bets):
 
 
 def summarize(bets):
+    bets = [b for b in bets if is_result(b)]
     s = [b for b in bets if b.get("status") in SETTLED]
     n, mean, se = roi_stats(s)
     return {"settled": n, "won": sum(b["status"] == "won" for b in s),
@@ -246,7 +255,7 @@ def switch_stats(bets):
     bar is the widest of: every bet on its own, bets grouped by event, bets grouped by the day
     they were opened."""
     rows = [(b["pnl"] / (b["stake"] + b["fee"]), b.get("event") or b.get("condition"), _day(b))
-            for b in bets if b.get("status") in SETTLED and simcore.finite(b.get("pnl"))
+            for b in bets if is_result(b) and b.get("status") in SETTLED and simcore.finite(b.get("pnl"))
             and (b.get("stake", 0) + b.get("fee", 0)) > 0]
     n = len(rows)
     if n == 0:
