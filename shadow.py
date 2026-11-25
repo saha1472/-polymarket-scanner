@@ -201,31 +201,89 @@ def summarize(bets):
 
 # ---------- automatic strategy switch ----------
 
+# A pause or a resume is a verdict on noisy results, so it is reached carefully:
+#   - bets on one event, or opened on one day, move together (a day's weather, a match with
+#     several markets), so the error bar groups them instead of counting each bet as news;
+#   - the verdict is looked at on a fixed schedule, every REVIEW_EVERY newly settled bets,
+#     not on every scan: each extra look is another chance for luck to cross the line;
+#   - it needs bets from at least SWITCH_MIN_DAYS different days.
 SWITCH_MIN_N = 30        # never judge on fewer settled bets than this
+SWITCH_MIN_DAYS = 6      # ... or on fewer different days than this
 SWITCH_WINDOW = 100      # judge on the most recent 100 settled real bets
-PAUSE_Z = 1.645          # pause only if even the optimistic end (90%, one-sided) is a loss
-RESUME_Z = 0.674         # resume when the cautious end (75%, one-sided) of the
+REVIEW_EVERY = 25        # look again after this many more settled bets
+PAUSE_Z = 2.6            # pause only if even the optimistic end of the range is a loss
+RESUME_Z = 1.645         # resume when the cautious end (95%, one-sided) of the
                          # shadow results since the pause is a profit
+# Chosen by simulation (see the pull request that introduced them): a strategy with no edge at all, over 300
+# bets with eight a day, was paused by the old rule 46-88% of the time (the more a day's bets move
+# together, the more often) and resumed 68-77%; with these settings 2-10% and 13-17%. A clear loser
+# (-35% per bet) is still paused within about 100-130 bets, 70-100% of the time.
 
 
 def is_paused(ledger):
     return bool((ledger.get("auto") or {}).get("paused"))
 
 
+def _day(b):
+    return (b.get("opened") or b.get("created") or "")[:10] or None
+
+
+def _group_se(rows, key, mean):
+    """Standard error of the mean when rows sharing `key` move together (a row whose
+    key is None is a group of its own). Fewer than two groups: no error bar (inf)."""
+    groups = {}
+    for i, r in enumerate(rows):
+        k = r[key] if key is not None else None
+        groups.setdefault(("own", i) if k is None else ("key", k), []).append(r[0] - mean)
+    c = len(groups)
+    if c < 2:
+        return float("inf")
+    return math.sqrt(c / (c - 1) * sum(sum(g) ** 2 for g in groups.values())) / len(rows)
+
+
+def switch_stats(bets):
+    """(n, mean ROI per bet, standard error, different days) over settled bets. The error
+    bar is the widest of: every bet on its own, bets grouped by event, bets grouped by the day
+    they were opened."""
+    rows = [(b["pnl"] / (b["stake"] + b["fee"]), b.get("event") or b.get("condition"), _day(b))
+            for b in bets if b.get("status") in SETTLED and simcore.finite(b.get("pnl"))
+            and (b.get("stake", 0) + b.get("fee", 0)) > 0]
+    n = len(rows)
+    if n == 0:
+        return 0, 0.0, float("inf"), 0
+    mean = sum(r[0] for r in rows) / n
+    days = len({r[2] for r in rows if r[2]})
+    se = max(_group_se(rows, None, mean), _group_se(rows, 1, mean), _group_se(rows, 2, mean))
+    return n, mean, se, days
+
+
+def review_due(settled, auto):
+    """True when `settled` bets are enough for a verdict and REVIEW_EVERY more have
+    settled since the last look (auto["reviewed"]). If the count has gone down since
+    the last look (judging restarted), the stored look is cleared in `auto` itself."""
+    if auto.get("reviewed", 0) > settled:
+        auto["reviewed"] = 0        # judging restarted: look afresh
+    return settled >= max(SWITCH_MIN_N, auto.get("reviewed", 0) + REVIEW_EVERY)
+
+
 def switch_update(ledger, shadow_bets, strategy, now=None, judge_from=""):
     """Pause or resume `strategy` in place. Returns a message on a change, else None.
     Pausing looks at the real ledger (only bets opened at or after `judge_from`,
     so results from a since-fixed bug don't count); resuming looks at the shadow
-    bets the strategy kept recording while paused (reason "auto_paused")."""
+    bets the strategy kept recording while paused (reason "auto_paused"). Either way
+    it only looks every REVIEW_EVERY settled bets (see above)."""
     now = now or now_iso()
     auto = ledger.get("auto") or {}
+    real = sorted((b for b in ledger["bets"] if b.get("status") in SETTLED
+                   and b.get("opened", "") >= (judge_from or "")),
+                  key=lambda b: b.get("closed", ""))
     if not auto.get("paused"):
-        real = sorted((b for b in ledger["bets"] if b.get("status") in SETTLED
-                       and b.get("opened", "") >= (judge_from or "")),
-                      key=lambda b: b.get("closed", ""))[-SWITCH_WINDOW:]
-        n, mean, se = roi_stats(real)
-        if n >= SWITCH_MIN_N and mean + PAUSE_Z * se < 0:
-            why = f"last {n} settled bets: ROI {mean:+.1%} per bet (±{se:.1%})"
+        if not review_due(len(real), auto):
+            return None
+        ledger["auto"] = dict(auto, reviewed=len(real))
+        n, mean, se, days = switch_stats(real[-SWITCH_WINDOW:])
+        if n >= SWITCH_MIN_N and days >= SWITCH_MIN_DAYS and mean + PAUSE_Z * se < 0:
+            why = f"last {n} settled bets over {days} days: ROI {mean:+.1%} per bet (±{se:.1%})"
             ledger["auto"] = {"paused": True, "since": now, "why": why,
                               "history": auto.get("history", [])}
             return (f"🤖 Auto-paused {strategy}: {why}. Still tracking it in shadow; "
@@ -234,10 +292,16 @@ def switch_update(ledger, shadow_bets, strategy, now=None, judge_from=""):
     since = auto.get("since", "")
     sh = [b for b in shadow_bets if b.get("strategy") == strategy and b.get("kind") == "skipped"
           and b.get("reason") == "auto_paused" and b.get("created", "") >= since]
-    n, mean, se = roi_stats(sh)
-    if n >= SWITCH_MIN_N and mean - RESUME_Z * se > 0:
-        why = f"{n} shadow bets since the pause: ROI {mean:+.1%} per bet (±{se:.1%})"
+    done = sum(1 for b in sh if b.get("status") in SETTLED)
+    if not review_due(done, auto):
+        return None
+    ledger["auto"] = dict(auto, reviewed=done)
+    n, mean, se, days = switch_stats(sh)
+    if n >= SWITCH_MIN_N and days >= SWITCH_MIN_DAYS and mean - RESUME_Z * se > 0:
+        why = f"{n} shadow bets over {days} days since the pause: ROI {mean:+.1%} per bet (±{se:.1%})"
         hist = auto.get("history", []) + [{"paused": since, "resumed": now, "why": auto.get("why")}]
-        ledger["auto"] = {"paused": False, "resumed": now, "why": why, "history": hist}
+        # the bets that led to the pause are still in the window: the next look waits for REVIEW_EVERY new ones
+        ledger["auto"] = {"paused": False, "resumed": now, "why": why, "history": hist,
+                          "reviewed": len(real)}
         return f"🤖 Auto-resumed {strategy}: {why}."
     return None
