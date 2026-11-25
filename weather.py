@@ -314,7 +314,9 @@ def forecasts(stations, coords):
 
 def fill(token, dollars, fee_rate=None):
     """Walk the asks like a real market order. Returns (avg price, shares,
-    fee, book) for spending `dollars`, or None if the book can't fill it.
+    fee, book, worst price) for spending `dollars`, or None if the book can't
+    fill it. `worst price` is the highest level the order has to reach: the
+    price limits below apply to it, not to the average.
     `fee_rate` is the market's own taker rate; the desk's constant is the fallback."""
     rate = FEE_RATE if fee_rate is None else fee_rate
     book = get(BOOK_URL, {"token_id": token})
@@ -330,7 +332,7 @@ def fill(token, dollars, fee_rate=None):
         fee += take * rate * price * (1 - price)
         left -= take * price
         if left <= 1e-9:
-            return dollars / shares, shares, fee, book
+            return dollars / shares, shares, fee, book, price
     return None
 
 
@@ -363,10 +365,10 @@ def make_bet(strategy, event, bucket, side, reason):
     got = fill(token, BET_SIZE, own)
     if not got:
         return None
-    ask, shares, fee, book = got
+    ask, shares, fee, book, worst = got
     return {"strategy": strategy, "asset": token, "condition": bucket["condition"],
             "event": event["slug"], "title": bucket["question"], "outcome": side,
-            "bucket": bucket["label"], "price": ask, "shares": shares,
+            "bucket": bucket["label"], "price": ask, "worst_price": worst, "shares": shares,
             "stake": BET_SIZE, "fee": fee, "profit_if_win": shares - BET_SIZE - fee,
             "fee_rate": FEE_RATE if own is None else own, "fee_src": "desk" if own is None else "market",
             "reason": reason,
@@ -608,23 +610,25 @@ def open_bets(ledger, signals, book=None):
                         "max_open" if len(open_) >= MAX_OPEN_BETS else "cash")
             continue
         bet = make_bet(strategy, e, b, side, reason)
-        if strategy in FAV_RULES and (not bet or bet["price"] > FAV_MAX_FILL):
+        # The upper price limits apply to the WORST level the order reaches, not to the average:
+        # an order that has to walk past the limit is not placed (the average hides the dear level).
+        if strategy in FAV_RULES and (not bet or bet["worst_price"] > FAV_MAX_FILL):
             if bet:   # what buying at the (too expensive) ask would have done instead
                 shadow_skip(book, strategy, e, b, side, reason, "price_filter", bet)
             continue
         if not bet:
             continue
-        if strategy == "DEAD" and (bet["price"] > DEAD_MAX_PRICE or
+        if strategy == "DEAD" and (bet["worst_price"] > DEAD_MAX_PRICE or
                                    bet["profit_if_win"] / bet["stake"] < DEAD_MIN_RETURN):
             shadow_skip(book, strategy, e, b, side, reason, "price_filter", bet)
             continue
-        if strategy == "LATE" and not LATE_MIN_PRICE - 0.02 <= bet["price"] <= LATE_MAX_PRICE:
+        if strategy == "LATE" and not (LATE_MIN_PRICE - 0.02 <= bet["price"]
+                                       and bet["worst_price"] <= LATE_MAX_PRICE):
             shadow_skip(book, strategy, e, b, side, reason, "price_filter", bet)
             continue
-        if strategy == "SHIFT" and not SHIFT_MIN_PRICE <= bet["price"] <= SHIFT_MAX_PRICE:
+        if strategy == "SHIFT" and not (SHIFT_MIN_PRICE <= bet["price"]
+                                        and bet["worst_price"] <= SHIFT_MAX_PRICE):
             continue
-        if strategy in FAV_RULES and bet["price"] > FAV_MAX_FILL:
-            continue  # the real fill is too expensive for the edge
         if ledger["cash"] < bet["stake"] + bet["fee"]:
             shadow_skip(book, strategy, e, b, side, reason, "cash", bet)
             continue  # the early cash check only allows a fixed 5 cents for the fee; check the real cost

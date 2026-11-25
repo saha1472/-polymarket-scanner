@@ -34,7 +34,7 @@ class InTempDir(unittest.TestCase):
 
 def fake_bet(strategy, asset="N"):
     return {"strategy": strategy, "asset": asset, "condition": "c", "event": "ev",
-            "title": "q", "outcome": "NO", "bucket": "5°C", "price": 0.95, "shares": 1.05,
+            "title": "q", "outcome": "NO", "bucket": "5°C", "price": 0.95, "worst_price": 0.95, "shares": 1.05,
             "stake": 1.0, "fee": 0.002, "profit_if_win": 0.05, "order": "market",
             "audit": {}}
 

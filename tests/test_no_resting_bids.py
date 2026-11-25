@@ -32,7 +32,7 @@ class InTempDir(unittest.TestCase):
 
 def expensive_bet():
     return {"strategy": "MORNING", "asset": "Y", "condition": "c", "event": "ev", "title": "q", "outcome": "YES",
-            "bucket": "5°C", "price": 0.97, "shares": 1.03, "stake": 1.0, "fee": 0.0, "profit_if_win": 0.03,
+            "bucket": "5°C", "price": 0.97, "worst_price": 0.97, "shares": 1.03, "stake": 1.0, "fee": 0.0, "profit_if_win": 0.03,
             "order": "market", "audit": {}}
 
 
@@ -58,7 +58,7 @@ class NothingIsPosted(InTempDir):
         self.assertEqual((led["bets"], led["cash"], msgs, book.bets), ([], 50.0, [], []))
 
     def test_an_affordable_favourite_is_still_bought_at_the_ask(self):
-        cheap = dict(expensive_bet(), price=0.90, shares=1.11, profit_if_win=0.11)
+        cheap = dict(expensive_bet(), price=0.90, worst_price=0.90, shares=1.11, profit_if_win=0.11)
         led, book, msgs = self.run_open(cheap)
         self.assertEqual([b["status"] for b in led["bets"]], ["open"])
         self.assertAlmostEqual(led["cash"], 49.0)
