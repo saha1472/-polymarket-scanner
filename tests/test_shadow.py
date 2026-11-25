@@ -119,9 +119,11 @@ class ShadowBook(InTempDir):
                                 shares=1, stake=1, fee=0, **KW))
 
 
-def settled(n, pnl, opened="2026-11-01T00:00:00+00:00", stake=1.0):
+def settled(n, pnl, opened=None, stake=1.0):
+    """n settled bets; opened on `opened`, or spread over twelve different days."""
     return [{"status": "won" if pnl > 0 else "lost", "pnl": pnl, "stake": stake, "fee": 0.0,
-             "opened": opened, "closed": f"2026-11-02T00:{i % 60:02d}:00+00:00"}
+             "opened": opened or f"2026-11-{1 + i % 12:02d}T00:00:00+00:00",
+             "closed": f"2026-11-20T00:{i % 60:02d}:00+00:00"}
             for i in range(n)]
 
 
@@ -152,10 +154,11 @@ class StrategySwitch(unittest.TestCase):
     def _paused(self):
         return {"cash": 50, "bets": [], "auto": {"paused": True, "since": "2026-11-01T00:00:00+00:00"}}
 
-    def _sh(self, n_win, n_loss, created="2026-11-02T00:00:00+00:00", reason="auto_paused"):
+    def _sh(self, n_win, n_loss, created=None, reason="auto_paused"):
         out = []
         for i in range(n_win + n_loss):
-            out.append({"strategy": "S", "kind": "skipped", "reason": reason, "created": created,
+            out.append({"strategy": "S", "kind": "skipped", "reason": reason,
+                        "created": created or f"2026-11-{2 + i % 12:02d}T00:00:00+00:00",
                         "status": "won" if i < n_win else "lost", "stake": 1.0, "fee": 0.0,
                         "pnl": 0.3 if i < n_win else -1.0})
         return out
