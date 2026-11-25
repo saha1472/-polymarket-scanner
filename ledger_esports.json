@@ -1,5 +1,5 @@
 {
-  "cash": 46.31004251826553,
+  "cash": 45.285042518265534,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -5688,6 +5688,131 @@
       "stops": {},
       "closed": "2026-11-24T06:16:10.725949+00:00",
       "pnl": -1.028
+    },
+    {
+      "asset": "108012396746075036558728777418736882684902956591652165290157953978698301719800",
+      "condition": "0xc609a9f272d33865de26427612ee82caee3b499f3fe74cdd3fc3867a5307ad41",
+      "title": "Counter-Strike: M80 vs Eternal Fire (BO3) - PGL Major Singapore Stage 1",
+      "outcome": "M80",
+      "event": "cs2-m80-ef1-2026-11-26",
+      "price": 0.5,
+      "shares": 2.0,
+      "stake": 1.0,
+      "fee": 0.025,
+      "order": "market",
+      "fee_rate": 0.05,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "ChonkVision"
+      ],
+      "holders": {
+        "0x676c1bb692c76b57b06f1b93817515acfa5ce139": {
+          "name": "ChonkVision",
+          "size": 2295.759,
+          "entry": 0.4899,
+          "win_rate": 0.6078431372549019,
+          "roi": 0.12667666684919868,
+          "n": 102,
+          "alt": false
+        }
+      },
+      "flow": {
+        "usd": 19014.24,
+        "trades": 63,
+        "wallets": 48,
+        "ours_share": 0.5048,
+        "side_share": 0.5048,
+        "ours_is_bigger": true,
+        "top_wallet_share": 0.3753,
+        "top_wallet_usd": 7136.25,
+        "price_move": -0.03,
+        "window_h": 6,
+        "reached_back_h": 1.95,
+        "truncated": false,
+        "flags": []
+      },
+      "audit": {
+        "code": "76954d71034b",
+        "scan": "ESPORTS",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30,
+            "min_days": 7
+          },
+          "real_stop": 0.4,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-25T15:31:29.606941+00:00",
+        "book": {
+          "asks": [
+            [
+              0.5,
+              5556.77
+            ],
+            [
+              0.51,
+              5098.9
+            ],
+            [
+              0.52,
+              1095.32
+            ],
+            [
+              0.53,
+              1011.79
+            ],
+            [
+              0.54,
+              1279.38
+            ]
+          ],
+          "bids": [
+            [
+              0.49,
+              40152.28
+            ],
+            [
+              0.48,
+              49006.11
+            ],
+            [
+              0.47,
+              2573.38
+            ],
+            [
+              0.46,
+              961.2
+            ],
+            [
+              0.45,
+              25008.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1795620686943",
+          "hash": "0d8e89b90975b6d9b049c43c9741b5c778782ba3"
+        }
+      },
+      "opened": "2026-11-25T15:31:29.607010+00:00",
+      "ends": "2026-11-26T00:00:06.392359+00:00"
     }
   ],
   "auto": {
