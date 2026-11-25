@@ -15,7 +15,11 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 30   # trader re-scoring (every 6h) takes ~15 min for all scans
+    # Measured over the last 70 runs: the whole job takes 11 min (longest 16), so 30 is generous.
+    # Every step below also has its own limit, at least twice its longest run. They are small enough that
+    # any two steps can hang at their limit and the save step still has time: a hung step then fails
+    # alone instead of eating the job and skipping the save.
+    timeout-minutes: 30
     env:
       DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
     steps:
@@ -42,16 +46,19 @@ jobs:
       # GATE: if any test fails, nothing below trades, notifies or saves.
       - name: Simulator self-tests
         id: tests
+        timeout-minutes: 5    # takes ~3 s
         run: python -m unittest discover -s tests -v
 
       - name: Arbitrage scanner
         if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
+        timeout-minutes: 5    # longest seen: 2 min
         run: python scanner.py
 
       # All five scans run side by side (separate ledgers), then their logs
       # are printed one after another. The step fails if any scan failed.
       - name: Smart-money signals (general + categories) + weather desk
         if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
+        timeout-minutes: 8    # longest seen: 3 min
         run: |
           for scan in GENERAL SPORTS ESPORTS TECH WEATHER GEOPOLITICS; do
             arg=$scan; [ "$scan" = GENERAL ] && arg=""
@@ -74,6 +81,7 @@ jobs:
       - name: Weather ensemble shadow log
         if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
         continue-on-error: true
+        timeout-minutes: 3    # longest seen: 6 s
         run: python wx_ensemble.py
 
       # SHADOW experiment (never trades): once a day, check on settled results whether
@@ -91,23 +99,28 @@ jobs:
       - name: Politics consensus shadow
         if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
         continue-on-error: true
+        timeout-minutes: 5    # longest seen: 2 min
         run: python shadow_politics.py
 
-      # For the rest of this run's 15-minute slot, check resting bids (real and
-      # shadow) and the rewards tracker's quotes about every 30 seconds.
+      # For the rest of this run's 15-minute slot, watch the shadow limit bids and the
+      # rewards tracker's quotes about every 30 seconds (it ends itself 11 minutes after
+      # the run started).
       - name: Book watcher
         if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
         continue-on-error: true
+        timeout-minutes: 12   # takes ~9.5 min by design
         run: python watch_books.py
 
       # Hypothetical market-making record for the rewards question. Never trades.
       - name: Rewards tracker
         if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
         continue-on-error: true
+        timeout-minutes: 3    # takes ~1 s
         run: python rewards_tracker.py
 
       - name: Daily heartbeat
         if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
+        timeout-minutes: 2    # takes ~1 s
         run: python heartbeat.py
 
       # READ-ONLY: every paper strategy's return per bet, its likely range and whether
@@ -115,10 +128,12 @@ jobs:
       - name: Scorecard
         if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
         continue-on-error: true
+        timeout-minutes: 2    # takes ~1 s
         run: python scorecard.py --markdown >> "$GITHUB_STEP_SUMMARY"
 
       - name: Save ledgers
         if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
+        timeout-minutes: 6    # longest seen: 5 min (push retries)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -146,8 +161,9 @@ jobs:
           echo "::error::Could not save ledgers (network, auth or conflict). Copy kept as a run artifact."
           exit 1
 
+      # A timeout counts as "cancelled", not "failed": keep the ledgers and warn then too.
       - name: Keep this run's ledgers if saving failed
-        if: ${{ failure() }}
+        if: ${{ failure() || cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: unsaved-ledgers-${{ github.run_id }}
@@ -165,7 +181,8 @@ jobs:
           if-no-files-found: ignore
 
       - name: Warn on Discord if anything failed
-        if: ${{ failure() }}
+        if: ${{ failure() || cancelled() }}
+        timeout-minutes: 2
         run: |
           [ -z "$DISCORD_WEBHOOK_URL" ] && exit 0
           curl -s -H "Content-Type: application/json" -X POST "$DISCORD_WEBHOOK_URL" \

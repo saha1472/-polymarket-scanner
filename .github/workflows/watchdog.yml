@@ -1,0 +1,39 @@
+name: Watchdog
+
+# Raises an alarm on Discord if the scanner has gone quiet: no successful scan run for an hour.
+# The scan reports its own failures, but not the case where it stops running at all (the trigger
+# stops, GitHub skips its schedule, the workflow gets disabled). READ-ONLY: it never saves anything
+# and never trades; its only output is one Discord message, at most a few per outage.
+# The logic lives in watchdog.py (tested offline); this file only fetches the runs and posts the text.
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: watchdog
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Is the scanner alive?
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/workflows/scan.yml/runs?per_page=20" --jq .workflow_runs > runs.json
+          msg=$(python3 watchdog.py runs.json)
+          if [ -z "$msg" ]; then echo "The scanner is alive."; exit 0; fi
+          echo "$msg"
+          [ -z "$DISCORD_WEBHOOK_URL" ] && exit 0
+          jq -n --arg c "$msg ${{ github.server_url }}/${{ github.repository }}/actions/workflows/scan.yml" '{content: $c}' \
+            | curl -s -H "Content-Type: application/json" -X POST "$DISCORD_WEBHOOK_URL" -d @-
