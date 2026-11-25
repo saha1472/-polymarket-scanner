@@ -67,6 +67,7 @@ MIN_RETURN_IF_WIN = 0.03   # need at least 3% profit on the stake if it wins
 # ---------- Trader filter ----------
 LEADERBOARD_SIZE = 100 if SCAN == "GENERAL" else 50
 HISTORY_DAYS = 30          # judge traders on bets resolved in the last 30 days
+MIN_HISTORY_DAYS = 7       # a busy trader's list can be cut off by the page cap; covering less than this is no basis to score
 MIN_RESOLVED = 30          # need at least this many resolved bets to judge
 MIN_WIN_RATE = 0.58
 MIN_ROI = 0.10
@@ -387,7 +388,9 @@ def trader_history(wallet, with_time=False):
     Both lists are read newest first and a bet belongs to the window by its
     last_event_at. A busy trader's list can be cut off by the page cap; then the
     window shrinks to the stretch BOTH lists cover, so wins and losses always
-    come from the same period."""
+    come from the same period. If that stretch is shorter than MIN_HISTORY_DAYS
+    the trader is not judged at all (no bets): a day or two of a very busy
+    wallet says little about it."""
     since = (datetime.now(timezone.utc) - timedelta(days=HISTORY_DAYS)).timestamp()
     newest_first = {"sort_by": "TIMESTAMP", "sort_direction": "DESC"}
     def past_window(page):
@@ -405,6 +408,8 @@ def trader_history(wallet, with_time=False):
     if unredeemed is None:
         return None
     start = max(covered_from(closed, since), covered_from(unredeemed, since))
+    if start > since + (HISTORY_DAYS - MIN_HISTORY_DAYS) * 86400:
+        return []                        # the lists reach back less than MIN_HISTORY_DAYS: too short a window to judge
     # a shrunken window is judged strictly after its edge: batch redemptions share a second
     inside = (lambda r: num(r.get("last_event_at")) > start) if start > since else (
         lambda r: num(r.get("last_event_at")) >= since)
@@ -903,7 +908,7 @@ def settings_snapshot():
             "max_bet": MAX_BET, "max_chase": MAX_CHASE, "hours": [HOURS_MIN, HOURS_MAX],
             "min_return_if_win": MIN_RETURN_IF_WIN, "min_traders_agree": MIN_TRADERS_AGREE,
             "trader_bar": {"win_rate": MIN_WIN_RATE, "roi": MIN_ROI, "n": MIN_RESOLVED,
-                           "days": HISTORY_DAYS},
+                           "days": HISTORY_DAYS, "min_days": MIN_HISTORY_DAYS},
             "real_stop": REAL_STOP, "per_event": MAX_BETS_PER_EVENT,
             "per_trader": MAX_OPEN_PER_TRADER, "daily_loss_limit": DAILY_LOSS_LIMIT}
 
