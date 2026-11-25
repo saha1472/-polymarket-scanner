@@ -211,14 +211,23 @@ def v1_leader(row):
             "pnl": row.get("pnl"), "vol": row.get("volume")}
 
 
-def data_v2(path, params, max_pages=10, stop=None, complete=False):
+class PagedRows(list):
+    """The rows of a paged list. `capped` is True when paging ended at max_pages
+    with more rows still left (so the list is only the first part of it)."""
+    capped = False
+
+
+def data_v2(path, params, max_pages=10, stop=None, complete=False, stop_page=None):
     """All rows of a v2 Data API list, following the cursor. Returns None if
     the API failed (so callers can tell "no data" from "API down").
-    `stop(row)` ends paging early once it returns True for a row.
+    `stop(row)` ends paging early once it returns True for a row (the rest of
+    that page is dropped). `stop_page(rows)` ends paging after a whole page has
+    been kept, once it returns True for that page's rows.
     `complete=True`: a page that fails after the first one also gives None, not
-    the rows read so far (for callers that must not mistake half a list for all of it)."""
-    rows, cursor = [], None
-    for _ in range(max_pages):
+    the rows read so far (for callers that must not mistake half a list for all of it).
+    The rows come back as PagedRows, which says whether the page cap cut the list off."""
+    rows, cursor, capped = PagedRows(), None, False
+    for n in range(1, max_pages + 1):
         q = dict(params, **({"cursor": cursor} if cursor else {}))
         page = get(f"{DATA_API}/v2/{path}", q, raw=True)
         if not isinstance(page, dict) or not isinstance(page.get("data"), list):
@@ -228,14 +237,21 @@ def data_v2(path, params, max_pages=10, stop=None, complete=False):
                 return rows
             rows.append(r)
         cursor = (page.get("pagination") or {}).get("next_cursor")
-        if not cursor:
+        if not cursor or (stop_page and stop_page(page["data"])):
             break
+        capped = n == max_pages
+    rows.capped = capped
     return rows
 
 
-def positions(wallet, max_pages=6, complete=False, **params):
-    rows = data_v2("positions", dict(params, user=wallet, limit=500), max_pages, complete=complete)
-    return None if rows is None else [v1_position(r) for r in rows]
+def positions(wallet, max_pages=6, complete=False, stop_page=None, **params):
+    rows = data_v2("positions", dict(params, user=wallet, limit=500), max_pages,
+                   complete=complete, stop_page=stop_page)
+    if rows is None:
+        return None
+    out = PagedRows(v1_position(r) for r in rows)
+    out.capped = getattr(rows, "capped", False)
+    return out
 
 
 pmap = simcore.pmap            # shared helpers live in simcore.py
@@ -350,32 +366,54 @@ def end_ts(value):
     return dt.timestamp()
 
 
+def covered_from(rows, since):
+    """Where in time a newest-first list is known to be complete. A list the page
+    cap cut off only reaches back to its last rows; the newest of the last five
+    dated rows is used because a few rows sit out of order (some with no
+    timestamp at all, which are skipped). A cut-off list with nothing dated
+    covers nothing."""
+    if not getattr(rows, "capped", False) or not rows:
+        return since
+    dated = [t for t in (num(r.get("last_event_at")) for r in rows) if t > 0]
+    return max(since, max(dated[-5:])) if dated else float("inf")
+
+
 def trader_history(wallet, with_time=False):
     """Every bet this trader had resolved in the last HISTORY_DAYS, wins AND
     losses, as (event slug, pnl, cost), or (event slug, pnl, cost, time) with
     with_time. Closed positions alone miss most
     losses: a losing bet resolves to $0 and is usually never redeemed, so it
-    stays in /positions as 'redeemable'."""
-    cutoff = datetime.now(timezone.utc) - timedelta(days=HISTORY_DAYS)
-    out = []
-    # closed positions, newest first (v2: status=CLOSED, sort_by=TIMESTAMP)
-    closed = data_v2("positions", {"user": wallet, "status": "CLOSED", "limit": 100,
-                                   "sort_by": "TIMESTAMP", "sort_direction": "DESC"},
-                     max_pages=5, stop=lambda r: num(r.get("last_event_at")) < cutoff.timestamp(),
-                     complete=True)
+    stays in /positions as 'redeemable'.
+    Both lists are read newest first and a bet belongs to the window by its
+    last_event_at. A busy trader's list can be cut off by the page cap; then the
+    window shrinks to the stretch BOTH lists cover, so wins and losses always
+    come from the same period."""
+    since = (datetime.now(timezone.utc) - timedelta(days=HISTORY_DAYS)).timestamp()
+    newest_first = {"sort_by": "TIMESTAMP", "sort_direction": "DESC"}
+    def past_window(page):
+        # the end of the window: a page whose dated rows are ALL older than it. Single old
+        # rows turn up among new ones, and an empty or undated page says nothing, so neither ends the list
+        dated = [t for t in (num(r.get("last_event_at")) for r in page) if t > 0]
+        return bool(dated) and all(t < since for t in dated)
+    closed = data_v2("positions", {"user": wallet, "status": "CLOSED", "limit": 500, **newest_first},
+                     max_pages=5, stop_page=past_window, complete=True)
     if closed is None:
         return None                      # also when a later page failed: a half-read history is not scored
-    for r in map(v1_position, closed):
+    # resolved but never redeemed (most losers end up here)
+    unredeemed = positions(wallet, status="REDEEMABLE", complete=True, stop_page=past_window,
+                           **newest_first)
+    if unredeemed is None:
+        return None
+    start = max(covered_from(closed, since), covered_from(unredeemed, since))
+    # a shrunken window is judged strictly after its edge: batch redemptions share a second
+    inside = (lambda r: num(r.get("last_event_at")) > start) if start > since else (
+        lambda r: num(r.get("last_event_at")) >= since)
+    out = []
+    for r in filter(inside, map(v1_position, closed)):
         cost = num(r.get("totalBought")) * num(r.get("avgPrice"))
         out.append((r.get("eventSlug"), num(r.get("realizedPnl")), cost,
                     num(r.get("timestamp"), None)))
-    # resolved but never redeemed (most losers end up here)
-    rows = positions(wallet, status="REDEEMABLE", complete=True)
-    if rows is None:
-        return None
-    for p in rows:
-        if str(p.get("endDate", ""))[:10] < cutoff.date().isoformat():
-            continue
+    for p in filter(inside, unredeemed):
         cost = num(p.get("initialValue"))
         out.append((p.get("eventSlug"), num(p.get("currentValue")) - cost, cost,
                     end_ts(p.get("endDate"))))

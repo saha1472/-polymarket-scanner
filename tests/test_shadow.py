@@ -333,7 +333,7 @@ class DataApiV2(unittest.TestCase):
                             "avg_price": 0.5, "event_slug": "a"},
                            {"last_event_at": old, "realized_pnl": 9, "total_size": 10,
                             "avg_price": 0.5, "event_slug": "old"}], "pagination": {}}
-        redeem = {"data": [{"end_date": now.date().isoformat(), "current_value": 0,
+        redeem = {"data": [{"end_date": now.date().isoformat(), "last_event_at": recent, "current_value": 0,
                             "total_cost_usdc": 4, "event_slug": "b"}], "pagination": {}}
 
         def get(url, params=None, raw=False):

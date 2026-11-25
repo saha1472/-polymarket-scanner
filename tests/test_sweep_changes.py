@@ -147,7 +147,7 @@ class NewBar(unittest.TestCase):
         ts = int(now.timestamp()) - 86400
         closed = {"data": [{"last_event_at": ts, "realized_pnl": 5, "total_size": 10,
                             "avg_price": 0.5, "event_slug": "a"}], "pagination": {}}
-        redeem = {"data": [{"end_date": now.date().isoformat(), "current_value": 0,
+        redeem = {"data": [{"end_date": now.date().isoformat(), "last_event_at": ts, "current_value": 0,
                             "total_cost_usdc": 4, "event_slug": "b"}], "pagination": {}}
 
         def get(url, params=None, raw=False):
