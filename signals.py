@@ -1001,6 +1001,21 @@ def record_shadow_candidates(book, candidates, fetch=None):
     return book.check_limits({t: a for t, a in seen.items() if a is not None})
 
 
+def trader_keys(item):
+    """Who stands behind a bet or a signal, for the per-trader cap: the wallets (lower case), because a
+    display name can be shared by two wallets or changed by one. A record that kept no wallets falls
+    back to its names, marked so a name can never be mistaken for a wallet."""
+    keys = {str(w).lower() for w in (item.get("holders") or {})}
+    return keys or {f"name:{t}" for t in item.get("traders") or ()}
+
+
+def cap_keys(signal):
+    """What the cap looks up for a signal: its wallets, plus its names so that a bet recorded
+    without wallets (counted by name only) still counts against it. Bets that have wallets are
+    only ever counted by wallet, so two wallets sharing a name stay independent."""
+    return trader_keys(signal) | {f"name:{t}" for t in signal.get("traders") or ()}
+
+
 def open_paper_bets(ledger, signals, book=None, refresh=None):
     """Book the signals that pass every cap. `refresh` (the sizer) re-prices each one
     on a fresh order book just before it is booked: signals are sized early in the
@@ -1019,10 +1034,10 @@ def open_paper_bets(ledger, signals, book=None, refresh=None):
     for b in open_bets:
         if b.get("event"):
             per_event[b["event"]] = per_event.get(b["event"], 0) + 1
-        for t in b["traders"]:
+        for t in trader_keys(b):
             per_trader[t] = per_trader.get(t, 0) + 1
 
-    cutoff = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
+    cutoff =(datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
     lost_24h = sum(b["pnl"] for b in ledger["bets"]
                    if b["status"] != "open" and b.get("closed", "") >= cutoff)
     paused = lost_24h <= -DAILY_LOSS_LIMIT
@@ -1055,7 +1070,7 @@ def open_paper_bets(ledger, signals, book=None, refresh=None):
         if s.get("event") and per_event.get(s["event"], 0) >= MAX_BETS_PER_EVENT:
             shadow_skip(book, s, "per_event")
             continue  # already have a bet on this match/event
-        if max(per_trader.get(t, 0) for t in s["traders"]) >= MAX_OPEN_PER_TRADER:
+        if max((per_trader.get(t, 0) for t in cap_keys(s)), default=0) >= MAX_OPEN_PER_TRADER:
             shadow_skip(book, s, "per_trader")
             continue  # strict cap: ANY supporting trader already drives enough open bets
         if refresh:
@@ -1091,9 +1106,9 @@ def open_paper_bets(ledger, signals, book=None, refresh=None):
         held_markets.add(s["condition"])
         if s.get("event"):
             per_event[s["event"]] = per_event.get(s["event"], 0) + 1
-        for t in s["traders"]:
+        for t in trader_keys(s):
             per_trader[t] = per_trader.get(t, 0) + 1
-        ends = f"ends in {s['hours']:.0f}h | " if s["hours"] else ""
+        ends =f"ends in {s['hours']:.0f}h | " if s["hours"] else ""
         msgs.append(
             f"📝 Paper bet ${s['stake']:.2f} ({s['shares']:.2f} shares, "
             f"{s['order']} order) on {s['outcome']} @ {s['price']:.2f} | "
