@@ -3,8 +3,9 @@
 For each strategy: the real ledger (settled bets, ROI with its error range,
 auto-pause state) next to every kind of shadow record, broken down by why
 the bet wasn't placed. Use it to answer questions like "do the per-trader
-caps help?", "would the unfilled weather bids have won?", "is bidding at
-the trader's entry better than buying at the ask?".
+caps help?", "is bidding at the trader's entry better than buying at the ask?".
+Resting weather bids that expired without a fill are only counted: how they would
+have ended is not what a bid earns (see shadow.is_result).
 
 The wide-pool lines test a looser trader bar (see signals.wide_band); they are
 shadow only, so a good result there is a reason to loosen the bar, not a profit.
@@ -67,6 +68,19 @@ def line(label, st):
             f"ROI {st['roi']:+6.1%}{rng}" + (f"  [{', '.join(extra)}]" if extra else ""))
 
 
+UNFILLED = "unfilled resting bids"
+
+
+def unfilled_line(rows):
+    """Resting bids that expired without a fill. They are counted, never scored: how they would
+    have ended says nothing about what a bid earns, because the bids that never fill are the ones
+    where the price ran away from them."""
+    done = [b for b in rows if b.get("status") in shadow.SETTLED]
+    won = sum(1 for b in done if b["status"] == "won")
+    return (f"  {UNFILLED:28} {len(rows)} expired without a fill ({won} of {len(done)} settled would have won). "
+            f"Not a return: the bids that never fill are the ones where the price ran away.")
+
+
 def main():
     ledgers = {}
     for p in sorted(glob.glob("ledger*.json")):
@@ -98,13 +112,13 @@ def main():
         groups = {}
         for b in mine:
             key = (f"limit bid at traders' entry" if b["kind"] == "limit" else
-                   "unfilled resting bids" if b["kind"] == "unfilled" else
+                   UNFILLED if b["kind"] == "unfilled" else
                    CHEAP_LABEL if b["reason"] == "cheap_band" else
                    DEEP_LABEL if b["reason"] == "deep_pool" else
                    WIDE_LABELS.get(b["reason"], f"skipped: {b['reason']}"))
             groups.setdefault(key, []).append(b)
         for key in sorted(groups):
-            r = line(key, shadow.summarize(groups[key]))
+            r = unfilled_line(groups[key]) if key == UNFILLED else line(key, shadow.summarize(groups[key]))
             if r:
                 out.append(r)
         blocked = groups.get("skipped: per_event", [])
