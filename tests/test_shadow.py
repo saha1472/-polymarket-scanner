@@ -255,17 +255,6 @@ class CandidateShadows(InTempDir):
 
 
 class WeatherShadow(InTempDir):
-    def test_expired_resting_bid_becomes_unfilled_record(self):
-        led = {"cash": 49.0, "bets": [{"strategy": "MORNING", "status": "resting", "asset": "A",
-                                       "condition": "c", "event": "e", "title": "t",
-                                       "outcome": "YES", "bucket": "5°C", "price": 0.8,
-                                       "shares": 1.25, "stake": 1.0, "expires": iso(-1)}]}
-        b = shadow.Book("s.json")
-        weather.check_resting(led, {}, set(), b)
-        self.assertEqual(led["bets"][0]["status"], "cancelled")
-        self.assertEqual([(x["kind"], x["status"], x["price"]) for x in b.bets],
-                         [("unfilled", "open", 0.8)])
-
     def test_auto_paused_weather_strategy_only_records(self):
         led = {"cash": 50, "bets": [], "auto": {"paused": True, "since": iso(-60)}}
         e = {"slug": "ev"}
@@ -356,21 +345,14 @@ class Watcher(InTempDir):
         self.assertEqual(watch_books.budget_seconds(5000, {"RUN_STARTED": "1000"}), 0)
         self.assertEqual(watch_books.budget_seconds(1000, {}), 0)
 
-    def test_fills_real_and_shadow_bids_and_tracks_quote_extremes(self):
-        led = {"cash": 49.0, "bets": [{"strategy": "MORNING", "status": "resting", "asset": "W",
-                                       "condition": "c", "event": "e", "title": "t",
-                                       "outcome": "YES", "bucket": "5°C", "price": 0.80,
-                                       "shares": 1.25, "stake": 1.0, "fee": 0.0,
-                                       "expires": iso(60)}]}
-        with open("ledger_wx_morning.json", "w") as fh:
-            json.dump(led, fh)
+    def test_fills_shadow_bids_and_tracks_quote_extremes(self):
         b = shadow.Book("shadow_sports.json")
         b.add_limit("SPORTS", asset="L", limit_price=0.5, best_ask=0.6, fee_rate=0.05, **KW)
         b.save()
         with open("rewards_state.json", "w") as fh:
             json.dump({"quotes": {"R": {}}, "watch": {}}, fh)
-        looks = iter([{"W": 0.85, "L": 0.55, "R": (0.40, 0.45)},
-                      {"W": 0.80, "L": 0.50, "R": (0.38, 0.44)}])
+        looks = iter([{"L": 0.55, "R": (0.40, 0.45)},
+                      {"L": 0.50, "R": (0.38, 0.44)}])
 
         def fetch(tokens):
             snap = next(looks)
@@ -383,15 +365,7 @@ class Watcher(InTempDir):
                 elif v is not None:
                     out[t] = {"asks": [{"price": str(v), "size": "9"}], "bids": []}
             return out
-        old = weather.notify
-        weather.notify = lambda lines: True
-        try:
-            watch_books.main(seconds=watch_books.POLL_SECONDS + 1, sleep=lambda s: None,
-                             fetch=fetch)
-        finally:
-            weather.notify = old
-        with open("ledger_wx_morning.json") as fh:
-            self.assertEqual(json.load(fh)["bets"][0]["status"], "open")
+        watch_books.main(seconds=watch_books.POLL_SECONDS + 1, sleep=lambda s: None, fetch=fetch)
         self.assertEqual(shadow.Book("shadow_sports.json").bets[0]["status"], "open")
         with open("rewards_state.json") as fh:
             w = json.load(fh)["watch"]["R"]

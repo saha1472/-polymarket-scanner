@@ -97,10 +97,9 @@ FAV_RULES = {
 FAV_MIN_PRICE = 0.70
 FAV_MAX_PRICE = 0.95
 FAV_MAX_FILL = 0.96          # take a real seller's offer only up to this price
-# Usually nobody is selling the favourite, so instead we post a resting bid one
-# cent above the best bid (maker: no fee). It only counts as filled if a later
-# run sees a seller offering at or below our price; it is cancelled when the
-# time window ends.
+# When the ask is above FAV_MAX_FILL the signal is skipped (recorded as "price_filter" in shadow).
+# Until 2026-11-25 a resting (maker) bid was posted one cent above the best bid instead; under the
+# snapshot fill proxy none of 273 ever filled, so the path was removed (see release_resting).
 
 STRATEGIES = ("DEAD", "LATE", "SHIFT", "MORNING", "AFTERNOON")
 SHADOW_FILE = "shadow_wx.json"
@@ -612,14 +611,6 @@ def open_bets(ledger, signals, book=None):
         if strategy in FAV_RULES and (not bet or bet["price"] > FAV_MAX_FILL):
             if bet:   # what buying at the (too expensive) ask would have done instead
                 shadow_skip(book, strategy, e, b, side, reason, "price_filter", bet)
-            rest = resting_bid(strategy, e, b, reason)
-            if rest:
-                ledger["cash"] -= rest["stake"]      # reserve the money
-                ledger["bets"].append(rest)
-                open_.append(rest)
-                held_markets.add(b["condition"])
-                msgs.append(f"⏳ Resting bid YES {b['label']} @ {rest['price']:.2f} | "
-                            f"{rest['title']} | {reason}")
             continue
         if not bet:
             continue
@@ -647,57 +638,15 @@ def open_bets(ledger, signals, book=None):
     return msgs
 
 
-def resting_bid(strategy, e, b, reason):
-    if b["yes_bid"] is None:
-        return None
-    price = round(b["yes_bid"] + 0.01, 2)
-    if not FAV_MIN_PRICE <= price <= FAV_MAX_PRICE:
-        return None
-    end_hour = FAV_RULES[strategy]["hours"][1]
-    tz = ZoneInfo(e["tz"])
-    expires = datetime(e["date"].year, e["date"].month, e["date"].day, end_hour, tzinfo=tz)
-    shares = BET_SIZE / price
-    return {"strategy": strategy, "asset": b["yes"], "condition": b["condition"],
-            "event": e["slug"], "title": b["question"], "outcome": "YES",
-            "bucket": b["label"], "price": price, "shares": shares, "stake": BET_SIZE,
-            "fee": 0.0, "profit_if_win": shares - BET_SIZE, "reason": reason,
-            "order": "maker", "status": "resting", "placed": now_utc().isoformat(),
-            "expires": expires.astimezone(timezone.utc).isoformat(),
-            "audit": simcore.audit(f"WX-{strategy}", strategy_settings(strategy),
-                                   quote={"yes_bid": b["yes_bid"], "yes_ask": b["yes_ask"]})}
-
-
-def check_resting(ledger, asks, active, book=None, how="snapshot proxy"):
-    """asks: YES token -> current best ask (only where a seller exists).
-    This is a FILL PROXY: a seller at or below our price on a later snapshot.
-    It can't see queue position, sizes or fills between snapshots.
-    Expiry is checked first: a quote seen after the deadline can't prove the
-    order filled before it."""
-    msgs = []
-    now = now_utc().isoformat()
-    for bet in ledger["bets"]:
-        if bet["status"] != "resting":
-            continue
-        if now >= bet["expires"]:
-            bet["status"] = "cancelled"          # releases the reserved cash once
-            ledger["cash"] += bet["stake"]
-            if book is not None:                 # would it have won if it had filled?
-                book.add(bet["strategy"], "unfilled", "expired", asset=bet["asset"],
-                         condition=bet["condition"], title=bet["title"], event=bet["event"],
-                         outcome=bet["outcome"], price=bet["price"], shares=bet["shares"],
-                         stake=bet["stake"], fee=0.0, extra={"bucket": bet.get("bucket")})
-            continue
-        ask = asks.get(bet["asset"])
-        if ask is not None and ask <= bet["price"]:
-            bet["status"] = "open"
-            bet["opened"] = now
-            bet["fill_evidence"] = {"time": now, "seen_ask": ask,
-                                    "code": simcore.code_version(),
-                                    "note": f"{how}: ask at/below our bid"}
-            msgs.append(f"✅ Bid filled: YES {bet['bucket']} @ {bet['price']:.2f} | {bet['title']}")
-        # a market missing from this run's scan (e.g. an API hiccup) is NOT
-        # treated as closed; the expiry deadline cancels the bid instead
-    return msgs
+def release_resting(ledger):
+    """Resting (maker) bids are no longer placed: none of 273 ever filled under the snapshot fill
+    proxy (removed 2026-11-25). A resting bid left over in a ledger from before is cancelled and
+    its reserved cash returned, once; the cancelled bets already in the ledgers stay as history."""
+    left = [b for b in ledger["bets"] if b["status"] == "resting"]
+    for bet in left:
+        bet["status"] = "cancelled"
+        ledger["cash"] += bet["stake"]
+    return [f"Cancelled {len(left)} leftover resting bid(s); cash returned."] if left else []
 
 
 def summary(ledger):
@@ -706,12 +655,9 @@ def summary(ledger):
     losses = sum(1 for b in done if b["status"] == "lost")
     split = sum(1 for b in done if b["status"] == "split")
     open_n = sum(1 for b in ledger["bets"] if b["status"] == "open")
-    resting = sum(1 for b in ledger["bets"] if b["status"] == "resting")
-    unfilled = sum(1 for b in ledger["bets"] if b["status"] == "cancelled")
-    extra = f" | resting {resting}, unfilled {unfilled}" if resting or unfilled else ""
     return (f"💰 Cash ${ledger['cash']:.2f} | open {open_n} | record {wins}-{losses}"
             + (f" (+{split} split)" if split else "")
-            + f" | realized P&L ${sum(b['pnl'] for b in done):+.2f}{extra}")
+            + f" | realized P&L ${sum(b['pnl'] for b in done):+.2f}")
 
 
 def notify(lines):
@@ -745,10 +691,6 @@ if __name__ == "__main__":
 
     for e in events:
         e["tz"] = (fc.get(e["station"]) or {}).get("tz") or "UTC"
-    asks = {b["yes"]: b["yes_ask"] for e in events for b in e["buckets"]
-            if b["yes_ask"] is not None}
-    active = {b["yes"] for e in events for b in e["buckets"]}
-
     signals = {
         "DEAD": dead_signals(events, obs, fc),
         "LATE": late_signals(events, obs, fc),
@@ -761,7 +703,7 @@ if __name__ == "__main__":
     shadow_settled = book.settle(get)
     for strat in STRATEGIES:
         led = load_ledger(ledger_file(strat))
-        msgs = check_resting(led, asks, active, book) + settle(led)
+        msgs = release_resting(led) + settle(led)
         switch = shadow.switch_update(led, book.bets, strat, judge_from=JUDGE_FROM.get(strat, ""))
         msgs += ([switch] if switch else []) + open_bets(led, signals[strat], book)
         write_json(ledger_file(strat), led)

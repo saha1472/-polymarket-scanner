@@ -23,8 +23,8 @@ NAMES = {
     "ledger_wx_dead.json": "WX dead buckets",
     "ledger_wx_late.json": "WX late (risky)",
     "ledger_wx_shift.json": "WX forecast shift",
-    "ledger_wx_morning.json": "WX morning low (maker, proxy fills)",
-    "ledger_wx_afternoon.json": "WX afternoon high (maker, proxy fills)",
+    "ledger_wx_morning.json": "WX morning low",
+    "ledger_wx_afternoon.json": "WX afternoon high",
 }
 
 
@@ -41,7 +41,6 @@ def line(path, since):
     bets = led.get("bets", [])
     done = [b for b in bets if b.get("status") in ("won", "lost", "stopped", "split")]
     open_n = sum(1 for b in bets if b.get("status") == "open")
-    resting = sum(1 for b in bets if b.get("status") == "resting")
     wins = sum(1 for b in done if b.get("status") == "won")
     stopped = sum(1 for b in done if b.get("status") == "stopped")
     pnl = sum(b.get("pnl", 0) for b in done)
@@ -55,7 +54,7 @@ def line(path, since):
            + (f" (+{split} split)" if split else ""))
     return (pnl, f"{'🟢' if pnl > 0 else '🔴' if pnl < 0 else '⚪'} **{name}**: {rec} | "
                  f"P&L ${pnl:+.2f} (ROI {roi}) | 24h {len(day)} settled ${day_pnl:+.2f} | "
-                 f"open {open_n}" + (f" (+{resting} resting bids)" if resting else "")
+                 f"open {open_n}"
                  + f" | cash ${led.get('cash', 0):.2f}"
                  + (" | ⏸️ paused" if led.get("paused") else "")
                  + (" | 🤖 auto-paused" if (led.get("auto") or {}).get("paused") else ""))
