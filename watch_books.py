@@ -3,10 +3,9 @@ of everything waiting for a fill about every 30 seconds, instead of only once
 per 15-minute run.
 
 Watched:
-  - weather resting bids (MORNING / AFTERNOON) in the real paper ledgers:
-    filled when a seller at or below our price shows up, exactly the rule the
-    weather desk uses, just checked far more often
-  - shadow limit bids (shadow_*.json), same rule
+  - shadow limit bids (shadow_*.json): filled when a seller at or below our
+    price shows up (the weather desk's own resting bids were removed on
+    2026-11-25: none of 273 ever filled)
   - the rewards tracker's hypothetical quotes (rewards_state.json): the lowest
     ask and highest bid seen are kept, so the tracker can tell whether a
     quote would have been hit
@@ -27,7 +26,6 @@ import time
 
 import shadow
 import simcore
-import weather
 
 POLL_SECONDS = 30
 WATCH_UNTIL_MIN = 11
@@ -66,31 +64,21 @@ def main(seconds=None, sleep=time.sleep, fetch=simcore.fetch_books):
     deadline = time.time() + seconds
     max_looks = int(seconds // POLL_SECONDS) + 1
 
-    wx_paths = sorted(glob.glob("ledger_wx_*.json"))
-    ledgers = {p: weather.load_ledger(p) for p in wx_paths}
     books = {p: shadow.Book(p) for p in sorted(glob.glob("shadow_*.json"))}
-    rewards = weather.read_json(REWARDS_STATE, {})
+    rewards = simcore.read_json(REWARDS_STATE, {})
     watch = rewards.setdefault("watch", {})
     for tok in (rewards.get("quotes") or {}):
         watch.setdefault(tok, {})
-    wx_book = books.get(weather.SHADOW_FILE)
 
-    msgs, looks, filled_real, filled_shadow = [], 0, 0, 0
+    looks, filled_shadow = 0, 0
     while True:
-        tokens = {b["asset"] for led in ledgers.values() for b in led["bets"]
-                  if b["status"] == "resting"}
-        tokens |= {b["asset"] for bk in books.values() for b in bk.resting()}
+        tokens = {b["asset"] for bk in books.values() for b in bk.resting()}
         tokens |= set(watch)
         if not tokens:
             break
         got = fetch(tokens)
         asks = {t: simcore.best_ask(bk) for t, bk in got.items()}
         asks = {t: a for t, a in asks.items() if a is not None}
-        for p, led in ledgers.items():
-            new = weather.check_resting(led, asks, set(), wx_book, how="book watch (~30s)")
-            filled_real += len(new)
-            if new:
-                msgs += [f"**[WX-{p[10:-5].upper()}]**"] + new
         for bk in books.values():
             filled_shadow += bk.check_limits(asks, how="book watch (~30s)")
         update_extremes(watch, got)
@@ -99,18 +87,12 @@ def main(seconds=None, sleep=time.sleep, fetch=simcore.fetch_books):
             break
         sleep(POLL_SECONDS)
 
-    for p, led in ledgers.items():
-        weather.write_json(p, led)
     for bk in books.values():
         bk.save()
     if watch:
         simcore.write_json_atomic(REWARDS_STATE, rewards, indent=1)
-    print(f"Book watcher: {looks} look(s) over {seconds:.0f}s budget | real bids filled "
-          f"{filled_real} | shadow limits filled {filled_shadow} | rewards quotes watched {len(watch)}")
-    if msgs:
-        print("\n".join(msgs))
-        if not weather.notify(msgs):
-            sys.exit("Discord delivery failed (files were saved).")
+    print(f"Book watcher: {looks} look(s) over {seconds:.0f}s budget | "
+          f"shadow limits filled {filled_shadow} | rewards quotes watched {len(watch)}")
     return 0
 
 

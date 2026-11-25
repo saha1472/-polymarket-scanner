@@ -10,7 +10,8 @@ keeps a shadow file (shadow_<scan>.json) with:
             instead of buying at the ask. Fills when a later look at the book
             (scan snapshots, or the book watcher every ~30s) shows a seller at
             or below our price. No fee (makers pay none).
-  unfilled  a weather resting bid that expired unfilled: would it have won?
+  unfilled  (old rows only, no longer written) a weather resting bid that expired
+            unfilled; never counted as a result, see is_result
 
 Each record settles on Polymarket's official payout like a real bet. One
 record per (strategy, kind, asset): a signal seen on every run is one record.

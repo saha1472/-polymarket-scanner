@@ -104,35 +104,7 @@ class RealStop(unittest.TestCase):
         self.assertEqual(led["bets"][0]["status"], "open")
 
 
-# ---------- Finding 2: resting bids and expiry ----------
-
-class Resting(unittest.TestCase):
-    def _bet(self, exp_minutes):
-        return {"status": "resting", "asset": "A", "price": 0.80, "stake": 1.0,
-                "expires": iso(exp_minutes), "bucket": "x", "title": "t"}
-
-    def test_fill_before_expiry(self):
-        led = {"cash": 49.0, "bets": [self._bet(60)]}
-        weather.check_resting(led, {"A": 0.79}, {"A"})
-        self.assertEqual(led["bets"][0]["status"], "open")
-        self.assertEqual(led["cash"], 49.0)
-
-    def test_no_fill_after_expiry_even_if_cheap(self):
-        led = {"cash": 49.0, "bets": [self._bet(-60)]}
-        weather.check_resting(led, {"A": 0.79}, {"A"})
-        self.assertEqual(led["bets"][0]["status"], "cancelled")
-        self.assertEqual(led["cash"], 50.0)
-
-    def test_cancel_releases_cash_once(self):
-        led = {"cash": 49.0, "bets": [self._bet(-60)]}
-        weather.check_resting(led, {}, set())
-        weather.check_resting(led, {}, set())
-        self.assertEqual(led["cash"], 50.0)
-
-    def test_missing_from_scan_is_not_a_cancel(self):
-        led = {"cash": 49.0, "bets": [self._bet(60)]}
-        weather.check_resting(led, {}, set())      # API hiccup: market not seen
-        self.assertEqual(led["bets"][0]["status"], "resting")
+# (Finding 2, resting bids and expiry, is gone with the resting bids: see test_no_resting_bids.py)
 
 
 # ---------- Finding 3 (+ follow-up #3): settlement ----------
@@ -485,16 +457,6 @@ class AuditTrail(unittest.TestCase):
         self.assertEqual(bet["audit"]["scan"], "WX-MORNING")
         self.assertEqual(bet["audit"]["settings"]["hours"], [8, 12])
         self.assertEqual(bet["audit"]["book"]["asks"][0], [0.62, 2.0])
-
-    def test_resting_fill_records_evidence(self):
-        led = {"cash": 49.0, "bets": [{"status": "resting", "asset": "A", "price": 0.80,
-                                       "stake": 1.0, "expires": iso(60), "bucket": "x",
-                                       "title": "t"}]}
-        weather.check_resting(led, {"A": 0.79}, {"A"})
-        ev = led["bets"][0]["fill_evidence"]
-        self.assertEqual(ev["seen_ask"], 0.79)
-        self.assertIn("proxy", ev["note"])
-
 
 class SettlementChecker(unittest.TestCase):
     def _bet(self, **kw):
