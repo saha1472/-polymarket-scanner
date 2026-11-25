@@ -263,48 +263,94 @@ class TheWindow(Patched):
         self.serve({"CLOSED": [page([])], "REDEEMABLE": [page([bare, redeemable_row("ok")])]})
         self.assertEqual(self.slugs(signals.trader_history("0x1")), ["ok"])
 
-    def cut_off_closed(self):
-        """Five full pages of closed bets, the last one at about 5 days back, and more rows left."""
-        pages = [page([closed_row(f"c{i}-{j}", days=i + 1 + j / 1000.0) for j in range(5)], "more") for i in range(5)]
-        return pages
+    def cut_off_closed(self, step=2.0):
+        """Five full pages of closed bets, `step` days apart (the last one at 5 x step days back), and more rows left."""
+        return [page([closed_row(f"c{i}-{j}", days=step * (i + 1) + j / 1000.0) for j in range(5)], "more") for i in range(5)]
+
+    def cut_off_unredeemed(self, step=2.0):
+        """Six full pages of unredeemed bets, `step` days apart (the last one at 6 x step days back), and more rows left."""
+        return [page([redeemable_row(f"u{i}-{j}", days=step * (i + 1) + j / 1000.0) for j in range(5)], "more") for i in range(6)]
 
     def test_a_cut_off_closed_list_narrows_the_window_for_both_lists(self):
-        unredeemed = [redeemable_row("u3", days=3), redeemable_row("u4.5", days=4.5), redeemable_row("u10", days=10)]
+        unredeemed = [redeemable_row("u3", days=3), redeemable_row("u9", days=9), redeemable_row("u15", days=15)]
         self.serve({"CLOSED": self.cut_off_closed(), "REDEEMABLE": [page(unredeemed)]})
         got = self.slugs(signals.trader_history("0x1"))
         self.assertIn("u3", got)
-        self.assertIn("u4.5", got)
-        self.assertNotIn("u10", got)                               # inside 30 days, but before the closed list reaches
-        # the edge is the newest of the last five closed rows read (c4-0, 5 days back) and is itself left out
+        self.assertIn("u9", got)
+        self.assertNotIn("u15", got)                               # inside 30 days, but before the closed list reaches
+        # the edge is the newest of the last five closed rows read (c4-0, 10 days back) and is itself left out
         self.assertIn("c3-4", got)
         self.assertNotIn("c4-0", got)
         self.assertEqual(sum(1 for s in got if s.startswith("c")), 20)
 
     def test_a_cut_off_unredeemed_list_narrows_the_window_for_closed_bets(self):
-        unredeemed = [page([redeemable_row(f"u{i}-{j}", days=i + 1 + j / 1000.0) for j in range(5)], "more") for i in range(6)]
-        closed = [closed_row("c2", days=2), closed_row("c4", days=4), closed_row("c12", days=12)]
-        self.serve({"CLOSED": [page(closed)], "REDEEMABLE": unredeemed})
+        closed = [closed_row("c2", days=2), closed_row("c9", days=9), closed_row("c20", days=20)]
+        self.serve({"CLOSED": [page(closed)], "REDEEMABLE": self.cut_off_unredeemed()})
         got = self.slugs(signals.trader_history("0x1"))
         self.assertIn("c2", got)
-        self.assertIn("c4", got)
-        self.assertNotIn("c12", got)
-        self.assertEqual(sum(1 for s in got if s.startswith("u")), 25)   # last page (6 days back) is the edge: its newest row is left out
+        self.assertIn("c9", got)
+        self.assertNotIn("c20", got)
+        self.assertEqual(sum(1 for s in got if s.startswith("u")), 25)   # last page (12 days back) is the edge: its newest row is left out
 
     def test_a_cut_off_list_whose_tail_has_no_timestamps_still_narrows_the_window(self):
         bare = {"event_slug": "bare", "realized_pnl": 1, "total_size": 1, "avg_price": 0.5}
-        pages = [page([closed_row(f"c{i}-{j}", days=i + 1 + j / 1000.0) for j in range(5)], "more") for i in range(4)]
+        pages = self.cut_off_closed()[:4]
         pages.append(page([dict(bare) for _ in range(5)], "more"))               # the last page: nothing to date it by
-        unredeemed = [redeemable_row("u3", days=3), redeemable_row("u10", days=10)]
+        unredeemed = [redeemable_row("u3", days=3), redeemable_row("u15", days=15)]
         self.serve({"CLOSED": pages, "REDEEMABLE": [page(unredeemed)]})
         got = self.slugs(signals.trader_history("0x1"))
         self.assertIn("u3", got)
-        self.assertNotIn("u10", got)                                             # past the last dated row (4 days back)
+        self.assertNotIn("u15", got)                                             # past the last dated row (8 days back)
 
     def test_a_cut_off_list_with_nothing_dated_gives_no_bets(self):
         bare = {"event_slug": "bare", "realized_pnl": 1, "total_size": 1, "avg_price": 0.5}
         self.serve({"CLOSED": [page([dict(bare) for _ in range(5)], "more") for _ in range(5)],
                     "REDEEMABLE": [page([redeemable_row("u1", days=1)])]})
         self.assertEqual(signals.trader_history("0x1"), [])
+
+    # The minimum window: a list cut off by the page cap that reaches back less than MIN_HISTORY_DAYS is not judged.
+    def test_the_minimum_is_a_week_inside_the_thirty_days(self):
+        self.assertEqual(signals.MIN_HISTORY_DAYS, 7)
+        self.assertLessEqual(signals.MIN_HISTORY_DAYS, signals.HISTORY_DAYS)
+
+    def test_a_cut_off_closed_list_that_reaches_back_under_a_week_gives_no_bets(self):
+        self.serve({"CLOSED": self.cut_off_closed(step=1.2), "REDEEMABLE": [page([redeemable_row("u1", days=1)])]})   # 6 days
+        self.assertEqual(signals.trader_history("0x1"), [])
+
+    def test_a_cut_off_unredeemed_list_that_reaches_back_under_a_week_gives_no_bets(self):
+        self.serve({"CLOSED": [page([closed_row("c1", days=1)])], "REDEEMABLE": self.cut_off_unredeemed(step=1.1)})   # 6.6 days
+        self.assertEqual(signals.trader_history("0x1"), [])
+
+    def test_exactly_a_week_is_enough(self):
+        self.serve({"CLOSED": self.cut_off_closed(step=1.4), "REDEEMABLE": [page([redeemable_row("u1", days=1)])]})   # 7 days
+        got = self.slugs(signals.trader_history("0x1"))
+        self.assertIn("u1", got)
+        self.assertEqual(sum(1 for s in got if s.startswith("c")), 20)
+
+    def test_just_under_a_week_is_not(self):
+        self.serve({"CLOSED": self.cut_off_closed(step=1.38), "REDEEMABLE": [page([redeemable_row("u1", days=1)])]})  # 6.9 days
+        self.assertEqual(signals.trader_history("0x1"), [])
+
+    def test_a_young_wallet_with_a_complete_short_history_is_not_affected(self):
+        # not cut off by the cap: its whole history is two days of bets, which is its own limit (the 30-bet bar), not a window problem
+        self.serve({"CLOSED": [page([closed_row("a", days=0.5), closed_row("b", days=2)])],
+                    "REDEEMABLE": [page([redeemable_row("c", days=1)])]})
+        self.assertEqual(self.slugs(signals.trader_history("0x1")), ["a", "b", "c"])
+
+    def test_a_cut_off_list_with_only_the_bets_of_the_last_day_or_two_is_not_scored(self):
+        # the case the minimum exists for: a very busy wallet, 2500 closed rows in two days
+        self.serve({"CLOSED": self.cut_off_closed(step=0.4), "REDEEMABLE": [page([])]})
+        self.assertEqual(signals.trader_history("0x1"), [])
+
+    def test_the_minimum_does_not_shorten_the_normal_window(self):
+        self.serve({"CLOSED": [page([closed_row("in", days=29), closed_row("out", days=31)])], "REDEEMABLE": [page([])]})
+        self.assertEqual(self.slugs(signals.trader_history("0x1")), ["in"])
+
+    def test_a_trader_judged_on_too_short_a_window_gets_no_score(self):
+        rows = [page([closed_row(f"e{i}-{j}", pnl=1.0, days=0.2 * (i + 1) + j / 1000.0) for j in range(6)], "more") for i in range(5)]
+        queues = {"CLOSED": rows, "REDEEMABLE": [page([])]}
+        self.serve(queues)
+        self.assertEqual(signals.score_traders({"0x1": "Busy"}), {})
 
     def test_a_complete_pair_keeps_the_full_thirty_days(self):
         self.serve({"CLOSED": [page([closed_row("c", days=29)])], "REDEEMABLE": [page([redeemable_row("r", days=28)])]})
