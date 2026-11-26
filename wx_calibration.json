@@ -1,19 +1,19 @@
 {
  "version": 1,
- "fitted_on": "2026-11-25",
- "code": "a5603f628047",
- "events": 2020,
+ "fitted_on": "2026-11-26",
+ "code": "1c91c7cddd19",
+ "events": 2097,
  "groups": {
   "highest@10": {
-   "rows": 12441,
-   "train_rows": 9812,
-   "train_days": 19,
-   "test_two_sided_rows": 1327,
+   "rows": 12969,
+   "train_rows": 10340,
+   "train_days": 20,
+   "test_two_sided_rows": 1297,
    "test_events": 239,
    "test_days": 5,
-   "ll_market": 0.27670188471800355,
-   "ll_model": 0.47447103712069,
-   "ll_blend": 0.2784290824517783,
+   "ll_market": 0.27118430678034255,
+   "ll_model": 0.47799276205094565,
+   "ll_blend": 0.2728226754326139,
    "bets": {
     "n": 0,
     "events": 0,
@@ -32,25 +32,25 @@
     1.0
    ],
    "weights_train": [
-    0.086,
-    -0.0168,
-    1.1645
+    0.0948,
+    -0.0125,
+    1.1655
    ],
    "streak": 0,
    "base_streak": 0,
    "trusted": false,
-   "evaluated_on": "2026-11-25"
+   "evaluated_on": "2026-11-26"
   },
   "highest@15": {
-   "rows": 12628,
-   "train_rows": 9999,
-   "train_days": 19,
-   "test_two_sided_rows": 550,
-   "test_events": 221,
+   "rows": 13156,
+   "train_rows": 10527,
+   "train_days": 20,
+   "test_two_sided_rows": 549,
+   "test_events": 220,
    "test_days": 5,
-   "ll_market": 0.10005123352758385,
-   "ll_model": 0.17821695838833435,
-   "ll_blend": 0.10342398413621288,
+   "ll_market": 0.09959093020947546,
+   "ll_model": 0.18880748831947225,
+   "ll_blend": 0.10335713698500135,
    "bets": {
     "n": 0,
     "events": 0,
@@ -69,25 +69,25 @@
     1.0
    ],
    "weights_train": [
-    0.0623,
-    0.0733,
-    1.2642
+    0.0631,
+    0.0811,
+    1.2556
    ],
    "streak": 0,
    "base_streak": 0,
    "trusted": false,
-   "evaluated_on": "2026-11-25"
+   "evaluated_on": "2026-11-26"
   },
   "lowest@8": {
-   "rows": 9592,
-   "train_rows": 7997,
-   "train_days": 19,
-   "test_two_sided_rows": 181,
-   "test_events": 59,
+   "rows": 9911,
+   "train_rows": 8316,
+   "train_days": 20,
+   "test_two_sided_rows": 169,
+   "test_events": 52,
    "test_days": 5,
-   "ll_market": 0.09388080026037612,
-   "ll_model": 0.09610518465739556,
-   "ll_blend": 0.047057265893049156,
+   "ll_market": 0.060800433251989444,
+   "ll_model": 0.07566118542172885,
+   "ll_blend": 0.02078245432947385,
    "bets": {
     "n": 5,
     "events": 5,
@@ -106,14 +106,14 @@
     1.0
    ],
    "weights_train": [
-    0.6197,
-    0.576,
-    0.8939
+    0.6183,
+    0.5784,
+    0.8889
    ],
    "streak": 0,
    "base_streak": 0,
    "trusted": false,
-   "evaluated_on": "2026-11-25"
+   "evaluated_on": "2026-11-26"
   }
  },
  "backlog": false,
