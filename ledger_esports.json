@@ -1,5 +1,5 @@
 {
-  "cash": 45.285042518265534,
+  "cash": 44.260042518265536,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -5816,6 +5816,133 @@
       "stops": {},
       "closed": "2026-11-26T09:01:32.489578+00:00",
       "pnl": -1.025
+    },
+    {
+      "asset": "109179935966601294366423389226030715495601580568564910402021701923711396701780",
+      "condition": "0xd9edd98da2cec0ca2307dc0cb7c7a94eb487c6e1b5c1d922b147b8601e516b47",
+      "title": "Map Handicap: HERO (-1.5) vs Lynn Vision (+1.5)",
+      "outcome": "Lynn Vision",
+      "event": "cs2-lvg-hero-2026-11-27",
+      "price": 0.5,
+      "shares": 2.0,
+      "stake": 1.0,
+      "fee": 0.025,
+      "order": "market",
+      "fee_rate": 0.05,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "ChonkVision"
+      ],
+      "holders": {
+        "0x676c1bb692c76b57b06f1b93817515acfa5ce139": {
+          "name": "ChonkVision",
+          "size": 620.84,
+          "entry": 0.4899,
+          "win_rate": 0.6224489795918368,
+          "roi": 0.17108917319848266,
+          "n": 98,
+          "alt": true
+        }
+      },
+      "flow": {
+        "usd": 26528.34,
+        "trades": 85,
+        "wallets": 46,
+        "ours_share": 0.8293,
+        "side_share": 0.8293,
+        "ours_is_bigger": true,
+        "top_wallet_share": 0.686,
+        "top_wallet_usd": 18197.86,
+        "price_move": -0.03,
+        "window_h": 6,
+        "reached_back_h": 3.93,
+        "truncated": false,
+        "flags": [
+          "whale"
+        ]
+      },
+      "audit": {
+        "code": "876d92054209",
+        "scan": "ESPORTS",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30,
+            "min_days": 7
+          },
+          "real_stop": 0.4,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-26T19:46:54.482240+00:00",
+        "book": {
+          "asks": [
+            [
+              0.5,
+              6517.96
+            ],
+            [
+              0.51,
+              160.0
+            ],
+            [
+              0.52,
+              3127.88
+            ],
+            [
+              0.53,
+              2122.5
+            ],
+            [
+              0.54,
+              2007.0
+            ]
+          ],
+          "bids": [
+            [
+              0.49,
+              19651.51
+            ],
+            [
+              0.48,
+              10756.17
+            ],
+            [
+              0.47,
+              1677.97
+            ],
+            [
+              0.46,
+              5068.36
+            ],
+            [
+              0.45,
+              349.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1795722345825",
+          "hash": "64c3f7a7d82c1a573f8f7050ef3d7e7aa7d89e31"
+        }
+      },
+      "opened": "2026-11-26T19:46:54.482321+00:00",
+      "ends": "2026-11-27T00:00:06.298783+00:00"
     }
   ],
   "auto": {
