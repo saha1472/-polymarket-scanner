@@ -1,5 +1,5 @@
 {
-  "cash": 53.6551214476883,
+  "cash": 53.342936701925595,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -7766,7 +7766,7 @@
       "order": "market",
       "fee_rate": 0.01,
       "fee_src": "market",
-      "status": "open",
+      "status": "won",
       "traders": [
         "quqqq"
       ],
@@ -7862,7 +7862,9 @@
       },
       "opened": "2026-11-25T15:32:05.779386+00:00",
       "ends": "2026-11-26T00:00:12.659675+00:00",
-      "stops": {}
+      "stops": {},
+      "closed": "2026-11-26T21:46:19.615882+00:00",
+      "pnl": 0.6908152542372883
     },
     {
       "asset": "66215332542007927228966726765858493749769346029000843142526167087458474968910",
@@ -7877,7 +7879,7 @@
       "order": "market",
       "fee_rate": 0.01,
       "fee_src": "market",
-      "status": "open",
+      "status": "lost",
       "traders": [
         "quqqq"
       ],
@@ -7973,7 +7975,229 @@
       },
       "opened": "2026-11-25T16:32:35.253265+00:00",
       "ends": "2026-11-26T00:00:12.604087+00:00",
-      "stops": {}
+      "stops": {},
+      "closed": "2026-11-26T21:46:19.615882+00:00",
+      "pnl": -1.0047
+    },
+    {
+      "asset": "53358855711670417809395778791594464308755087424153351255777707665879319852146",
+      "condition": "0x56937ef06bb32c396495d920dd93824bee5175544d2d3fa4e7feec49f6f27511",
+      "title": "Will the highest temperature in Beijing be 12\u00b0C on November 27?",
+      "outcome": "No",
+      "event": "highest-temperature-in-beijing-on-november-27-2026",
+      "price": 0.73,
+      "shares": 1.36986301369863,
+      "stake": 1.0,
+      "fee": 0.0026999999999999997,
+      "order": "market",
+      "fee_rate": 0.01,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "quqqq"
+      ],
+      "holders": {
+        "0x1b29fd072a61e82c870034e25bd81169ef70f288": {
+          "name": "quqqq",
+          "size": 175.4568,
+          "entry": 0.7295,
+          "win_rate": 0.625,
+          "roi": 0.1476410665981922,
+          "n": 216,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "ba1c4fa0ac58",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30,
+            "min_days": 7
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-26T21:47:02.077385+00:00",
+        "book": {
+          "asks": [
+            [
+              0.73,
+              20.44
+            ],
+            [
+              0.74,
+              8.77
+            ],
+            [
+              0.75,
+              88.43
+            ],
+            [
+              0.76,
+              18.62
+            ],
+            [
+              0.77,
+              9.5
+            ]
+          ],
+          "bids": [
+            [
+              0.71,
+              20.0
+            ],
+            [
+              0.7,
+              6.23
+            ],
+            [
+              0.69,
+              77.6
+            ],
+            [
+              0.68,
+              20.19
+            ],
+            [
+              0.67,
+              7.59
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1795729619338",
+          "hash": "8ebfa6e42ba3317abf61d84d0f3c57cef179e948"
+        }
+      },
+      "opened": "2026-11-26T21:47:02.077432+00:00",
+      "ends": "2026-11-27T00:00:12.568514+00:00"
+    },
+    {
+      "asset": "52066018376798070179992322667713756205568430696808356897286448839376782084803",
+      "condition": "0xb9dd9df22be8b30b37e51ba900e208e94580fce1037e5aaab4dbf3771abf8d04",
+      "title": "Will the highest temperature in Moscow be -3\u00b0C on November 27?",
+      "outcome": "Yes",
+      "event": "highest-temperature-in-moscow-on-november-27-2026",
+      "price": 0.56,
+      "shares": 1.7857142857142856,
+      "stake": 1.0,
+      "fee": 0.004399999999999999,
+      "order": "market",
+      "fee_rate": 0.01,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "quqqq"
+      ],
+      "holders": {
+        "0x1b29fd072a61e82c870034e25bd81169ef70f288": {
+          "name": "quqqq",
+          "size": 222.6122,
+          "entry": 0.4716,
+          "win_rate": 0.625,
+          "roi": 0.1476410665981922,
+          "n": 216,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "ba1c4fa0ac58",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30,
+            "min_days": 7
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-26T21:47:02.334289+00:00",
+        "book": {
+          "asks": [
+            [
+              0.56,
+              50.0
+            ],
+            [
+              0.58,
+              33.09
+            ],
+            [
+              0.59,
+              118.0
+            ],
+            [
+              0.6,
+              64.52
+            ],
+            [
+              0.61,
+              40.0
+            ]
+          ],
+          "bids": [
+            [
+              0.51,
+              5.0
+            ],
+            [
+              0.5,
+              40.0
+            ],
+            [
+              0.49,
+              20.0
+            ],
+            [
+              0.48,
+              5.0
+            ],
+            [
+              0.47,
+              8.9
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1795729601776",
+          "hash": "6a6befcf8b4d1f7afed54c21e0137e01a6e218d9"
+        }
+      },
+      "opened": "2026-11-26T21:47:02.334340+00:00",
+      "ends": "2026-11-27T00:00:12.825414+00:00"
     }
   ],
   "paused": false,
