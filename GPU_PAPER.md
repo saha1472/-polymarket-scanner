@@ -6,7 +6,8 @@ no keys. It is separate from the main bot's rewards record and writes only
 
 Already seen when these rules were chosen: about one day of market-wide data (26-27 November)
 suggesting the average maker on these markets is between break-even and losing after rewards.
-No result from this test had been seen.
+No result from this test had been seen. Before merging, a throwaway dry run (two runs a few
+minutes apart, no fills) checked the mechanics; no pass-mark line was changed after it.
 
 ## The question
 
@@ -27,8 +28,9 @@ in liquidity rewards than it loses when it is filled?
 - **Reward:** the low estimate of our share times the pool's current daily rate, taking the
   lower of the estimate when the quote was placed and at the next run. It stops at the first
   fill, and is zero if the next run is more than 30 minutes later.
-- **$1 rule:** a market's reward for one UTC day counts only if it reaches $1. The docs say the
-  minimum payout is $1 without saying per market or per account; this is the stricter reading.
+- **$1 rule:** a market's reward for one UTC day counts only if it reaches $1 (reward earned
+  across midnight is split between the two days). The docs say the minimum payout is $1 without
+  saying per market or per account; this is the stricter reading.
 - **Fills:** from the public trade feed (each resting order's fill at its own price), from the
   time the quote was placed to the next run, 30 minutes at most. Two counts:
   - **sure:** only trades at a price worse than ours (the market traded through our quote);
@@ -36,11 +38,14 @@ in liquidity rewards than it loses when it is filled?
 - **After a fill:** the position is closed at the next run against the book as it then is,
   walking the depth and paying the market's taker fee. Nothing is carried forward. Shares the
   book cannot absorb count as a total loss.
+- **A window that cannot be read** (no book, or trade rows that do not add up) is retried for
+  24 hours, then counted as the worst case: one side filled and lost in full.
 
 ## Pass mark
 
 The test period is the 14 full UTC days that start at the first midnight after the first
-record. Each group is judged on its own, and every line must hold under **both** fill counts.
+record. It is judged one day after it ends, so that late windows are in. Each group is judged
+on its own, and every line must hold under **both** fill counts.
 
 **Enough data first:** runs cover at least 90% of the period, and there are at least 30 quote
 windows with a sure fill. If not, the result is **NOT ENOUGH DATA** and the group is read once
@@ -55,7 +60,7 @@ more over days 1-28. If it is still short then, the answer is "not proven" and t
 
 Anything else is **FAIL**. The verdict is read once. Numbers seen earlier are interim and decide
 nothing. These rules do not change after the first record; a change means a new test with a
-new log.
+new log. Recording stops by itself 31 days after the first run.
 
 ## What a pass would not mean
 

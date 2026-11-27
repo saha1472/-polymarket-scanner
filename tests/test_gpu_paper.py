@@ -60,6 +60,10 @@ class MakerFills(unittest.TestCase):
         with self.assertRaises(ValueError):
             gp.maker_fills(SWEEP[1:], [TAKER])
 
+    def test_resting_orders_that_do_not_add_up_to_the_taker_row_are_refused(self):
+        with self.assertRaises(ValueError):          # one resting order of the sweep is missing
+            gp.maker_fills(SWEEP[:-1], [TAKER])
+
 
 class FillCounts(unittest.TestCase):
     def count(self, bid, sure):
@@ -189,12 +193,20 @@ class Choose(unittest.TestCase):
 
 def rec(day, condition, reward, pnl=0.0, sure_fill=False, group="busy", covered=DAY, possible_pnl=None):
     t = START + day * DAY + 600
-    part = {"reward": reward, "pnl": pnl, "bought": 50.0 if sure_fill else 0.0, "sold": 0.0}
-    return {"t": t, "condition": condition, "group": group, "covered_s": covered, "sure": part,
+    part = {"reward": reward, "pnl": pnl, "bought": 50.0 if sure_fill else 0.0, "sold": 0.0, "until": t}
+    return {"t": t, "placed": t - 600, "condition": condition, "group": group, "covered_s": covered, "sure": part,
             "possible": dict(part, pnl=pnl if possible_pnl is None else possible_pnl)}
 
 
 START = datetime(2026, 11, 28, tzinfo=timezone.utc).timestamp()
+
+
+def before_the_period():
+    """The test's first record, an hour before the midnight at which the judged period starts."""
+    r = rec(0, "a", 5.0)
+    r.update(t=START - 3600, placed=START - 4200, sure=dict(r["sure"], until=START - 3600),
+             possible=dict(r["possible"], until=START - 3600))
+    return r
 
 
 def period(days=14, reward=3.0, pnl=0.0, fills_per_day=3, markets=("a", "b")):
@@ -214,6 +226,26 @@ class Judge(unittest.TestCase):
     def test_a_market_day_under_one_dollar_pays_nothing(self):
         j = self.judge([rec(0, "a", 0.6), rec(0, "a", 0.6), rec(0, "b", 0.99)])
         self.assertAlmostEqual(j["net"], 1.2)
+
+    def straddle(self, until):
+        """A window placed 5 minutes before midnight and scored 10 minutes after it, earning until `until`."""
+        r = rec(1, "a", 0.9)
+        r["placed"], r["t"] = START + DAY - 300, START + DAY + 600
+        r["sure"] = dict(r["sure"], until=START + until)
+        return r
+
+    def test_reward_earned_across_midnight_is_split_between_the_two_days(self):
+        j = self.judge([rec(0, "a", 0.8), self.straddle(DAY + 600)])
+        self.assertAlmostEqual(j["net"], 0.8 + 0.3)          # day 1 reaches $1; day 2 gets 0.6 and is not paid
+
+    def test_reward_that_stopped_before_midnight_belongs_to_the_earlier_day(self):
+        j = self.judge([rec(0, "a", 0.8), self.straddle(DAY - 60)])
+        self.assertAlmostEqual(j["net"], 1.7)
+
+    def test_an_unscored_loss_belongs_to_the_day_the_quote_was_placed(self):
+        r = rec(13, "a", 0.0, pnl=-26.5)
+        r.update(unscored=True, t=START + 15 * DAY)
+        self.assertAlmostEqual(self.judge(period() + [r])["net"], 84.0 - 26.5)
 
     def test_half_rewards_are_halved_before_the_one_dollar_rule(self):
         j = self.judge([rec(0, "a", 1.5), rec(0, "b", 4.0)])
@@ -250,20 +282,24 @@ class Judge(unittest.TestCase):
         self.assertEqual(gp.verdict(worse, "busy", START, 14), "FAIL")
 
     def test_the_report_starts_the_period_at_the_first_midnight_and_marks_interim(self):
-        first = [dict(rec(0, "a", 5.0), t=START - 3600)]
-        text = gp.report(first + period(days=3))
+        text = gp.report([before_the_period()] + period(days=3))
         self.assertIn("2026-11-28", text)
         self.assertIn("INTERIM", text)
         self.assertNotIn("PASS", text)
 
+    def test_no_verdict_until_a_day_after_the_period_so_stuck_quotes_are_in(self):
+        text = gp.report([before_the_period()] + period(days=15))
+        self.assertIn("INTERIM", text)
+        self.assertNotIn("PASS", text)
+
     def test_the_report_gives_the_verdict_from_the_first_14_days_only(self):
-        records = [dict(rec(0, "a", 5.0), t=START - 3600)] + period(days=14) + [rec(15, "a", 0.0, pnl=-999.0)]
+        records = [before_the_period()] + period(days=14) + [rec(15, "a", 0.0, pnl=-999.0)]
         self.assertIn("VERDICT (days 1-14): PASS", gp.report(records))
 
     def test_short_data_is_read_once_more_at_day_28_then_ends_as_not_proven(self):
-        first = [dict(rec(0, "a", 5.0), t=START - 3600)]
-        self.assertIn("read again at day 28", gp.report(first + period(days=15, fills_per_day=0)))
-        self.assertIn("not proven", gp.report(first + period(days=29, fills_per_day=0)))
+        first = [before_the_period()]
+        self.assertIn("read again at day 28", gp.report(first + period(days=16, fills_per_day=0)))
+        self.assertIn("not proven", gp.report(first + period(days=30, fills_per_day=0)))
 
     def test_an_empty_log_says_so(self):
         self.assertIn("No records", gp.report([]))
@@ -281,7 +317,7 @@ class FakeSession:
     """Answers the four public endpoints the script reads."""
 
     def __init__(self):
-        self.lag, self.trades_fail, self.takers, self.every = 3, False, [], []
+        self.lag, self.trades_fail, self.takers, self.every, self.cursor = 3, False, [], [], None
         self.pools = [{"condition_id": "c1", "event_slug": "ornn-h200-average-rental-price-in-january-2027", "question": "q1",
                        "rewards_config": [{"rate_per_day": 960}], "rewards_max_spread": 4.5, "rewards_min_size": 50,
                        "end_date": "2027-02-01", "tokens": [{"outcome": "Yes", "token_id": "yes1"}, {"outcome": "No", "token_id": "no1"}]},
@@ -297,7 +333,8 @@ class FakeSession:
         if url.endswith("/v2/trades"):
             if self.trades_fail:
                 return Reply({}, 400)
-            return Reply({"data": self.takers if params["taker_only"] == "true" else self.every, "pagination": {}})
+            return Reply({"data": self.takers if params["taker_only"] == "true" else self.every,
+                          "pagination": {"next_cursor": self.cursor}})
         return Reply([{"feesEnabled": False}])
 
 
@@ -313,9 +350,9 @@ class Run(unittest.TestCase):
         os.chdir(self.old)
         self.tmp.cleanup()
 
-    def run_at(self, t):
+    def run_at(self, t, sleep=lambda s: None):
         with contextlib.redirect_stdout(io.StringIO()):
-            return gp.main(session=self.session, fetch=lambda tokens: self.books, sleep=lambda s: None, clock=lambda: t)
+            return gp.main(session=self.session, fetch=lambda tokens: self.books, sleep=sleep, clock=lambda: t)
 
     def log(self):
         return simcore.read_log(gp.LOG_FILE)
@@ -358,8 +395,38 @@ class Run(unittest.TestCase):
         self.assertEqual(self.state()["open"]["c1"]["t"], START)
         self.run_at(START + DAY + 1)
         (r,) = self.log()
-        self.assertEqual((r["unscored"], r["covered_s"]), (True, 0.0))
+        self.assertEqual((r["unscored"], r["covered_s"], r["placed"]), (True, 0.0, START))
+        self.assertAlmostEqual(r["sure"]["pnl"], -50 * 0.53)     # bid 46, ask 47: the worse side is lost in full
+        self.assertEqual(r["possible"], r["sure"])
         self.assertIsNone(self.state()["open"]["c1"]["quote"])
+
+    def test_a_feed_that_falls_behind_during_the_pause_changes_nothing(self):
+        self.run_at(START)
+        self.run_at(START + 900, sleep=lambda s: setattr(self.session, "lag", 600))
+        self.assertEqual((self.log(), self.state()["open"]["c1"]["t"]), ([], START))
+
+    def test_a_missing_state_file_beside_an_old_log_stops_the_test(self):
+        self.run_at(START)
+        self.run_at(START + 900)
+        os.remove(gp.STATE_FILE)
+        self.assertEqual(self.run_at(START + 1800), 1)
+        self.assertFalse(os.path.exists(gp.STATE_FILE))
+
+    def test_an_unusable_trade_row_keeps_the_quote_instead_of_crashing(self):
+        self.run_at(START)
+        self.session.every = [{"transaction_hash": "0x1"}]
+        self.assertEqual(self.run_at(START + 900), 0)
+        self.assertEqual((self.log(), self.state()["open"]["c1"]["t"]), ([], START))
+
+    def test_an_empty_page_that_promises_more_is_not_a_complete_read(self):
+        self.session.cursor = "more"
+        self.assertIsNone(gp.fetch_trades(self.session, "c1", 0, 10, False))
+
+    def test_the_test_stops_recording_once_its_longest_period_is_over(self):
+        self.run_at(START)
+        self.run_at(START + 900)
+        self.assertEqual(self.run_at(START + 31 * DAY + 1), 0)
+        self.assertEqual((len(self.log()), self.state()["open"]["c1"]["t"]), (1, START + 900))
 
     def test_the_main_bot_files_are_never_written(self):
         self.run_at(START)

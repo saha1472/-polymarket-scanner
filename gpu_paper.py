@@ -31,10 +31,13 @@ PER_GROUP = 5
 MIN_DAYS = 30.0
 MAX_AGE_S = 30 * 60           # a quote counts as resting for this long at most
 GIVE_UP_S = 24 * 3600         # a quote that cannot be scored for this long is logged as unscored
+END_AFTER_S = 31 * 86400      # first day, 28 judged days, the give-up day and one spare: then stop
 MAX_LAG_S = 25                # trade feed further behind than this: change nothing this run
 SETTLE_S = 30                 # wait after reading the books, so the feed has every trade up to then
 RULES = (("sure", True), ("possible", False))
 MIN_COVERAGE, MIN_FILL_WINDOWS = 0.9, 30
+SIZE_TOLERANCE = 0.05         # shares by which a transaction's two sets of rows may differ
+DAY_S = 86400
 EPS = 1e-9
 
 
@@ -44,24 +47,28 @@ def maker_fills(every, takers):
     """[(timestamp, "bid"|"ask", YES price, shares)], one per RESTING order that traded.
 
     A taker row carries only the average price of its sweep; the full list (taker_only=false) also
-    has each resting order at its own price. ValueError if the two lists disagree, so a half-read
-    feed is never mistaken for a quiet market."""
+    has each resting order at its own price. ValueError unless every taker row is in the full list
+    and each transaction's resting shares add up to its taker shares, so a half-read feed is never
+    mistaken for a quiet market."""
     def key(r):
         return (r["transaction_hash"], r["proxy_wallet"], r["side"], r["token_id"],
                 round(r["price"], 6), round(r["size"], 6))
     left = Counter(key(r) for r in takers)
-    matched, resting = set(), []
+    unfilled = Counter()                     # per transaction: taker shares minus resting shares
+    for r in takers:
+        unfilled[r["transaction_hash"]] += r["size"]
+    fills = []
     for r in every:
         if left[key(r)] > 0:
             left[key(r)] -= 1
-            matched.add(r["transaction_hash"])
             continue
         yes = r["price"] if r["outcome_index"] == 0 else 1 - r["price"]
         side = "bid" if (r["side"] == "BUY") == (r["outcome_index"] == 0) else "ask"
-        resting.append((r["transaction_hash"], (r["timestamp"], side, yes, r["size"])))
-    if sum(left.values()) or any(tx not in matched for tx, _ in resting):
+        unfilled[r["transaction_hash"]] -= r["size"]
+        fills.append((r["timestamp"], side, yes, r["size"]))
+    if sum(left.values()) or any(abs(gap) > SIZE_TOLERANCE for gap in unfilled.values()):
         raise ValueError("taker rows and resting-order rows disagree")
-    return [fill for _, fill in resting]
+    return fills
 
 
 def fills_against(quote, fills, sure):
@@ -128,12 +135,22 @@ def quote_for(book, pool):
     return quote if quote["usd_day"] > 0 else None
 
 
-def record(market, now, quote, covered_s):
-    """An empty log line for one market and run."""
-    nothing = {"reward": 0.0, "bought": 0.0, "sold": 0.0, "pnl": 0.0}
-    return {"time": datetime.fromtimestamp(now, timezone.utc).isoformat(), "t": now,
+def record(market, placed, now, quote, covered_s):
+    """An empty log line for one market's window from `placed` to `now`."""
+    nothing = {"reward": 0.0, "bought": 0.0, "sold": 0.0, "pnl": 0.0, "until": now}
+    return {"time": datetime.fromtimestamp(now, timezone.utc).isoformat(), "t": now, "placed": placed,
             "condition": market["condition"], "group": market["group"], "question": market["question"],
             "covered_s": covered_s, "quote": quote, "sure": dict(nothing), "possible": dict(nothing)}
+
+
+def unscored(market, open_, now):
+    """A window that could not be read: counted as the worst case, one side filled and lost in full."""
+    quote = open_["quote"]
+    loss = round(quote["size"] * max(quote["bid"], 1 - quote["ask"]), 9)
+    line = record(market, open_["t"], now, quote, 0.0)
+    for name, _ in RULES:
+        line[name]["pnl"] = -loss
+    return dict(line, unscored=True)
 
 
 def score(open_, now, book, pool, market, fills):
@@ -142,14 +159,15 @@ def score(open_, now, book, pool, market, fills):
     fresh = now - placed <= MAX_AGE_S
     inside = [f for f in fills if placed < f[0] <= min(now, placed + MAX_AGE_S)]
     rate = min(quote["usd_day"], reward_rate(book, quote, pool)) if quote and fresh else 0.0
-    line = record(market, now, quote, now - placed if fresh else 0.0)
+    line = record(market, placed, now, quote, now - placed if fresh else 0.0)
     for name, sure in RULES:
         bought, sold, first = fills_against(quote, inside, sure) if quote else (0.0, 0.0, None)
         pnl = 0.0
         if bought or sold:
             pnl = sold * quote["ask"] - bought * quote["bid"] + close_out(book, bought - sold, market["fee_rate"])
-        reward = rate * ((now if first is None else first) - placed) / 86400
-        line[name] = {"reward": round(reward, 9), "bought": bought, "sold": sold, "pnl": round(pnl, 9)}
+        until = now if first is None else first
+        line[name] = {"reward": round(rate * (until - placed) / DAY_S, 9), "bought": bought, "sold": sold,
+                      "pnl": round(pnl, 9), "until": until}
     return line
 
 
@@ -183,12 +201,24 @@ def choose(candidates, fee_of, now=None):
 
 def judge(records, group, rule, start, days):
     """The pass-mark numbers for one group under one fill count, over `days` UTC days from `start`."""
-    rows = [r for r in records if r["group"] == group and start <= r["t"] < start + days * 86400]
+    mine = [r for r in records if r["group"] == group]
+    end = start + days * DAY_S
+    rows = [r for r in mine if start <= r["t"] < end]
     reward, pnl = Counter(), Counter()                    # by (market, day)
-    for r in rows:
-        key = (r["condition"], int((r["t"] - start) // 86400))
-        reward[key] += r[rule]["reward"]
-        pnl[key] += r[rule]["pnl"]
+
+    def key(r, t):
+        return r["condition"], int((t - start) // DAY_S)
+
+    for r in mine:
+        begin, until = r["placed"], r[rule]["until"]
+        midnight = (begin // DAY_S + 1) * DAY_S           # reward belongs to the day it was earned
+        before = 1.0 if until <= midnight else (midnight - begin) / (until - begin)
+        for t, share in ((begin, before), (midnight, 1 - before)):
+            if share > 0 and start <= t < end:
+                reward[key(r, t)] += r[rule]["reward"] * share
+        at = begin if r.get("unscored") else r["t"]       # a fill result counts when the position is closed
+        if start <= at < end:
+            pnl[key(r, at)] += r[rule]["pnl"]
     keys = set(reward) | set(pnl)
 
     def total(part, factor=1.0):                          # a market-day under $1 is not paid
@@ -197,17 +227,17 @@ def judge(records, group, rule, start, days):
     net = total(keys)
     by_market = [total([k for k in keys if k[0] == c]) for c in {k[0] for k in keys}]
     by_day = [total([k for k in keys if k[1] == d]) for d in range(days)]
-    markets = len({r["condition"] for r in records if r["group"] == group})
+    markets = len({r["condition"] for r in mine})
     fill_pnl = sum(pnl.values())
     out = {"net": net, "reward": net - fill_pnl, "pnl": fill_pnl,
-           "coverage": min(1.0, sum(r["covered_s"] for r in rows) / (markets * days * 86400)) if markets else 0.0,
+           "coverage": min(1.0, sum(r["covered_s"] for r in rows) / (markets * days * DAY_S)) if markets else 0.0,
            "fill_windows": sum(1 for r in rows if r["sure"]["bought"] or r["sure"]["sold"]),
            "halves": (sum(by_day[:days // 2]), sum(by_day[days // 2:])),
            "net_without_best_market": net - max(by_market, default=0.0),
            "net_without_best_day": net - max(by_day),
            "net_half_reward": total(keys, 0.5)}
-    out["passes"] = all(x > 0 for x in (net, *out["halves"], out["net_without_best_market"],
-                                        out["net_without_best_day"], out["net_half_reward"]))
+    out["passes"] = all(x > EPS for x in (net, *out["halves"], out["net_without_best_market"],
+                                          out["net_without_best_day"], out["net_half_reward"]))
     return out
 
 
@@ -222,8 +252,8 @@ def report(records):
     if not records:
         return "No records yet."
     first, latest = min(r["t"] for r in records), max(r["t"] for r in records)
-    start = (first // 86400 + 1) * 86400                  # the first UTC midnight after the first record
-    elapsed = (latest - start) / 86400
+    start = (first // DAY_S + 1) * DAY_S                  # the first UTC midnight after the first record
+    elapsed = (latest - start) / DAY_S
 
     def when(t):
         return datetime.fromtimestamp(t, timezone.utc).strftime("%Y-%m-%d %H:%M")
@@ -233,14 +263,15 @@ def report(records):
         if not any(r["group"] == group for r in records):
             out.append(f"\n{group}: no markets")
             continue
-        days, final = 14, elapsed >= 14
+        # a quote that cannot be read is given up after a day, so a period is judged a day after it ends
+        days, final = 14, elapsed >= 14 + GIVE_UP_S / DAY_S
         if not final:
-            days = max(1, int(elapsed) + 1) if elapsed >= 0 else 1
+            days = min(14, max(1, int(elapsed) + 1))
             head = f"INTERIM, day {days if elapsed >= 0 else 0} of 14 (decides nothing)"
         else:
             result = verdict(records, group, start, 14)
             head = f"VERDICT (days 1-14): {result}"
-            if result == "NOT ENOUGH DATA" and elapsed < 28:
+            if result == "NOT ENOUGH DATA" and elapsed < 28 + GIVE_UP_S / DAY_S:
                 head += "; read again at day 28"
             elif result == "NOT ENOUGH DATA":
                 days = 28
@@ -258,9 +289,9 @@ def report(records):
                            f"with half the reward ${j['net_half_reward']:+.2f}")
         out.append(f"  windows with a sure fill: {j['fill_windows']} (need {MIN_FILL_WINDOWS})"
                    + (f"; runs cover {j['coverage']:.0%} of the period (need {MIN_COVERAGE:.0%})" if final else ""))
-    unscored = sum(1 for r in records if r.get("unscored"))
-    if unscored:
-        out.append(f"\n{unscored} quote(s) could not be scored; any fills on them are not in these numbers.")
+    lost = sum(1 for r in records if r.get("unscored"))
+    if lost:
+        out.append(f"\n{lost} quote(s) could not be read; each is counted as one side filled and lost in full.")
     return "\n".join(out)
 
 
@@ -318,34 +349,39 @@ def fetch_trades(session, condition, since, until, taker_only):
             return None
         out += [r for r in page["data"] if since < r["timestamp"] <= until]
         cursor = (page.get("pagination") or {}).get("next_cursor")
-        if not cursor or not page["data"] or page["data"][-1]["timestamp"] <= since:
+        if not cursor or (page["data"] and page["data"][-1]["timestamp"] <= since):
             return out
     return None
 
 
 def read_fills(session, condition, since, until):
-    every = fetch_trades(session, condition, since, until, False)
-    takers = None if every is None else fetch_trades(session, condition, since, until, True)
-    if takers is None:
-        return None
+    """The resting-order fills in the window, or None if they could not be read reliably."""
     try:
-        return maker_fills(every, takers)
+        every = fetch_trades(session, condition, since, until, False)
+        takers = None if every is None else fetch_trades(session, condition, since, until, True)
+        return None if takers is None else maker_fills(every, takers)
     except (ValueError, KeyError, TypeError) as err:
-        print(f"GPU paper test: trade rows for {condition[:12]} not usable: {err}")
+        print(f"GPU paper test: trade rows for {condition[:12]} not usable: {err!r}")
         return None
 
 
 def main(session=None, fetch=simcore.fetch_books, sleep=time.sleep, clock=time.time):
-    state = simcore.read_json(STATE_FILE, None) if os.path.exists(STATE_FILE) else {}
-    if state is None:                          # never pick a new market list over a damaged one
-        print(f"GPU paper test: {STATE_FILE} is unreadable; nothing changed.")
+    if os.path.exists(STATE_FILE):
+        state = simcore.read_json(STATE_FILE, None)
+    else:
+        state = None if simcore.log_files(LOG_FILE) else {}
+    if state is None:                          # never pick a new market list in the middle of a test
+        print(f"GPU paper test: {STATE_FILE} is missing or unreadable beside an existing log; nothing changed.")
         return 1
+    if state.get("started") and clock() - state["started"] > END_AFTER_S:
+        print("GPU paper test: the longest period is over; nothing more is recorded. See --report.")
+        return 0
     if session is None:
         import requests
         session = requests.Session()
     pools = reward_pools(session)
-    if pools is None or not feed_is_current(session):
-        print("GPU paper test: reward list unreadable or trade feed behind; nothing changed.")
+    if pools is None:
+        print("GPU paper test: reward list unreadable; nothing changed.")
         return 0
     markets = state.get("markets")
     if not markets:
@@ -356,10 +392,13 @@ def main(session=None, fetch=simcore.fetch_books, sleep=time.sleep, clock=time.t
         if not markets:
             print("GPU paper test: no market qualifies yet.")
             return 0
-        state = {"markets": markets, "open": {}}
+        state = {"started": clock(), "markets": markets, "open": {}}
     books = fetch(m["token"] for m in markets)
     now = clock()
     sleep(SETTLE_S)                            # let the trade feed catch up with the moment of the books
+    if not feed_is_current(session):           # lag under the pause: every trade up to `now` is in
+        print("GPU paper test: trade feed behind; nothing changed.")
+        return 0
     quotes, lines = state.setdefault("open", {}), []
     for m in markets:
         condition = m["condition"]
@@ -373,7 +412,7 @@ def main(session=None, fetch=simcore.fetch_books, sleep=time.sleep, clock=time.t
             elif now - prev["t"] < GIVE_UP_S:
                 continue                       # keep the quote and score it on a later run
             else:
-                lines.append(dict(record(m, now, prev["quote"], 0.0), unscored=True))
+                lines.append(unscored(m, prev, now))
         elif prev:
             lines.append(score(prev, now, book, pool, m, []))
         quotes[condition] = {"t": now, "quote": quote_for(book, pool)}
