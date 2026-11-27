@@ -6,8 +6,10 @@ no keys. It is separate from the main bot's rewards record and writes only
 
 Already seen when these rules were chosen: about one day of market-wide data (26-27 November)
 suggesting the average maker on these markets is between break-even and losing after rewards.
-No result from this test had been seen. Before merging, a throwaway dry run (two runs a few
-minutes apart, no fills) checked the mechanics; no pass-mark line was changed after it.
+No result from this test had been seen. The rules were then tightened after a code review
+(late and unreadable windows, reward around midnight, when the verdict is read, when recording
+stops), all before the first record; throwaway dry runs checked the mechanics only. The git
+history shows each change.
 
 ## The question
 
