@@ -1,5 +1,5 @@
 {
-  "cash": 45.23854251826553,
+  "cash": 44.21404251826553,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -6072,6 +6072,134 @@
       "opened": "2026-11-27T18:31:26.079291+00:00",
       "ends": "2026-11-28T00:00:05.527543+00:00",
       "stops": {}
+    },
+    {
+      "asset": "57493262546406540001657238914708617777480777982408048503309561864594195421862",
+      "condition": "0x5e9c8ad42778089351b74e2a63f78ceb1be31fd640ad3a490c9f7fec31c33687",
+      "title": "Counter-Strike: MIBR vs 100 Thieves (BO1) - PGL Major Singapore Stage 2",
+      "outcome": "MIBR",
+      "event": "cs2-mibr-100t-2026-11-28",
+      "price": 0.51,
+      "shares": 1.9607843137254901,
+      "stake": 1.0,
+      "fee": 0.0245,
+      "order": "market",
+      "fee_rate": 0.05,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "ChonkVision"
+      ],
+      "holders": {
+        "0x676c1bb692c76b57b06f1b93817515acfa5ce139": {
+          "name": "ChonkVision",
+          "size": 5288.34,
+          "entry": 0.4999,
+          "win_rate": 0.6262626262626263,
+          "roi": 0.1725451473845925,
+          "n": 99,
+          "alt": true
+        }
+      },
+      "flow": {
+        "usd": 16810.38,
+        "trades": 66,
+        "wallets": 51,
+        "ours_share": 0.9484,
+        "side_share": 0.9484,
+        "ours_is_bigger": true,
+        "top_wallet_share": 0.5374,
+        "top_wallet_usd": 9033.39,
+        "price_move": 0.03,
+        "window_h": 6,
+        "reached_back_h": 4.12,
+        "truncated": false,
+        "flags": [
+          "one_sided",
+          "whale"
+        ]
+      },
+      "audit": {
+        "code": "62fa6142ab7d",
+        "scan": "ESPORTS",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30,
+            "min_days": 7
+          },
+          "real_stop": 0.4,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-27T19:47:04.614425+00:00",
+        "book": {
+          "asks": [
+            [
+              0.51,
+              87371.24
+            ],
+            [
+              0.52,
+              54336.92
+            ],
+            [
+              0.53,
+              36146.8
+            ],
+            [
+              0.54,
+              19223.61
+            ],
+            [
+              0.55,
+              140.0
+            ]
+          ],
+          "bids": [
+            [
+              0.5,
+              21394.84
+            ],
+            [
+              0.49,
+              20109.92
+            ],
+            [
+              0.48,
+              10805.43
+            ],
+            [
+              0.47,
+              32261.57
+            ],
+            [
+              0.46,
+              21309.51
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1795808809210",
+          "hash": "5cb230d18943f1ae5f4cc7c8a2419f95da3ece2e"
+        }
+      },
+      "opened": "2026-11-27T19:47:04.614498+00:00",
+      "ends": "2026-11-28T00:00:06.890530+00:00"
     }
   ],
   "auto": {
