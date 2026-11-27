@@ -23,7 +23,8 @@ SCAN = read("scan.yml")
 SCAN_STEPS = steps(SCAN)
 LIMITED = ("Simulator self-tests", "Arbitrage scanner", "Smart-money signals (general + categories) + weather desk",
            "Weather ensemble shadow log", "Weather calibration (shadow)", "Politics consensus shadow", "Book watcher",
-           "Rewards tracker", "Daily heartbeat", "Scorecard", "Save ledgers", "Warn on Discord if anything failed")
+           "Rewards tracker", "GPU paper test", "Daily heartbeat", "Scorecard", "Save ledgers",
+           "Warn on Discord if anything failed")
 
 
 def limit(step_text):
@@ -57,6 +58,7 @@ class ScanLimits(unittest.TestCase):
         longest_seen_minutes = {"Simulator self-tests": 0.1, "Arbitrage scanner": 1.9,
                                 "Smart-money signals (general + categories) + weather desk": 3.0, "Weather ensemble shadow log": 0.1,
                                 "Politics consensus shadow": 2.2, "Book watcher": 9.6, "Rewards tracker": 0.1, "Daily heartbeat": 0.1,
+                                "GPU paper test": 1.0,
                                 "Scorecard": 0.1, "Save ledgers": 4.8}
         for name, seen in longest_seen_minutes.items():
             if name == "Book watcher":
@@ -72,8 +74,20 @@ class ScanLimits(unittest.TestCase):
 
     def test_shadow_steps_may_still_fail_without_failing_the_run(self):
         for name in ("Weather ensemble shadow log", "Weather calibration (shadow)", "Politics consensus shadow", "Book watcher",
-                     "Rewards tracker", "Scorecard"):
+                     "Rewards tracker", "GPU paper test", "Scorecard"):
             self.assertIn("continue-on-error: true", SCAN_STEPS[name], name)
+
+    def test_the_gpu_paper_files_are_saved_checked_for_clashes_and_kept(self):
+        save = SCAN_STEPS["Save ledgers"]
+        added = re.search(r"git add (.*)", save).group(1)
+        for pattern in ("gpu_paper_state.json", "gpu_paper_log*.jsonl"):
+            self.assertIn(pattern, added)
+            self.assertIn(pattern, SCAN_STEPS["Keep this run's ledgers if saving failed"])
+        clash = re.compile(re.search(r"grep -qE '([^']+)'", save).group(1))
+        for name in ("gpu_paper_state.json", "gpu_paper_log_2026-11.jsonl"):
+            self.assertRegex(name, clash)
+        for name in ("gpu_paper.py", "GPU_PAPER.md"):
+            self.assertNotRegex(name, clash)
 
 
 class ScanAlerts(unittest.TestCase):
