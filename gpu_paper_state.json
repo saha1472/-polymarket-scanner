@@ -1,0 +1,177 @@
+{
+ "started": 1795774289.8944693,
+ "markets": [
+  {
+   "condition": "0x9efa3ded1559ac74bc3083145861cd7a8c9093b8cb28fc2013694c41bc1feb65",
+   "group": "busy",
+   "token": "66871593294834393720874903483945218708389453910811984417158000948586087022148",
+   "question": "Will the average Ornn H200 rental price in December 2026 be above $6.50?",
+   "event": "h200-average-rental-price-in-december-2026",
+   "fee_rate": 0.0
+  },
+  {
+   "condition": "0xbf0627cfb7b486403a44a0f7ef353ff9e07b1b15ea4fc4a6c501a57853ba3a24",
+   "group": "busy",
+   "token": "98429331295683161179016301130477617517425257063295077621485561649067013652520",
+   "question": "Will the average Ornn H200 rental price in January 2027 be above $6.50?",
+   "event": "h200-average-rental-price-in-january-2027",
+   "fee_rate": 0.0
+  },
+  {
+   "condition": "0xabc47aa81f4ec195c867df3b5ab87f02e1c832c3d27277f957c7ccfd0dbade23",
+   "group": "busy",
+   "token": "40277917341824930394358247438928621308247645167460749753400086794898970653374",
+   "question": "Will the average Ornn H200 rental price in February 2027 be above $7.00?",
+   "event": "h200-average-rental-price-in-february-2027",
+   "fee_rate": 0.0
+  },
+  {
+   "condition": "0xbf77bacabf36281dcf4ef617153a67cb7c723680a88468366b6935d39648aa9e",
+   "group": "busy",
+   "token": "105999891616770296103844266812097385316104263000149561955389736204780686839304",
+   "question": "Will the average Ornn H200 rental price in March 2027 be above $6.00?",
+   "event": "h200-average-rental-price-in-march-2027",
+   "fee_rate": 0.0
+  },
+  {
+   "condition": "0x293e3cbd90f8c7801359b2717bfe40707353fcaf72c1d93f29d3bea7816ef316",
+   "group": "busy",
+   "token": "95187385916021332154851385924507761018869367136677107702920295942566634709913",
+   "question": "Will the average Ornn H200 rental price in June 2027 be above $6.00?",
+   "event": "h200-average-rental-price-in-june-2027",
+   "fee_rate": 0.0
+  },
+  {
+   "condition": "0x285ff4473b9a9b576807b7636304fe63c42b11ee7a56a0af3474f021ccab5ac9",
+   "group": "quiet",
+   "token": "104687096428800450645820418671426767891894130205151622614963031621579106563071",
+   "question": "Will the average Ornn H200 rental price in December 2026 be above $7.00?",
+   "event": "h200-average-rental-price-in-december-2026",
+   "fee_rate": 0.0
+  },
+  {
+   "condition": "0x77cc383ea01eaa3c0f2fe1f329a070e44286b03dbb458a9e8e070b5f8481fa34",
+   "group": "quiet",
+   "token": "67107752082379953611751272962697762548048101828941107181552954948358843694943",
+   "question": "Will the average Ornn H200 rental price in January 2027 be above $7.50?",
+   "event": "h200-average-rental-price-in-january-2027",
+   "fee_rate": 0.0
+  },
+  {
+   "condition": "0xe7159a0082f3bbe5fe73618648cf17d1fda69aae9b5180c61fff6fc175149ed3",
+   "group": "quiet",
+   "token": "112946321546233370450690634651935949830183622289297625502165460562268044383527",
+   "question": "Will the average Ornn H200 rental price in February 2027 be above $5.00?",
+   "event": "h200-average-rental-price-in-february-2027",
+   "fee_rate": 0.0
+  },
+  {
+   "condition": "0x5b0a1c0208ba7c19dd57daec7f58b3655bff9c3cd7c30db92eef8e85acfb75f1",
+   "group": "quiet",
+   "token": "100967887557557277146268733533274530677332313482709232395205046297646305097492",
+   "question": "Will the average Ornn H200 rental price in March 2027 be above $8.00?",
+   "event": "h200-average-rental-price-in-march-2027",
+   "fee_rate": 0.0
+  },
+  {
+   "condition": "0x8d23001d212151dca90f761c038ff03ab77858e5158b23aabb9ea6b569a17c2f",
+   "group": "quiet",
+   "token": "41437194198645570052379714562790027551043277923626109745479572484500579014573",
+   "question": "Will the average Ornn H200 rental price in June 2027 be above $4.00?",
+   "event": "h200-average-rental-price-in-june-2027",
+   "fee_rate": 0.0
+  }
+ ],
+ "open": {
+  "0x9efa3ded1559ac74bc3083145861cd7a8c9093b8cb28fc2013694c41bc1feb65": {
+   "t": 1795774290.094673,
+   "quote": {
+    "bid": 0.47,
+    "ask": 0.48,
+    "size": 50.0,
+    "usd_day": 0.7459608949329743
+   }
+  },
+  "0xbf0627cfb7b486403a44a0f7ef353ff9e07b1b15ea4fc4a6c501a57853ba3a24": {
+   "t": 1795774290.094673,
+   "quote": {
+    "bid": 0.51,
+    "ask": 0.52,
+    "size": 50.0,
+    "usd_day": 1.2518131527388585
+   }
+  },
+  "0xabc47aa81f4ec195c867df3b5ab87f02e1c832c3d27277f957c7ccfd0dbade23": {
+   "t": 1795774290.094673,
+   "quote": {
+    "bid": 0.43,
+    "ask": 0.44,
+    "size": 50.0,
+    "usd_day": 1.1760647065901302
+   }
+  },
+  "0xbf77bacabf36281dcf4ef617153a67cb7c723680a88468366b6935d39648aa9e": {
+   "t": 1795774290.094673,
+   "quote": {
+    "bid": 0.52,
+    "ask": 0.53,
+    "size": 50.0,
+    "usd_day": 2.9880623795372525
+   }
+  },
+  "0x293e3cbd90f8c7801359b2717bfe40707353fcaf72c1d93f29d3bea7816ef316": {
+   "t": 1795774290.094673,
+   "quote": {
+    "bid": 0.47,
+    "ask": 0.48,
+    "size": 50.0,
+    "usd_day": 0.7012184169125009
+   }
+  },
+  "0x285ff4473b9a9b576807b7636304fe63c42b11ee7a56a0af3474f021ccab5ac9": {
+   "t": 1795774290.094673,
+   "quote": {
+    "bid": 0.28,
+    "ask": 0.29,
+    "size": 50.0,
+    "usd_day": 0.7869459439453477
+   }
+  },
+  "0x77cc383ea01eaa3c0f2fe1f329a070e44286b03dbb458a9e8e070b5f8481fa34": {
+   "t": 1795774290.094673,
+   "quote": {
+    "bid": 0.24,
+    "ask": 0.25,
+    "size": 50.0,
+    "usd_day": 0.5162427305562216
+   }
+  },
+  "0xe7159a0082f3bbe5fe73618648cf17d1fda69aae9b5180c61fff6fc175149ed3": {
+   "t": 1795774290.094673,
+   "quote": {
+    "bid": 0.76,
+    "ask": 0.77,
+    "size": 50.0,
+    "usd_day": 1.6209511994912253
+   }
+  },
+  "0x5b0a1c0208ba7c19dd57daec7f58b3655bff9c3cd7c30db92eef8e85acfb75f1": {
+   "t": 1795774290.094673,
+   "quote": {
+    "bid": 0.22,
+    "ask": 0.23,
+    "size": 50.0,
+    "usd_day": 0.33935690064494256
+   }
+  },
+  "0x8d23001d212151dca90f761c038ff03ab77858e5158b23aabb9ea6b569a17c2f": {
+   "t": 1795774290.094673,
+   "quote": {
+    "bid": 0.78,
+    "ask": 0.79,
+    "size": 50.0,
+    "usd_day": 0.7182313373759285
+   }
+  }
+ }
+}
