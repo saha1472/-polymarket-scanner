@@ -1,5 +1,5 @@
 {
-  "cash": 46.260042518265536,
+  "cash": 45.23854251826553,
   "bets": [
     {
       "asset": "35884490298887308913705520208653379328000204842509957754720215868297869172357",
@@ -5946,6 +5946,131 @@
       "stops": {},
       "closed": "2026-11-27T08:31:24.011110+00:00",
       "pnl": 0.975
+    },
+    {
+      "asset": "49189993896213440594345928451119166412139497985403409701249788338122942918843",
+      "condition": "0xe908d92e0a05ff74d78a0a3e15b214120483b9d919d8b65d2b2361594bc8820c",
+      "title": "Counter-Strike: G2 vs Liquid (BO1) - PGL Major Singapore Stage 2",
+      "outcome": "G2",
+      "event": "cs2-g2-tl1-2026-11-28",
+      "price": 0.57,
+      "shares": 1.7543859649122808,
+      "stake": 1.0,
+      "fee": 0.021500000000000005,
+      "order": "market",
+      "fee_rate": 0.05,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "ChonkVision"
+      ],
+      "holders": {
+        "0x676c1bb692c76b57b06f1b93817515acfa5ce139": {
+          "name": "ChonkVision",
+          "size": 2014.21,
+          "entry": 0.5599,
+          "win_rate": 0.6262626262626263,
+          "roi": 0.1725451473845925,
+          "n": 99,
+          "alt": true
+        }
+      },
+      "flow": {
+        "usd": 12124.33,
+        "trades": 51,
+        "wallets": 44,
+        "ours_share": 0.7521,
+        "side_share": 0.7521,
+        "ours_is_bigger": true,
+        "top_wallet_share": 0.2928,
+        "top_wallet_usd": 3550.29,
+        "price_move": 0.03,
+        "window_h": 6,
+        "reached_back_h": 4.43,
+        "truncated": false,
+        "flags": []
+      },
+      "audit": {
+        "code": "74a51cc5e9f9",
+        "scan": "ESPORTS",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30,
+            "min_days": 7
+          },
+          "real_stop": 0.4,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-27T18:31:26.079209+00:00",
+        "book": {
+          "asks": [
+            [
+              0.57,
+              14553.09
+            ],
+            [
+              0.58,
+              29662.1
+            ],
+            [
+              0.59,
+              21083.6
+            ],
+            [
+              0.6,
+              17172.15
+            ],
+            [
+              0.61,
+              95.0
+            ]
+          ],
+          "bids": [
+            [
+              0.56,
+              49624.22
+            ],
+            [
+              0.55,
+              52043.54
+            ],
+            [
+              0.54,
+              48684.11
+            ],
+            [
+              0.53,
+              43129.86
+            ],
+            [
+              0.52,
+              30258.02
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1795804283751",
+          "hash": "77d51030abe442a44860a0e3c82c89acce8e4f45"
+        }
+      },
+      "opened": "2026-11-27T18:31:26.079291+00:00",
+      "ends": "2026-11-28T00:00:05.527543+00:00"
     }
   ],
   "auto": {
