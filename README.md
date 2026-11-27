@@ -13,8 +13,9 @@ Nothing here is proven to make money. Most ideas tested so far lose or are withi
 3. **Copy-trading scans** (`signals.py`: general, sports, esports, tech, weather, geopolitics) and the **weather desk** (`weather.py`), side by side, each with its own ledger.
 4. **Shadow experiments** that only record what would have happened: the forecast-model log (`wx_ensemble.py`), its daily calibration check (`wx_calibrate.py`) and the politics consensus test (`shadow_politics.py`).
 5. **Book watcher** (`watch_books.py`) and the **rewards tracker** (`rewards_tracker.py`), a hypothetical market-making record.
-6. **Daily heartbeat** to Discord (`heartbeat.py`) and the **scorecard** on the run's summary page (`scorecard.py`).
-7. **Save**: ledgers and logs are committed back to the repo.
+6. **GPU paper test** (`gpu_paper.py`), a separate market-making paper test on the GPU rental-price markets, with its own files and a pass mark written in advance (`GPU_PAPER.md`).
+7. **Daily heartbeat** to Discord (`heartbeat.py`) and the **scorecard** on the run's summary page (`scorecard.py`).
+8. **Save**: ledgers and logs are committed back to the repo.
 
 ## Files
 
@@ -29,6 +30,7 @@ Nothing here is proven to make money. Most ideas tested so far lose or are withi
 | `shadow.py`, `shadow_politics.py` | Shadow records and the automatic pause/resume switch |
 | `wx_ensemble.py`, `wx_ensemble_eval.py`, `wx_calibrate.py` | Forecast-model shadow log, its scorer, and the daily model-versus-market check |
 | `rewards_tracker.py`, `watch_books.py` | Paper market-making record and the 30-second book watcher (both in the 15-minute run) |
+| `gpu_paper.py` | Separate paper test on the GPU price markets; fills counted from the public trade feed (rules and pass mark: `GPU_PAPER.md`) |
 | `rewards_estimate.py` | Liquidity-reward estimate. Not in the 15-minute run: start it by hand from the Actions tab (`rewards.yml`, "Rewards estimate") |
 | `heartbeat.py`, `scanner.py`, `scorecard.py` | Daily summary, arbitrage scanner, and the per-strategy scorecard shown on each run's summary page |
 | `tests/` | Self-tests, run before every scan |
@@ -45,6 +47,7 @@ Nothing here is proven to make money. Most ideas tested so far lose or are withi
 | `python clv_report.py` | Did the price move our way after we bought? |
 | `python verify_settlements.py` | Do the ledgers agree with Polymarket's official results? |
 | `python rewards_tracker.py --report` | The rewards tracker's record so far |
+| `python gpu_paper.py --report` | The GPU paper test so far, and its verdict once 14 days are in |
 | `python wx_ensemble_eval.py` | The forecast model scored against settled results |
 
 ## Data files
@@ -52,8 +55,8 @@ Nothing here is proven to make money. Most ideas tested so far lose or are withi
 - `ledger*.json`: one paper account per strategy ($50 start, $1 bets).
 - `shadow_*.json`: "what would have happened" records. They never touch a ledger.
 - `traders_*.json`: cached trader scores.
-- `wx_shadow*.jsonl`, `rewards_log*.jsonl`: append-only logs, **one file per month** (for example `wx_shadow_2026-11.jsonl`). The original un-dated files are still read but no longer grow.
-- `wx_state.json`, `wx_calibration.json`, `wx_winners.json`, `rewards_state.json`, `heartbeat.json`: working state.
+- `wx_shadow*.jsonl`, `rewards_log*.jsonl`, `gpu_paper_log*.jsonl`: append-only logs, **one file per month** (for example `wx_shadow_2026-11.jsonl`). The original un-dated files are still read but no longer grow.
+- `wx_state.json`, `wx_calibration.json`, `wx_winners.json`, `rewards_state.json`, `gpu_paper_state.json`, `heartbeat.json`: working state.
 
 ## Switching a strategy off by hand
 
