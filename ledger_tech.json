@@ -1,5 +1,5 @@
 {
-  "cash": 52.97048355326233,
+  "cash": 51.96448355326233,
   "bets": [
     {
       "asset": "26922035314154497018737638829774069315488348073215105242613348160492279741517",
@@ -1223,6 +1223,116 @@
       },
       "closed": "2026-11-23T05:31:12.684636+00:00",
       "pnl": 0.5787440894568691
+    },
+    {
+      "asset": "20600980062958715528309517878818238366522606237029330206160757841296963657123",
+      "condition": "0xfbd9675e0aaf0e39b4169d2a97d11fe2f19a8cd944ea7f4cb43ecf41e2563a21",
+      "title": "Will there be exactly 2 Codex weekly usage limit resets in the week of November 23?",
+      "outcome": "No",
+      "event": "how-many-codex-resets-week-of-november-23",
+      "price": 0.88,
+      "shares": 1.1363636363636365,
+      "stake": 1.0,
+      "fee": 0.006,
+      "order": "market",
+      "fee_rate": 0.05,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "KimchiCapital"
+      ],
+      "holders": {
+        "0x9578af80708f271f705e27867dcf6ec653acf066": {
+          "name": "KimchiCapital",
+          "size": 218.44,
+          "entry": 0.7802,
+          "win_rate": 0.6944444444444444,
+          "roi": 0.12124851359633249,
+          "n": 108,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "cd676bdd0022",
+        "scan": "TECH",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.04,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30,
+            "min_days": 7
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-28T12:01:28.753605+00:00",
+        "book": {
+          "asks": [
+            [
+              0.88,
+              40.0
+            ],
+            [
+              0.94,
+              107.52
+            ],
+            [
+              0.95,
+              163.83
+            ],
+            [
+              0.98,
+              6.08
+            ],
+            [
+              0.99,
+              22.78
+            ]
+          ],
+          "bids": [
+            [
+              0.21,
+              20.0
+            ],
+            [
+              0.2,
+              20.0
+            ],
+            [
+              0.17,
+              5.0
+            ],
+            [
+              0.08,
+              20.0
+            ],
+            [
+              0.06,
+              30.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1795867267574",
+          "hash": "505ddb2285a53de0ffef26a272f7fb415fb62ced"
+        }
+      },
+      "opened": "2026-11-28T12:01:28.753642+00:00",
+      "ends": "2026-11-30T00:00:02.926092+00:00"
     }
   ]
 }
