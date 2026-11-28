@@ -3286,7 +3286,8 @@
     "paused": true,
     "since": "2026-11-17T17:17:33.806297+00:00",
     "why": "last 52 settled bets: ROI -15.0% per bet (\u00b18.9%)",
-    "history": []
+    "history": [],
+    "reviewed": 30
   },
   "trader_watch": {
     "Tokor": {
