@@ -1,5 +1,5 @@
 {
-  "cash": 51.70179971562422,
+  "cash": 52.4521856805365,
   "bets": [
     {
       "asset": "21778855006180788776429403918768899038985015043431518142791980986685107945419",
@@ -8220,7 +8220,7 @@
       "order": "market",
       "fee_rate": 0.01,
       "fee_src": "market",
-      "status": "open",
+      "status": "won",
       "traders": [
         "quqqq"
       ],
@@ -8316,7 +8316,9 @@
       },
       "opened": "2026-11-27T16:33:00.799393+00:00",
       "ends": "2026-11-28T00:00:13.915774+00:00",
-      "stops": {}
+      "stops": {},
+      "closed": "2026-11-28T15:31:22.074186+00:00",
+      "pnl": 0.7500859649122809
     },
     {
       "asset": "78742042091824742119825320547832933789576964276636727031642816538725311084259",
@@ -8539,6 +8541,116 @@
       "opened": "2026-11-27T22:02:29.126341+00:00",
       "ends": "2026-11-28T00:00:13.348150+00:00",
       "stops": {}
+    },
+    {
+      "asset": "34981969696549906448069121688708450799340691863137363790820452701164727450551",
+      "condition": "0x1190b2f5bff9fcce6bd62777041978e6f9245ca8b635449e349abee0ce29f0a8",
+      "title": "Will the highest temperature in Karachi be 31\u00b0C on November 29?",
+      "outcome": "Yes",
+      "event": "highest-temperature-in-karachi-on-november-29-2026",
+      "price": 0.6,
+      "shares": 1.6666666666666667,
+      "stake": 1.0,
+      "fee": 0.004,
+      "order": "market",
+      "fee_rate": 0.01,
+      "fee_src": "market",
+      "status": "open",
+      "traders": [
+        "quqqq"
+      ],
+      "holders": {
+        "0x1b29fd072a61e82c870034e25bd81169ef70f288": {
+          "name": "quqqq",
+          "size": 896.1785,
+          "entry": 0.5579,
+          "win_rate": 0.6036036036036037,
+          "roi": 0.12864391263525726,
+          "n": 222,
+          "alt": true
+        }
+      },
+      "audit": {
+        "code": "46a64681b3ca",
+        "scan": "WEATHER",
+        "settings": {
+          "min_price": 0.4,
+          "max_price": 0.9,
+          "fee_rate": 0.05,
+          "max_bet": 1.0,
+          "max_chase": 0.1,
+          "hours": [
+            0.5,
+            36
+          ],
+          "min_return_if_win": 0.03,
+          "min_traders_agree": 1,
+          "trader_bar": {
+            "win_rate": 0.58,
+            "roi": 0.1,
+            "n": 30,
+            "days": 30,
+            "min_days": 7
+          },
+          "real_stop": null,
+          "per_event": 1,
+          "per_trader": 2,
+          "daily_loss_limit": 3.0
+        },
+        "time": "2026-11-28T15:32:06.918227+00:00",
+        "book": {
+          "asks": [
+            [
+              0.6,
+              293.93
+            ],
+            [
+              0.61,
+              104.0
+            ],
+            [
+              0.62,
+              59.1
+            ],
+            [
+              0.63,
+              96.96
+            ],
+            [
+              0.64,
+              36.55
+            ]
+          ],
+          "bids": [
+            [
+              0.52,
+              277.62
+            ],
+            [
+              0.51,
+              17.27
+            ],
+            [
+              0.48,
+              78.0
+            ],
+            [
+              0.47,
+              20.0
+            ],
+            [
+              0.35,
+              30.0
+            ]
+          ],
+          "min_order_size": "5",
+          "tick_size": "0.01",
+          "timestamp": "1795879924920",
+          "hash": "5a7673aea4e23acd14f48d5eae21e4b729895ef6"
+        }
+      },
+      "opened": "2026-11-28T15:32:06.918289+00:00",
+      "ends": "2026-11-29T00:00:10.350465+00:00"
     }
   ],
   "paused": false,
